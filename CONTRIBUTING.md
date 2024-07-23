@@ -4,7 +4,7 @@ Thank-you for your interest in helping to improve Acorn. As you might have guess
 
 I am likewise inexperienced with collaborating on software projects. For this reason, I have not defined processes for community involvement, even though such participation would be welcomed. 
 
-If you are still interested in contributing to Acorn after reading the above, please contact me via email at danboyne (at) gmail-dot-com.
+If you are still interested in contributing to Acorn after reading the above, please contact me via email at **danboyne (at) gmail-dot-com**.
 
 With sincere thanks,  
 &nbsp; Dan Boyne  
