@@ -1,0 +1,330 @@
+#12345678901234567890123456789012345678901234567890123456789012345678901234567890
+# Any line that begins with a '#' character is a comment and is disregarded by
+# the auto-router program. Blank lines are allowed. Use them to add clarity to 
+# the input file.
+#
+# You can add additional comments following two consecutive slash characters:
+# grid_resolution = 5  // 5 micron grid is fine enough for 20um line/space
+#
+
+
+# Specify the dimension in microns of the grid that the auto-router will use.
+# Use a dimension that is less than one half to one quarter of the smallest
+# linewidth or spacing in the design.
+grid_resolution = 20  // in microns
+
+# Specify the dimensions in millimeters of the grid:
+width  = 2.4  // in millimeters
+height = 2.4  // in millimeters
+
+# Specify the number of routing layers. Typical values are 1, 2, 4, 6, and 8.
+number_layers = 4
+
+# Specify the name of each routing layer and (for multiple layers) the name
+# of each intervening via layer. Examples:
+# 
+#   layer_names = M1 V1-2 M2 V2-3 M3 V3-4 M4  // For 4-layer substrate
+#   layer_names = M   // for single-layer
+#
+layer_names = Pkg_M3 V3-4 Pkg_M4 V4-5 Pkg_M5 BGA PCB
+
+#
+# Specify the origin that the start/end-locations are relative to. Allowed 
+# values are: center, lower_left, upper_left, lower_right, upper_right
+#
+origin = lower_left
+
+
+# Specify the pin-swappable zone. For this case, all terminals on the
+# PCB layer are swappable with each other:
+pin_swap   PCB  ALL
+
+
+#
+# Specify the start- and end-locations of the paths to be routed. Dimensions are
+# in microns, relative to the origin specified with the 'origin' statement.
+# Start- and End-Layers are specified using the names from the 'layer_names'
+# statement.
+#
+start_nets
+# Net                Start   Start    Start        End    End    End    Net-specific     Diff Pair Partner
+# Name               Layer     X        Y         Layer    X      Y     Rule (optional)  (optional)
+# ----------------- ------- -------- --------    ------- -----  -----   ---------------  -----------------
+Net_281_N            Pkg_M3   1400     1400        PCB    1200   1000      100_ohm       Net_282_P
+Net_282_P            Pkg_M3   1400     1000        PCB    1200   1000      100_ohm       Net_281_N
+end_nets
+
+# 
+# Specify which areas on each layer to block from routing. By default, all areas
+# are routable. Use the following BLOCK or UNBLOCK statements to define 
+# unroutable areas. All coordinates are in microns.
+#
+#  BLOCK RECT <layer name> X1 Y1 X2 Y2 // Block the rectangle defined by 
+#                                      // (x1, y1) and (x2, y2)
+#
+#  BLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Block triangle defined by 
+#                                            // 3 x/y coordinates
+#
+#  BLOCK CIR  <layer name> X Y R  // Block circle defined by center (x,y) and 
+#                                 // radius R
+#
+#  BLOCK ALL <layer name>         // Block all cells on layer <layer name>
+#
+#  UNBLOCK RECT <layer name> X1 Y1 X2 Y2 // Unblock the rectangle defined by 
+#                                        // (x1, y1) and (x2, y2)
+#
+#  UNBLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Unblock triangle defined 
+#                                              // by 3 x/y coordinates
+#
+#  UNBLOCK CIR  <layer name> X Y R  // Unblock circle defined by center (x,y) 
+#                                   // and radius R
+#
+#  UNBLOCK ALL <layer name>         // Unblock all cells on layer <layer name> 
+#
+# As an example, to create a keep-out zone on the perimeter of layer M1,
+# use the folowing two commands:
+#
+#    BLOCK ALL M1                    // Block all of M1
+#    UNBLOCK RECT M1 20 20 16.8 16.8 // Unblock a large rectangle in middle of M1
+#
+
+#
+# Start of PCB definition:
+#
+BLOCK   ALL   PCB    // Block entire PCB layer, and then unblock areas for BGAs
+UNBLOCK RECT   PCB       1198  0      1202  2400 
+
+
+#
+# Create the BGA hole on layer 'BGA':
+#
+#
+BLOCK   ALL BGA   // Block entire BGA layer, and then unblock areas for BGAs
+UNBLOCK CIR BGA    1200  1200      660   // Wide opening for Net_281_N/Net_282_P diff pair
+#
+#
+# End of BGA pattern definition for layers BGA and PCB
+#
+
+
+#
+# Block via directly above BGA balls (preventing via-in-pad)
+#
+BLOCK CIR V4-5    1200  1200      660   // Wide circle for Net_281_N/Net_282_P diff pair
+# End of pattern for blocking vias directly above BGA balls (no via-in-pad)
+
+
+#
+# Define cost-multipliers for traces and vias;
+#
+#  trace_cost_multipliter  <multiplier index>     <multiplier value>
+#    via_cost_multipliter  <multiplier index>     <multiplier value>
+trace_cost_multiplier             1                      2
+trace_cost_multiplier             2                      4
+trace_cost_multiplier             3                      5
+trace_cost_multiplier             4                     20
+
+#
+# Define cost-zones for traces and vias:
+#
+# trace_cost_zone   <trace mult. index>     <rout. layer name>   <ALL|RECT|CIR|TRI>
+#   via_cost_zone     <via mult. index>       <via layer name>   <ALL|RECT|CIR|TRI>
+
+# Use Pkg_M4 as an 'overflow' layer:
+trace_cost_zone              2                  Pkg_M4           ALL
+
+# Minimize routing on package BGA layer or the PCB layer:
+trace_cost_zone              3                  Pkg_M5           ALL
+
+
+#
+# Design rules: #########################################
+#
+
+design_rule_set Non_Bottom   Design Rules for all package layers except bottom layer and breakout area // Rules for routing layers
+  line_width        = 20   // Minimum linewidth is ~20 um
+  line_spacing      = 20   // Minimum trace-to-trace spacing is ~20um
+  via_up_diameter   = 100  // Pad diameter is 100um
+  via_down_diameter = 100  // Pad diameter is 100um
+
+  via_up_to_trace_spacing      = 20  // Trace-to-pad spacing is 20um
+  via_down_to_trace_spacing    = 20  // Trace-to-pad spacing is 20um
+  via_up_to_via_up_spacing     = 40  // Via pad-to-pad spacing is 40-50um
+  via_down_to_via_down_spacing = 40  // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   = 40  // Via pad-to-pad spacing is 40-50um
+
+  exception = PWR_GND   // Exception design rules power and ground nets 
+    line_width        = 40   // Minimum linewidthis ~20 um
+  end_exception  // End of exception power and ground nets
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    line_width        = 25   //Linewidth is ~25 um on M1
+    line_spacing      = 32   //Line spacing is ~32um on M1
+
+    via_up_to_trace_spacing      = 30  // Trace-to-pad spacing is 20um
+    via_down_to_trace_spacing    = 30  // Trace-to-pad spacing is 20um
+    via_up_to_via_up_spacing     = 50  // Via pad-to-pad spacing is 40-50um
+    via_down_to_via_down_spacing = 50  // Via pad-to-pad spacing is 40-50um
+    via_up_to_via_down_spacing   = 50  // Via pad-to-pad spacing is 40-50um
+    
+    diff_pair_pitch = 58  // Center-to-center pitch forDiff pairs
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    line_width        = 35   //Linewidth is ~35 um on M1
+    line_spacing      = 50   //Line spacing is ~50 um on M1
+
+    via_up_to_trace_spacing      = 40  // Trace-to-pad spacing is 20um
+    via_down_to_trace_spacing    = 50  // Trace-to-pad spacing is 20um
+    via_up_to_via_up_spacing     = 50  // Via pad-to-pad spacing is 40-50um
+    via_down_to_via_down_spacing = 50  // Via pad-to-pad spacing is 40-50um
+    via_up_to_via_down_spacing   = 50  // Via pad-to-pad spacing is 40-50um
+    
+    diff_pair_pitch = 85  // Center-to-center pitch forDiff pairs
+  end_exception  // End of exception for 100-ohm differential pairs
+  
+end_design_rule_set   // End of design rule set
+
+design_rule_set Pkg_Bottom   Design Rules for bottom package layer  // Rules for bottom pkg layer
+  line_width        = 100  // Typical linewidth on bottom is ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
+  via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+  
+  exception = PWR_GND   // Exception design rules power and ground nets 
+    line_width        = 150
+  end_exception  // End of exception power and ground nets
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 200  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 200
+  end_exception  // End of exception for 100-ohm differential pairs
+    
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set  DIFF_PAIRS_ONLY   Design Rules for diff-pair BGA vias
+
+  line_width        = 100  // Typical linewidth on bottom is ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
+  via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+
+  allowed_directions = NONE  // Prevent all non-diff-pair nets
+
+  exception = 50_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY  // Allow diff-pair nets in this region
+  end_exception
+
+  exception = 100_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY  // Allow diff-pair nets in this region
+  end_exception
+end_design_rule_set
+
+
+design_rule_set PCB    Design Rules for top PCB layer  // Rules for top PCB layer
+  line_width        = 0    // 5 mils, based on example evaluation board from industry
+  line_spacing      = 0    // 4 mils, based on example evaluation board from industry
+  via_up_diameter   = 0    // Not applicable for single-layer PCB
+  via_down_diameter = 500  // BGA pad diameter is 500um
+
+  via_up_to_trace_spacing      = 0   // Not applicable for single-layer PCB
+  via_down_to_trace_spacing    = 102 // 4 mils, based on example evaluation board from industry
+  via_up_to_via_up_spacing     = 0   // Not applicable for single-layer PCB
+  via_down_to_via_down_spacing = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_up_to_via_down_spacing   = 0   // Not applicable for single-layer PCB
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 200  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 200
+  end_exception  // End of exception for 100-ohm differential pairs
+    
+end_design_rule_set   // End of design rule set
+
+
+
+
+############ Define design-rule zones: #####################
+##
+## Specify which areas on each layer will use each design-rule set.
+## All coordinates are in microns.
+##
+##  DR_zone <DR name> <layer name>  RECT  X1 Y1 X2 Y2 // Use DR set 'DR name' in
+##                                                    // rectangle defined by
+##                                                    // (x1, y1) and (x2, y2)
+##                                                    // on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> TRI  X1 Y1 X2 Y2 X2 Y3 // User DR set 'DR name'
+##                                                        // in triangle defined by
+##                                                        // 3 x/y coordinates on
+##                                                        // layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> CIR  X Y R  // Use DR set 'DR name' in circle
+##                                             // defined by center (x,y) and radius
+##                                             // R on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> ALL      // Use DR set 'DR name' on all cells
+##                                          // on layer <layer name>.
+##
+DR_zone   Non_Bottom      Pkg_M3    ALL
+DR_zone   Non_Bottom      Pkg_M4    ALL
+DR_zone   Pkg_Bottom      Pkg_M5    ALL
+DR_zone   PCB             PCB       ALL
+
+
+# Create circular design-rule zones on Pkg_M5 above each BGA via for diff-pairs,
+# to prevent non-diff-pair nets routing through these extra-large BGA via holes.
+# Note that the radius is only large enough to keep non-diff-pair vias from
+# entering this via-hole. Recall that unusual things can happen at the boundaries
+# of different design-rule zones.
+DR_zone  DIFF_PAIRS_ONLY  Pkg_M5     CIR     1200  1200      500   // Wide circle for Net_281_N/Net_282_P diff pair
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+#
+# The following parameters affect the final routed solution and run-time, but
+# should not be modified without extreme caution:
+#
+#
+
+# The parameter 'maxIterations' is the maximum number of iterations the program
+# will make to find a crossing-free solution.
+maxIterations = 200
+
+# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
+# solutions that program will find before deciding that it has found the
+# optimal solution.
+violationFreeThreshold = 10
+
+# The parameter 'vertCost' is the cost of routing up or down to a different
+# routing layer, i.e., the cost of a layer-to-layer via. The value is in
+# microns, and should be interpreted as half the trace-length that could be
+# avoided by adding a via to a different layer.
+vertCost  = 5000   // in microns of equivalent trace length
+
+# The parameter 'runsPerPngMap' is the number of iterations to run between
+# writing PNG versions of the routing maps.
+runsPerPngMap =  1

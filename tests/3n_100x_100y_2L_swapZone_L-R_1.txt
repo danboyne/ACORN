@@ -1,0 +1,108 @@
+#12345678901234567890123456789012345678901234567890123456789012345678901234567890
+# Any line that begins with a '#' character is a comment and is disregarded by
+# the auto-router program. Blank lines are allowed. Use them to add clarity to 
+# the input file.
+#
+# You can add additional comments following two consecutive slash characters:
+# grid_resolution = 5  // 5 micron grid is fine enough for 20um line/space
+#
+
+
+# Specify the dimension in microns of the grid that the auto-router will use.
+# Use a dimension that is less than one half to one quarter of the smallest
+# linewidth or spacing in the design.
+grid_resolution = 1  // in microns
+
+# Specify the dimensions in millimeters of the grid:
+width  = 0.100  // in millimeters
+height = 0.100  // in millimeters
+
+# Specify the number of routing layers. Typical values are 1, 2, 4, 6, and 8.
+number_layers = 2
+
+# Specify the name of each routing layer and (for multiple layers) the name
+# of each intervening via layer. Examples:
+# 
+#   layer_names = M1 V1-2 M2 V2-3 M3 V3-4 M4  // For 4-layer substrate
+#   layer_names = M   // for single-layer
+#
+layer_names = M1 VIA M2
+
+#
+# Specify the origin that the start/end-locations are relative to. Allowed 
+# values are: center, lower_left, upper_left, lower_right, upper_right
+#
+origin = lower_left
+
+#
+# Specify the start- and end-locations of the paths to be routed. Dimensions are
+# in microns, relative to the origin specified with the 'origin' statement.
+# Start- and End-Layers are specified using the names from the 'layer_names'
+# statement.
+#
+start_nets
+# Net        Start  Start Start    End    End   End
+# Name       Layer    X     Y     Layer    X     Y
+# --------  ------- ----- -----  ------- ----- -----
+#
+# 3 horizontal nets, each starting on M1 and terminating on M2:
+     A	       M1    12     70     M2      88    30
+     B         M1    12     30     M2      88    50
+     C         M1    12     50     M2      88    70
+end_nets
+
+#
+# Pin-swap zones:
+# 
+pin_swap     M1     RECT  10 28    14 72
+
+
+#
+# BLOCK/UNBLOCK statements:
+#
+BLOCK      RECT VIA 10 28   14 72
+
+#
+# Design rules: #########################################
+#
+design_rule_set Design_Rules   All Design Rules // Rules for entire map
+  line_width = 3
+  line_spacing = 2
+  via_up_diameter = 6
+  via_down_diameter = 6
+
+  via_up_to_trace_spacing = 3
+  via_down_to_trace_spacing = 3
+  via_up_to_via_up_spacing = 3
+  via_down_to_via_down_spacing = 3
+  via_up_to_via_down_spacing = 3
+end_design_rule_set   // End of design rule set
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+#
+# The following parameters affect the final routed solution and run-time, but
+# should not be modified without extreme caution:
+#
+#
+
+# The parameter 'maxIterations' is the maximum number of iterations the program
+# will make to find a crossing-free solution.
+maxIterations = 50
+
+# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
+# solutions that program will find before deciding that it has found the
+# optimal solution.
+violationFreeThreshold = 10
+
+# The parameter 'vertCost' is the cost of routing up or down to a different
+# routing layer, i.e., the cost of a layer-to-layer via.
+vertCost  = 1
+
+# The parameter 'runsPerPngMap' is the number of iterations to run between
+# writing PNG versions of the routing maps.
+runsPerPngMap =  1
+
+

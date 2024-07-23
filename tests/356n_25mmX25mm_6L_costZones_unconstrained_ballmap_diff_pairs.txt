@@ -1,0 +1,1834 @@
+#12345678901234567890123456789012345678901234567890123456789012345678901234567890
+# Any line that begins with a '#' character is a comment and is disregarded by
+# the auto-router program. Blank lines are allowed. Use them to add clarity to 
+# the input file.
+#
+# You can add additional comments following two consecutive slash characters:
+# grid_resolution = 5  // 5 micron grid is fine enough for 20um line/space
+#
+
+
+# Specify the dimension in microns of the grid that the auto-router will use.
+# Use a dimension that is less than one half to one quarter of the smallest
+# linewidth or spacing in the design.
+grid_resolution = 20  // in microns
+
+# Specify the dimensions in millimeters of the grid:
+width  = 25  // in millimeters
+height = 25  // in millimeters
+
+# Specify the number of routing layers. Typical values are 1, 2, 4, 6, and 8.
+number_layers = 6
+
+# Specify the name of each routing layer and (for multiple layers) the name
+# of each intervening via layer. Examples:
+# 
+#   layer_names = M1 V1-2 M2 V2-3 M3 V3-4 M4  // For 4-layer substrate
+#   layer_names = M   // for single-layer
+#
+layer_names = Pkg_M1 V1-2 Pkg_M2 V2-3 Pkg_M3 V3-4 Pkg_M4 V4-5 Pkg_M5 BGA PCB
+
+#
+# Specify the origin that the start/end-locations are relative to. Allowed 
+# values are: center, lower_left, upper_left, lower_right, upper_right
+#
+origin = lower_left
+
+
+# Specify the pin-swappable zone. For this case, all terminals on the
+# PCB layer are swappable with each other:
+pin_swap   PCB  ALL
+
+
+#
+# Specify the start- and end-locations of the paths to be routed. Dimensions are
+# in microns, relative to the origin specified with the 'origin' statement.
+# Start- and End-Layers are specified using the names from the 'layer_names'
+# statement.
+#
+start_nets
+# Net                Start   Start    Start        End    End    End    Net-specific     Diff Pair Partner
+# Name               Layer     X        Y         Layer    X      Y     Rule (optional)  (optional)
+# ----------------- ------- -------- --------    ------- -----  -----   ---------------  -----------------
+Net_0                Pkg_M1 12110.84 16118.90      PCB   12900  12900
+Net_1                Pkg_M1 10354.40 15051.59      PCB   12900  12900      PWR_GND
+Net_2                Pkg_M1 15382.16 12074.30      PCB   12900  12900      PWR_GND
+Net_3                Pkg_M1 10822.13 14641.10      PCB   12900  12900      PWR_GND
+Net_4                Pkg_M1 11747.60  8917.82      PCB   12900  12900      PWR_GND
+Net_5                Pkg_M1 13607.90  8917.82      PCB   12900  12900      PWR_GND
+Net_6                Pkg_M1 14974.64 16118.90      PCB   12900  12900
+Net_7                Pkg_M1 11681.27 15434.45      PCB   12900  12900
+Net_8                Pkg_M1 10354.40 13530.59      PCB   12900  12900
+Net_9                Pkg_M1  9602.90 13530.59      PCB   12900  12900
+Net_10               Pkg_M1  9452.60 13530.59      PCB   12900  12900
+Net_11               Pkg_M1 10053.80 13530.59      PCB   12900  12900
+Net_12               Pkg_M1  9828.35 13690.79      PCB   12900  12900      PWR_GND
+Net_13               Pkg_M1 15464.78 11479.49      PCB   12900  12900
+Net_14               Pkg_M1 14555.96 11622.68      PCB   12900  12900
+Net_15               Pkg_M1 14886.44 11622.68      PCB   12900  12900
+Net_16               Pkg_M1 14390.72 11787.92      PCB   12900  12900
+Net_17               Pkg_M1 14721.20 11787.92      PCB   12900  12900
+Net_18               Pkg_M1 14721.20 12360.68      PCB   12900  12900
+Net_19               Pkg_M1 14390.72 12360.68      PCB   12900  12900
+Net_20               Pkg_M1 15464.78 12503.87      PCB   12900  12900
+Net_21               Pkg_M1 14886.44 12360.68      PCB   12900  12900
+Net_22               Pkg_M1 14390.72 12647.06      PCB   12900  12900
+Net_23               Pkg_M1 14886.44 11336.30      PCB   12900  12900
+Net_24               Pkg_M1 14555.96 12647.06      PCB   12900  12900
+Net_25               Pkg_M1 14886.44 12647.06      PCB   12900  12900
+Net_26               Pkg_M1 14638.58  9221.39      PCB   12900  12900
+Net_27               Pkg_M1 14638.58 15048.35      PCB   12900  12900
+Net_28               Pkg_M1 15464.78 15048.35      PCB   12900  12900
+Net_29               Pkg_M1 14886.44 11787.92      PCB   12900  12900
+Net_30               Pkg_M1 14390.72 11622.68      PCB   12900  12900
+Net_31               Pkg_M1 14390.72 11336.30      PCB   12900  12900
+Net_32               Pkg_M1 14721.20 11336.30      PCB   12900  12900
+Net_33               Pkg_M1 15299.54 15048.35      PCB   12900  12900
+Net_34               Pkg_M1 14390.72  9364.58      PCB   12900  12900
+Net_35_P             Pkg_M1 15547.40 12647.06      PCB   12900  12900      50_ohm        Net_36_N
+Net_36_N             Pkg_M1 15382.16 12647.06      PCB   12900  12900      50_ohm        Net_35_P
+Net_37_P             Pkg_M1 15382.16 12360.68      PCB   12900  12900      50_ohm        Net_38_N
+Net_38_N             Pkg_M1 15547.40 12360.68      PCB   12900  12900      50_ohm        Net_37_P
+Net_39               Pkg_M1 14390.72 15191.54      PCB   12900  12900
+Net_40               Pkg_M1 14886.44 15191.54      PCB   12900  12900
+Net_41               Pkg_M1 14886.44  9364.58      PCB   12900  12900
+Net_42               Pkg_M1 15382.16  9078.20      PCB   12900  12900
+Net_43               Pkg_M1 14555.96  9364.58      PCB   12900  12900
+Net_44               Pkg_M1 14886.44  9078.20      PCB   12900  12900
+Net_45               Pkg_M1 15547.40 11787.92      PCB   12900  12900
+Net_46               Pkg_M1 15382.16 11787.92      PCB   12900  12900
+Net_47               Pkg_M1 15547.40 14618.78      PCB   12900  12900
+Net_48               Pkg_M1 15547.40 14167.16      PCB   12900  12900
+Net_49               Pkg_M1 15547.40 13715.54      PCB   12900  12900
+Net_50               Pkg_M1 15547.40 13263.92      PCB   12900  12900
+Net_51               Pkg_M1 15547.40 10884.68      PCB   12900  12900
+Net_52               Pkg_M1 15547.40 10433.06      PCB   12900  12900
+Net_53               Pkg_M1 15547.40  9981.44      PCB   12900  12900
+Net_54               Pkg_M1 15547.40  9529.82      PCB   12900  12900
+Net_55               Pkg_M1 15547.40 12812.30      PCB   12900  12900
+Net_56               Pkg_M1 14886.44 14905.16      PCB   12900  12900
+Net_57               Pkg_M1 14555.96 14905.16      PCB   12900  12900
+Net_58               Pkg_M1 14390.72 14905.16      PCB   12900  12900
+Net_59               Pkg_M1 15464.78 14761.97      PCB   12900  12900
+Net_60               Pkg_M1 14638.58 14761.97      PCB   12900  12900
+Net_61               Pkg_M1 14886.44 14618.78      PCB   12900  12900
+Net_62               Pkg_M1 14721.20 14618.78      PCB   12900  12900
+Net_63               Pkg_M1 14390.72 14618.78      PCB   12900  12900
+Net_64               Pkg_M1 14886.44 14453.54      PCB   12900  12900
+Net_65               Pkg_M1 14555.96 14453.54      PCB   12900  12900
+Net_66               Pkg_M1 14390.72 14453.54      PCB   12900  12900
+Net_67               Pkg_M1 15464.78 14310.35      PCB   12900  12900
+Net_68               Pkg_M1 14638.58 14310.35      PCB   12900  12900
+Net_69               Pkg_M1 14886.44 14167.16      PCB   12900  12900
+Net_70               Pkg_M1 14721.20 14167.16      PCB   12900  12900
+Net_71               Pkg_M1 14390.72 14167.16      PCB   12900  12900
+Net_72               Pkg_M1 14886.44 14001.92      PCB   12900  12900
+Net_73               Pkg_M1 14555.96 14001.92      PCB   12900  12900
+Net_74               Pkg_M1 14390.72 14001.92      PCB   12900  12900
+Net_75               Pkg_M1 15464.78 13858.73      PCB   12900  12900
+Net_76               Pkg_M1 14638.58 13858.73      PCB   12900  12900
+Net_77               Pkg_M1 14886.44 13715.54      PCB   12900  12900
+Net_78               Pkg_M1 14721.20 13715.54      PCB   12900  12900
+Net_79               Pkg_M1 14390.72 13715.54      PCB   12900  12900
+Net_80               Pkg_M1 14886.44 13550.30      PCB   12900  12900
+Net_81               Pkg_M1 14555.96 13550.30      PCB   12900  12900
+Net_82               Pkg_M1 14390.72 13550.30      PCB   12900  12900
+Net_83               Pkg_M1 15464.78 13407.11      PCB   12900  12900
+Net_84               Pkg_M1 14638.58 13407.11      PCB   12900  12900
+Net_85               Pkg_M1 14886.44 13263.92      PCB   12900  12900
+Net_86               Pkg_M1 14721.20 13263.92      PCB   12900  12900
+Net_87               Pkg_M1 14390.72 13263.92      PCB   12900  12900
+Net_88               Pkg_M1 14886.44 11171.06      PCB   12900  12900
+Net_89               Pkg_M1 14555.96 11171.06      PCB   12900  12900
+Net_90               Pkg_M1 14390.72 11171.06      PCB   12900  12900
+Net_91               Pkg_M1 15464.78 11027.87      PCB   12900  12900
+Net_92               Pkg_M1 14638.58 11027.87      PCB   12900  12900
+Net_93               Pkg_M1 14886.44 10884.68      PCB   12900  12900
+Net_94               Pkg_M1 14721.20 10884.68      PCB   12900  12900
+Net_95               Pkg_M1 14390.72 10884.68      PCB   12900  12900
+Net_96               Pkg_M1 14886.44 10719.44      PCB   12900  12900
+Net_97               Pkg_M1 14555.96 10719.44      PCB   12900  12900
+Net_98               Pkg_M1 14390.72 10719.44      PCB   12900  12900
+Net_99               Pkg_M1 15464.78 10576.25      PCB   12900  12900
+Net_100              Pkg_M1 14638.58 10576.25      PCB   12900  12900
+Net_101              Pkg_M1 14886.44 10433.06      PCB   12900  12900
+Net_102              Pkg_M1 14721.20 10433.06      PCB   12900  12900
+Net_103              Pkg_M1 14390.72 10433.06      PCB   12900  12900
+Net_104              Pkg_M1 14886.44 10267.82      PCB   12900  12900
+Net_105              Pkg_M1 14555.96 10267.82      PCB   12900  12900
+Net_106              Pkg_M1 14390.72 10267.82      PCB   12900  12900
+Net_107              Pkg_M1 15464.78 10124.63      PCB   12900  12900
+Net_108              Pkg_M1 14638.58 10124.63      PCB   12900  12900
+Net_109              Pkg_M1 14886.44  9981.44      PCB   12900  12900
+Net_110              Pkg_M1 14721.20  9981.44      PCB   12900  12900
+Net_111              Pkg_M1 14390.72  9981.44      PCB   12900  12900
+Net_112              Pkg_M1 14886.44  9816.20      PCB   12900  12900
+Net_113              Pkg_M1 14555.96  9816.20      PCB   12900  12900
+Net_114              Pkg_M1 14390.72  9816.20      PCB   12900  12900
+Net_115              Pkg_M1 15464.78  9673.01      PCB   12900  12900
+Net_116              Pkg_M1 14638.58  9673.01      PCB   12900  12900
+Net_117              Pkg_M1 14886.44  9529.82      PCB   12900  12900
+Net_118              Pkg_M1 14721.20  9529.82      PCB   12900  12900
+Net_119              Pkg_M1 14390.72  9529.82      PCB   12900  12900
+Net_120_P            Pkg_M1 15547.40 14905.16      PCB   12900  12900      50_ohm        Net_121_N
+Net_121_N            Pkg_M1 15382.16 14905.16      PCB   12900  12900      50_ohm        Net_120_P
+Net_122_P            Pkg_M1 15547.40 14453.54      PCB   12900  12900      50_ohm        Net_123_N
+Net_123_N            Pkg_M1 15382.16 14453.54      PCB   12900  12900      50_ohm        Net_122_P
+Net_124_P            Pkg_M1 15547.40 14001.92      PCB   12900  12900      50_ohm        Net_125_N
+Net_125_N            Pkg_M1 15382.16 14001.92      PCB   12900  12900      50_ohm        Net_124_P
+Net_126_P            Pkg_M1 15547.40 13550.30      PCB   12900  12900      50_ohm        Net_127_N
+Net_127_N            Pkg_M1 15382.16 13550.30      PCB   12900  12900      50_ohm        Net_126_P
+Net_128_P            Pkg_M1 15547.40 11171.06      PCB   12900  12900      50_ohm        Net_129_N
+Net_129_N            Pkg_M1 15382.16 11171.06      PCB   12900  12900      50_ohm        Net_128_P
+Net_130_P            Pkg_M1 15547.40 10719.44      PCB   12900  12900      50_ohm        Net_131_N
+Net_131_N            Pkg_M1 15382.16 10719.44      PCB   12900  12900      50_ohm        Net_130_P
+Net_132_P            Pkg_M1 15547.40 10267.82      PCB   12900  12900      50_ohm        Net_133_N
+Net_133_N            Pkg_M1 15382.16 10267.82      PCB   12900  12900      50_ohm        Net_132_P
+Net_134_P            Pkg_M1 15547.40  9816.20      PCB   12900  12900      50_ohm        Net_135_N
+Net_135_N            Pkg_M1 15382.16  9816.20      PCB   12900  12900      50_ohm        Net_134_P
+Net_136_P            Pkg_M1 15547.40 13098.68      PCB   12900  12900      50_ohm        Net_137_N
+Net_137_N            Pkg_M1 15382.16 13098.68      PCB   12900  12900      50_ohm        Net_136_P
+Net_138              Pkg_M1 14886.44 13098.68      PCB   12900  12900
+Net_139              Pkg_M1 14555.96 13098.68      PCB   12900  12900
+Net_140              Pkg_M1 14390.72 13098.68      PCB   12900  12900
+Net_141              Pkg_M1 15464.78 12955.49      PCB   12900  12900
+Net_142              Pkg_M1 14638.58 12955.49      PCB   12900  12900
+Net_143              Pkg_M1 14886.44 12812.30      PCB   12900  12900
+Net_144              Pkg_M1 14721.20 12812.30      PCB   12900  12900
+Net_145              Pkg_M1 14390.72 12812.30      PCB   12900  12900
+Net_146              Pkg_M1 15464.78  9221.39      PCB   12900  12900
+Net_147              Pkg_M1 14721.20  9078.20      PCB   12900  12900
+Net_148              Pkg_M1 15547.40  9364.58      PCB   12900  12900
+Net_149              Pkg_M1 15216.92 12074.30      PCB   12900  12900      PWR_GND
+Net_150              Pkg_M1 15382.16  9364.58      PCB   12900  12900
+Net_151              Pkg_M1 15134.30 11931.11      PCB   12900  12900
+Net_152              Pkg_M1 15547.40 12074.30      PCB   12900  12900
+Net_153_P            Pkg_M1 11538.08 16118.90      PCB   12900  12900      50_ohm        Net_154_N
+Net_154_N            Pkg_M1 11394.89 16042.85      PCB   12900  12900      50_ohm        Net_153_P
+Net_155              Pkg_M1  9828.35 12472.19      PCB   12900  12900      PWR_GND
+Net_156              Pkg_M1 10053.80 11716.19      PCB   12900  12900
+Net_157              Pkg_M1  9602.90 12018.59      PCB   12900  12900
+Net_158              Pkg_M1  9527.75 12169.79      PCB   12900  12900
+Net_159              Pkg_M1  9527.75 11564.99      PCB   12900  12900
+Net_160              Pkg_M1 10053.80 12018.59      PCB   12900  12900
+Net_161              Pkg_M1 10128.95 12169.79      PCB   12900  12900
+Net_162              Pkg_M1 10429.55 12169.79      PCB   12900  12900
+Net_163              Pkg_M1  9452.60 12018.59      PCB   12900  12900
+Net_164              Pkg_M1 10128.95 11564.99      PCB   12900  12900
+Net_165              Pkg_M1  9602.90 11716.19      PCB   12900  12900
+Net_166              Pkg_M1  9527.75 11867.39      PCB   12900  12900
+Net_167              Pkg_M1 10354.40 12018.59      PCB   12900  12900
+Net_168              Pkg_M1 10429.55 11867.39      PCB   12900  12900
+Net_169              Pkg_M1 10354.40 11716.19      PCB   12900  12900
+Net_170              Pkg_M1  9452.60 11716.19      PCB   12900  12900
+Net_171              Pkg_M1 10053.80 11413.79      PCB   12900  12900
+Net_172              Pkg_M1  9527.75 11262.59      PCB   12900  12900
+Net_173              Pkg_M1  9828.35 14295.59      PCB   12900  12900      PWR_GND
+Net_174              Pkg_M1 12397.22 15966.80      PCB   12900  12900
+Net_175              Pkg_M1 11967.65 16042.85      PCB   12900  12900
+Net_176              Pkg_M1 12254.03 15130.25      PCB   12900  12900
+Net_177              Pkg_M1 11824.46 16118.90      PCB   12900  12900
+Net_178              Pkg_M1 12110.84 15966.80      PCB   12900  12900
+Net_179              Pkg_M1 15404.21 15890.75      PCB   12900  12900
+Net_180              Pkg_M1 15547.40 15814.70      PCB   12900  12900
+Net_181              Pkg_M1 15404.21 15738.65      PCB   12900  12900
+Net_182              Pkg_M1 10053.80 10799.99      PCB   12900  12900
+Net_183              Pkg_M1  9602.90 10799.99      PCB   12900  12900
+Net_184              Pkg_M1 10429.55 10951.19      PCB   12900  12900
+Net_185              Pkg_M1 10354.40 10799.99      PCB   12900  12900
+Net_186              Pkg_M1 10429.55 10648.79      PCB   12900  12900
+Net_187              Pkg_M1 11967.65 15434.45      PCB   12900  12900
+Net_188              Pkg_M1 12826.79 15130.25      PCB   12900  12900
+Net_189              Pkg_M1 12826.79 16042.85      PCB   12900  12900
+Net_190              Pkg_M1 12683.60 16118.90      PCB   12900  12900
+Net_191              Pkg_M1 13256.36 15966.80      PCB   12900  12900
+Net_192              Pkg_M1 12826.79 15434.45      PCB   12900  12900
+Net_193              Pkg_M1 12969.98 15206.30      PCB   12900  12900
+Net_194              Pkg_M1 12683.60 15510.50      PCB   12900  12900
+Net_195              Pkg_M1 13113.17 16042.85      PCB   12900  12900
+Net_196              Pkg_M1 12540.41 15434.45      PCB   12900  12900
+Net_197              Pkg_M1 12969.98 15510.50      PCB   12900  12900
+Net_198              Pkg_M1 12540.41 16042.85      PCB   12900  12900
+Net_199              Pkg_M1 13113.17 15434.45      PCB   12900  12900
+Net_200              Pkg_M1 12683.60 15206.30      PCB   12900  12900
+Net_201              Pkg_M1 13256.36 15206.30      PCB   12900  12900
+Net_202              Pkg_M1 12969.98 15966.80      PCB   12900  12900
+Net_203              Pkg_M1 12683.60 15966.80      PCB   12900  12900
+Net_204              Pkg_M1 13829.12 15966.80      PCB   12900  12900
+Net_205              Pkg_M1 13685.93 16042.85      PCB   12900  12900
+Net_206              Pkg_M1 13113.17 15130.25      PCB   12900  12900
+Net_207              Pkg_M1 13256.36 16118.90      PCB   12900  12900
+Net_208              Pkg_M1 13256.36 15510.50      PCB   12900  12900
+Net_209              Pkg_M1 13542.74 15510.50      PCB   12900  12900
+Net_210              Pkg_M1 13542.74 16118.90      PCB   12900  12900
+Net_211              Pkg_M1 13542.74 15206.30      PCB   12900  12900
+Net_212              Pkg_M1 13542.74 15966.80      PCB   12900  12900
+Net_213              Pkg_M1 13972.31 15434.45      PCB   12900  12900
+Net_214              Pkg_M1 13972.31 15130.25      PCB   12900  12900
+Net_215              Pkg_M1 13399.55 15434.45      PCB   12900  12900
+Net_216              Pkg_M1 14115.50 15510.50      PCB   12900  12900
+Net_217              Pkg_M1 13829.12 15510.50      PCB   12900  12900
+Net_218              Pkg_M1 14115.50 15966.80      PCB   12900  12900
+Net_219              Pkg_M1 14545.07 16042.85      PCB   12900  12900
+Net_220              Pkg_M1 14688.26 15966.80      PCB   12900  12900
+Net_221              Pkg_M1 14688.26 16118.90      PCB   12900  12900
+Net_222              Pkg_M1 13829.12 16118.90      PCB   12900  12900
+Net_223              Pkg_M1 14974.64 15966.80      PCB   12900  12900
+Net_224              Pkg_M1 15261.02 16118.90      PCB   12900  12900
+Net_225              Pkg_M1 13685.93 15130.25      PCB   12900  12900
+Net_226              Pkg_M1 13399.55 16042.85      PCB   12900  12900
+Net_227              Pkg_M1 14115.50 16118.90      PCB   12900  12900
+Net_228              Pkg_M1 14688.26 15662.60      PCB   12900  12900
+Net_229              Pkg_M1 13685.93 15434.45      PCB   12900  12900
+Net_230              Pkg_M1 14831.45 16042.85      PCB   12900  12900
+Net_231              Pkg_M1 13829.12 15206.30      PCB   12900  12900
+Net_232              Pkg_M1 14258.69 16042.85      PCB   12900  12900
+Net_233              Pkg_M1 13972.31 16042.85      PCB   12900  12900
+Net_234              Pkg_M1 13399.55 15130.25      PCB   12900  12900
+Net_235              Pkg_M1 14401.88 15662.60      PCB   12900  12900
+Net_236              Pkg_M1 14401.88 15510.50      PCB   12900  12900
+Net_237              Pkg_M1 14401.88 15966.80      PCB   12900  12900
+Net_238              Pkg_M1 12969.98 16118.90      PCB   12900  12900
+Net_239              Pkg_M1 14401.88 16118.90      PCB   12900  12900
+Net_240              Pkg_M1  9452.60 12623.39      PCB   12900  12900
+Net_241              Pkg_M1 10128.95 12774.59      PCB   12900  12900
+Net_242              Pkg_M1 10354.40 12925.79      PCB   12900  12900
+Net_243              Pkg_M1 10429.55 12472.19      PCB   12900  12900
+Net_244              Pkg_M1  9452.60 12320.99      PCB   12900  12900
+Net_245              Pkg_M1  9602.90 12320.99      PCB   12900  12900
+Net_246              Pkg_M1 12397.22 15206.30      PCB   12900  12900
+Net_247              Pkg_M1 11824.46 15966.80      PCB   12900  12900
+Net_248              Pkg_M1 11681.27 15130.25      PCB   12900  12900
+Net_249              Pkg_M1 10354.40 11413.79      PCB   12900  12900
+Net_250              Pkg_M1 10128.95 11867.39      PCB   12900  12900
+Net_251              Pkg_M1  9527.75 13993.19      PCB   12900  12900
+Net_252              Pkg_M1  9452.60 12925.79      PCB   12900  12900
+Net_253              Pkg_M1 12254.03 16042.85      PCB   12900  12900
+Net_254              Pkg_M1  9602.90 14749.19      PCB   12900  12900
+Net_255              Pkg_M1  9602.90 15051.59      PCB   12900  12900
+Net_256              Pkg_M1 11681.27 16042.85      PCB   12900  12900
+Net_257              Pkg_M1 14688.26 15510.50      PCB   12900  12900
+Net_258              Pkg_M1 12110.84 15206.30      PCB   12900  12900
+Net_259              Pkg_M1 11212.10  9083.42      PCB   12900  12900
+Net_260              Pkg_M1 13773.50  9083.42      PCB   12900  12900
+Net_261              Pkg_M1 11664.80  9226.97      PCB   12900  12900
+Net_262              Pkg_M1 11499.20  9226.97      PCB   12900  12900
+Net_263              Pkg_M1 13525.10  9226.97      PCB   12900  12900
+Net_264              Pkg_M1 13359.50  9226.97      PCB   12900  12900
+Net_265_N            Pkg_M1 11416.40  9083.42      PCB   12900  12900      100_ohm       Net_266_P
+Net_266_P            Pkg_M1 11416.40  8917.82      PCB   12900  12900      100_ohm       Net_265_N
+Net_267_N            Pkg_M1 13276.70  9083.42      PCB   12900  12900      100_ohm       Net_268_P
+Net_268_P            Pkg_M1 13276.70  8917.82      PCB   12900  12900      100_ohm       Net_267_N
+Net_269_N            Pkg_M1 11913.20  8917.82      PCB   12900  12900      100_ohm       Net_270_P
+Net_270_P            Pkg_M1 11913.20  9083.42      PCB   12900  12900      100_ohm       Net_269_N
+Net_271_N            Pkg_M1 12410.00  8917.82      PCB   12900  12900      100_ohm       Net_272_P
+Net_272_P            Pkg_M1 12410.00  9083.42      PCB   12900  12900      100_ohm       Net_271_N
+Net_273_N            Pkg_M1 12575.60  8917.82      PCB   12900  12900      100_ohm       Net_274_P
+Net_274_P            Pkg_M1 12575.60  9083.42      PCB   12900  12900      100_ohm       Net_273_N
+Net_275_N            Pkg_M1 13072.40  8917.82      PCB   12900  12900      100_ohm       Net_276_P
+Net_276_P            Pkg_M1 13072.40  9083.42      PCB   12900  12900      100_ohm       Net_275_N
+Net_277_N            Pkg_M1 12078.80  8917.82      PCB   12900  12900      100_ohm       Net_278_P
+Net_278_P            Pkg_M1 12078.80  9083.42      PCB   12900  12900      100_ohm       Net_277_N
+Net_279_N            Pkg_M1 12244.40  8917.82      PCB   12900  12900      100_ohm       Net_280_P
+Net_280_P            Pkg_M1 12244.40  9083.42      PCB   12900  12900      100_ohm       Net_279_N
+Net_281_N            Pkg_M1 12741.20  8917.82      PCB   12900  12900      100_ohm       Net_282_P
+Net_282_P            Pkg_M1 12741.20  9083.42      PCB   12900  12900      100_ohm       Net_281_N
+Net_283_N            Pkg_M1 12906.80  8917.82      PCB   12900  12900      100_ohm       Net_284_P
+Net_284_P            Pkg_M1 12906.80  9083.42      PCB   12900  12900      100_ohm       Net_283_N
+Net_285              Pkg_M1 10354.40 14144.39      PCB   12900  12900
+Net_286              Pkg_M1  9452.60 14446.79      PCB   12900  12900
+Net_287              Pkg_M1  9602.90 14446.79      PCB   12900  12900
+Net_288              Pkg_M1 10429.55 14295.59      PCB   12900  12900
+Net_289              Pkg_M1 10354.40 14446.79      PCB   12900  12900
+Net_290              Pkg_M1 10128.95 14295.59      PCB   12900  12900
+Net_291              Pkg_M1  9527.75 14295.59      PCB   12900  12900
+Net_292              Pkg_M1 10429.55 13993.19      PCB   12900  12900
+Net_293              Pkg_M1 13256.36 14393.24      PCB   12900  12900      PWR_GND
+Net_294              Pkg_M1 10025.36  9542.06      PCB   12900  12900      PWR_GND
+Net_295              Pkg_M1 13399.55 14475.86      PCB   12900  12900      PWR_GND
+Net_296              Pkg_M1 10168.55  9624.68      PCB   12900  12900      PWR_GND
+Net_297              Pkg_M1 10053.80 13841.99      PCB   12900  12900
+Net_298              Pkg_M1 10128.95 13993.19      PCB   12900  12900
+Net_299              Pkg_M1  9452.60 13841.99      PCB   12900  12900
+Net_300              Pkg_M1  9602.90 13841.99      PCB   12900  12900
+Net_301              Pkg_M1  9527.75 13690.79      PCB   12900  12900
+Net_302              Pkg_M1 10354.40 13841.99      PCB   12900  12900
+Net_303              Pkg_M1 10429.55 13690.79      PCB   12900  12900
+Net_304              Pkg_M1 11538.08 15966.80      PCB   12900  12900
+Net_305              Pkg_M1 14974.64 15510.50      PCB   12900  12900
+Net_306              Pkg_M1 15404.21 15586.55      PCB   12900  12900
+Net_307              Pkg_M1 15547.40 15662.60      PCB   12900  12900
+Net_308              Pkg_M1 15261.02 15966.80      PCB   12900  12900
+Net_309              Pkg_M1  9602.90 13228.19      PCB   12900  12900
+Net_310              Pkg_M1  9527.75 13076.99      PCB   12900  12900
+Net_311              Pkg_M1 10053.80 12925.79      PCB   12900  12900
+Net_312              Pkg_M1 10354.40 13228.19      PCB   12900  12900
+Net_313              Pkg_M1 10429.55 13076.99      PCB   12900  12900
+Net_314              Pkg_M1 10429.55 13379.39      PCB   12900  12900
+Net_315              Pkg_M1 10053.80 13228.19      PCB   12900  12900
+Net_316              Pkg_M1  9452.60 13228.19      PCB   12900  12900
+Net_317              Pkg_M1 10128.95 13379.39      PCB   12900  12900
+Net_318              Pkg_M1  9527.75 13379.39      PCB   12900  12900
+Net_319              Pkg_M1 15117.83 16042.85      PCB   12900  12900
+Net_320              Pkg_M1 11824.46 15206.30      PCB   12900  12900
+Net_321              Pkg_M1 10822.13 15136.82      PCB   12900  12900
+Net_322              Pkg_M1 10822.13 14971.58      PCB   12900  12900      PWR_GND
+Net_323              Pkg_M1 15261.02 15510.50      PCB   12900  12900
+Net_324              Pkg_M1 14974.64 15662.60      PCB   12900  12900
+Net_325              Pkg_M1 15261.02 15662.60      PCB   12900  12900
+Net_326              Pkg_M1  9452.60 10799.99      PCB   12900  12900
+Net_327              Pkg_M1  9452.60 11102.39      PCB   12900  12900
+Net_328              Pkg_M1 10053.80 11102.39      PCB   12900  12900
+Net_329              Pkg_M1  9602.90 11102.39      PCB   12900  12900
+Net_330              Pkg_M1 10128.95 10648.79      PCB   12900  12900
+Net_331              Pkg_M1 10128.95 10951.19      PCB   12900  12900
+Net_332              Pkg_M1 10354.40 11102.39      PCB   12900  12900
+Net_333              Pkg_M1  9527.75 10951.19      PCB   12900  12900
+Net_334              Pkg_M1  9828.35 11262.59      PCB   12900  12900      PWR_GND
+Net_335              Pkg_M1 10053.80 12623.39      PCB   12900  12900
+Net_336              Pkg_M1  9602.90 12623.39      PCB   12900  12900
+Net_337              Pkg_M1 10354.40 12623.39      PCB   12900  12900
+Net_338              Pkg_M1 10053.80 12320.99      PCB   12900  12900
+Net_339              Pkg_M1  9527.75 12774.59      PCB   12900  12900
+Net_340              Pkg_M1  9602.90 12925.79      PCB   12900  12900
+Net_341              Pkg_M1 10429.55 12774.59      PCB   12900  12900
+Net_342              Pkg_M1  9527.75 12472.19      PCB   12900  12900
+Net_343              Pkg_M1 10327.40 16036.28      PCB   12900  12900
+Net_344              Pkg_M1 11043.35 15953.66      PCB   12900  12900
+Net_345              Pkg_M1 11043.35 16118.90      PCB   12900  12900
+Net_346_N            Pkg_M1 10756.97 15953.66      PCB   12900  12900
+Net_347_P            Pkg_M1 10756.97 16118.90      PCB   12900  12900
+Net_348              Pkg_M1 10470.59 16118.90      PCB   12900  12900
+Net_349              Pkg_M1 10470.59 15623.18      PCB   12900  12900
+Net_350              Pkg_M1  9611.45 15953.66      PCB   12900  12900
+Net_351              Pkg_M1  9611.45 16118.90      PCB   12900  12900
+Net_352_N            Pkg_M1  9897.83 15953.66      PCB   12900  12900
+Net_353_P            Pkg_M1  9897.83 16118.90      PCB   12900  12900
+Net_354              Pkg_M1 10184.21 16118.90      PCB   12900  12900
+Net_355              Pkg_M1 10184.21 15623.18      PCB   12900  12900
+end_nets
+
+# 
+# Specify which areas on each layer to block from routing. By default, all areas
+# are routable. Use the following BLOCK or UNBLOCK statements to define 
+# unroutable areas. All coordinates are in microns.
+#
+#  BLOCK RECT <layer name> X1 Y1 X2 Y2 // Block the rectangle defined by 
+#                                      // (x1, y1) and (x2, y2)
+#
+#  BLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Block triangle defined by 
+#                                            // 3 x/y coordinates
+#
+#  BLOCK CIR  <layer name> X Y R  // Block circle defined by center (x,y) and 
+#                                 // radius R
+#
+#  BLOCK ALL <layer name>         // Block all cells on layer <layer name>
+#
+#  UNBLOCK RECT <layer name> X1 Y1 X2 Y2 // Unblock the rectangle defined by 
+#                                        // (x1, y1) and (x2, y2)
+#
+#  UNBLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Unblock triangle defined 
+#                                              // by 3 x/y coordinates
+#
+#  UNBLOCK CIR  <layer name> X Y R  // Unblock circle defined by center (x,y) 
+#                                   // and radius R
+#
+#  UNBLOCK ALL <layer name>         // Unblock all cells on layer <layer name> 
+#
+# As an example, to create a keep-out zone on the perimeter of layer M1,
+# use the folowing two commands:
+#
+#    BLOCK ALL M1                    // Block all of M1
+#    UNBLOCK RECT M1 20 20 16.8 16.8 // Unblock a large rectangle in middle of M1
+#
+
+#
+# Block all routing layers in package outside of 23x23mm package outline:
+#
+BLOCK ALL Pkg_M1
+BLOCK ALL Pkg_M2
+BLOCK ALL Pkg_M3
+BLOCK ALL Pkg_M4
+BLOCK ALL Pkg_M5
+UNBLOCK RECT Pkg_M1 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M2 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M3 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M4 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M5 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+#
+# End of package outline definition
+#
+
+#
+# Create the BGA pattern on layers BGA and PCB:
+#
+BLOCK RECT  BGA  1300 1300 23700 23700   // Block entire BGA layer, and then unblock areas for BGAs
+UNBLOCK CIR BGA  2500.00 22500.00  240
+UNBLOCK CIR BGA  9700.00 18500.00  240
+UNBLOCK CIR BGA  16900.00 20100.00  240
+UNBLOCK CIR BGA  8900.00 18500.00  240
+UNBLOCK CIR BGA  13700.00 6500.00  240
+UNBLOCK CIR BGA  16900.00 6500.00  240
+UNBLOCK CIR BGA  15300.00 19300.00  240
+UNBLOCK CIR BGA  5700.00 20100.00  240
+UNBLOCK CIR BGA  4100.00 12900.00  240
+UNBLOCK CIR BGA  3300.00 12900.00  240
+UNBLOCK CIR BGA  4100.00 13700.00  240
+UNBLOCK CIR BGA  4100.00 14500.00  240
+UNBLOCK CIR BGA  7300.00 14500.00  240
+UNBLOCK CIR BGA  23300.00 9700.00  240
+UNBLOCK CIR BGA  23300.00 13700.00  240
+UNBLOCK CIR BGA  22500.00 13700.00  240
+UNBLOCK CIR BGA  23300.00 14500.00  240
+UNBLOCK CIR BGA  22500.00 15300.00  240
+UNBLOCK CIR BGA  23300.00 15300.00  240
+UNBLOCK CIR BGA  23300.00 16100.00  240
+UNBLOCK CIR BGA  23300.00 16900.00  240
+UNBLOCK CIR BGA  22500.00 16900.00  240
+UNBLOCK CIR BGA  22500.00 18500.00  240
+UNBLOCK CIR BGA  22500.00 8100.00  240
+UNBLOCK CIR BGA  23300.00 17700.00  240
+UNBLOCK CIR BGA  23300.00 18500.00  240
+UNBLOCK CIR BGA  23300.00 4100.00  240
+UNBLOCK CIR BGA  22500.00 20100.00  240
+UNBLOCK CIR BGA  23300.00 20900.00  240
+UNBLOCK CIR BGA  23300.00 19300.00  240
+UNBLOCK CIR BGA  22500.00 9700.00  240
+UNBLOCK CIR BGA  23300.00 8100.00  240
+UNBLOCK CIR BGA  23300.00 8900.00  240
+UNBLOCK CIR BGA  23300.00 20100.00  240
+UNBLOCK CIR BGA  23300.00 5700.00  240
+UNBLOCK CIR BGA  22500.00 11300.00  240
+UNBLOCK CIR BGA  23300.00 11300.00  240
+UNBLOCK CIR BGA  22500.00 12100.00  240
+UNBLOCK CIR BGA  23300.00 12100.00  240
+UNBLOCK CIR BGA  22500.00 21700.00  240
+UNBLOCK CIR BGA  23300.00 21700.00  240
+UNBLOCK CIR BGA  23300.00 6500.00  240
+UNBLOCK CIR BGA  22500.00 5700.00  240
+UNBLOCK CIR BGA  22500.00 2500.00  240
+UNBLOCK CIR BGA  23300.00 3300.00  240
+UNBLOCK CIR BGA  23300.00 12900.00  240
+UNBLOCK CIR BGA  23300.00 10500.00  240
+UNBLOCK CIR BGA  18500.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 21700.00  240
+UNBLOCK CIR BGA  19300.00 19300.00  240
+UNBLOCK CIR BGA  21700.00 16100.00  240
+UNBLOCK CIR BGA  21700.00 10500.00  240
+UNBLOCK CIR BGA  20100.00 8100.00  240
+UNBLOCK CIR BGA  20100.00 4900.00  240
+UNBLOCK CIR BGA  20100.00 3300.00  240
+UNBLOCK CIR BGA  20100.00 13700.00  240
+UNBLOCK CIR BGA  17700.00 21700.00  240
+UNBLOCK CIR BGA  18500.00 23300.00  240
+UNBLOCK CIR BGA  21700.00 23300.00  240
+UNBLOCK CIR BGA  21700.00 22500.00  240
+UNBLOCK CIR BGA  17700.00 22500.00  240
+UNBLOCK CIR BGA  17700.00 23300.00  240
+UNBLOCK CIR BGA  20100.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 23300.00  240
+UNBLOCK CIR BGA  19300.00 21700.00  240
+UNBLOCK CIR BGA  20100.00 21700.00  240
+UNBLOCK CIR BGA  20900.00 19300.00  240
+UNBLOCK CIR BGA  21700.00 19300.00  240
+UNBLOCK CIR BGA  18500.00 20900.00  240
+UNBLOCK CIR BGA  19300.00 20900.00  240
+UNBLOCK CIR BGA  22500.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 20100.00  240
+UNBLOCK CIR BGA  19300.00 20100.00  240
+UNBLOCK CIR BGA  20100.00 20100.00  240
+UNBLOCK CIR BGA  19300.00 16900.00  240
+UNBLOCK CIR BGA  19300.00 16100.00  240
+UNBLOCK CIR BGA  18500.00 19300.00  240
+UNBLOCK CIR BGA  18500.00 17700.00  240
+UNBLOCK CIR BGA  19300.00 17700.00  240
+UNBLOCK CIR BGA  20100.00 16900.00  240
+UNBLOCK CIR BGA  21700.00 17700.00  240
+UNBLOCK CIR BGA  20900.00 16900.00  240
+UNBLOCK CIR BGA  21700.00 12900.00  240
+UNBLOCK CIR BGA  20900.00 13700.00  240
+UNBLOCK CIR BGA  20900.00 18500.00  240
+UNBLOCK CIR BGA  20900.00 17700.00  240
+UNBLOCK CIR BGA  21700.00 14500.00  240
+UNBLOCK CIR BGA  20900.00 14500.00  240
+UNBLOCK CIR BGA  20900.00 11300.00  240
+UNBLOCK CIR BGA  20900.00 10500.00  240
+UNBLOCK CIR BGA  21700.00 7300.00  240
+UNBLOCK CIR BGA  20900.00 7300.00  240
+UNBLOCK CIR BGA  20900.00 12900.00  240
+UNBLOCK CIR BGA  20900.00 12100.00  240
+UNBLOCK CIR BGA  21700.00 8900.00  240
+UNBLOCK CIR BGA  20900.00 8100.00  240
+UNBLOCK CIR BGA  20100.00 9700.00  240
+UNBLOCK CIR BGA  19300.00 8900.00  240
+UNBLOCK CIR BGA  18500.00 7300.00  240
+UNBLOCK CIR BGA  18500.00 5700.00  240
+UNBLOCK CIR BGA  18500.00 8900.00  240
+UNBLOCK CIR BGA  19300.00 9700.00  240
+UNBLOCK CIR BGA  20100.00 6500.00  240
+UNBLOCK CIR BGA  19300.00 6500.00  240
+UNBLOCK CIR BGA  21700.00 4900.00  240
+UNBLOCK CIR BGA  20900.00 4900.00  240
+UNBLOCK CIR BGA  19300.00 4900.00  240
+UNBLOCK CIR BGA  18500.00 4100.00  240
+UNBLOCK CIR BGA  20900.00 6500.00  240
+UNBLOCK CIR BGA  20900.00 5700.00  240
+UNBLOCK CIR BGA  19300.00 5700.00  240
+UNBLOCK CIR BGA  19300.00 4100.00  240
+UNBLOCK CIR BGA  20900.00 2500.00  240
+UNBLOCK CIR BGA  20900.00 1700.00  240
+UNBLOCK CIR BGA  18500.00 1700.00  240
+UNBLOCK CIR BGA  18500.00 3300.00  240
+UNBLOCK CIR BGA  21700.00 3300.00  240
+UNBLOCK CIR BGA  21700.00 1700.00  240
+UNBLOCK CIR BGA  19300.00 1700.00  240
+UNBLOCK CIR BGA  19300.00 3300.00  240
+UNBLOCK CIR BGA  20100.00 23300.00  240
+UNBLOCK CIR BGA  19300.00 23300.00  240
+UNBLOCK CIR BGA  21700.00 20900.00  240
+UNBLOCK CIR BGA  20900.00 20900.00  240
+UNBLOCK CIR BGA  20100.00 18500.00  240
+UNBLOCK CIR BGA  19300.00 18500.00  240
+UNBLOCK CIR BGA  20900.00 15300.00  240
+UNBLOCK CIR BGA  20900.00 16100.00  240
+UNBLOCK CIR BGA  20900.00 8900.00  240
+UNBLOCK CIR BGA  20900.00 9700.00  240
+UNBLOCK CIR BGA  19300.00 7300.00  240
+UNBLOCK CIR BGA  19300.00 8100.00  240
+UNBLOCK CIR BGA  20900.00 4100.00  240
+UNBLOCK CIR BGA  20900.00 3300.00  240
+UNBLOCK CIR BGA  20100.00 2500.00  240
+UNBLOCK CIR BGA  20100.00 1700.00  240
+UNBLOCK CIR BGA  19300.00 12100.00  240
+UNBLOCK CIR BGA  19300.00 12900.00  240
+UNBLOCK CIR BGA  20100.00 15300.00  240
+UNBLOCK CIR BGA  19300.00 13700.00  240
+UNBLOCK CIR BGA  19300.00 11300.00  240
+UNBLOCK CIR BGA  19300.00 10500.00  240
+UNBLOCK CIR BGA  19300.00 15300.00  240
+UNBLOCK CIR BGA  19300.00 14500.00  240
+UNBLOCK CIR BGA  20100.00 12100.00  240
+UNBLOCK CIR BGA  20100.00 11300.00  240
+UNBLOCK CIR BGA  23300.00 4900.00  240
+UNBLOCK CIR BGA  22500.00 4100.00  240
+UNBLOCK CIR BGA  23300.00 7300.00  240
+UNBLOCK CIR BGA  16900.00 19300.00  240
+UNBLOCK CIR BGA  22500.00 6500.00  240
+UNBLOCK CIR BGA  16900.00 16900.00  240
+UNBLOCK CIR BGA  17700.00 16900.00  240
+UNBLOCK CIR BGA  12100.00 18500.00  240
+UNBLOCK CIR BGA  12100.00 19300.00  240
+UNBLOCK CIR BGA  7300.00 12900.00  240
+UNBLOCK CIR BGA  3300.00 3300.00  240
+UNBLOCK CIR BGA  3300.00 2500.00  240
+UNBLOCK CIR BGA  1700.00 4900.00  240
+UNBLOCK CIR BGA  2500.00 2500.00  240
+UNBLOCK CIR BGA  2500.00 3300.00  240
+UNBLOCK CIR BGA  1700.00 3300.00  240
+UNBLOCK CIR BGA  1700.00 4100.00  240
+UNBLOCK CIR BGA  2500.00 4900.00  240
+UNBLOCK CIR BGA  4100.00 3300.00  240
+UNBLOCK CIR BGA  3300.00 4100.00  240
+UNBLOCK CIR BGA  4100.00 4100.00  240
+UNBLOCK CIR BGA  3300.00 4900.00  240
+UNBLOCK CIR BGA  3300.00 5700.00  240
+UNBLOCK CIR BGA  3300.00 1700.00  240
+UNBLOCK CIR BGA  4100.00 1700.00  240
+UNBLOCK CIR BGA  5700.00 10500.00  240
+UNBLOCK CIR BGA  5700.00 9700.00  240
+UNBLOCK CIR BGA  7300.00 15300.00  240
+UNBLOCK CIR BGA  5700.00 20900.00  240
+UNBLOCK CIR BGA  4100.00 21700.00  240
+UNBLOCK CIR BGA  1700.00 21700.00  240
+UNBLOCK CIR BGA  2500.00 21700.00  240
+UNBLOCK CIR BGA  3300.00 21700.00  240
+UNBLOCK CIR BGA  16900.00 21700.00  240
+UNBLOCK CIR BGA  16900.00 22500.00  240
+UNBLOCK CIR BGA  15300.00 18500.00  240
+UNBLOCK CIR BGA  7300.00 3300.00  240
+UNBLOCK CIR BGA  7300.00 4100.00  240
+UNBLOCK CIR BGA  5700.00 5700.00  240
+UNBLOCK CIR BGA  5700.00 1700.00  240
+UNBLOCK CIR BGA  6500.00 1700.00  240
+UNBLOCK CIR BGA  7300.00 20100.00  240
+UNBLOCK CIR BGA  4900.00 21700.00  240
+UNBLOCK CIR BGA  5700.00 21700.00  240
+UNBLOCK CIR BGA  6500.00 20900.00  240
+UNBLOCK CIR BGA  6500.00 21700.00  240
+UNBLOCK CIR BGA  7300.00 20900.00  240
+UNBLOCK CIR BGA  7300.00 21700.00  240
+UNBLOCK CIR BGA  8100.00 20900.00  240
+UNBLOCK CIR BGA  8100.00 21700.00  240
+UNBLOCK CIR BGA  8900.00 20900.00  240
+UNBLOCK CIR BGA  8900.00 21700.00  240
+UNBLOCK CIR BGA  9700.00 20100.00  240
+UNBLOCK CIR BGA  9700.00 21700.00  240
+UNBLOCK CIR BGA  9700.00 20900.00  240
+UNBLOCK CIR BGA  10500.00 21700.00  240
+UNBLOCK CIR BGA  10500.00 20900.00  240
+UNBLOCK CIR BGA  10500.00 20100.00  240
+UNBLOCK CIR BGA  4100.00 23300.00  240
+UNBLOCK CIR BGA  4900.00 22500.00  240
+UNBLOCK CIR BGA  4900.00 23300.00  240
+UNBLOCK CIR BGA  5700.00 22500.00  240
+UNBLOCK CIR BGA  5700.00 23300.00  240
+UNBLOCK CIR BGA  6500.00 23300.00  240
+UNBLOCK CIR BGA  7300.00 22500.00  240
+UNBLOCK CIR BGA  7300.00 23300.00  240
+UNBLOCK CIR BGA  8100.00 22500.00  240
+UNBLOCK CIR BGA  8100.00 23300.00  240
+UNBLOCK CIR BGA  8900.00 23300.00  240
+UNBLOCK CIR BGA  9700.00 22500.00  240
+UNBLOCK CIR BGA  9700.00 23300.00  240
+UNBLOCK CIR BGA  10500.00 22500.00  240
+UNBLOCK CIR BGA  10500.00 23300.00  240
+UNBLOCK CIR BGA  11300.00 23300.00  240
+UNBLOCK CIR BGA  14500.00 20900.00  240
+UNBLOCK CIR BGA  12100.00 23300.00  240
+UNBLOCK CIR BGA  13700.00 19300.00  240
+UNBLOCK CIR BGA  14500.00 23300.00  240
+UNBLOCK CIR BGA  16100.00 23300.00  240
+UNBLOCK CIR BGA  11300.00 21700.00  240
+UNBLOCK CIR BGA  12900.00 20100.00  240
+UNBLOCK CIR BGA  13700.00 20900.00  240
+UNBLOCK CIR BGA  13700.00 21700.00  240
+UNBLOCK CIR BGA  12100.00 20900.00  240
+UNBLOCK CIR BGA  13700.00 23300.00  240
+UNBLOCK CIR BGA  12900.00 20900.00  240
+UNBLOCK CIR BGA  12900.00 21700.00  240
+UNBLOCK CIR BGA  12100.00 21700.00  240
+UNBLOCK CIR BGA  12100.00 20100.00  240
+UNBLOCK CIR BGA  12900.00 22500.00  240
+UNBLOCK CIR BGA  12900.00 23300.00  240
+UNBLOCK CIR BGA  12100.00 22500.00  240
+UNBLOCK CIR BGA  11300.00 20900.00  240
+UNBLOCK CIR BGA  14500.00 19300.00  240
+UNBLOCK CIR BGA  1700.00 8900.00  240
+UNBLOCK CIR BGA  1700.00 9700.00  240
+UNBLOCK CIR BGA  3300.00 9700.00  240
+UNBLOCK CIR BGA  3300.00 8100.00  240
+UNBLOCK CIR BGA  3300.00 7300.00  240
+UNBLOCK CIR BGA  3300.00 6500.00  240
+UNBLOCK CIR BGA  3300.00 23300.00  240
+UNBLOCK CIR BGA  6500.00 19300.00  240
+UNBLOCK CIR BGA  3300.00 20900.00  240
+UNBLOCK CIR BGA  4100.00 6500.00  240
+UNBLOCK CIR BGA  4900.00 5700.00  240
+UNBLOCK CIR BGA  4100.00 15300.00  240
+UNBLOCK CIR BGA  3300.00 10500.00  240
+UNBLOCK CIR BGA  11300.00 19300.00  240
+UNBLOCK CIR BGA  9700.00 19300.00  240
+UNBLOCK CIR BGA  10500.00 19300.00  240
+UNBLOCK CIR BGA  3300.00 22500.00  240
+UNBLOCK CIR BGA  14500.00 22500.00  240
+UNBLOCK CIR BGA  8100.00 19300.00  240
+UNBLOCK CIR BGA  10500.00 7300.00  240
+UNBLOCK CIR BGA  16900.00 8100.00  240
+UNBLOCK CIR BGA  12900.00 8100.00  240
+UNBLOCK CIR BGA  12900.00 6500.00  240
+UNBLOCK CIR BGA  16100.00 8100.00  240
+UNBLOCK CIR BGA  16100.00 6500.00  240
+UNBLOCK CIR BGA  12100.00 7300.00  240
+UNBLOCK CIR BGA  12100.00 6500.00  240
+UNBLOCK CIR BGA  15300.00 7300.00  240
+UNBLOCK CIR BGA  15300.00 6500.00  240
+UNBLOCK CIR BGA  13700.00 2500.00  240
+UNBLOCK CIR BGA  13700.00 1700.00  240
+UNBLOCK CIR BGA  14500.00 2500.00  240
+UNBLOCK CIR BGA  14500.00 1700.00  240
+UNBLOCK CIR BGA  16100.00 2500.00  240
+UNBLOCK CIR BGA  16100.00 1700.00  240
+UNBLOCK CIR BGA  16900.00 2500.00  240
+UNBLOCK CIR BGA  16900.00 1700.00  240
+UNBLOCK CIR BGA  13700.00 4100.00  240
+UNBLOCK CIR BGA  13700.00 4900.00  240
+UNBLOCK CIR BGA  14500.00 4100.00  240
+UNBLOCK CIR BGA  14500.00 4900.00  240
+UNBLOCK CIR BGA  16100.00 4100.00  240
+UNBLOCK CIR BGA  16100.00 4900.00  240
+UNBLOCK CIR BGA  16900.00 4100.00  240
+UNBLOCK CIR BGA  16900.00 4900.00  240
+UNBLOCK CIR BGA  4900.00 15300.00  240
+UNBLOCK CIR BGA  1700.00 16100.00  240
+UNBLOCK CIR BGA  3300.00 16100.00  240
+UNBLOCK CIR BGA  2500.00 15300.00  240
+UNBLOCK CIR BGA  4100.00 16100.00  240
+UNBLOCK CIR BGA  3300.00 15300.00  240
+UNBLOCK CIR BGA  1700.00 15300.00  240
+UNBLOCK CIR BGA  4900.00 14500.00  240
+UNBLOCK CIR BGA  16900.00 18500.00  240
+UNBLOCK CIR BGA  8900.00 6500.00  240
+UNBLOCK CIR BGA  16100.00 18500.00  240
+UNBLOCK CIR BGA  8100.00 6500.00  240
+UNBLOCK CIR BGA  1700.00 13700.00  240
+UNBLOCK CIR BGA  1700.00 14500.00  240
+UNBLOCK CIR BGA  2500.00 14500.00  240
+UNBLOCK CIR BGA  3300.00 14500.00  240
+UNBLOCK CIR BGA  3300.00 13700.00  240
+UNBLOCK CIR BGA  1700.00 12900.00  240
+UNBLOCK CIR BGA  2500.00 12900.00  240
+UNBLOCK CIR BGA  12900.00 18500.00  240
+UNBLOCK CIR BGA  15300.00 20100.00  240
+UNBLOCK CIR BGA  17700.00 20100.00  240
+UNBLOCK CIR BGA  17700.00 18500.00  240
+UNBLOCK CIR BGA  15300.00 23300.00  240
+UNBLOCK CIR BGA  2500.00 12100.00  240
+UNBLOCK CIR BGA  1700.00 10500.00  240
+UNBLOCK CIR BGA  2500.00 10500.00  240
+UNBLOCK CIR BGA  1700.00 12100.00  240
+UNBLOCK CIR BGA  1700.00 11300.00  240
+UNBLOCK CIR BGA  4100.00 12100.00  240
+UNBLOCK CIR BGA  3300.00 11300.00  240
+UNBLOCK CIR BGA  4100.00 10500.00  240
+UNBLOCK CIR BGA  3300.00 12100.00  240
+UNBLOCK CIR BGA  4100.00 11300.00  240
+UNBLOCK CIR BGA  15300.00 21700.00  240
+UNBLOCK CIR BGA  7300.00 18500.00  240
+UNBLOCK CIR BGA  8900.00 19300.00  240
+UNBLOCK CIR BGA  8100.00 18500.00  240
+UNBLOCK CIR BGA  16100.00 19300.00  240
+UNBLOCK CIR BGA  15300.00 22500.00  240
+UNBLOCK CIR BGA  16100.00 20900.00  240
+UNBLOCK CIR BGA  4900.00 3300.00  240
+UNBLOCK CIR BGA  6500.00 5700.00  240
+UNBLOCK CIR BGA  7300.00 5700.00  240
+UNBLOCK CIR BGA  6500.00 4900.00  240
+UNBLOCK CIR BGA  5700.00 4100.00  240
+UNBLOCK CIR BGA  7300.00 4900.00  240
+UNBLOCK CIR BGA  5700.00 6500.00  240
+UNBLOCK CIR BGA  4900.00 4100.00  240
+UNBLOCK CIR BGA  5700.00 11300.00  240
+UNBLOCK CIR BGA  2500.00 8100.00  240
+UNBLOCK CIR BGA  1700.00 8100.00  240
+UNBLOCK CIR BGA  1700.00 7300.00  240
+UNBLOCK CIR BGA  2500.00 7300.00  240
+UNBLOCK CIR BGA  4100.00 8100.00  240
+UNBLOCK CIR BGA  4100.00 9700.00  240
+UNBLOCK CIR BGA  4100.00 8900.00  240
+UNBLOCK CIR BGA  4100.00 7300.00  240
+UNBLOCK CIR BGA  4100.00 18500.00  240
+UNBLOCK CIR BGA  5700.00 19300.00  240
+UNBLOCK CIR BGA  4900.00 19300.00  240
+UNBLOCK CIR BGA  2500.00 19300.00  240
+UNBLOCK CIR BGA  1700.00 19300.00  240
+UNBLOCK CIR BGA  4100.00 19300.00  240
+UNBLOCK CIR BGA  4100.00 20100.00  240
+UNBLOCK CIR BGA  4900.00 16900.00  240
+UNBLOCK CIR BGA  4900.00 17700.00  240
+UNBLOCK CIR BGA  2500.00 17700.00  240
+UNBLOCK CIR BGA  1700.00 17700.00  240
+UNBLOCK CIR BGA  4100.00 17700.00  240
+UNBLOCK CIR BGA  4100.00 16900.00  240
+
+
+BLOCK RECT  PCB  0 0    25000 25000   // Block entire PCB layer, and then unblock areas for BGAs
+UNBLOCK RECT PCB  12800  12800     13000  13000  // Open area where all PCB terminals are located.
+UNBLOCK CIR PCB  2500.00 22500.00  260
+UNBLOCK CIR PCB  9700.00 18500.00  260
+UNBLOCK CIR PCB  16900.00 20100.00  260
+UNBLOCK CIR PCB  8900.00 18500.00  260
+UNBLOCK CIR PCB  13700.00 6500.00  260
+UNBLOCK CIR PCB  16900.00 6500.00  260
+UNBLOCK CIR PCB  15300.00 19300.00  260
+UNBLOCK CIR PCB  5700.00 20100.00  260
+UNBLOCK CIR PCB  4100.00 12900.00  260
+UNBLOCK CIR PCB  3300.00 12900.00  260
+UNBLOCK CIR PCB  4100.00 13700.00  260
+UNBLOCK CIR PCB  4100.00 14500.00  260
+UNBLOCK CIR PCB  7300.00 14500.00  260
+UNBLOCK CIR PCB  23300.00 9700.00  260
+UNBLOCK CIR PCB  23300.00 13700.00  260
+UNBLOCK CIR PCB  22500.00 13700.00  260
+UNBLOCK CIR PCB  23300.00 14500.00  260
+UNBLOCK CIR PCB  22500.00 15300.00  260
+UNBLOCK CIR PCB  23300.00 15300.00  260
+UNBLOCK CIR PCB  23300.00 16100.00  260
+UNBLOCK CIR PCB  23300.00 16900.00  260
+UNBLOCK CIR PCB  22500.00 16900.00  260
+UNBLOCK CIR PCB  22500.00 18500.00  260
+UNBLOCK CIR PCB  22500.00 8100.00  260
+UNBLOCK CIR PCB  23300.00 17700.00  260
+UNBLOCK CIR PCB  23300.00 18500.00  260
+UNBLOCK CIR PCB  23300.00 4100.00  260
+UNBLOCK CIR PCB  22500.00 20100.00  260
+UNBLOCK CIR PCB  23300.00 20900.00  260
+UNBLOCK CIR PCB  23300.00 19300.00  260
+UNBLOCK CIR PCB  22500.00 9700.00  260
+UNBLOCK CIR PCB  23300.00 8100.00  260
+UNBLOCK CIR PCB  23300.00 8900.00  260
+UNBLOCK CIR PCB  23300.00 20100.00  260
+UNBLOCK CIR PCB  23300.00 5700.00  260
+UNBLOCK CIR PCB  22500.00 11300.00  260
+UNBLOCK CIR PCB  23300.00 11300.00  260
+UNBLOCK CIR PCB  22500.00 12100.00  260
+UNBLOCK CIR PCB  23300.00 12100.00  260
+UNBLOCK CIR PCB  22500.00 21700.00  260
+UNBLOCK CIR PCB  23300.00 21700.00  260
+UNBLOCK CIR PCB  23300.00 6500.00  260
+UNBLOCK CIR PCB  22500.00 5700.00  260
+UNBLOCK CIR PCB  22500.00 2500.00  260
+UNBLOCK CIR PCB  23300.00 3300.00  260
+UNBLOCK CIR PCB  23300.00 12900.00  260
+UNBLOCK CIR PCB  23300.00 10500.00  260
+UNBLOCK CIR PCB  18500.00 22500.00  260
+UNBLOCK CIR PCB  20900.00 21700.00  260
+UNBLOCK CIR PCB  19300.00 19300.00  260
+UNBLOCK CIR PCB  21700.00 16100.00  260
+UNBLOCK CIR PCB  21700.00 10500.00  260
+UNBLOCK CIR PCB  20100.00 8100.00  260
+UNBLOCK CIR PCB  20100.00 4900.00  260
+UNBLOCK CIR PCB  20100.00 3300.00  260
+UNBLOCK CIR PCB  20100.00 13700.00  260
+UNBLOCK CIR PCB  17700.00 21700.00  260
+UNBLOCK CIR PCB  18500.00 23300.00  260
+UNBLOCK CIR PCB  21700.00 23300.00  260
+UNBLOCK CIR PCB  21700.00 22500.00  260
+UNBLOCK CIR PCB  17700.00 22500.00  260
+UNBLOCK CIR PCB  17700.00 23300.00  260
+UNBLOCK CIR PCB  20100.00 22500.00  260
+UNBLOCK CIR PCB  20900.00 23300.00  260
+UNBLOCK CIR PCB  19300.00 21700.00  260
+UNBLOCK CIR PCB  20100.00 21700.00  260
+UNBLOCK CIR PCB  20900.00 19300.00  260
+UNBLOCK CIR PCB  21700.00 19300.00  260
+UNBLOCK CIR PCB  18500.00 20900.00  260
+UNBLOCK CIR PCB  19300.00 20900.00  260
+UNBLOCK CIR PCB  22500.00 22500.00  260
+UNBLOCK CIR PCB  20900.00 20100.00  260
+UNBLOCK CIR PCB  19300.00 20100.00  260
+UNBLOCK CIR PCB  20100.00 20100.00  260
+UNBLOCK CIR PCB  19300.00 16900.00  260
+UNBLOCK CIR PCB  19300.00 16100.00  260
+UNBLOCK CIR PCB  18500.00 19300.00  260
+UNBLOCK CIR PCB  18500.00 17700.00  260
+UNBLOCK CIR PCB  19300.00 17700.00  260
+UNBLOCK CIR PCB  20100.00 16900.00  260
+UNBLOCK CIR PCB  21700.00 17700.00  260
+UNBLOCK CIR PCB  20900.00 16900.00  260
+UNBLOCK CIR PCB  21700.00 12900.00  260
+UNBLOCK CIR PCB  20900.00 13700.00  260
+UNBLOCK CIR PCB  20900.00 18500.00  260
+UNBLOCK CIR PCB  20900.00 17700.00  260
+UNBLOCK CIR PCB  21700.00 14500.00  260
+UNBLOCK CIR PCB  20900.00 14500.00  260
+UNBLOCK CIR PCB  20900.00 11300.00  260
+UNBLOCK CIR PCB  20900.00 10500.00  260
+UNBLOCK CIR PCB  21700.00 7300.00  260
+UNBLOCK CIR PCB  20900.00 7300.00  260
+UNBLOCK CIR PCB  20900.00 12900.00  260
+UNBLOCK CIR PCB  20900.00 12100.00  260
+UNBLOCK CIR PCB  21700.00 8900.00  260
+UNBLOCK CIR PCB  20900.00 8100.00  260
+UNBLOCK CIR PCB  20100.00 9700.00  260
+UNBLOCK CIR PCB  19300.00 8900.00  260
+UNBLOCK CIR PCB  18500.00 7300.00  260
+UNBLOCK CIR PCB  18500.00 5700.00  260
+UNBLOCK CIR PCB  18500.00 8900.00  260
+UNBLOCK CIR PCB  19300.00 9700.00  260
+UNBLOCK CIR PCB  20100.00 6500.00  260
+UNBLOCK CIR PCB  19300.00 6500.00  260
+UNBLOCK CIR PCB  21700.00 4900.00  260
+UNBLOCK CIR PCB  20900.00 4900.00  260
+UNBLOCK CIR PCB  19300.00 4900.00  260
+UNBLOCK CIR PCB  18500.00 4100.00  260
+UNBLOCK CIR PCB  20900.00 6500.00  260
+UNBLOCK CIR PCB  20900.00 5700.00  260
+UNBLOCK CIR PCB  19300.00 5700.00  260
+UNBLOCK CIR PCB  19300.00 4100.00  260
+UNBLOCK CIR PCB  20900.00 2500.00  260
+UNBLOCK CIR PCB  20900.00 1700.00  260
+UNBLOCK CIR PCB  18500.00 1700.00  260
+UNBLOCK CIR PCB  18500.00 3300.00  260
+UNBLOCK CIR PCB  21700.00 3300.00  260
+UNBLOCK CIR PCB  21700.00 1700.00  260
+UNBLOCK CIR PCB  19300.00 1700.00  260
+UNBLOCK CIR PCB  19300.00 3300.00  260
+UNBLOCK CIR PCB  20100.00 23300.00  260
+UNBLOCK CIR PCB  19300.00 23300.00  260
+UNBLOCK CIR PCB  21700.00 20900.00  260
+UNBLOCK CIR PCB  20900.00 20900.00  260
+UNBLOCK CIR PCB  20100.00 18500.00  260
+UNBLOCK CIR PCB  19300.00 18500.00  260
+UNBLOCK CIR PCB  20900.00 15300.00  260
+UNBLOCK CIR PCB  20900.00 16100.00  260
+UNBLOCK CIR PCB  20900.00 8900.00  260
+UNBLOCK CIR PCB  20900.00 9700.00  260
+UNBLOCK CIR PCB  19300.00 7300.00  260
+UNBLOCK CIR PCB  19300.00 8100.00  260
+UNBLOCK CIR PCB  20900.00 4100.00  260
+UNBLOCK CIR PCB  20900.00 3300.00  260
+UNBLOCK CIR PCB  20100.00 2500.00  260
+UNBLOCK CIR PCB  20100.00 1700.00  260
+UNBLOCK CIR PCB  19300.00 12100.00  260
+UNBLOCK CIR PCB  19300.00 12900.00  260
+UNBLOCK CIR PCB  20100.00 15300.00  260
+UNBLOCK CIR PCB  19300.00 13700.00  260
+UNBLOCK CIR PCB  19300.00 11300.00  260
+UNBLOCK CIR PCB  19300.00 10500.00  260
+UNBLOCK CIR PCB  19300.00 15300.00  260
+UNBLOCK CIR PCB  19300.00 14500.00  260
+UNBLOCK CIR PCB  20100.00 12100.00  260
+UNBLOCK CIR PCB  20100.00 11300.00  260
+UNBLOCK CIR PCB  23300.00 4900.00  260
+UNBLOCK CIR PCB  22500.00 4100.00  260
+UNBLOCK CIR PCB  23300.00 7300.00  260
+UNBLOCK CIR PCB  16900.00 19300.00  260
+UNBLOCK CIR PCB  22500.00 6500.00  260
+UNBLOCK CIR PCB  16900.00 16900.00  260
+UNBLOCK CIR PCB  17700.00 16900.00  260
+UNBLOCK CIR PCB  12100.00 18500.00  260
+UNBLOCK CIR PCB  12100.00 19300.00  260
+UNBLOCK CIR PCB  7300.00 12900.00  260
+UNBLOCK CIR PCB  3300.00 3300.00  260
+UNBLOCK CIR PCB  3300.00 2500.00  260
+UNBLOCK CIR PCB  1700.00 4900.00  260
+UNBLOCK CIR PCB  2500.00 2500.00  260
+UNBLOCK CIR PCB  2500.00 3300.00  260
+UNBLOCK CIR PCB  1700.00 3300.00  260
+UNBLOCK CIR PCB  1700.00 4100.00  260
+UNBLOCK CIR PCB  2500.00 4900.00  260
+UNBLOCK CIR PCB  4100.00 3300.00  260
+UNBLOCK CIR PCB  3300.00 4100.00  260
+UNBLOCK CIR PCB  4100.00 4100.00  260
+UNBLOCK CIR PCB  3300.00 4900.00  260
+UNBLOCK CIR PCB  3300.00 5700.00  260
+UNBLOCK CIR PCB  3300.00 1700.00  260
+UNBLOCK CIR PCB  4100.00 1700.00  260
+UNBLOCK CIR PCB  5700.00 10500.00  260
+UNBLOCK CIR PCB  5700.00 9700.00  260
+UNBLOCK CIR PCB  7300.00 15300.00  260
+UNBLOCK CIR PCB  5700.00 20900.00  260
+UNBLOCK CIR PCB  4100.00 21700.00  260
+UNBLOCK CIR PCB  1700.00 21700.00  260
+UNBLOCK CIR PCB  2500.00 21700.00  260
+UNBLOCK CIR PCB  3300.00 21700.00  260
+UNBLOCK CIR PCB  16900.00 21700.00  260
+UNBLOCK CIR PCB  16900.00 22500.00  260
+UNBLOCK CIR PCB  15300.00 18500.00  260
+UNBLOCK CIR PCB  7300.00 3300.00  260
+UNBLOCK CIR PCB  7300.00 4100.00  260
+UNBLOCK CIR PCB  5700.00 5700.00  260
+UNBLOCK CIR PCB  5700.00 1700.00  260
+UNBLOCK CIR PCB  6500.00 1700.00  260
+UNBLOCK CIR PCB  7300.00 20100.00  260
+UNBLOCK CIR PCB  4900.00 21700.00  260
+UNBLOCK CIR PCB  5700.00 21700.00  260
+UNBLOCK CIR PCB  6500.00 20900.00  260
+UNBLOCK CIR PCB  6500.00 21700.00  260
+UNBLOCK CIR PCB  7300.00 20900.00  260
+UNBLOCK CIR PCB  7300.00 21700.00  260
+UNBLOCK CIR PCB  8100.00 20900.00  260
+UNBLOCK CIR PCB  8100.00 21700.00  260
+UNBLOCK CIR PCB  8900.00 20900.00  260
+UNBLOCK CIR PCB  8900.00 21700.00  260
+UNBLOCK CIR PCB  9700.00 20100.00  260
+UNBLOCK CIR PCB  9700.00 21700.00  260
+UNBLOCK CIR PCB  9700.00 20900.00  260
+UNBLOCK CIR PCB  10500.00 21700.00  260
+UNBLOCK CIR PCB  10500.00 20900.00  260
+UNBLOCK CIR PCB  10500.00 20100.00  260
+UNBLOCK CIR PCB  4100.00 23300.00  260
+UNBLOCK CIR PCB  4900.00 22500.00  260
+UNBLOCK CIR PCB  4900.00 23300.00  260
+UNBLOCK CIR PCB  5700.00 22500.00  260
+UNBLOCK CIR PCB  5700.00 23300.00  260
+UNBLOCK CIR PCB  6500.00 23300.00  260
+UNBLOCK CIR PCB  7300.00 22500.00  260
+UNBLOCK CIR PCB  7300.00 23300.00  260
+UNBLOCK CIR PCB  8100.00 22500.00  260
+UNBLOCK CIR PCB  8100.00 23300.00  260
+UNBLOCK CIR PCB  8900.00 23300.00  260
+UNBLOCK CIR PCB  9700.00 22500.00  260
+UNBLOCK CIR PCB  9700.00 23300.00  260
+UNBLOCK CIR PCB  10500.00 22500.00  260
+UNBLOCK CIR PCB  10500.00 23300.00  260
+UNBLOCK CIR PCB  11300.00 23300.00  260
+UNBLOCK CIR PCB  14500.00 20900.00  260
+UNBLOCK CIR PCB  12100.00 23300.00  260
+UNBLOCK CIR PCB  13700.00 19300.00  260
+UNBLOCK CIR PCB  14500.00 23300.00  260
+UNBLOCK CIR PCB  16100.00 23300.00  260
+UNBLOCK CIR PCB  11300.00 21700.00  260
+UNBLOCK CIR PCB  12900.00 20100.00  260
+UNBLOCK CIR PCB  13700.00 20900.00  260
+UNBLOCK CIR PCB  13700.00 21700.00  260
+UNBLOCK CIR PCB  12100.00 20900.00  260
+UNBLOCK CIR PCB  13700.00 23300.00  260
+UNBLOCK CIR PCB  12900.00 20900.00  260
+UNBLOCK CIR PCB  12900.00 21700.00  260
+UNBLOCK CIR PCB  12100.00 21700.00  260
+UNBLOCK CIR PCB  12100.00 20100.00  260
+UNBLOCK CIR PCB  12900.00 22500.00  260
+UNBLOCK CIR PCB  12900.00 23300.00  260
+UNBLOCK CIR PCB  12100.00 22500.00  260
+UNBLOCK CIR PCB  11300.00 20900.00  260
+UNBLOCK CIR PCB  14500.00 19300.00  260
+UNBLOCK CIR PCB  1700.00 8900.00  260
+UNBLOCK CIR PCB  1700.00 9700.00  260
+UNBLOCK CIR PCB  3300.00 9700.00  260
+UNBLOCK CIR PCB  3300.00 8100.00  260
+UNBLOCK CIR PCB  3300.00 7300.00  260
+UNBLOCK CIR PCB  3300.00 6500.00  260
+UNBLOCK CIR PCB  3300.00 23300.00  260
+UNBLOCK CIR PCB  6500.00 19300.00  260
+UNBLOCK CIR PCB  3300.00 20900.00  260
+UNBLOCK CIR PCB  4100.00 6500.00  260
+UNBLOCK CIR PCB  4900.00 5700.00  260
+UNBLOCK CIR PCB  4100.00 15300.00  260
+UNBLOCK CIR PCB  3300.00 10500.00  260
+UNBLOCK CIR PCB  11300.00 19300.00  260
+UNBLOCK CIR PCB  9700.00 19300.00  260
+UNBLOCK CIR PCB  10500.00 19300.00  260
+UNBLOCK CIR PCB  3300.00 22500.00  260
+UNBLOCK CIR PCB  14500.00 22500.00  260
+UNBLOCK CIR PCB  8100.00 19300.00  260
+UNBLOCK CIR PCB  10500.00 7300.00  260
+UNBLOCK CIR PCB  16900.00 8100.00  260
+UNBLOCK CIR PCB  12900.00 8100.00  260
+UNBLOCK CIR PCB  12900.00 6500.00  260
+UNBLOCK CIR PCB  16100.00 8100.00  260
+UNBLOCK CIR PCB  16100.00 6500.00  260
+UNBLOCK CIR PCB  12100.00 7300.00  260
+UNBLOCK CIR PCB  12100.00 6500.00  260
+UNBLOCK CIR PCB  15300.00 7300.00  260
+UNBLOCK CIR PCB  15300.00 6500.00  260
+UNBLOCK CIR PCB  13700.00 2500.00  260
+UNBLOCK CIR PCB  13700.00 1700.00  260
+UNBLOCK CIR PCB  14500.00 2500.00  260
+UNBLOCK CIR PCB  14500.00 1700.00  260
+UNBLOCK CIR PCB  16100.00 2500.00  260
+UNBLOCK CIR PCB  16100.00 1700.00  260
+UNBLOCK CIR PCB  16900.00 2500.00  260
+UNBLOCK CIR PCB  16900.00 1700.00  260
+UNBLOCK CIR PCB  13700.00 4100.00  260
+UNBLOCK CIR PCB  13700.00 4900.00  260
+UNBLOCK CIR PCB  14500.00 4100.00  260
+UNBLOCK CIR PCB  14500.00 4900.00  260
+UNBLOCK CIR PCB  16100.00 4100.00  260
+UNBLOCK CIR PCB  16100.00 4900.00  260
+UNBLOCK CIR PCB  16900.00 4100.00  260
+UNBLOCK CIR PCB  16900.00 4900.00  260
+UNBLOCK CIR PCB  4900.00 15300.00  260
+UNBLOCK CIR PCB  1700.00 16100.00  260
+UNBLOCK CIR PCB  3300.00 16100.00  260
+UNBLOCK CIR PCB  2500.00 15300.00  260
+UNBLOCK CIR PCB  4100.00 16100.00  260
+UNBLOCK CIR PCB  3300.00 15300.00  260
+UNBLOCK CIR PCB  1700.00 15300.00  260
+UNBLOCK CIR PCB  4900.00 14500.00  260
+UNBLOCK CIR PCB  16900.00 18500.00  260
+UNBLOCK CIR PCB  8900.00 6500.00  260
+UNBLOCK CIR PCB  16100.00 18500.00  260
+UNBLOCK CIR PCB  8100.00 6500.00  260
+UNBLOCK CIR PCB  1700.00 13700.00  260
+UNBLOCK CIR PCB  1700.00 14500.00  260
+UNBLOCK CIR PCB  2500.00 14500.00  260
+UNBLOCK CIR PCB  3300.00 14500.00  260
+UNBLOCK CIR PCB  3300.00 13700.00  260
+UNBLOCK CIR PCB  1700.00 12900.00  260
+UNBLOCK CIR PCB  2500.00 12900.00  260
+UNBLOCK CIR PCB  12900.00 18500.00  260
+UNBLOCK CIR PCB  15300.00 20100.00  260
+UNBLOCK CIR PCB  17700.00 20100.00  260
+UNBLOCK CIR PCB  17700.00 18500.00  260
+UNBLOCK CIR PCB  15300.00 23300.00  260
+UNBLOCK CIR PCB  2500.00 12100.00  260
+UNBLOCK CIR PCB  1700.00 10500.00  260
+UNBLOCK CIR PCB  2500.00 10500.00  260
+UNBLOCK CIR PCB  1700.00 12100.00  260
+UNBLOCK CIR PCB  1700.00 11300.00  260
+UNBLOCK CIR PCB  4100.00 12100.00  260
+UNBLOCK CIR PCB  3300.00 11300.00  260
+UNBLOCK CIR PCB  4100.00 10500.00  260
+UNBLOCK CIR PCB  3300.00 12100.00  260
+UNBLOCK CIR PCB  4100.00 11300.00  260
+UNBLOCK CIR PCB  15300.00 21700.00  260
+UNBLOCK CIR PCB  7300.00 18500.00  260
+UNBLOCK CIR PCB  8900.00 19300.00  260
+UNBLOCK CIR PCB  8100.00 18500.00  260
+UNBLOCK CIR PCB  16100.00 19300.00  260
+UNBLOCK CIR PCB  15300.00 22500.00  260
+UNBLOCK CIR PCB  16100.00 20900.00  260
+UNBLOCK CIR PCB  4900.00 3300.00  260
+UNBLOCK CIR PCB  6500.00 5700.00  260
+UNBLOCK CIR PCB  7300.00 5700.00  260
+UNBLOCK CIR PCB  6500.00 4900.00  260
+UNBLOCK CIR PCB  5700.00 4100.00  260
+UNBLOCK CIR PCB  7300.00 4900.00  260
+UNBLOCK CIR PCB  5700.00 6500.00  260
+UNBLOCK CIR PCB  4900.00 4100.00  260
+UNBLOCK CIR PCB  5700.00 11300.00  260
+UNBLOCK CIR PCB  2500.00 8100.00  260
+UNBLOCK CIR PCB  1700.00 8100.00  260
+UNBLOCK CIR PCB  1700.00 7300.00  260
+UNBLOCK CIR PCB  2500.00 7300.00  260
+UNBLOCK CIR PCB  4100.00 8100.00  260
+UNBLOCK CIR PCB  4100.00 9700.00  260
+UNBLOCK CIR PCB  4100.00 8900.00  260
+UNBLOCK CIR PCB  4100.00 7300.00  260
+UNBLOCK CIR PCB  4100.00 18500.00  260
+UNBLOCK CIR PCB  5700.00 19300.00  260
+UNBLOCK CIR PCB  4900.00 19300.00  260
+UNBLOCK CIR PCB  2500.00 19300.00  260
+UNBLOCK CIR PCB  1700.00 19300.00  260
+UNBLOCK CIR PCB  4100.00 19300.00  260
+UNBLOCK CIR PCB  4100.00 20100.00  260
+UNBLOCK CIR PCB  4900.00 16900.00  260
+UNBLOCK CIR PCB  4900.00 17700.00  260
+UNBLOCK CIR PCB  2500.00 17700.00  260
+UNBLOCK CIR PCB  1700.00 17700.00  260
+UNBLOCK CIR PCB  4100.00 17700.00  260
+UNBLOCK CIR PCB  4100.00 16900.00  260
+
+# Unblock a grid of narrow horizontal and vertical lines on PCB layer that 
+# connect all the BGA sites:
+#
+# 28 vertical lines:
+UNBLOCK RECT	PCB	1680	1700	1720	23300   // With tab delimiters
+UNBLOCK RECT   PCB      2480   1700   2520   23300      // With space delimiters
+UNBLOCK RECT   PCB      3280   1700   3320   23300
+UNBLOCK RECT   PCB      4080   1700   4120   23300
+UNBLOCK RECT   PCB      4880   1700   4920   23300
+UNBLOCK RECT   PCB      5680   1700   5720   23300
+UNBLOCK RECT   PCB      6480   1700   6520   23300
+UNBLOCK RECT   PCB      7280   1700   7320   23300
+UNBLOCK RECT   PCB      8080   1700   8120   23300
+UNBLOCK RECT   PCB      8880   1700   8920   23300
+UNBLOCK RECT   PCB      9680   1700   9720   23300
+UNBLOCK RECT   PCB      10480   1700   10520   23300
+UNBLOCK RECT   PCB      11280   1700   11320   23300
+UNBLOCK RECT   PCB      12080   1700   12120   23300
+UNBLOCK RECT   PCB      12880   1700   12920   23300
+UNBLOCK RECT   PCB      13680   1700   13720   23300
+UNBLOCK RECT   PCB      14480   1700   14520   23300
+UNBLOCK RECT   PCB      15280   1700   15320   23300
+UNBLOCK RECT   PCB      16080   1700   16120   23300
+UNBLOCK RECT   PCB      16880   1700   16920   23300
+UNBLOCK RECT   PCB      17680   1700   17720   23300
+UNBLOCK RECT   PCB      18480   1700   18520   23300
+UNBLOCK RECT   PCB      19280   1700   19320   23300
+UNBLOCK RECT   PCB      20080   1700   20120   23300
+UNBLOCK RECT   PCB      20880   1700   20920   23300
+UNBLOCK RECT   PCB      21680   1700   21720   23300
+UNBLOCK RECT   PCB      22480   1700   22520   23300
+UNBLOCK RECT   PCB      23280   1700   23320   23300
+
+
+# 28 horizontal lines:
+UNBLOCK RECT   PCB      1700   1680   23300   1720
+UNBLOCK RECT   PCB      1700   2480   23300   2520
+UNBLOCK RECT   PCB      1700   3280   23300   3320
+UNBLOCK RECT   PCB      1700   4080   23300   4120
+UNBLOCK RECT   PCB      1700   4880   23300   4920
+UNBLOCK RECT   PCB      1700   5680   23300   5720
+UNBLOCK RECT   PCB      1700   6480   23300   6520
+UNBLOCK RECT   PCB      1700   7280   23300   7320
+UNBLOCK RECT   PCB      1700   8080   23300   8120
+UNBLOCK RECT   PCB      1700   8880   23300   8920
+UNBLOCK RECT   PCB      1700   9680   23300   9720
+UNBLOCK RECT   PCB      1700   10480   23300   10520
+UNBLOCK RECT   PCB      1700   11280   23300   11320
+UNBLOCK RECT   PCB      1700   12080   23300   12120
+UNBLOCK RECT   PCB      1700   12880   23300   12920
+UNBLOCK RECT   PCB      1700   13680   23300   13720
+UNBLOCK RECT   PCB      1700   14480   23300   14520
+UNBLOCK RECT   PCB      1700   15280   23300   15320
+UNBLOCK RECT   PCB      1700   16080   23300   16120
+UNBLOCK RECT   PCB      1700   16880   23300   16920
+UNBLOCK RECT   PCB      1700   17680   23300   17720
+UNBLOCK RECT   PCB      1700   18480   23300   18520
+UNBLOCK RECT   PCB      1700   19280   23300   19320
+UNBLOCK RECT   PCB      1700   20080   23300   20120
+UNBLOCK RECT   PCB      1700   20880   23300   20920
+UNBLOCK RECT   PCB      1700   21680   23300   21720
+UNBLOCK RECT   PCB      1700   22480   23300   22520
+UNBLOCK RECT   PCB      1700   23280   23300   23320
+#
+# End of BGA pattern definition for layers BGA and PCB
+#
+
+
+#
+# Create pattern for blocking vias directly above BGA balls (preventing via-in-pad)
+#
+BLOCK CIR V4-5  2500.00 22500.00  240
+BLOCK CIR V4-5  9700.00 18500.00  240
+BLOCK CIR V4-5  16900.00 20100.00  240
+BLOCK CIR V4-5  8900.00 18500.00  240
+BLOCK CIR V4-5  13700.00 6500.00  240
+BLOCK CIR V4-5  16900.00 6500.00  240
+BLOCK CIR V4-5  15300.00 19300.00  240
+BLOCK CIR V4-5  5700.00 20100.00  240
+BLOCK CIR V4-5  4100.00 12900.00  240
+BLOCK CIR V4-5  3300.00 12900.00  240
+BLOCK CIR V4-5  4100.00 13700.00  240
+BLOCK CIR V4-5  4100.00 14500.00  240
+BLOCK CIR V4-5  7300.00 14500.00  240
+BLOCK CIR V4-5  23300.00 9700.00  240
+BLOCK CIR V4-5  23300.00 13700.00  240
+BLOCK CIR V4-5  22500.00 13700.00  240
+BLOCK CIR V4-5  23300.00 14500.00  240
+BLOCK CIR V4-5  22500.00 15300.00  240
+BLOCK CIR V4-5  23300.00 15300.00  240
+BLOCK CIR V4-5  23300.00 16100.00  240
+BLOCK CIR V4-5  23300.00 16900.00  240
+BLOCK CIR V4-5  22500.00 16900.00  240
+BLOCK CIR V4-5  22500.00 18500.00  240
+BLOCK CIR V4-5  22500.00 8100.00  240
+BLOCK CIR V4-5  23300.00 17700.00  240
+BLOCK CIR V4-5  23300.00 18500.00  240
+BLOCK CIR V4-5  23300.00 4100.00  240
+BLOCK CIR V4-5  22500.00 20100.00  240
+BLOCK CIR V4-5  23300.00 20900.00  240
+BLOCK CIR V4-5  23300.00 19300.00  240
+BLOCK CIR V4-5  22500.00 9700.00  240
+BLOCK CIR V4-5  23300.00 8100.00  240
+BLOCK CIR V4-5  23300.00 8900.00  240
+BLOCK CIR V4-5  23300.00 20100.00  240
+BLOCK CIR V4-5  23300.00 5700.00  240
+BLOCK CIR V4-5  22500.00 11300.00  240
+BLOCK CIR V4-5  23300.00 11300.00  240
+BLOCK CIR V4-5  22500.00 12100.00  240
+BLOCK CIR V4-5  23300.00 12100.00  240
+BLOCK CIR V4-5  22500.00 21700.00  240
+BLOCK CIR V4-5  23300.00 21700.00  240
+BLOCK CIR V4-5  23300.00 6500.00  240
+BLOCK CIR V4-5  22500.00 5700.00  240
+BLOCK CIR V4-5  22500.00 2500.00  240
+BLOCK CIR V4-5  23300.00 3300.00  240
+BLOCK CIR V4-5  23300.00 12900.00  240
+BLOCK CIR V4-5  23300.00 10500.00  240
+BLOCK CIR V4-5  18500.00 22500.00  240
+BLOCK CIR V4-5  20900.00 21700.00  240
+BLOCK CIR V4-5  19300.00 19300.00  240
+BLOCK CIR V4-5  21700.00 16100.00  240
+BLOCK CIR V4-5  21700.00 10500.00  240
+BLOCK CIR V4-5  20100.00 8100.00  240
+BLOCK CIR V4-5  20100.00 4900.00  240
+BLOCK CIR V4-5  20100.00 3300.00  240
+BLOCK CIR V4-5  20100.00 13700.00  240
+BLOCK CIR V4-5  17700.00 21700.00  240
+BLOCK CIR V4-5  18500.00 23300.00  240
+BLOCK CIR V4-5  21700.00 23300.00  240
+BLOCK CIR V4-5  21700.00 22500.00  240
+BLOCK CIR V4-5  17700.00 22500.00  240
+BLOCK CIR V4-5  17700.00 23300.00  240
+BLOCK CIR V4-5  20100.00 22500.00  240
+BLOCK CIR V4-5  20900.00 23300.00  240
+BLOCK CIR V4-5  19300.00 21700.00  240
+BLOCK CIR V4-5  20100.00 21700.00  240
+BLOCK CIR V4-5  20900.00 19300.00  240
+BLOCK CIR V4-5  21700.00 19300.00  240
+BLOCK CIR V4-5  18500.00 20900.00  240
+BLOCK CIR V4-5  19300.00 20900.00  240
+BLOCK CIR V4-5  22500.00 22500.00  240
+BLOCK CIR V4-5  20900.00 20100.00  240
+BLOCK CIR V4-5  19300.00 20100.00  240
+BLOCK CIR V4-5  20100.00 20100.00  240
+BLOCK CIR V4-5  19300.00 16900.00  240
+BLOCK CIR V4-5  19300.00 16100.00  240
+BLOCK CIR V4-5  18500.00 19300.00  240
+BLOCK CIR V4-5  18500.00 17700.00  240
+BLOCK CIR V4-5  19300.00 17700.00  240
+BLOCK CIR V4-5  20100.00 16900.00  240
+BLOCK CIR V4-5  21700.00 17700.00  240
+BLOCK CIR V4-5  20900.00 16900.00  240
+BLOCK CIR V4-5  21700.00 12900.00  240
+BLOCK CIR V4-5  20900.00 13700.00  240
+BLOCK CIR V4-5  20900.00 18500.00  240
+BLOCK CIR V4-5  20900.00 17700.00  240
+BLOCK CIR V4-5  21700.00 14500.00  240
+BLOCK CIR V4-5  20900.00 14500.00  240
+BLOCK CIR V4-5  20900.00 11300.00  240
+BLOCK CIR V4-5  20900.00 10500.00  240
+BLOCK CIR V4-5  21700.00 7300.00  240
+BLOCK CIR V4-5  20900.00 7300.00  240
+BLOCK CIR V4-5  20900.00 12900.00  240
+BLOCK CIR V4-5  20900.00 12100.00  240
+BLOCK CIR V4-5  21700.00 8900.00  240
+BLOCK CIR V4-5  20900.00 8100.00  240
+BLOCK CIR V4-5  20100.00 9700.00  240
+BLOCK CIR V4-5  19300.00 8900.00  240
+BLOCK CIR V4-5  18500.00 7300.00  240
+BLOCK CIR V4-5  18500.00 5700.00  240
+BLOCK CIR V4-5  18500.00 8900.00  240
+BLOCK CIR V4-5  19300.00 9700.00  240
+BLOCK CIR V4-5  20100.00 6500.00  240
+BLOCK CIR V4-5  19300.00 6500.00  240
+BLOCK CIR V4-5  21700.00 4900.00  240
+BLOCK CIR V4-5  20900.00 4900.00  240
+BLOCK CIR V4-5  19300.00 4900.00  240
+BLOCK CIR V4-5  18500.00 4100.00  240
+BLOCK CIR V4-5  20900.00 6500.00  240
+BLOCK CIR V4-5  20900.00 5700.00  240
+BLOCK CIR V4-5  19300.00 5700.00  240
+BLOCK CIR V4-5  19300.00 4100.00  240
+BLOCK CIR V4-5  20900.00 2500.00  240
+BLOCK CIR V4-5  20900.00 1700.00  240
+BLOCK CIR V4-5  18500.00 1700.00  240
+BLOCK CIR V4-5  18500.00 3300.00  240
+BLOCK CIR V4-5  21700.00 3300.00  240
+BLOCK CIR V4-5  21700.00 1700.00  240
+BLOCK CIR V4-5  19300.00 1700.00  240
+BLOCK CIR V4-5  19300.00 3300.00  240
+BLOCK CIR V4-5  20100.00 23300.00  240
+BLOCK CIR V4-5  19300.00 23300.00  240
+BLOCK CIR V4-5  21700.00 20900.00  240
+BLOCK CIR V4-5  20900.00 20900.00  240
+BLOCK CIR V4-5  20100.00 18500.00  240
+BLOCK CIR V4-5  19300.00 18500.00  240
+BLOCK CIR V4-5  20900.00 15300.00  240
+BLOCK CIR V4-5  20900.00 16100.00  240
+BLOCK CIR V4-5  20900.00 8900.00  240
+BLOCK CIR V4-5  20900.00 9700.00  240
+BLOCK CIR V4-5  19300.00 7300.00  240
+BLOCK CIR V4-5  19300.00 8100.00  240
+BLOCK CIR V4-5  20900.00 4100.00  240
+BLOCK CIR V4-5  20900.00 3300.00  240
+BLOCK CIR V4-5  20100.00 2500.00  240
+BLOCK CIR V4-5  20100.00 1700.00  240
+BLOCK CIR V4-5  19300.00 12100.00  240
+BLOCK CIR V4-5  19300.00 12900.00  240
+BLOCK CIR V4-5  20100.00 15300.00  240
+BLOCK CIR V4-5  19300.00 13700.00  240
+BLOCK CIR V4-5  19300.00 11300.00  240
+BLOCK CIR V4-5  19300.00 10500.00  240
+BLOCK CIR V4-5  19300.00 15300.00  240
+BLOCK CIR V4-5  19300.00 14500.00  240
+BLOCK CIR V4-5  20100.00 12100.00  240
+BLOCK CIR V4-5  20100.00 11300.00  240
+BLOCK CIR V4-5  23300.00 4900.00  240
+BLOCK CIR V4-5  22500.00 4100.00  240
+BLOCK CIR V4-5  23300.00 7300.00  240
+BLOCK CIR V4-5  16900.00 19300.00  240
+BLOCK CIR V4-5  22500.00 6500.00  240
+BLOCK CIR V4-5  16900.00 16900.00  240
+BLOCK CIR V4-5  17700.00 16900.00  240
+BLOCK CIR V4-5  12100.00 18500.00  240
+BLOCK CIR V4-5  12100.00 19300.00  240
+BLOCK CIR V4-5  7300.00 12900.00  240
+BLOCK CIR V4-5  3300.00 3300.00  240
+BLOCK CIR V4-5  3300.00 2500.00  240
+BLOCK CIR V4-5  1700.00 4900.00  240
+BLOCK CIR V4-5  2500.00 2500.00  240
+BLOCK CIR V4-5  2500.00 3300.00  240
+BLOCK CIR V4-5  1700.00 3300.00  240
+BLOCK CIR V4-5  1700.00 4100.00  240
+BLOCK CIR V4-5  2500.00 4900.00  240
+BLOCK CIR V4-5  4100.00 3300.00  240
+BLOCK CIR V4-5  3300.00 4100.00  240
+BLOCK CIR V4-5  4100.00 4100.00  240
+BLOCK CIR V4-5  3300.00 4900.00  240
+BLOCK CIR V4-5  3300.00 5700.00  240
+BLOCK CIR V4-5  3300.00 1700.00  240
+BLOCK CIR V4-5  4100.00 1700.00  240
+BLOCK CIR V4-5  5700.00 10500.00  240
+BLOCK CIR V4-5  5700.00 9700.00  240
+BLOCK CIR V4-5  7300.00 15300.00  240
+BLOCK CIR V4-5  5700.00 20900.00  240
+BLOCK CIR V4-5  4100.00 21700.00  240
+BLOCK CIR V4-5  1700.00 21700.00  240
+BLOCK CIR V4-5  2500.00 21700.00  240
+BLOCK CIR V4-5  3300.00 21700.00  240
+BLOCK CIR V4-5  16900.00 21700.00  240
+BLOCK CIR V4-5  16900.00 22500.00  240
+BLOCK CIR V4-5  15300.00 18500.00  240
+BLOCK CIR V4-5  7300.00 3300.00  240
+BLOCK CIR V4-5  7300.00 4100.00  240
+BLOCK CIR V4-5  5700.00 5700.00  240
+BLOCK CIR V4-5  5700.00 1700.00  240
+BLOCK CIR V4-5  6500.00 1700.00  240
+BLOCK CIR V4-5  7300.00 20100.00  240
+BLOCK CIR V4-5  4900.00 21700.00  240
+BLOCK CIR V4-5  5700.00 21700.00  240
+BLOCK CIR V4-5  6500.00 20900.00  240
+BLOCK CIR V4-5  6500.00 21700.00  240
+BLOCK CIR V4-5  7300.00 20900.00  240
+BLOCK CIR V4-5  7300.00 21700.00  240
+BLOCK CIR V4-5  8100.00 20900.00  240
+BLOCK CIR V4-5  8100.00 21700.00  240
+BLOCK CIR V4-5  8900.00 20900.00  240
+BLOCK CIR V4-5  8900.00 21700.00  240
+BLOCK CIR V4-5  9700.00 20100.00  240
+BLOCK CIR V4-5  9700.00 21700.00  240
+BLOCK CIR V4-5  9700.00 20900.00  240
+BLOCK CIR V4-5  10500.00 21700.00  240
+BLOCK CIR V4-5  10500.00 20900.00  240
+BLOCK CIR V4-5  10500.00 20100.00  240
+BLOCK CIR V4-5  4100.00 23300.00  240
+BLOCK CIR V4-5  4900.00 22500.00  240
+BLOCK CIR V4-5  4900.00 23300.00  240
+BLOCK CIR V4-5  5700.00 22500.00  240
+BLOCK CIR V4-5  5700.00 23300.00  240
+BLOCK CIR V4-5  6500.00 23300.00  240
+BLOCK CIR V4-5  7300.00 22500.00  240
+BLOCK CIR V4-5  7300.00 23300.00  240
+BLOCK CIR V4-5  8100.00 22500.00  240
+BLOCK CIR V4-5  8100.00 23300.00  240
+BLOCK CIR V4-5  8900.00 23300.00  240
+BLOCK CIR V4-5  9700.00 22500.00  240
+BLOCK CIR V4-5  9700.00 23300.00  240
+BLOCK CIR V4-5  10500.00 22500.00  240
+BLOCK CIR V4-5  10500.00 23300.00  240
+BLOCK CIR V4-5  11300.00 23300.00  240
+BLOCK CIR V4-5  14500.00 20900.00  240
+BLOCK CIR V4-5  12100.00 23300.00  240
+BLOCK CIR V4-5  13700.00 19300.00  240
+BLOCK CIR V4-5  14500.00 23300.00  240
+BLOCK CIR V4-5  16100.00 23300.00  240
+BLOCK CIR V4-5  11300.00 21700.00  240
+BLOCK CIR V4-5  12900.00 20100.00  240
+BLOCK CIR V4-5  13700.00 20900.00  240
+BLOCK CIR V4-5  13700.00 21700.00  240
+BLOCK CIR V4-5  12100.00 20900.00  240
+BLOCK CIR V4-5  13700.00 23300.00  240
+BLOCK CIR V4-5  12900.00 20900.00  240
+BLOCK CIR V4-5  12900.00 21700.00  240
+BLOCK CIR V4-5  12100.00 21700.00  240
+BLOCK CIR V4-5  12100.00 20100.00  240
+BLOCK CIR V4-5  12900.00 22500.00  240
+BLOCK CIR V4-5  12900.00 23300.00  240
+BLOCK CIR V4-5  12100.00 22500.00  240
+BLOCK CIR V4-5  11300.00 20900.00  240
+BLOCK CIR V4-5  14500.00 19300.00  240
+BLOCK CIR V4-5  1700.00 8900.00  240
+BLOCK CIR V4-5  1700.00 9700.00  240
+BLOCK CIR V4-5  3300.00 9700.00  240
+BLOCK CIR V4-5  3300.00 8100.00  240
+BLOCK CIR V4-5  3300.00 7300.00  240
+BLOCK CIR V4-5  3300.00 6500.00  240
+BLOCK CIR V4-5  3300.00 23300.00  240
+BLOCK CIR V4-5  6500.00 19300.00  240
+BLOCK CIR V4-5  3300.00 20900.00  240
+BLOCK CIR V4-5  4100.00 6500.00  240
+BLOCK CIR V4-5  4900.00 5700.00  240
+BLOCK CIR V4-5  4100.00 15300.00  240
+BLOCK CIR V4-5  3300.00 10500.00  240
+BLOCK CIR V4-5  11300.00 19300.00  240
+BLOCK CIR V4-5  9700.00 19300.00  240
+BLOCK CIR V4-5  10500.00 19300.00  240
+BLOCK CIR V4-5  3300.00 22500.00  240
+BLOCK CIR V4-5  14500.00 22500.00  240
+BLOCK CIR V4-5  8100.00 19300.00  240
+BLOCK CIR V4-5  10500.00 7300.00  240
+BLOCK CIR V4-5  16900.00 8100.00  240
+BLOCK CIR V4-5  12900.00 8100.00  240
+BLOCK CIR V4-5  12900.00 6500.00  240
+BLOCK CIR V4-5  16100.00 8100.00  240
+BLOCK CIR V4-5  16100.00 6500.00  240
+BLOCK CIR V4-5  12100.00 7300.00  240
+BLOCK CIR V4-5  12100.00 6500.00  240
+BLOCK CIR V4-5  15300.00 7300.00  240
+BLOCK CIR V4-5  15300.00 6500.00  240
+BLOCK CIR V4-5  13700.00 2500.00  240
+BLOCK CIR V4-5  13700.00 1700.00  240
+BLOCK CIR V4-5  14500.00 2500.00  240
+BLOCK CIR V4-5  14500.00 1700.00  240
+BLOCK CIR V4-5  16100.00 2500.00  240
+BLOCK CIR V4-5  16100.00 1700.00  240
+BLOCK CIR V4-5  16900.00 2500.00  240
+BLOCK CIR V4-5  16900.00 1700.00  240
+BLOCK CIR V4-5  13700.00 4100.00  240
+BLOCK CIR V4-5  13700.00 4900.00  240
+BLOCK CIR V4-5  14500.00 4100.00  240
+BLOCK CIR V4-5  14500.00 4900.00  240
+BLOCK CIR V4-5  16100.00 4100.00  240
+BLOCK CIR V4-5  16100.00 4900.00  240
+BLOCK CIR V4-5  16900.00 4100.00  240
+BLOCK CIR V4-5  16900.00 4900.00  240
+BLOCK CIR V4-5  4900.00 15300.00  240
+BLOCK CIR V4-5  1700.00 16100.00  240
+BLOCK CIR V4-5  3300.00 16100.00  240
+BLOCK CIR V4-5  2500.00 15300.00  240
+BLOCK CIR V4-5  4100.00 16100.00  240
+BLOCK CIR V4-5  3300.00 15300.00  240
+BLOCK CIR V4-5  1700.00 15300.00  240
+BLOCK CIR V4-5  4900.00 14500.00  240
+BLOCK CIR V4-5  16900.00 18500.00  240
+BLOCK CIR V4-5  8900.00 6500.00  240
+BLOCK CIR V4-5  16100.00 18500.00  240
+BLOCK CIR V4-5  8100.00 6500.00  240
+BLOCK CIR V4-5  1700.00 13700.00  240
+BLOCK CIR V4-5  1700.00 14500.00  240
+BLOCK CIR V4-5  2500.00 14500.00  240
+BLOCK CIR V4-5  3300.00 14500.00  240
+BLOCK CIR V4-5  3300.00 13700.00  240
+BLOCK CIR V4-5  1700.00 12900.00  240
+BLOCK CIR V4-5  2500.00 12900.00  240
+BLOCK CIR V4-5  12900.00 18500.00  240
+BLOCK CIR V4-5  15300.00 20100.00  240
+BLOCK CIR V4-5  17700.00 20100.00  240
+BLOCK CIR V4-5  17700.00 18500.00  240
+BLOCK CIR V4-5  15300.00 23300.00  240
+BLOCK CIR V4-5  2500.00 12100.00  240
+BLOCK CIR V4-5  1700.00 10500.00  240
+BLOCK CIR V4-5  2500.00 10500.00  240
+BLOCK CIR V4-5  1700.00 12100.00  240
+BLOCK CIR V4-5  1700.00 11300.00  240
+BLOCK CIR V4-5  4100.00 12100.00  240
+BLOCK CIR V4-5  3300.00 11300.00  240
+BLOCK CIR V4-5  4100.00 10500.00  240
+BLOCK CIR V4-5  3300.00 12100.00  240
+BLOCK CIR V4-5  4100.00 11300.00  240
+BLOCK CIR V4-5  15300.00 21700.00  240
+BLOCK CIR V4-5  7300.00 18500.00  240
+BLOCK CIR V4-5  8900.00 19300.00  240
+BLOCK CIR V4-5  8100.00 18500.00  240
+BLOCK CIR V4-5  16100.00 19300.00  240
+BLOCK CIR V4-5  15300.00 22500.00  240
+BLOCK CIR V4-5  16100.00 20900.00  240
+BLOCK CIR V4-5  4900.00 3300.00  240
+BLOCK CIR V4-5  6500.00 5700.00  240
+BLOCK CIR V4-5  7300.00 5700.00  240
+BLOCK CIR V4-5  6500.00 4900.00  240
+BLOCK CIR V4-5  5700.00 4100.00  240
+BLOCK CIR V4-5  7300.00 4900.00  240
+BLOCK CIR V4-5  5700.00 6500.00  240
+BLOCK CIR V4-5  4900.00 4100.00  240
+BLOCK CIR V4-5  5700.00 11300.00  240
+BLOCK CIR V4-5  2500.00 8100.00  240
+BLOCK CIR V4-5  1700.00 8100.00  240
+BLOCK CIR V4-5  1700.00 7300.00  240
+BLOCK CIR V4-5  2500.00 7300.00  240
+BLOCK CIR V4-5  4100.00 8100.00  240
+BLOCK CIR V4-5  4100.00 9700.00  240
+BLOCK CIR V4-5  4100.00 8900.00  240
+BLOCK CIR V4-5  4100.00 7300.00  240
+BLOCK CIR V4-5  4100.00 18500.00  240
+BLOCK CIR V4-5  5700.00 19300.00  240
+BLOCK CIR V4-5  4900.00 19300.00  240
+BLOCK CIR V4-5  2500.00 19300.00  240
+BLOCK CIR V4-5  1700.00 19300.00  240
+BLOCK CIR V4-5  4100.00 19300.00  240
+BLOCK CIR V4-5  4100.00 20100.00  240
+BLOCK CIR V4-5  4900.00 16900.00  240
+BLOCK CIR V4-5  4900.00 17700.00  240
+BLOCK CIR V4-5  2500.00 17700.00  240
+BLOCK CIR V4-5  1700.00 17700.00  240
+BLOCK CIR V4-5  4100.00 17700.00  240
+BLOCK CIR V4-5  4100.00 16900.00  240
+# End of pattern for blocking vias directly above BGA balls (no via-in-pad)
+
+
+#
+# Define cost-multipliers for traces and vias;
+#
+#  trace_cost_multipliter  <multiplier index>     <multiplier value>
+#    via_cost_multipliter  <multiplier index>     <multiplier value>
+trace_cost_multiplier             1                      2
+trace_cost_multiplier             2                      4
+trace_cost_multiplier             3                      5
+
+#
+# Define cost-zones for traces and vias:
+#
+# trace_cost_zone   <trace mult. index>     <rout. layer name>   <ALL|RECT|CIR|TRI>
+#   via_cost_zone     <via mult. index>       <via layer name>   <ALL|RECT|CIR|TRI>
+
+# Avoid routing in rectangle directly beneath center of die:
+trace_cost_zone              1                  Pkg_M1           RECT  11000 10000   14000 14000
+trace_cost_zone              1                  Pkg_M2           RECT  11000 10000   14000 14000
+trace_cost_zone              1                  Pkg_M3           RECT  11000 10000   14000 14000
+
+# Use Pkg_M4 as an 'overflow' layer:
+trace_cost_zone              2                  Pkg_M4           ALL
+
+# Minimize routing on package BGA layer or the PCB layer:
+trace_cost_zone              3                  Pkg_M5           ALL
+# trace_cost_zone              3                    PCB            ALL
+
+
+#
+# Design rules: #########################################
+#
+design_rule_set Break_Out   Design Rules for break-out area on Pkg_M1 layer near die // Break-out rules
+  line_width        = 17   // Minimum linewidth is 17 um in breakout area
+  line_spacing      = 20   // Minimum trace-to-trace spacing is ~20um
+  via_up_diameter   = 100  // Pad diameter is 100um
+  via_down_diameter = 100  // Pad diameter is 100um
+
+  via_up_to_trace_spacing      = 20  // Trace-to-pad spacing is 20um
+  via_down_to_trace_spacing    = 20  // Trace-to-pad spacing is 20um
+  via_up_to_via_up_spacing     = 40  // Via pad-to-pad spacing is 40-50um
+  via_down_to_via_down_spacing = 40  // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   = 40  // Via pad-to-pad spacing is 40-50um
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 58  // Center-to-center pitch for 50-ohm diff pairs
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 85  // Center-to-center pitch for 100-ohm diff pairs
+  end_exception  // End of exception for 100-ohm differential pairs
+  
+end_design_rule_set   // End of design rule set
+
+design_rule_set Non_Bottom   Design Rules for all package layers except bottom layer and breakout area // Rules for routing layers
+  line_width        = 20   // Minimum linewidth is ~20 um
+  line_spacing      = 20   // Minimum trace-to-trace spacing is ~20um
+  via_up_diameter   = 100  // Pad diameter is 100um
+  via_down_diameter = 100  // Pad diameter is 100um
+
+  via_up_to_trace_spacing      = 20  // Trace-to-pad spacing is 20um
+  via_down_to_trace_spacing    = 20  // Trace-to-pad spacing is 20um
+  via_up_to_via_up_spacing     = 40  // Via pad-to-pad spacing is 40-50um
+  via_down_to_via_down_spacing = 40  // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   = 40  // Via pad-to-pad spacing is 40-50um
+
+  exception = PWR_GND   // Exception design rules power and ground nets 
+    line_width        = 40   // Minimum linewidth is ~20 um
+  end_exception  // End of exception power and ground nets
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    line_width        = 25   //Linewidth is ~25 um on M1
+    line_spacing      = 32   //Line spacing is ~32um on M1
+
+    via_up_to_trace_spacing      = 30  // Trace-to-pad spacing is 20um
+    via_down_to_trace_spacing    = 30  // Trace-to-pad spacing is 20um
+    via_up_to_via_up_spacing     = 50  // Via pad-to-pad spacing is 40-50um
+    via_down_to_via_down_spacing = 50  // Via pad-to-pad spacing is 40-50um
+    via_up_to_via_down_spacing   = 50  // Via pad-to-pad spacing is 40-50um
+    
+    diff_pair_pitch = 58  // Center-to-center pitch forDiff pairs
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    line_width        = 35   //Linewidth is ~35 um on M1
+    line_spacing      = 50   //Line spacing is ~50 um on M1
+
+    via_up_to_trace_spacing      = 40  // Trace-to-pad spacing is 20um
+    via_down_to_trace_spacing    = 50  // Trace-to-pad spacing is 20um
+    via_up_to_via_up_spacing     = 50  // Via pad-to-pad spacing is 40-50um
+    via_down_to_via_down_spacing = 50  // Via pad-to-pad spacing is 40-50um
+    via_up_to_via_down_spacing   = 50  // Via pad-to-pad spacing is 40-50um
+    
+    diff_pair_pitch = 85  // Center-to-center pitch forDiff pairs
+  end_exception  // End of exception for 100-ohm differential pairs
+  
+end_design_rule_set   // End of design rule set
+
+design_rule_set Pkg_Bottom   Design Rules for bottom package layer  // Rules for bottom pkg layer
+  line_width        = 100  // Typical linewidth on bottom is ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
+  via_up_to_via_up_spacing     = 290 // BGA pad-to-pad spacing is 300 um
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+  
+  exception = PWR_GND   // Exception design rules power and ground nets 
+    line_width        = 150
+  end_exception  // End of exception power and ground nets
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 200  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 200
+  end_exception  // End of exception for 100-ohm differential pairs
+    
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set PCB    Design Rules for top PCB layer  // Rules for top PCB layer
+  line_width        = 0    // 5 mils, based on example evaluation board from industry
+  line_spacing      = 0    // 4 mils, based on example evaluation board from industry
+  via_up_diameter   = 0    // Not applicable for single-layer PCB
+  via_down_diameter = 500  // BGA pad diameter is 500um
+
+  via_up_to_trace_spacing      = 0   // Not applicable for single-layer PCB
+  via_down_to_trace_spacing    = 0   // 4 mils, based on example evaluation board from industry
+  via_up_to_via_up_spacing     = 0   // Not applicable for single-layer PCB
+  via_down_to_via_down_spacing = 290 // BGA pad-to-pad spacing is 300 um
+  via_up_to_via_down_spacing   = 0   // Not applicable for single-layer PCB
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 200  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 200
+  end_exception  // End of exception for 100-ohm differential pairs
+  
+  
+end_design_rule_set   // End of design rule set
+
+
+###   design_rule_set PCB    Design Rules for top PCB layer  // Rules for top PCB layer
+###     line_width        = 127  // 5 mils, based on example evaluation board from industry
+###     line_spacing      = 102  // 4 mils, based on example evaluation board from industry
+###     via_up_diameter   = 100  // Not applicable for single-layer PCB
+###     via_down_diameter = 500  // BGA pad diameter is 500um
+###   
+###     via_up_to_trace_spacing      = 100 // Not applicable for single-layer PCB
+###     via_down_to_trace_spacing    = 102 // 4 mils, based on example evaluation board from industry
+###     via_up_to_via_up_spacing     = 100 // Not applicable for single-layer PCB
+###     via_down_to_via_down_spacing = 290 // BGA pad-to-pad spacing is 300 um
+###     via_up_to_via_down_spacing   = 100 // Not applicable for single-layer PCB
+###   end_design_rule_set   // End of design rule set
+
+############ Define design-rule zones: #####################
+##
+## Specify which areas on each layer will use each design-rule set.
+## All coordinates are in microns.
+##
+##  DR_zone <DR name> <layer name>  RECT  X1 Y1 X2 Y2 // Use DR set 'DR name' in
+##                                                    // rectangle defined by
+##                                                    // (x1, y1) and (x2, y2)
+##                                                    // on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> TRI  X1 Y1 X2 Y2 X2 Y3 // User DR set 'DR name'
+##                                                        // in triangle defined by
+##                                                        // 3 x/y coordinates on
+##                                                        // layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> CIR  X Y R  // Use DR set 'DR name' in circle
+##                                             // defined by center (x,y) and radius
+##                                             // R on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> ALL      // Use DR set 'DR name' on all cells
+##                                          // on layer <layer name>.
+##
+DR_zone   Non_Bottom      Pkg_M1    ALL
+DR_zone   Break_Out       Pkg_M1    RECT   9352.6  8817.82     15647.4  16218.9  // Area within 100 um of C4 bump array 
+DR_zone   Non_Bottom      Pkg_M2    ALL
+DR_zone   Non_Bottom      Pkg_M3    ALL
+DR_zone   Non_Bottom      Pkg_M4    ALL
+DR_zone   Pkg_Bottom      Pkg_M5    ALL
+DR_zone   PCB             PCB       ALL
+
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+#
+# The following parameters affect the final routed solution and run-time, but
+# should not be modified without extreme caution:
+#
+#
+
+# The parameter 'maxIterations' is the maximum number of iterations the program
+# will make to find a crossing-free solution.
+maxIterations = 1000
+
+# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
+# solutions that program will find before deciding that it has found the
+# optimal solution.
+violationFreeThreshold = 500
+
+# The parameter 'vertCost' is the cost of routing up or down to a different
+# routing layer, i.e., the cost of a layer-to-layer via. The value is in
+# microns, and should be interpreted as half the trace-length that could be
+# avoided by adding a via to a different layer.
+vertCost  = 5000   // in microns of equivalent trace length
+
+# The parameter 'runsPerPngMap' is the number of iterations to run between
+# writing PNG versions of the routing maps.
+runsPerPngMap =  1
+

@@ -1,0 +1,555 @@
+# ACORN input file
+# ================
+#
+# Any line that begins with a '#' character is a comment and is disregarded by
+# the Acorn program. Blank lines are allowed. Use them to add clarity to 
+# the input file.
+#
+# You can add additional comments following two consecutive slash characters,
+# for example:
+#    grid_resolution = 5  // 5 micron grid 
+#
+
+# Specify the dimension in microns of the grid that the auto-router will use.
+# Smaller values cause longer run-times, so choose a dimension that is 
+# one half the minimum pitch. For example, if the minimum line and space
+# are both 20 microns (40 um pitch), then choose 20 microns for the resolution.
+grid_resolution = 15  // in microns
+
+# Specify the dimensions in millimeters of the grid. This should be large enough for
+# the package and/or PCB:
+width  = 16  // in millimeters
+height = 16  // in millimeters
+
+# Specify the number of routing layers. This should include package and PCB 
+# routing layers, but should exclude via layers or the BGA layer.
+number_layers = 5
+
+# Specify the name of each routing layer and (for multiple layers) the name
+# of each intervening via layer. Examples:
+# 
+#   layer_names = M1 V1-2 M2 V2-3 M3 V3-4 M4  // For 4-layer substrate
+#   layer_names = M   // for single-layer
+#
+# If there are 'N' routing layers, then you should specify 2N-1 layer names
+layer_names = Pkg_M1 V1-2 Pkg_M2 V2-3 Pkg_M3 V3-4 Pkg_M4 BGA PCB_top
+
+#
+# Specify the start- and end-locations of the paths to be routed. Dimensions are
+# in microns, relative to the lower-left corner. Start- and End-Layers are 
+# specified using the names from the 'layer_names' statement.
+#
+start_nets
+# Net           Start    Start          Start            End      End    End
+# Name          Layer      X               Y             Layer     X      Y
+# --------     -------   -----           -----         -------   -----  -----
+Net_0     Pkg_M1	9681.2	8812.7	PCB_top	13374	13374
+Net_1     Pkg_M1	8000	9237.5	PCB_top	8000	15600
+Net_2     Pkg_M1	6562.7	8515.7	PCB_top	400	8000
+Net_3       Pkg_M1	7018.1	6745.22	PCB_top	2626	2626
+Net_4  Pkg_M1	9387.71	6783.65	PCB_top	13374	2626
+Net_5     Pkg_M1	6318.8	8689.4	PCB_top	400	8000
+Net_6     Pkg_M1	6318.8	8839.7	PCB_top	2626	13374
+Net_7   Pkg_M1	8385.38	6858.8	PCB_top	8000	400
+Net_8   Pkg_M1	8528.57	6933.95	PCB_top	13374	2626
+Net_9   Pkg_M1	8528.57	6783.65	PCB_top	13374	2626
+Net_10   Pkg_M1	9606.05	7139.42	PCB_top	13374	2626
+Net_11   Pkg_M1	7669.43	6783.65	PCB_top	8000	400
+Net_12   Pkg_M1	7669.43	6933.95	PCB_top	8000	400
+Net_13  Pkg_M1	8000	8936.9	PCB_top	8000	15600
+Net_14     Pkg_M1	9606.05	7404.2	PCB_top	15600	8000
+Net_15     Pkg_M1	9455.75	7404.2	PCB_top	15600	8000
+Net_16      Pkg_M1	9681.2	7538.66	PCB_top	15600	8000
+Net_17      Pkg_M1	9530.9	7538.66	PCB_top	15600	8000
+Net_18      Pkg_M1	9681.2	7269.74	PCB_top	13374	2626
+Net_19      Pkg_M1	9530.9	7269.74	PCB_top	13374	2626
+Net_20       Pkg_M1	9606.05	7673.12	PCB_top	15600	8000
+Net_21       Pkg_M1	9455.75	7673.12	PCB_top	15600	8000
+Net_22  Pkg_M1	8958.14	6858.8	PCB_top	13374	2626
+Net_23  Pkg_M1	8814.95	6783.65	PCB_top	13374	2626
+Net_24  Pkg_M1	8671.76	6858.8	PCB_top	13374	2626
+Net_25 Pkg_M1	8814.95	6933.95	PCB_top	13374	2626
+Net_26    Pkg_M1	6318.8	7009.1	PCB_top	2626	2626
+Net_27    Pkg_M1	6318.8	7159.4	PCB_top	2626	2626
+Net_28 Pkg_M1	9530.9	7009.1	PCB_top	13374	2626
+Net_29  Pkg_M1	7812.62	6858.8	PCB_top	8000	400
+Net_30   Pkg_M1	6318.8	7884.8	PCB_top	400	8000
+Net_31  Pkg_M1	6517.88	9087.2	PCB_top	2626	13374
+Net_32  Pkg_M1	6517.88	9237.5	PCB_top	2626	13374
+Net_33  Pkg_M1	6786.8	9087.2	PCB_top	2626	13374
+Net_34  Pkg_M1	6786.8	9237.5	PCB_top	2626	13374
+Net_35_P Pkg_M1	9213.2	9087.2	PCB_top	13374	13374
+Net_36_N Pkg_M1	9213.2	9237.5	PCB_top	13374	13374
+Net_37_P Pkg_M1	9482.12	9087.2	PCB_top	13374	13374
+Net_38_N Pkg_M1	9482.12	9237.5	PCB_top	13374	13374
+Net_39  Pkg_M1	7316.36	9087.2	PCB_top	2626	13374
+Net_40  Pkg_M1	7316.36	9237.5	PCB_top	2626	13374
+Net_41  Pkg_M1	7585.28	9087.2	PCB_top	8000	15600
+Net_42  Pkg_M1	7585.28	9237.5	PCB_top	8000	15600
+Net_43  Pkg_M1	8414.72	9087.2	PCB_top	8000	15600
+Net_44  Pkg_M1	8414.72	9237.5	PCB_top	8000	15600
+Net_45  Pkg_M1	8683.64	9087.2	PCB_top	13374	13374
+Net_46  Pkg_M1	8683.64	9237.5	PCB_top	13374	13374
+Net_47      Pkg_M1	9387.71	6933.95	PCB_top	13374	2626
+Net_48   Pkg_M1	7183.7	6745.22	PCB_top	2626	2626
+Net_49   Pkg_M1	7183.7	6910.82	PCB_top	2626	2626
+Net_50   Pkg_M1	7349.3	6745.22	PCB_top	2626	2626
+Net_51   Pkg_M1	7349.3	6910.82	PCB_top	2626	2626
+Net_52         Pkg_M1	6482.6	6910.82	PCB_top	2626	2626
+Net_53         Pkg_M1	7514.9	6910.82	PCB_top	2626	2626
+Net_54  Pkg_M1	7955.81	6783.65	PCB_top	8000	400
+Net_55    Pkg_M1	7955.81	6933.95	PCB_top	8000	400
+Net_56    Pkg_M1	8242.19	6933.95	PCB_top	8000	400
+Net_57    Pkg_M1	8099	6858.8	PCB_top	8000	400
+Net_58    Pkg_M1	8385.38	6708.5	PCB_top	8000	400
+Net_59   Pkg_M1	8242.19	6783.65	PCB_top	8000	400
+Net_60   Pkg_M1	8099	6708.5	PCB_top	8000	400
+Net_61 Pkg_M1	8671.76	6708.5	PCB_top	13374	2626
+Net_62    Pkg_M1	6318.8	8335.7	PCB_top	400	8000
+Net_63      Pkg_M1	6318.8	8185.4	PCB_top	400	8000
+Net_64 Pkg_M1	9101.33	6933.95	PCB_top	13374	2626
+Net_65 Pkg_M1	9244.52	6708.5	PCB_top	13374	2626
+Net_66 Pkg_M1	6318.8	8035.1	PCB_top	400	8000
+Net_67 Pkg_M1	9244.52	6858.8	PCB_top	13374	2626
+Net_68 Pkg_M1	7812.62	6708.5	PCB_top	8000	400
+Net_69     Pkg_M1	9530.9	6858.8	PCB_top	13374	2626
+Net_70     Pkg_M1	9681.2	6984.8	PCB_top	13374	2626
+Net_71 Pkg_M1	9574.82	8706.5	PCB_top	13374	13374
+Net_72 Pkg_M1	7845.92	9237.5	PCB_top	8000	15600
+Net_73 Pkg_M1	7845.92	9087.2	PCB_top	8000	15600
+Net_74 Pkg_M1	8154.08	9237.5	PCB_top	8000	15600
+Net_75 Pkg_M1	8154.08	9087.2	PCB_top	8000	15600
+Net_76 Pkg_M1	9101.33	6783.65	PCB_top	13374	2626
+Net_77 Pkg_M1	8958.14	6708.5	PCB_top	13374	2626
+Net_78    Pkg_M1	8948.42	9087.2	PCB_top	13374	13374
+Net_79    Pkg_M1	8948.42	9237.5	PCB_top	13374	13374
+end_nets
+
+#
+# Specify 8 pin-swappable zones that are arcs of a circle in the north, south, east,
+# west, NE, NW, SE, and SW. Each arc subtends 45 degrees. 
+#
+pin_swap     PCB_top  CIR    8000  8000     7650  // Circle at center of PCB with 7650 um radius
+no_pin_swap  PCB_top  CIR    8000  8000     7550  // Anti-circle at PCB center with 7550 um radius
+no_pin_swap  PCB_top  RECT      0  4900    16000  5000 // Horizontal anti-line to break up circle
+no_pin_swap  PCB_top  RECT      0 11000    16000 11100 // Horizontal anti-line to break up circle
+no_pin_swap  PCB_top  RECT   4900     0     5000 16000 // Vertical anti-line to break up circle
+no_pin_swap  PCB_top  RECT  11000     0    11100 16000 // Vertical anti-line to break up circle
+
+
+
+#
+# Optional: Tell the auto-router which areas are off-limits (keep-out
+#           zones.
+# 
+# Specify which areas on each layer to block from routing. By default, all areas
+# are routable. Use the following BLOCK or UNBLOCK statements to define 
+# unroutable areas. All coordinates are in microns, relative to the lower-left
+# corner.
+#
+#  BLOCK RECT <layer name> X1 Y1 X2 Y2 // Block the rectangle defined by 
+#                                      // (x1, y1) and (x2, y2)
+#
+#  BLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Block triangle defined by 
+#                                            // 3 x/y coordinates
+#
+#  BLOCK CIR  <layer name> X Y R  // Block circle defined by center (x,y) and 
+#                                 // radius R
+#
+#  BLOCK ALL <layer name>         // Block all cells on layer <layer name>
+#
+#  UNBLOCK RECT <layer name> X1 Y1 X2 Y2 // Unblock the rectangle defined by 
+#                                        // (x1, y1) and (x2, y2)
+#
+#  UNBLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Unblock triangle defined 
+#                                              // by 3 x/y coordinates
+#
+#  UNBLOCK CIR  <layer name> X Y R  // Unblock circle defined by center (x,y) 
+#                                   // and radius R
+#
+#  UNBLOCK ALL <layer name>         // Unblock all cells on layer <layer name> 
+#
+# As an example, to create a keep-out zone on the perimeter of layer M1,
+# use the folowing two commands:
+#
+#    BLOCK ALL M1                    // Block all of M1
+#    UNBLOCK RECT M1 20 20 16.8 16.8 // Unblock a large rectangle in middle of M1
+#
+
+#
+# Block all routing layers in package outside of 8x8mm package outline. Within the
+# package outline, define 300um keep-out zone at the package edge.
+#
+BLOCK ALL Pkg_M1
+BLOCK ALL Pkg_M2
+BLOCK ALL Pkg_M3
+BLOCK ALL Pkg_M4
+UNBLOCK RECT Pkg_M1 4300 4300 11700 11700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M2 4300 4300 11700 11700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M3 4300 4300 11700 11700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M4 4300 4300 11700 11700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+#
+# End of package outline definition
+#
+
+#
+# Create the BGA pattern on layers BGA and PCB:
+#
+BLOCK   RECT BGA  4000 4000 12000 12000  // Block BGA layer under package, and then unblock circles for BGAs
+UNBLOCK CIR BGA 	9500	10000	180 // 360-micron diameter is sufficient for BGA pad with diameter of 330um
+UNBLOCK CIR BGA 	8000	10500	180
+UNBLOCK CIR BGA 	5500	8000	180
+UNBLOCK CIR BGA 	5500	6500	180
+UNBLOCK CIR BGA 	10500	5500	180
+UNBLOCK CIR BGA 	5000	9000	180
+UNBLOCK CIR BGA 	4500	9000	180
+UNBLOCK CIR BGA 	9500	4500	180
+UNBLOCK CIR BGA 	10000	5000	180
+UNBLOCK CIR BGA 	10000	4500	180
+UNBLOCK CIR BGA 	10500	7000	180
+UNBLOCK CIR BGA 	7000	5000	180
+UNBLOCK CIR BGA 	7000	4500	180
+UNBLOCK CIR BGA 	8000	9500	180
+UNBLOCK CIR BGA 	11000	8000	180
+UNBLOCK CIR BGA 	11500	8000	180
+UNBLOCK CIR BGA 	10500	8500	180
+UNBLOCK CIR BGA 	10500	9000	180
+UNBLOCK CIR BGA 	10500	7500	180
+UNBLOCK CIR BGA 	10500	8000	180
+UNBLOCK CIR BGA 	11000	9000	180
+UNBLOCK CIR BGA 	11500	9000	180
+UNBLOCK CIR BGA 	11500	6000	180
+UNBLOCK CIR BGA 	10500	5000	180
+UNBLOCK CIR BGA 	11000	4500	180
+UNBLOCK CIR BGA 	11000	5000	180
+UNBLOCK CIR BGA 	4500	5500	180
+UNBLOCK CIR BGA 	4500	6000	180
+UNBLOCK CIR BGA 	11000	7000	180
+UNBLOCK CIR BGA 	8000	6000	180
+UNBLOCK CIR BGA 	5000	7000	180
+UNBLOCK CIR BGA 	4500	10500	180
+UNBLOCK CIR BGA 	4500	10000	180
+UNBLOCK CIR BGA 	5000	11000	180
+UNBLOCK CIR BGA 	5000	11500	180
+UNBLOCK CIR BGA 	11000	11000	180
+UNBLOCK CIR BGA 	11000	11500	180
+UNBLOCK CIR BGA 	11500	10500	180
+UNBLOCK CIR BGA 	11500	10000	180
+UNBLOCK CIR BGA 	6000	11500	180
+UNBLOCK CIR BGA 	6000	11000	180
+UNBLOCK CIR BGA 	7000	11000	180
+UNBLOCK CIR BGA 	7000	11500	180
+UNBLOCK CIR BGA 	9000	11000	180
+UNBLOCK CIR BGA 	9000	11500	180
+UNBLOCK CIR BGA 	10000	11500	180
+UNBLOCK CIR BGA 	10000	11000	180
+UNBLOCK CIR BGA 	10500	6000	180
+UNBLOCK CIR BGA 	5000	4500	180
+UNBLOCK CIR BGA 	5000	5000	180
+UNBLOCK CIR BGA 	6000	4500	180
+UNBLOCK CIR BGA 	6000	5000	180
+UNBLOCK CIR BGA 	6000	7000	180
+UNBLOCK CIR BGA 	6000	6000	180
+UNBLOCK CIR BGA 	8000	5000	180
+UNBLOCK CIR BGA 	7500	5000	180
+UNBLOCK CIR BGA 	8500	5000	180
+UNBLOCK CIR BGA 	9000	5000	180
+UNBLOCK CIR BGA 	9500	5000	180
+UNBLOCK CIR BGA 	8000	4500	180
+UNBLOCK CIR BGA 	8500	4500	180
+UNBLOCK CIR BGA 	9000	5500	180
+UNBLOCK CIR BGA 	4500	8000	180
+UNBLOCK CIR BGA 	5000	8000	180
+UNBLOCK CIR BGA 	9000	6000	180
+UNBLOCK CIR BGA 	10000	5500	180
+UNBLOCK CIR BGA 	4500	7000	180
+UNBLOCK CIR BGA 	10000	6000	180
+UNBLOCK CIR BGA 	8000	5500	180
+UNBLOCK CIR BGA 	10500	6500	180
+UNBLOCK CIR BGA 	11500	7000	180
+UNBLOCK CIR BGA 	10500	10000	180
+UNBLOCK CIR BGA 	7500	11000	180
+UNBLOCK CIR BGA 	7500	11500	180
+UNBLOCK CIR BGA 	8500	11000	180
+UNBLOCK CIR BGA 	8500	11500	180
+UNBLOCK CIR BGA 	11000	6000	180
+UNBLOCK CIR BGA 	11500	5000	180
+UNBLOCK CIR BGA 	6500	10000	180
+UNBLOCK CIR BGA 	5500	10000	180
+UNBLOCK CIR BGA 	6500	10000	180
+UNBLOCK CIR BGA 	5500	10000	180
+# End of BGA pattern definition for layer 'BGA'
+
+
+#
+# Create pattern for blocking vias directly above BGA balls (no via-in-pad)
+#
+BLOCK CIR V3-4 	9500	10000	165
+BLOCK CIR V3-4 	8000	10500	165
+BLOCK CIR V3-4 	5500	8000	165
+BLOCK CIR V3-4 	5500	6500	165
+BLOCK CIR V3-4 	10500	5500	165
+BLOCK CIR V3-4 	5000	9000	165
+BLOCK CIR V3-4 	4500	9000	165
+BLOCK CIR V3-4 	9500	4500	165
+BLOCK CIR V3-4 	10000	5000	165
+BLOCK CIR V3-4 	10000	4500	165
+BLOCK CIR V3-4 	10500	7000	165
+BLOCK CIR V3-4 	7000	5000	165
+BLOCK CIR V3-4 	7000	4500	165
+BLOCK CIR V3-4 	8000	9500	165
+BLOCK CIR V3-4 	11000	8000	165
+BLOCK CIR V3-4 	11500	8000	165
+BLOCK CIR V3-4 	10500	8500	165
+BLOCK CIR V3-4 	10500	9000	165
+BLOCK CIR V3-4 	10500	7500	165
+BLOCK CIR V3-4 	10500	8000	165
+BLOCK CIR V3-4 	11000	9000	165
+BLOCK CIR V3-4 	11500	9000	165
+BLOCK CIR V3-4 	11500	6000	165
+BLOCK CIR V3-4 	10500	5000	165
+BLOCK CIR V3-4 	11000	4500	165
+BLOCK CIR V3-4 	11000	5000	165
+BLOCK CIR V3-4 	4500	5500	165
+BLOCK CIR V3-4 	4500	6000	165
+BLOCK CIR V3-4 	11000	7000	165
+BLOCK CIR V3-4 	8000	6000	165
+BLOCK CIR V3-4 	5000	7000	165
+BLOCK CIR V3-4 	4500	10500	165
+BLOCK CIR V3-4 	4500	10000	165
+BLOCK CIR V3-4 	5000	11000	165
+BLOCK CIR V3-4 	5000	11500	165
+BLOCK CIR V3-4 	11000	11000	165
+BLOCK CIR V3-4 	11000	11500	165
+BLOCK CIR V3-4 	11500	10500	165
+BLOCK CIR V3-4 	11500	10000	165
+BLOCK CIR V3-4 	6000	11500	165
+BLOCK CIR V3-4 	6000	11000	165
+BLOCK CIR V3-4 	7000	11000	165
+BLOCK CIR V3-4 	7000	11500	165
+BLOCK CIR V3-4 	9000	11000	165
+BLOCK CIR V3-4 	9000	11500	165
+BLOCK CIR V3-4 	10000	11500	165
+BLOCK CIR V3-4 	10000	11000	165
+BLOCK CIR V3-4 	10500	6000	165
+BLOCK CIR V3-4 	5000	4500	165
+BLOCK CIR V3-4 	5000	5000	165
+BLOCK CIR V3-4 	6000	4500	165
+BLOCK CIR V3-4 	6000	5000	165
+BLOCK CIR V3-4 	6000	7000	165
+BLOCK CIR V3-4 	6000	6000	165
+BLOCK CIR V3-4 	8000	5000	165
+BLOCK CIR V3-4 	7500	5000	165
+BLOCK CIR V3-4 	8500	5000	165
+BLOCK CIR V3-4 	9000	5000	165
+BLOCK CIR V3-4 	9500	5000	165
+BLOCK CIR V3-4 	8000	4500	165
+BLOCK CIR V3-4 	8500	4500	165
+BLOCK CIR V3-4 	9000	5500	165
+BLOCK CIR V3-4 	4500	8000	165
+BLOCK CIR V3-4 	5000	8000	165
+BLOCK CIR V3-4 	9000	6000	165
+BLOCK CIR V3-4 	10000	5500	165
+BLOCK CIR V3-4 	4500	7000	165
+BLOCK CIR V3-4 	10000	6000	165
+BLOCK CIR V3-4 	8000	5500	165
+BLOCK CIR V3-4 	10500	6500	165
+BLOCK CIR V3-4 	11500	7000	165
+BLOCK CIR V3-4 	10500	10000	165
+BLOCK CIR V3-4 	7500	11000	165
+BLOCK CIR V3-4 	7500	11500	165
+BLOCK CIR V3-4 	8500	11000	165
+BLOCK CIR V3-4 	8500	11500	165
+BLOCK CIR V3-4 	11000	6000	165
+BLOCK CIR V3-4 	11500	5000	165
+BLOCK CIR V3-4 	6500	10000	165
+BLOCK CIR V3-4 	5500	10000	165
+BLOCK CIR V3-4 	6500	10000	165
+BLOCK CIR V3-4 	5500	10000	165
+# End of pattern for blocking vias directly above BGA balls (no via-in-pad)
+
+#
+# Optional: Tell the auto-router to avoid certain areas if possible. First,
+#           define cost-multipliers (e.g., 2x, 3x). Second, define which
+#           areas/zones to apply these cost-multipliers.
+# 
+# Define cost-multipliers for traces and vias. Valid values for
+# <multiplier index> are 1 to 15 for traces, and 1 to 7 for vias.  
+#
+#  trace_cost_multipliter  <multiplier index>     <multiplier value>
+#    via_cost_multipliter  <multiplier index>     <multiplier value>
+trace_cost_multiplier             1                      2
+trace_cost_multiplier             2                      4  // Not used
+trace_cost_multiplier             3                      5
+trace_cost_multiplier             4                     10  // Not used
+
+via_cost_multiplier               1                      2  // Not used
+via_cost_multiplier               2                      3  // Not used
+via_cost_multiplier               3                      4  // Not used
+
+#
+# Define locations of high-cost zones for traces and vias. 
+#
+# trace_cost_zone   <trace mult. index>     <rout. layer name>   <ALL|RECT|CIR|TRI>
+#   via_cost_zone     <via mult. index>       <via layer name>   <ALL|RECT|CIR|TRI>
+
+# Avoid routing on M1 in rectangle directly beneath center of die, where
+# power and ground C4s are located.
+trace_cost_zone              1                  Pkg_M1           RECT   6800  7600    9000  8700
+
+# Avoid routing on package layers M2 and M3, which are used for power/ground planes
+trace_cost_zone              1                  Pkg_M2           ALL  // 2x cost-multiplier
+trace_cost_zone              1                  Pkg_M3           ALL  // 2x cost-multiplier
+
+# Limit routing on package layers M4, which is used for BGAs and ground plane
+trace_cost_zone              3                  Pkg_M4           ALL  // 5x cost-multiplier
+
+# Don't route on PCB layer:
+# trace_cost_zone              4                  PCB_top          ALL  // 10x cost-multiplier
+
+
+
+#
+# Design rules: Specify up to 15 design-rule sets. Later, we'll define
+#               where each set is used in the design.
+# 
+# Syntax is:
+#   design_rule_set  <DR set name (no spaces)>   <DR set description>
+#     line_width        = ___ // in microns
+#     line_spacing      = ___ // in microns  
+#     via_up_diameter   = ___ // in microns
+#     via_down_diameter = ___ // in microns
+#     via_up_to_trace_spacing      = ___ // in microns
+#     via_down_to_trace_spacing    = ___ // in microns
+#     via_up_to_via_up_spacing     = ___ // in microns
+#     via_down_to_via_down_spacing = ___ // in microns
+#     via_up_to_via_down_spacing   = ___ // in microns
+#   end_design_rule_set
+#
+design_rule_set Pkg_top_DRs   Design rules for top layer of package
+  line_width        = 20   // Minimum M1 linewidth is 15 um
+  line_spacing      = 20   // Minimum M1 trace-to-trace spacing is 15um
+  via_up_diameter   = 95   // M1 pad diameter is 95um
+  via_down_diameter = 95   // M1 pad diameter is 95um
+
+  via_up_to_trace_spacing      = 15  // M1 trace-to-pad spacing is 15um
+  via_down_to_trace_spacing    = 15  // M1 trace-to-pad spacing is 15um
+  via_up_to_via_up_spacing     = 40  // M1 via pad-to-pad spacing is 40
+  via_down_to_via_down_spacing = 40  // M1 via pad-to-pad spacing is 40
+  via_up_to_via_down_spacing   = 40  // M1 via pad-to-pad spacing is 40
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set Pkg_M2_DRs   Design rules for package M2 layer
+  line_width        = 50   // Minimum M2/M3 linewidth is 50 um
+  line_spacing      = 50   // Minimum M2/M3 trace-to-trace spacing is 50um
+  via_up_diameter   = 215  // M2 land diameter is 215um for M2-to-M3 vias
+  via_down_diameter = 100  // M2 land diameter is 100um for M1-to-M2 vias
+
+  via_up_to_trace_spacing      = 50  // M2 trace-to-pad spacing is 50um
+  via_down_to_trace_spacing    = 50  // M2 trace-to-pad spacing is 50um
+  via_up_to_via_up_spacing     = 50  // M2 via pad-to-pad spacing is 50
+  via_down_to_via_down_spacing = 50  // M2 via pad-to-pad spacing is 50
+  via_up_to_via_down_spacing   = 50  // M2 via pad-to-pad spacing is 50
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set Pkg_M3_DRs   Design rules for package M3 layer
+  line_width        = 50   // Minimum M2/M3 linewidth is 50 um
+  line_spacing      = 50   // Minimum M2/M3 trace-to-trace spacing is 50um
+  via_up_diameter   = 100  // M3 land diameter is 100um for M3-to-M4 vias
+  via_down_diameter = 215  // M3 land diameter is 215um for M2-to-M3 vias
+
+  via_up_to_trace_spacing      = 65  // M3 trace-to-pad spacing is 65um
+  via_down_to_trace_spacing    = 65  // M3 trace-to-pad spacing is 65um
+  via_up_to_via_up_spacing     = 50  // M3 via pad-to-pad spacing is 50
+  via_down_to_via_down_spacing = 50  // M3 via pad-to-pad spacing is 50
+  via_up_to_via_down_spacing   = 50  // M3 via pad-to-pad spacing is 50
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set Pkg_bottom_DRs   Design rules for bottom package layer  
+  line_width        = 30   // Minimum linewidth on bottom is 30um
+  line_spacing      = 60   // Minimum linewidth on bottom is 60um
+  via_up_diameter   = 330  // BGA pad diameter is 330um
+  via_down_diameter = 95   // M4 land diameter is 95um for M3-to-M4 vias
+
+  via_up_to_trace_spacing      =  50 // Minimum M4 trace-to-BGA-pad spacing is 50um
+  via_down_to_trace_spacing    =  30 // Minimum M4 trace-to-pad spacing is 30um
+  via_up_to_via_up_spacing     = 155 // Minimum BGA pad-to-pad spacing is 170um
+  via_down_to_via_down_spacing = 175 // Minimum M4 pad-to-pad spacing is ~175um for M3-to-M4 vias
+  via_up_to_via_down_spacing   =  35 // Minimum BGA pad-to-via pad spacing is ~35um
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set PCB_top_DRs    Design rules for top PCB layer  
+  line_width        = 100  // Guess
+  line_spacing      = 100  // Guess
+  via_up_diameter   = 100  // Not applicable for single-layer PCB
+  via_down_diameter = 330  // Matches BGA pad diameter, which is 330um
+
+  via_up_to_trace_spacing      = 100 // Not applicable for single-layer PCB
+  via_down_to_trace_spacing    = 100 // Guess
+  via_up_to_via_up_spacing     = 100 // Not applicable for single-layer PCB
+  via_down_to_via_down_spacing = 155 // BGA pad-to-pad spacing is 170 um
+  via_up_to_via_down_spacing   = 100 // Not applicable for single-layer PCB
+end_design_rule_set   // End of design rule set
+
+
+############ Define define-rule zones: #####################
+##
+## Specify which areas on each layer will use each design-rule set.
+## All coordinates are in microns.
+##
+##  DR_zone <DR name> <layer name>  RECT  X1 Y1 X2 Y2 // Use DR set 'DR name' in
+##                                                    // rectangle defined by
+##                                                    // (x1, y1) and (x2, y2)
+##                                                    // on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> TRI  X1 Y1 X2 Y2 X2 Y3 // User DR set 'DR name'
+##                                                        // in triangle defined by
+##                                                        // 3 x/y coordinates on
+##                                                        // layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> CIR  X Y R  // Use DR set 'DR name' in circle
+##                                             // defined by center (x,y) and radius
+##                                             // R on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> ALL      // Use DR set 'DR name' on all cells
+##                                          // on layer <layer name>.
+##
+#         Design Rule         Layer
+#             Name            Name      Layer coordinates
+#         -----------         -------   ----------------------
+DR_zone   Pkg_top_DRs         Pkg_M1    ALL
+DR_zone   Pkg_M2_DRs          Pkg_M2    ALL
+DR_zone   Pkg_M3_DRs          Pkg_M3    ALL
+DR_zone   Pkg_bottom_DRs      Pkg_M4    ALL
+DR_zone   PCB_top_DRs         PCB_top   ALL
+
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+#
+# The following parameters affect the final routed solution and run-time, but
+# should not be modified without extreme caution:
+#
+#
+
+# The parameter 'maxIterations' is the maximum number of iterations the program
+# will make to find a crossing-free solution.
+maxIterations = 200
+
+# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
+# solutions that program will find before deciding that it has found the
+# optimal solution.
+violationFreeThreshold = 50
+
+# The parameter 'vertCost' is the cost of routing up or down to a different
+# routing layer, i.e., the cost of a layer-to-layer via. The value is in
+# microns, and should be interpreted as half the trace-length that could be
+# avoided by adding a via to a different layer. If not specified, the default 
+# value is half the average dimension of the map (e.g., 5000um for a 10x10mm map).
+vertCost  = 4000   // in microns of equivalent trace length

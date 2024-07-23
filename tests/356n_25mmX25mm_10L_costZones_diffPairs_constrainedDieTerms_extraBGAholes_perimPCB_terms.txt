@@ -1,0 +1,3472 @@
+#12345678901234567890123456789012345678901234567890123456789012345678901234567890
+# Any line that begins with a '#' character is a comment and is disregarded by
+# the auto-router program. Blank lines are allowed. Use them to add clarity to 
+# the input file.
+#
+# You can add additional comments following two consecutive slash characters:
+# grid_resolution = 5  // 5 micron grid is fine enough for 20um line/space
+#
+
+
+# Specify the dimension in microns of the grid that the auto-router will use.
+# Use a dimension that is less than one half to one quarter of the smallest
+# linewidth or spacing in the design.
+grid_resolution = 20  // in microns
+
+# Specify the dimensions in millimeters of the grid:
+width  = 25  // in millimeters
+height = 25  // in millimeters
+
+# Specify the number of routing layers. Typical values are 1, 2, 4, 6, and 8.
+number_layers = 10
+
+# Specify the name of each routing layer and (for multiple layers) the name
+# of each intervening via layer. Examples:
+# 
+#   layer_names = M1 V1-2 M2 V2-3 M3 V3-4 M4  // For 4-layer substrate
+#   layer_names = M   // for single-layer
+#
+layer_names = Die_top Pass_via UBM C4 Pkg_M1 V1-2 Pkg_M2 V2-3 Pkg_M3 V3-4 Pkg_M4 V4-5 Pkg_M5 BGA PCB_M1 VPCB1-2 PCB_M2 VPCB2-3 PCB_M3
+
+#
+# Specify the origin that the start/end-locations are relative to. Allowed 
+# values are: center, lower_left, upper_left, lower_right, upper_right
+#
+origin = lower_left
+
+
+#
+# Specify the pin-swappable zone on the PCB layers. A thin square swap-zone is
+# created far enough away from the map's perimeter so that pseudo-terminals are
+# located at least half a pseudo-net's linewidth from the map's edge. (If we 
+# placed the swap-zone closer to the map's perimeter, routing would be disallowed
+# because of the close proximity to the map's edge.)
+#
+pin_swap      PCB_M1   RECT  200 200      24800  24800
+pin_swap      PCB_M2   RECT  200 200      24800  24800
+pin_swap      PCB_M3   RECT  200 200      24800  24800
+no_pin_swap   PCB_M1   RECT  240 240      24760  24760
+no_pin_swap   PCB_M2   RECT  240 240      24760  24760
+no_pin_swap   PCB_M3   RECT  240 240      24760  24760
+#
+# End of statements for defining swap-zones on PCB layers
+#
+
+
+#
+# Specify the start- and end-locations of the paths to be routed. Dimensions are
+# in microns, relative to the origin specified with the 'origin' statement.
+# Start- and End-Layers are specified using the names from the 'layer_names'
+# statement.
+#
+start_nets
+# Net                 Start   Start    Start        End     End    End    Net-specific     Diff Pair Partner
+# Name                Layer     X        Y         Layer     X      Y     Rule (optional)  (optional)
+# -----------------  ------- -------- --------    -------  -----  -----   ---------------  -----------------
+Net_0     Die_top    12110.84    16230    PCB_M1    220    220        
+Net_1        Die_top    9351.5    15131.59    PCB_M1    220    220    PWR_GND    
+Net_2      Die_top    15648.5    12160    PCB_M1    220    220    PWR_GND    
+Net_3        Die_top    9351.5    14721.1    PCB_M1    220    220    PWR_GND    
+Net_4            Die_top    11747.6    8770    PCB_M1    220    220    PWR_GND    
+Net_5            Die_top    13607.9    8770    PCB_M1    220    220    PWR_GND    
+Net_6          Die_top    14974.64    16230    PCB_M1    220    220        
+Net_7      Die_top    11681.27    16230    PCB_M1    220    220        
+Net_8    Die_top    9351.5    13530.59    PCB_M1    220    220        
+Net_9    Die_top    9351.5    13490.59    PCB_M1    220    220        
+Net_10   Die_top    9351.5    13450.59    PCB_M1    220    220        
+Net_11   Die_top    9351.5    13410.59    PCB_M1    220    220        
+Net_12  Die_top    9351.5    13681.99    PCB_M1    220    220    PWR_GND    
+Net_13     Die_top    15648.5    11480    PCB_M1    220    220        
+Net_14     Die_top    15648.5    11620    PCB_M1    220    220        
+Net_15     Die_top    15648.5    11560    PCB_M1    220    220        
+Net_16     Die_top    15648.5    11920    PCB_M1    220    220        
+Net_17     Die_top    15648.5    11860    PCB_M1    220    220        
+Net_18     Die_top    15648.5    12430    PCB_M1    220    220        
+Net_19     Die_top    15648.5    12280    PCB_M1    220    220        
+Net_20     Die_top    15648.5    12470    PCB_M1    220    220        
+Net_21     Die_top    15648.5    12220    PCB_M1    220    220        
+Net_22     Die_top    15648.5    12590    PCB_M1    220    220        
+Net_23     Die_top    15648.5    11440    PCB_M1    220    220        
+Net_24     Die_top    15648.5    12550    PCB_M1    220    220        
+Net_25     Die_top    15648.5    12510    PCB_M1    220    220        
+Net_26     Die_top    15648.5    9080    PCB_M1    220    220        
+Net_27     Die_top    15648.5    15151.54    PCB_M1    220    220        
+Net_28     Die_top    15648.5    15111.54    PCB_M1    220    220        
+Net_29            Die_top    15648.5    11800    PCB_M1    220    220        
+Net_30          Die_top    15648.5    11520    PCB_M1    220    220        
+Net_31     Die_top    15648.5    11400    PCB_M1    220    220        
+Net_32     Die_top    15648.5    11360    PCB_M1    220    220        
+Net_33     Die_top    15648.5    15071.54    PCB_M1    220    220        
+Net_34       Die_top    15648.5    9380    PCB_M1    220    220        
+Net_35_P   Die_top    15648.5    12670    PCB_M1    220    220    100_ohm Net_36_N
+Net_36_N     Die_top    15648.5    12630    PCB_M1    220    220    100_ohm Net_35_P
+Net_37_P   Die_top    15648.5    12380    PCB_M1    220    220    100_ohm Net_38_N
+Net_38_N     Die_top    15648.5    12340    PCB_M1    220    220    100_ohm Net_37_P
+Net_39      Die_top    15648.5    15231.54    PCB_M1    220    220        
+Net_40      Die_top    15648.5    15191.54    PCB_M1    220    220        
+Net_41       Die_top    15648.5    9320    PCB_M1    220    220        
+Net_42       Die_top    15648.5    8960    PCB_M1    220    220        
+Net_43       Die_top    15648.5    9260    PCB_M1    220    220        
+Net_44       Die_top    15648.5    8900    PCB_M1    220    220        
+Net_45      Die_top    15648.5    11740    PCB_M1    220    220        
+Net_46      Die_top    15648.5    11680    PCB_M1    220    220        
+Net_47     Die_top    15648.5    14751.54    PCB_M1    220    220        
+Net_48     Die_top    15648.5    14311.54    PCB_M1    220    220        
+Net_49     Die_top    15648.5    13871.54    PCB_M1    220    220        
+Net_50     Die_top    15648.5    13360    PCB_M1    220    220        
+Net_51     Die_top    15648.5    11030    PCB_M1    220    220        
+Net_52     Die_top    15648.5    10580    PCB_M1    220    220        
+Net_53     Die_top    15648.5    10130    PCB_M1    220    220        
+Net_54     Die_top    15648.5    9620    PCB_M1    220    220        
+Net_55     Die_top    15648.5    12840    PCB_M1    220    220        
+Net_56      Die_top    15648.5    15031.54    PCB_M1    220    220        
+Net_57      Die_top    15648.5    14991.54    PCB_M1    220    220        
+Net_58      Die_top    15648.5    14951.54    PCB_M1    220    220        
+Net_59      Die_top    15648.5    14831.54    PCB_M1    220    220        
+Net_60      Die_top    15648.5    14791.54    PCB_M1    220    220        
+Net_61      Die_top    15648.5    14711.54    PCB_M1    220    220        
+Net_62      Die_top    15648.5    14671.54    PCB_M1    220    220        
+Net_63      Die_top    15648.5    14631.54    PCB_M1    220    220        
+Net_64      Die_top    15648.5    14591.54    PCB_M1    220    220        
+Net_65      Die_top    15648.5    14551.54    PCB_M1    220    220        
+Net_66      Die_top    15648.5    14511.54    PCB_M1    220    220        
+Net_67      Die_top    15648.5    14391.54    PCB_M1    220    220        
+Net_68      Die_top    15648.5    14351.54    PCB_M1    220    220        
+Net_69      Die_top    15648.5    14271.54    PCB_M1    220    220        
+Net_70      Die_top    15648.5    14231.54    PCB_M1    220    220        
+Net_71      Die_top    15648.5    14191.54    PCB_M1    220    220        
+Net_72      Die_top    15648.5    14151.54    PCB_M1    220    220        
+Net_73      Die_top    15648.5    14111.54    PCB_M1    220    220        
+Net_74      Die_top    15648.5    14071.54    PCB_M1    220    220        
+Net_75      Die_top    15648.5    13951.54    PCB_M1    220    220        
+Net_76      Die_top    15648.5    13911.54    PCB_M1    220    220        
+Net_77      Die_top    15648.5    13831.54    PCB_M1    220    220        
+Net_78      Die_top    15648.5    13791.54    PCB_M1    220    220        
+Net_79      Die_top    15648.5    13751.54    PCB_M1    220    220        
+Net_80      Die_top    15648.5    13711.54    PCB_M1    220    220        
+Net_81      Die_top    15648.5    13671.54    PCB_M1    220    220        
+Net_82      Die_top    15648.5    13631.54    PCB_M1    220    220        
+Net_83      Die_top    15648.5    13490    PCB_M1    220    220        
+Net_84      Die_top    15648.5    13420    PCB_M1    220    220        
+Net_85      Die_top    15648.5    13300    PCB_M1    220    220        
+Net_86      Die_top    15648.5    13240    PCB_M1    220    220        
+Net_87      Die_top    15648.5    13180    PCB_M1    220    220        
+Net_88      Die_top    15648.5    11320    PCB_M1    220    220        
+Net_89      Die_top    15648.5    11280    PCB_M1    220    220        
+Net_90      Die_top    15648.5    11240    PCB_M1    220    220        
+Net_91      Die_top    15648.5    11110    PCB_M1    220    220        
+Net_92      Die_top    15648.5    11070    PCB_M1    220    220        
+Net_93      Die_top    15648.5    10990    PCB_M1    220    220        
+Net_94      Die_top    15648.5    10950    PCB_M1    220    220        
+Net_95      Die_top    15648.5    10910    PCB_M1    220    220        
+Net_96      Die_top    15648.5    10870    PCB_M1    220    220        
+Net_97      Die_top    15648.5    10830    PCB_M1    220    220        
+Net_98      Die_top    15648.5    10790    PCB_M1    220    220        
+Net_99      Die_top    15648.5    10660    PCB_M1    220    220        
+Net_100     Die_top    15648.5    10620    PCB_M1    220    220        
+Net_101     Die_top    15648.5    10540    PCB_M1    220    220        
+Net_102     Die_top    15648.5    10500    PCB_M1    220    220        
+Net_103     Die_top    15648.5    10460    PCB_M1    220    220        
+Net_104     Die_top    15648.5    10420    PCB_M1    220    220        
+Net_105     Die_top    15648.5    10380    PCB_M1    220    220        
+Net_106     Die_top    15648.5    10340    PCB_M1    220    220        
+Net_107     Die_top    15648.5    10210    PCB_M1    220    220        
+Net_108     Die_top    15648.5    10170    PCB_M1    220    220        
+Net_109     Die_top    15648.5    10090    PCB_M1    220    220        
+Net_110     Die_top    15648.5    10050    PCB_M1    220    220        
+Net_111     Die_top    15648.5    10010    PCB_M1    220    220        
+Net_112     Die_top    15648.5    9970    PCB_M1    220    220        
+Net_113     Die_top    15648.5    9930    PCB_M1    220    220        
+Net_114     Die_top    15648.5    9890    PCB_M1    220    220        
+Net_115     Die_top    15648.5    9740    PCB_M1    220    220        
+Net_116     Die_top    15648.5    9680    PCB_M1    220    220        
+Net_117     Die_top    15648.5    9560    PCB_M1    220    220        
+Net_118     Die_top    15648.5    9500    PCB_M1    220    220        
+Net_119     Die_top    15648.5    9440    PCB_M1    220    220        
+Net_120_P   Die_top    15648.5    14911.54    PCB_M1    220    220    100_ohm Net_121_N
+Net_121_N     Die_top    15648.5    14871.54    PCB_M1    220    220    100_ohm Net_120_P
+Net_122_P   Die_top    15648.5    14471.54    PCB_M1    220    220    100_ohm Net_123_N
+Net_123_N     Die_top    15648.5    14431.54    PCB_M1    220    220    100_ohm Net_122_P
+Net_124_P   Die_top    15648.5    14031.54    PCB_M1    220    220    100_ohm Net_125_N
+Net_125_N     Die_top    15648.5    13991.54    PCB_M1    220    220    100_ohm Net_124_P
+Net_126_P   Die_top    15648.5    13570    PCB_M1    220    220    100_ohm Net_127_N
+Net_127_N     Die_top    15648.5    13530    PCB_M1    220    220    100_ohm Net_126_P
+Net_128_P   Die_top    15648.5    11190    PCB_M1    220    220    100_ohm Net_129_N
+Net_129_N     Die_top    15648.5    11150    PCB_M1    220    220    100_ohm Net_128_P
+Net_130_P   Die_top    15648.5    10740    PCB_M1    220    220    100_ohm Net_131_N
+Net_131_N     Die_top    15648.5    10700    PCB_M1    220    220    100_ohm Net_130_P
+Net_132_P   Die_top    15648.5    10290    PCB_M1    220    220    100_ohm Net_133_N
+Net_133_N     Die_top    15648.5    10250    PCB_M1    220    220    100_ohm Net_132_P
+Net_134_P   Die_top    15648.5    9840    PCB_M1    220    220    100_ohm Net_135_N
+Net_135_N     Die_top    15648.5    9800    PCB_M1    220    220    100_ohm Net_134_P
+Net_136_P   Die_top    15648.5    13120    PCB_M1    220    220    100_ohm Net_137_N
+Net_137_N     Die_top    15648.5    13080    PCB_M1    220    220    100_ohm Net_136_P
+Net_138     Die_top    15648.5    13040    PCB_M1    220    220        
+Net_139     Die_top    15648.5    13000    PCB_M1    220    220        
+Net_140     Die_top    15648.5    12960    PCB_M1    220    220        
+Net_141     Die_top    15648.5    12920    PCB_M1    220    220        
+Net_142     Die_top    15648.5    12880    PCB_M1    220    220        
+Net_143     Die_top    15648.5    12800    PCB_M1    220    220        
+Net_144     Die_top    15648.5    12760    PCB_M1    220    220        
+Net_145     Die_top    15648.5    12720    PCB_M1    220    220        
+Net_146     Die_top    15648.5    9020    PCB_M1    220    220        
+Net_147     Die_top    15648.5    8838.2    PCB_M1    220    220        
+Net_148      Die_top    15648.5    9200    PCB_M1    220    220        
+Net_149     Die_top    15648.5    12100    PCB_M1    220    220    PWR_GND    
+Net_150     Die_top    15648.5    9140    PCB_M1    220    220        
+Net_151   Die_top    15648.5    11980    PCB_M1    220    220        
+Net_152   Die_top    15648.5    12040    PCB_M1    220    220        
+Net_153_P      Die_top    11538.08    16230    PCB_M1    220    220    100_ohm Net_154_N
+Net_154_N        Die_top    11394.89    16230    PCB_M1    220    220    100_ohm Net_153_P
+Net_155 Die_top    9351.5    12463.39    PCB_M1    220    220    PWR_GND    
+Net_156        Die_top    9351.5    11716.19    PCB_M1    220    220        
+Net_157           Die_top    9351.5    12018.59    PCB_M1    220    220        
+Net_158       Die_top    9351.5    12169.79    PCB_M1    220    220        
+Net_159      Die_top    9351.5    11556.19    PCB_M1    220    220        
+Net_160     Die_top    9351.5    11978.59    PCB_M1    220    220        
+Net_161     Die_top    9351.5    12129.79    PCB_M1    220    220        
+Net_162     Die_top    9351.5    12089.79    PCB_M1    220    220        
+Net_163     Die_top    9351.5    11938.59    PCB_M1    220    220        
+Net_164      Die_top    9351.5    11516.19    PCB_M1    220    220        
+Net_165     Die_top    9351.5    11676.19    PCB_M1    220    220        
+Net_166     Die_top    9351.5    11858.59    PCB_M1    220    220        
+Net_167     Die_top    9351.5    11898.59    PCB_M1    220    220        
+Net_168     Die_top    9351.5    11818.59    PCB_M1    220    220        
+Net_169     Die_top    9351.5    11636.19    PCB_M1    220    220        
+Net_170      Die_top    9351.5    11596.19    PCB_M1    220    220        
+Net_171     Die_top    9351.5    11413.79    PCB_M1    220    220        
+Net_172      Die_top    9351.5    11262.59    PCB_M1    220    220        
+Net_173 Die_top    9351.5    14295.59    PCB_M1    220    220    PWR_GND    
+Net_174   Die_top    12397.22    16230    PCB_M1    220    220        
+Net_175   Die_top    11967.65    16230    PCB_M1    220    220        
+Net_176   Die_top    12254.03    16230    PCB_M1    220    220        
+Net_177   Die_top    11824.46    16230    PCB_M1    220    220        
+Net_178   Die_top    12150.84    16230    PCB_M1    220    220        
+Net_179          Die_top    15421.02    16230    PCB_M1    220    220        
+Net_180          Die_top    15587.4    16230    PCB_M1    220    220        
+Net_181  Die_top    15461.02    16230    PCB_M1    220    220        
+Net_182     Die_top    9351.5    10799.99    PCB_M1    220    220        
+Net_183     Die_top    9351.5    10759.99    PCB_M1    220    220        
+Net_184     Die_top    9351.5    10942.39    PCB_M1    220    220        
+Net_185     Die_top    9351.5    10719.99    PCB_M1    220    220        
+Net_186     Die_top    9351.5    10559.99    PCB_M1    220    220        
+Net_187     Die_top    12007.65    16230    PCB_M1    220    220        
+Net_188    Die_top    12843.6    16230    PCB_M1    220    220        
+Net_189    Die_top    12883.6    16230    PCB_M1    220    220        
+Net_190    Die_top    12683.6    16230    PCB_M1    220    220        
+Net_191    Die_top    13256.36    16230    PCB_M1    220    220        
+Net_192    Die_top    12923.6    16230    PCB_M1    220    220        
+Net_193    Die_top    12969.98    16230    PCB_M1    220    220        
+Net_194    Die_top    12723.6    16230    PCB_M1    220    220        
+Net_195    Die_top    13129.98    16230    PCB_M1    220    220        
+Net_196    Die_top    12540.41    16230    PCB_M1    220    220        
+Net_197    Die_top    13009.98    16230    PCB_M1    220    220        
+Net_198    Die_top    12580.41    16230    PCB_M1    220    220        
+Net_199    Die_top    13169.98    16230    PCB_M1    220    220        
+Net_200    Die_top    12763.6    16230    PCB_M1    220    220        
+Net_201    Die_top    13296.36    16230    PCB_M1    220    220        
+Net_202    Die_top    13049.98    16230    PCB_M1    220    220        
+Net_203    Die_top    12803.6    16230    PCB_M1    220    220        
+Net_204     Die_top    13829.12    16230    PCB_M1    220    220        
+Net_205     Die_top    13702.74    16230    PCB_M1    220    220        
+Net_206     Die_top    13209.98    16230    PCB_M1    220    220        
+Net_207     Die_top    13336.36    16230    PCB_M1    220    220        
+Net_208     Die_top    13376.36    16230    PCB_M1    220    220        
+Net_209     Die_top    13542.74    16230    PCB_M1    220    220        
+Net_210     Die_top    13582.74    16230    PCB_M1    220    220        
+Net_211     Die_top    13622.74    16230    PCB_M1    220    220        
+Net_212     Die_top    13662.74    16230    PCB_M1    220    220        
+Net_213     Die_top    13989.12    16230    PCB_M1    220    220        
+Net_214     Die_top    14029.12    16230    PCB_M1    220    220        
+Net_215     Die_top    13416.36    16230    PCB_M1    220    220        
+Net_216     Die_top    14115.5    16230    PCB_M1    220    220        
+Net_217     Die_top    13869.12    16230    PCB_M1    220    220        
+Net_218     Die_top    14155.5    16230    PCB_M1    220    220        
+Net_219     Die_top    14561.88    16230    PCB_M1    220    220        
+Net_220    Die_top    14688.26    16230    PCB_M1    220    220        
+Net_221     Die_top    14728.26    16230    PCB_M1    220    220        
+Net_222    Die_top    13909.12    16230    PCB_M1    220    220        
+Net_223     Die_top    15014.64    16230    PCB_M1    220    220        
+Net_224     Die_top    15261.02    16230    PCB_M1    220    220        
+Net_225      Die_top    13742.74    16230    PCB_M1    220    220        
+Net_226      Die_top    13456.36    16230    PCB_M1    220    220        
+Net_227      Die_top    14195.5    16230    PCB_M1    220    220        
+Net_228      Die_top    14768.26    16230    PCB_M1    220    220        
+Net_229          Die_top    13782.74    16230    PCB_M1    220    220        
+Net_230      Die_top    14848.26    16230    PCB_M1    220    220        
+Net_231     Die_top    13949.12    16230    PCB_M1    220    220        
+Net_232     Die_top    14258.69    16230    PCB_M1    220    220        
+Net_233     Die_top    14069.12    16230    PCB_M1    220    220        
+Net_234       Die_top    13496.36    16230    PCB_M1    220    220        
+Net_235      Die_top    14401.88    16230    PCB_M1    220    220        
+Net_236      Die_top    14441.88    16230    PCB_M1    220    220        
+Net_237   Die_top    14481.88    16230    PCB_M1    220    220        
+Net_238      Die_top    13089.98    16230    PCB_M1    220    220        
+Net_239      Die_top    14521.88    16230    PCB_M1    220    220        
+Net_240     Die_top    9351.5    12623.39    PCB_M1    220    220        
+Net_241     Die_top    9351.5    12765.79    PCB_M1    220    220        
+Net_242     Die_top    9351.5    12925.79    PCB_M1    220    220        
+Net_243     Die_top    9351.5    12423.39    PCB_M1    220    220        
+Net_244     Die_top    9351.5    12320.99    PCB_M1    220    220        
+Net_245     Die_top    9351.5    12280.99    PCB_M1    220    220        
+Net_246      Die_top    12437.22    16230    PCB_M1    220    220        
+Net_247 Die_top    11864.46    16230    PCB_M1    220    220        
+Net_248 Die_top    11721.27    16230    PCB_M1    220    220        
+Net_249 Die_top    9351.5    11373.79    PCB_M1    220    220        
+Net_250 Die_top    9351.5    11778.59    PCB_M1    220    220        
+Net_251 Die_top    9351.5    13993.19    PCB_M1    220    220        
+Net_252 Die_top    9351.5    12885.79    PCB_M1    220    220        
+Net_253      Die_top    12294.03    16230    PCB_M1    220    220        
+Net_254     Die_top    9351.5    14829.19    PCB_M1    220    220        
+Net_255     Die_top    9351.5    15011.59    PCB_M1    220    220        
+Net_256        Die_top    11761.27    16230    PCB_M1    220    220        
+RTC    Die_top    14808.26    16230    PCB_M1    220    220        
+Net_258        Die_top    12190.84    16230    PCB_M1    220    220        
+Net_259           Die_top    11212.1    8770    PCB_M1    220    220        
+Net_260           Die_top    13773.5    8770    PCB_M1    220    220        
+Net_261         Die_top    11664.8    8770    PCB_M1    220    220        
+Net_262         Die_top    11499.2    8770    PCB_M1    220    220        
+Net_263         Die_top    13525.1    8770    PCB_M1    220    220        
+Net_264         Die_top    13359.5    8770    PCB_M1    220    220        
+Net_265_N         Die_top    11396.4    8770    PCB_M1    220    220    50_ohm Net_266_P
+Net_266_P         Die_top    11436.4    8770    PCB_M1    220    220    50_ohm Net_265_N
+Net_267_N         Die_top    13276.7    8770    PCB_M1    220    220    50_ohm Net_268_P
+Net_268_P         Die_top    13316.7    8770    PCB_M1    220    220    50_ohm Net_267_N
+Net_269_N    Die_top    11913.2    8770    PCB_M1    220    220    50_ohm Net_270_P
+Net_270_P    Die_top    11953.2    8770    PCB_M1    220    220    50_ohm Net_269_N
+Net_271_N    Die_top    12410    8770    PCB_M1    220    220    50_ohm Net_272_P
+Net_272_P    Die_top    12450    8770    PCB_M1    220    220    50_ohm Net_271_N
+Net_273_N    Die_top    12575.6    8770    PCB_M1    220    220    50_ohm Net_274_P
+Net_274_P    Die_top    12615.6    8770    PCB_M1    220    220    50_ohm Net_273_N
+Net_275_N    Die_top    13072.4    8770    PCB_M1    220    220    50_ohm Net_276_P
+Net_276_P    Die_top    13112.4    8770    PCB_M1    220    220    50_ohm Net_275_N
+Net_277_N    Die_top    12078.8    8770    PCB_M1    220    220    50_ohm Net_278_P
+Net_278_P    Die_top    12118.8    8770    PCB_M1    220    220    50_ohm Net_277_N
+Net_279_N    Die_top    12244.4    8770    PCB_M1    220    220    50_ohm Net_280_P
+Net_280_P    Die_top    12284.4    8770    PCB_M1    220    220    50_ohm Net_279_N
+Net_281_N    Die_top    12741.2    8770    PCB_M1    220    220    50_ohm Net_282_P
+Net_282_P    Die_top    12781.2    8770    PCB_M1    220    220    50_ohm Net_281_N
+Net_283_N    Die_top    12906.8    8770    PCB_M1    220    220    50_ohm Net_284_P
+Net_284_P    Die_top    12946.8    8770    PCB_M1    220    220    50_ohm Net_283_N
+Net_285      Die_top    9351.5    14135.59    PCB_M1    220    220        
+Net_286     Die_top    9351.5    14526.79    PCB_M1    220    220        
+Net_287     Die_top    9351.5    14486.79    PCB_M1    220    220        
+Net_288      Die_top    9351.5    14255.59    PCB_M1    220    220        
+Net_289      Die_top    9351.5    14446.79    PCB_M1    220    220        
+Net_290      Die_top    9351.5    14215.59    PCB_M1    220    220        
+Net_291      Die_top    9351.5    14175.59    PCB_M1    220    220        
+Net_292    Die_top    9351.5    13953.19    PCB_M1    220    220        
+Net_293     Die_top    13256.36    14293.24    PCB_M1    220    220    PWR_GND    
+Net_294      Die_top    10025.36    9362.06    PCB_M1    220    220    PWR_GND    
+Net_295     Die_top    13399.55    14375.86    PCB_M1    220    220    PWR_GND    
+Net_296      Die_top    10168.55    9444.68    PCB_M1    220    220    PWR_GND    
+Net_297    Die_top    9351.5    13841.99    PCB_M1    220    220        
+Net_298      Die_top    9351.5    13913.19    PCB_M1    220    220        
+Net_299      Die_top    9351.5    13801.99    PCB_M1    220    220        
+Net_300      Die_top    9351.5    13761.99    PCB_M1    220    220        
+Net_301      Die_top    9351.5    13641.99    PCB_M1    220    220        
+Net_302     Die_top    9351.5    13721.99    PCB_M1    220    220        
+Net_303     Die_top    9351.5    13601.99    PCB_M1    220    220        
+Net_304   Die_top    11578.08    16230    PCB_M1    220    220        
+TCK    Die_top    15054.64    16230    PCB_M1    220    220        
+Net_306      Die_top    15501.02    16230    PCB_M1    220    220        
+Net_307        Die_top    15627.4    16230    PCB_M1    220    220        
+TDI    Die_top    15301.02    16230    PCB_M1    220    220        
+Net_309    Die_top    9351.5    13228.19    PCB_M1    220    220        
+Net_310       Die_top    9351.5    13068.19    PCB_M1    220    220        
+Net_311     Die_top    9351.5    12845.79    PCB_M1    220    220        
+Net_312       Die_top    9351.5    13188.19    PCB_M1    220    220        
+Net_313     Die_top    9351.5    13028.19    PCB_M1    220    220        
+Net_314    Die_top    9351.5    13370.59    PCB_M1    220    220        
+Net_315       Die_top    9351.5    13148.19    PCB_M1    220    220        
+Net_316     Die_top    9351.5    13108.19    PCB_M1    220    220        
+Net_317       Die_top    9351.5    13330.59    PCB_M1    220    220        
+Net_318     Die_top    9351.5    13290.59    PCB_M1    220    220        
+TDO    Die_top    15134.64    16230    PCB_M1    220    220        
+Net_320       Die_top    11904.46    16230    PCB_M1    220    220        
+Net_321   Die_top    9351.5    15216.82    PCB_M1    220    220        
+Net_322   Die_top    9351.5    14971.58    PCB_M1    220    220    PWR_GND    
+Net_323         Die_top    15341.02    16230    PCB_M1    220    220        
+TMS    Die_top    15094.64    16230    PCB_M1    220    220        
+Net_325   Die_top    15381.02    16230    PCB_M1    220    220        
+Net_326                 Die_top    9351.5    10679.99    PCB_M1    220    220        
+Net_327                 Die_top    9351.5    11102.39    PCB_M1    220    220        
+Net_328             Die_top    9351.5    11062.39    PCB_M1    220    220        
+Net_329              Die_top    9351.5    11022.39    PCB_M1    220    220        
+Net_330                 Die_top    9351.5    10519.99    PCB_M1    220    220        
+Net_331                 Die_top    9351.5    10902.39    PCB_M1    220    220        
+Net_332               Die_top    9351.5    10982.39    PCB_M1    220    220        
+Net_333               Die_top    9351.5    10862.39    PCB_M1    220    220        
+Net_334 Die_top    9351.5    11222.59    PCB_M1    220    220    PWR_GND    
+Net_335        Die_top    9351.5    12583.39    PCB_M1    220    220        
+Net_336        Die_top    9351.5    12543.39    PCB_M1    220    220        
+Net_337      Die_top    9351.5    12503.39    PCB_M1    220    220        
+Net_338       Die_top    9351.5    12240.99    PCB_M1    220    220        
+Net_339        Die_top    9351.5    12725.79    PCB_M1    220    220        
+Net_340        Die_top    9351.5    12805.79    PCB_M1    220    220        
+Net_341      Die_top    9351.5    12685.79    PCB_M1    220    220        
+Net_342       Die_top    9351.5    12383.39    PCB_M1    220    220        
+Net_343           Die_top    10327.4    16230    PCB_M1    220    220        
+Net_344         Die_top    11043.35    16230    PCB_M1    220    220        
+Net_345          Die_top    11083.35    16230    PCB_M1    220    220        
+Net_346_N   Die_top    10736.97    16230    PCB_M1    220    220    50_ohm Net_347_P
+Net_347_P   Die_top    10776.97    16230    PCB_M1    220    220    50_ohm Net_346_N
+Net_348     Die_top    10470.59    16230    PCB_M1    220    220        
+Net_349          Die_top    10510.59    16230    PCB_M1    220    220        
+Net_350         Die_top    9591.45    16230    PCB_M1    220    220        
+Net_351          Die_top    9651.45    16230    PCB_M1    220    220        
+Net_352_N   Die_top    9877.83    16230    PCB_M1    220    220    50_ohm Net_353_P
+Net_353_P   Die_top    9917.83    16230    PCB_M1    220    220    50_ohm Net_352_N
+Net_354     Die_top    10144.21    16230    PCB_M1    220    220        
+Net_355          Die_top    10224.21    16230    PCB_M1    220    220        
+end_nets
+
+# 
+# Specify which areas on each layer to block from routing. By default, all areas
+# are routable. Use the following BLOCK or UNBLOCK statements to define 
+# unroutable areas. All coordinates are in microns.
+#
+#  BLOCK RECT <layer name> X1 Y1 X2 Y2 // Block the rectangle defined by 
+#                                      // (x1, y1) and (x2, y2)
+#
+#  BLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Block triangle defined by 
+#                                            // 3 x/y coordinates
+#
+#  BLOCK CIR  <layer name> X Y R  // Block circle defined by center (x,y) and 
+#                                 // radius R
+#
+#  BLOCK ALL <layer name>         // Block all cells on layer <layer name>
+#
+#  UNBLOCK RECT <layer name> X1 Y1 X2 Y2 // Unblock the rectangle defined by 
+#                                        // (x1, y1) and (x2, y2)
+#
+#  UNBLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Unblock triangle defined 
+#                                              // by 3 x/y coordinates
+#
+#  UNBLOCK CIR  <layer name> X Y R  // Unblock circle defined by center (x,y) 
+#                                   // and radius R
+#
+#  UNBLOCK ALL <layer name>         // Unblock all cells on layer <layer name> 
+#
+# As an example, to create a keep-out zone on the perimeter of layer M1,
+# use the folowing two commands:
+#
+#    BLOCK ALL M1                    // Block all of M1
+#    UNBLOCK RECT M1 20 20 16.8 16.8 // Unblock a large rectangle in middle of M1
+#
+
+
+#
+# Block all routing layers in package outside of 23x23mm package outline:
+#
+BLOCK ALL Pkg_M1
+BLOCK ALL Pkg_M2
+BLOCK ALL Pkg_M3
+BLOCK ALL Pkg_M4
+BLOCK ALL Pkg_M5
+UNBLOCK RECT Pkg_M1 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M2 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M3 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M4 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+UNBLOCK RECT Pkg_M5 1300 1300 23700 23700 // Allow routing within pkg, with 300um keep-out zone on perimeter
+#
+# End of package outline definition
+#
+
+#
+# Create a block at the perimeter of the die outline (6377x7540 microns):
+#
+BLOCK   RECT Die_top 9291.5 8710    15708.5 16290
+UNBLOCK RECT Die_top 9311.5 8730    15688.5 16270
+#
+# End of die outline definition
+#
+
+#
+# Block routing between different regions of the die:
+#
+# Create blocks around the west side of the die:
+BLOCK RECT Die_top    9311.5 15300       11000    15320  // Line along top of west I/O's
+BLOCK RECT Die_top   11000   15320       11020    10400  // Line along right of west I/O's
+BLOCK RECT Die_top    9311.5 10400       11000    10420  // Line along the bottom of west I/O's
+#
+# Create blocks around the north side of the die:
+BLOCK RECT Die_top   11000   14940       14200    14960  // Line along bottom of north I/O's
+#
+# Create blocks around the east side of the die:
+BLOCK RECT Die_top   14200   15320       15688.5  15340  // Line along top of east I/O's
+BLOCK RECT Die_top   14200   15340       14220     8730  // Line along left of east I/O's
+#
+# Create blocks around the bottom side of the die:
+BLOCK RECT Die_top   11000    8730       11020     9400  // Line along the left of south I/O's
+BLOCK RECT Die_top   11000    9400       14200     9420  // Line along the top of south I/O's
+#
+# End of definition of blocked regions within die
+#
+
+
+#
+# Create the C4 pattern on layer 'UBM':
+#
+BLOCK ALL   UBM   // Block entire UBM layer, and then unblock areas for each terminal, with the diameter (100 microns) of a physical C4
+UNBLOCK CIR UBM   12110.84 16118.90    40
+UNBLOCK CIR UBM   10354.40 15051.59    40
+UNBLOCK CIR UBM   15382.16 12074.30    40
+UNBLOCK CIR UBM   10822.13 14641.10    40
+UNBLOCK CIR UBM   11747.60  8917.82    40
+UNBLOCK CIR UBM   13607.90  8917.82    40
+UNBLOCK CIR UBM   14974.64 16118.90    40
+UNBLOCK CIR UBM   11681.27 15434.45    40
+UNBLOCK CIR UBM   10354.40 13530.59    40
+UNBLOCK CIR UBM    9602.90 13530.59    40
+UNBLOCK CIR UBM    9452.60 13530.59    40
+UNBLOCK CIR UBM   10053.80 13530.59    40
+UNBLOCK CIR UBM    9828.35 13690.79    40
+UNBLOCK CIR UBM   15464.78 11479.49    40
+UNBLOCK CIR UBM   14555.96 11622.68    40
+UNBLOCK CIR UBM   14886.44 11622.68    40
+UNBLOCK CIR UBM   14390.72 11787.92    40
+UNBLOCK CIR UBM   14721.20 11787.92    40
+UNBLOCK CIR UBM   14721.20 12360.68    40
+UNBLOCK CIR UBM   14390.72 12360.68    40
+UNBLOCK CIR UBM   15464.78 12503.87    40
+UNBLOCK CIR UBM   14886.44 12360.68    40
+UNBLOCK CIR UBM   14390.72 12647.06    40
+UNBLOCK CIR UBM   14886.44 11336.30    40
+UNBLOCK CIR UBM   14555.96 12647.06    40
+UNBLOCK CIR UBM   14886.44 12647.06    40
+UNBLOCK CIR UBM   14638.58  9221.39    40
+UNBLOCK CIR UBM   14638.58 15048.35    40
+UNBLOCK CIR UBM   15464.78 15048.35    40
+UNBLOCK CIR UBM   14886.44 11787.92    40
+UNBLOCK CIR UBM   14390.72 11622.68    40
+UNBLOCK CIR UBM   14390.72 11336.30    40
+UNBLOCK CIR UBM   14721.20 11336.30    40
+UNBLOCK CIR UBM   15299.54 15048.35    40
+UNBLOCK CIR UBM   14390.72  9364.58    40
+#
+# UNBLOCK CIR UBM   15547.40 12647.06    40  // Original Net_35_P
+# UNBLOCK CIR UBM   15382.16 12647.06    40  // Original Net_36_N
+UNBLOCK CIR UBM   15464.78 12647.06     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15382.16 12360.68    40  // Original Net_37_P
+# UNBLOCK CIR UBM   15547.40 12360.68    40  // Original Net_38_N
+UNBLOCK CIR UBM   15464.78 12360.68     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+UNBLOCK CIR UBM   14390.72 15191.54    40
+UNBLOCK CIR UBM   14886.44 15191.54    40
+UNBLOCK CIR UBM   14886.44  9364.58    40
+UNBLOCK CIR UBM   15382.16  9078.20    40
+UNBLOCK CIR UBM   14555.96  9364.58    40
+UNBLOCK CIR UBM   14886.44  9078.20    40
+UNBLOCK CIR UBM   15547.40 11787.92    40
+UNBLOCK CIR UBM   15382.16 11787.92    40
+UNBLOCK CIR UBM   15547.40 14618.78    40
+UNBLOCK CIR UBM   15547.40 14167.16    40
+UNBLOCK CIR UBM   15547.40 13715.54    40
+UNBLOCK CIR UBM   15547.40 13263.92    40
+UNBLOCK CIR UBM   15547.40 10884.68    40
+UNBLOCK CIR UBM   15547.40 10433.06    40
+UNBLOCK CIR UBM   15547.40  9981.44    40
+UNBLOCK CIR UBM   15547.40  9529.82    40
+UNBLOCK CIR UBM   15547.40 12812.30    40
+UNBLOCK CIR UBM   14886.44 14905.16    40
+UNBLOCK CIR UBM   14555.96 14905.16    40 
+UNBLOCK CIR UBM   14390.72 14905.16    40
+UNBLOCK CIR UBM   15464.78 14761.97    40
+UNBLOCK CIR UBM   14638.58 14761.97    40
+UNBLOCK CIR UBM   14886.44 14618.78    40
+UNBLOCK CIR UBM   14721.20 14618.78    40
+UNBLOCK CIR UBM   14390.72 14618.78    40
+UNBLOCK CIR UBM   14886.44 14453.54    40
+UNBLOCK CIR UBM   14555.96 14453.54    40
+UNBLOCK CIR UBM   14390.72 14453.54    40
+UNBLOCK CIR UBM   15464.78 14310.35    40
+UNBLOCK CIR UBM   14638.58 14310.35    40
+UNBLOCK CIR UBM   14886.44 14167.16    40
+UNBLOCK CIR UBM   14721.20 14167.16    40
+UNBLOCK CIR UBM   14390.72 14167.16    40
+UNBLOCK CIR UBM   14886.44 14001.92    40
+UNBLOCK CIR UBM   14555.96 14001.92    40
+UNBLOCK CIR UBM   14390.72 14001.92    40
+UNBLOCK CIR UBM   15464.78 13858.73    40
+UNBLOCK CIR UBM   14638.58 13858.73    40
+UNBLOCK CIR UBM   14886.44 13715.54    40
+UNBLOCK CIR UBM   14721.20 13715.54    40
+UNBLOCK CIR UBM   14390.72 13715.54    40
+UNBLOCK CIR UBM   14886.44 13550.30    40
+UNBLOCK CIR UBM   14555.96 13550.30    40
+UNBLOCK CIR UBM   14390.72 13550.30    40
+UNBLOCK CIR UBM   15464.78 13407.11    40
+UNBLOCK CIR UBM   14638.58 13407.11    40
+UNBLOCK CIR UBM   14886.44 13263.92    40
+UNBLOCK CIR UBM   14721.20 13263.92    40
+UNBLOCK CIR UBM   14390.72 13263.92    40
+UNBLOCK CIR UBM   14886.44 11171.06    40
+UNBLOCK CIR UBM   14555.96 11171.06    40
+UNBLOCK CIR UBM   14390.72 11171.06    40
+UNBLOCK CIR UBM   15464.78 11027.87    40
+UNBLOCK CIR UBM   14638.58 11027.87    40
+UNBLOCK CIR UBM   14886.44 10884.68    40
+UNBLOCK CIR UBM   14721.20 10884.68    40
+UNBLOCK CIR UBM   14390.72 10884.68    40
+UNBLOCK CIR UBM   14886.44 10719.44    40
+UNBLOCK CIR UBM   14555.96 10719.44    40
+UNBLOCK CIR UBM   14390.72 10719.44    40
+UNBLOCK CIR UBM   15464.78 10576.25    40
+UNBLOCK CIR UBM   14638.58 10576.25    40
+UNBLOCK CIR UBM   14886.44 10433.06    40
+UNBLOCK CIR UBM   14721.20 10433.06    40
+UNBLOCK CIR UBM   14390.72 10433.06    40
+UNBLOCK CIR UBM   14886.44 10267.82    40
+UNBLOCK CIR UBM   14555.96 10267.82    40
+UNBLOCK CIR UBM   14390.72 10267.82    40
+UNBLOCK CIR UBM   15464.78 10124.63    40
+UNBLOCK CIR UBM   14638.58 10124.63    40
+UNBLOCK CIR UBM   14886.44  9981.44    40
+UNBLOCK CIR UBM   14721.20  9981.44    40
+UNBLOCK CIR UBM   14390.72  9981.44    40
+UNBLOCK CIR UBM   14886.44  9816.20    40
+UNBLOCK CIR UBM   14555.96  9816.20    40
+UNBLOCK CIR UBM   14390.72  9816.20    40
+UNBLOCK CIR UBM   15464.78  9673.01    40
+UNBLOCK CIR UBM   14638.58  9673.01    40
+UNBLOCK CIR UBM   14886.44  9529.82    40
+UNBLOCK CIR UBM   14721.20  9529.82    40
+UNBLOCK CIR UBM   14390.72  9529.82    40
+#
+# UNBLOCK CIR UBM   15547.40 14905.16    40  // Original Net_120_P
+# UNBLOCK CIR UBM   15382.16 14905.16    40  // Original Net_121_N
+UNBLOCK CIR UBM   15464.78 14905.16     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 14453.54    40  // Original Net_122_P
+# UNBLOCK CIR UBM   15382.16 14453.54    40  // Original Net_123_N
+UNBLOCK CIR UBM   15464.78 14453.54     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 14001.92    40  // Original Net_124_P
+# UNBLOCK CIR UBM   15382.16 14001.92    40  // Original Net_125_N
+UNBLOCK CIR UBM   15464.78 14001.92     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 13550.30    40  // Original Net_126_P
+# UNBLOCK CIR UBM   15382.16 13550.30    40  // Original Net_127_N
+UNBLOCK CIR UBM   15464.78 13550.30     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 11171.06    40  // Original Net_128_P
+# UNBLOCK CIR UBM   15382.16 11171.06    40  // Original Net_129_N
+UNBLOCK CIR UBM   15464.78 11171.06     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 10719.44    40  // Original Net_130_P
+# UNBLOCK CIR UBM   15382.16 10719.44    40  // Original Net_131_N
+UNBLOCK CIR UBM   15464.78 10719.44     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 10267.82    40  // Original Net_132_P
+# UNBLOCK CIR UBM   15382.16 10267.82    40  // Original Net_133_N
+UNBLOCK CIR UBM   15464.78 10267.82     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40  9816.20    40  // Original Net_134_P
+# UNBLOCK CIR UBM   15382.16  9816.20    40  // Original Net_135_N
+UNBLOCK CIR UBM   15464.78  9816.20     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   15547.40 13098.68    40  // Original Net_136_P
+# UNBLOCK CIR UBM   15382.16 13098.68    40  // Original Net_137_N
+UNBLOCK CIR UBM   15464.78 13098.68     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+UNBLOCK CIR UBM   14886.44 13098.68    40
+UNBLOCK CIR UBM   14555.96 13098.68    40
+UNBLOCK CIR UBM   14390.72 13098.68    40
+UNBLOCK CIR UBM   15464.78 12955.49    40
+UNBLOCK CIR UBM   14638.58 12955.49    40
+UNBLOCK CIR UBM   14886.44 12812.30    40
+UNBLOCK CIR UBM   14721.20 12812.30    40
+UNBLOCK CIR UBM   14390.72 12812.30    40
+UNBLOCK CIR UBM   15464.78  9221.39    40
+UNBLOCK CIR UBM   14721.20  9078.20    40
+UNBLOCK CIR UBM   15547.40  9364.58    40
+UNBLOCK CIR UBM   15216.92 12074.30    40
+UNBLOCK CIR UBM   15382.16  9364.58    40
+UNBLOCK CIR UBM   15134.30 11931.11    40
+UNBLOCK CIR UBM   15547.40 12074.30    40
+#
+# UNBLOCK CIR UBM   11538.08 16118.90    40  // Original Net_153_P
+# UNBLOCK CIR UBM   11394.89 16042.85    40  // Original Net_154_N
+UNBLOCK CIR UBM   11466.485 16080.875   140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+UNBLOCK CIR UBM    9828.35 12472.19    40
+UNBLOCK CIR UBM   10053.80 11716.19    40
+UNBLOCK CIR UBM    9602.90 12018.59    40
+UNBLOCK CIR UBM    9527.75 12169.79    40
+UNBLOCK CIR UBM    9527.75 11564.99    40
+UNBLOCK CIR UBM   10053.80 12018.59    40
+UNBLOCK CIR UBM   10128.95 12169.79    40
+UNBLOCK CIR UBM   10429.55 12169.79    40
+UNBLOCK CIR UBM    9452.60 12018.59    40
+UNBLOCK CIR UBM   10128.95 11564.99    40
+UNBLOCK CIR UBM    9602.90 11716.19    40
+UNBLOCK CIR UBM    9527.75 11867.39    40
+UNBLOCK CIR UBM   10354.40 12018.59    40
+UNBLOCK CIR UBM   10429.55 11867.39    40
+UNBLOCK CIR UBM   10354.40 11716.19    40
+UNBLOCK CIR UBM    9452.60 11716.19    40
+UNBLOCK CIR UBM   10053.80 11413.79    40
+UNBLOCK CIR UBM    9527.75 11262.59    40
+UNBLOCK CIR UBM    9828.35 14295.59    40
+UNBLOCK CIR UBM   12397.22 15966.80    40
+UNBLOCK CIR UBM   11967.65 16042.85    40
+UNBLOCK CIR UBM   12254.03 15130.25    40
+UNBLOCK CIR UBM   11824.46 16118.90    40
+UNBLOCK CIR UBM   12110.84 15966.80    40
+UNBLOCK CIR UBM   15404.21 15890.75    40
+UNBLOCK CIR UBM   15547.40 15814.70    40
+UNBLOCK CIR UBM   15404.21 15738.65    40
+UNBLOCK CIR UBM   10053.80 10799.99    40
+UNBLOCK CIR UBM    9602.90 10799.99    40
+UNBLOCK CIR UBM   10429.55 10951.19    40
+UNBLOCK CIR UBM   10354.40 10799.99    40
+UNBLOCK CIR UBM   10429.55 10648.79    40
+UNBLOCK CIR UBM   11967.65 15434.45    40
+UNBLOCK CIR UBM   12826.79 15130.25    40
+UNBLOCK CIR UBM   12826.79 16042.85    40
+UNBLOCK CIR UBM   12683.60 16118.90    40
+UNBLOCK CIR UBM   13256.36 15966.80    40
+UNBLOCK CIR UBM   12826.79 15434.45    40
+UNBLOCK CIR UBM   12969.98 15206.30    40
+UNBLOCK CIR UBM   12683.60 15510.50    40
+UNBLOCK CIR UBM   13113.17 16042.85    40
+UNBLOCK CIR UBM   12540.41 15434.45    40
+UNBLOCK CIR UBM   12969.98 15510.50    40
+UNBLOCK CIR UBM   12540.41 16042.85    40
+UNBLOCK CIR UBM   13113.17 15434.45    40
+UNBLOCK CIR UBM   12683.60 15206.30    40
+UNBLOCK CIR UBM   13256.36 15206.30    40
+UNBLOCK CIR UBM   12969.98 15966.80    40
+UNBLOCK CIR UBM   12683.60 15966.80    40
+UNBLOCK CIR UBM   13829.12 15966.80    40
+UNBLOCK CIR UBM   13685.93 16042.85    40
+UNBLOCK CIR UBM   13113.17 15130.25    40
+UNBLOCK CIR UBM   13256.36 16118.90    40
+UNBLOCK CIR UBM   13256.36 15510.50    40
+UNBLOCK CIR UBM   13542.74 15510.50    40
+UNBLOCK CIR UBM   13542.74 16118.90    40
+UNBLOCK CIR UBM   13542.74 15206.30    40
+UNBLOCK CIR UBM   13542.74 15966.80    40
+UNBLOCK CIR UBM   13972.31 15434.45    40
+UNBLOCK CIR UBM   13972.31 15130.25    40
+UNBLOCK CIR UBM   13399.55 15434.45    40
+UNBLOCK CIR UBM   14115.50 15510.50    40
+UNBLOCK CIR UBM   13829.12 15510.50    40
+UNBLOCK CIR UBM   14115.50 15966.80    40
+UNBLOCK CIR UBM   14545.07 16042.85    40
+UNBLOCK CIR UBM   14688.26 15966.80    40
+UNBLOCK CIR UBM   14688.26 16118.90    40
+UNBLOCK CIR UBM   13829.12 16118.90    40
+UNBLOCK CIR UBM   14974.64 15966.80    40
+UNBLOCK CIR UBM   15261.02 16118.90    40
+UNBLOCK CIR UBM   13685.93 15130.25    40
+UNBLOCK CIR UBM   13399.55 16042.85    40
+UNBLOCK CIR UBM   14115.50 16118.90    40
+UNBLOCK CIR UBM   14688.26 15662.60    40
+UNBLOCK CIR UBM   13685.93 15434.45    40
+UNBLOCK CIR UBM   14831.45 16042.85    40
+UNBLOCK CIR UBM   13829.12 15206.30    40
+UNBLOCK CIR UBM   14258.69 16042.85    40
+UNBLOCK CIR UBM   13972.31 16042.85    40
+UNBLOCK CIR UBM   13399.55 15130.25    40
+UNBLOCK CIR UBM   14401.88 15662.60    40
+UNBLOCK CIR UBM   14401.88 15510.50    40
+UNBLOCK CIR UBM   14401.88 15966.80    40
+UNBLOCK CIR UBM   12969.98 16118.90    40
+UNBLOCK CIR UBM   14401.88 16118.90    40
+UNBLOCK CIR UBM    9452.60 12623.39    40
+UNBLOCK CIR UBM   10128.95 12774.59    40
+UNBLOCK CIR UBM   10354.40 12925.79    40
+UNBLOCK CIR UBM   10429.55 12472.19    40
+UNBLOCK CIR UBM    9452.60 12320.99    40
+UNBLOCK CIR UBM    9602.90 12320.99    40
+UNBLOCK CIR UBM   12397.22 15206.30    40
+UNBLOCK CIR UBM   11824.46 15966.80    40
+UNBLOCK CIR UBM   11681.27 15130.25    40
+UNBLOCK CIR UBM   10354.40 11413.79    40
+UNBLOCK CIR UBM   10128.95 11867.39    40
+UNBLOCK CIR UBM    9527.75 13993.19    40
+UNBLOCK CIR UBM    9452.60 12925.79    40
+UNBLOCK CIR UBM   12254.03 16042.85    40
+UNBLOCK CIR UBM    9602.90 14749.19    40
+UNBLOCK CIR UBM    9602.90 15051.59    40
+UNBLOCK CIR UBM   11681.27 16042.85    40
+UNBLOCK CIR UBM   14688.26 15510.50    40
+UNBLOCK CIR UBM   12110.84 15206.30    40
+UNBLOCK CIR UBM   11212.10  9083.42    40
+UNBLOCK CIR UBM   13773.50  9083.42    40
+UNBLOCK CIR UBM   11664.80  9226.97    40
+UNBLOCK CIR UBM   11499.20  9226.97    40
+UNBLOCK CIR UBM   13525.10  9226.97    40
+UNBLOCK CIR UBM   13359.50  9226.97    40
+#
+# UNBLOCK CIR UBM   11416.40  9083.42    40  // Original Net_265_N
+# UNBLOCK CIR UBM   11416.40  8917.82    40  // Original Net_266_P
+UNBLOCK CIR UBM   11416.40  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   13276.70  9083.42    40  // Original Net_267_N
+# UNBLOCK CIR UBM   13276.70  8917.82    40  // Original Net_268_P
+UNBLOCK CIR UBM   13276.70  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   11913.20  8917.82    40  // Original Net_269_N
+# UNBLOCK CIR UBM   11913.20  9083.42    40  // Original Net_270_P
+UNBLOCK CIR UBM   11913.20  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   12410.00  8917.82    40  // Original Net_271_N
+# UNBLOCK CIR UBM   12410.00  9083.42    40  // Original Net_272_P
+UNBLOCK CIR UBM   12410.00  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   12575.60  8917.82    40  // Original Net_273_N
+# UNBLOCK CIR UBM   12575.60  9083.42    40  // Original Net_274_P
+UNBLOCK CIR UBM   12575.60  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   13072.40  8917.82    40  // Original Net_275_N
+# UNBLOCK CIR UBM   13072.40  9083.42    40  // Original Net_276_P
+UNBLOCK CIR UBM   13072.40  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   12078.80  8917.82    40  // Original Net_277_N
+# UNBLOCK CIR UBM   12078.80  9083.42    40  // Original Net_278_P
+UNBLOCK CIR UBM   12078.80  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   12244.40  8917.82    40  // Original Net_279_N
+# UNBLOCK CIR UBM   12244.40  9083.42    40  // Original Net_280_P
+UNBLOCK CIR UBM   12244.40  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   12741.20  8917.82    40  // Original Net_281_N
+# UNBLOCK CIR UBM   12741.20  9083.42    40  // Original Net_282_P
+UNBLOCK CIR UBM   12741.20  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+# UNBLOCK CIR UBM   12906.80  8917.82    40  // Original Net_283_N
+# UNBLOCK CIR UBM   12906.80  9083.42    40  // Original Net_284_P
+UNBLOCK CIR UBM   12906.80  9000.62     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+UNBLOCK CIR UBM   10354.40 14144.39    40
+UNBLOCK CIR UBM    9452.60 14446.79    40
+UNBLOCK CIR UBM    9602.90 14446.79    40
+UNBLOCK CIR UBM   10429.55 14295.59    40
+UNBLOCK CIR UBM   10354.40 14446.79    40
+UNBLOCK CIR UBM   10128.95 14295.59    40
+UNBLOCK CIR UBM    9527.75 14295.59    40
+UNBLOCK CIR UBM   10429.55 13993.19    40
+UNBLOCK CIR UBM   13256.36 14393.24    40
+UNBLOCK CIR UBM   10025.36  9542.06    40
+UNBLOCK CIR UBM   13399.55 14475.86    40
+UNBLOCK CIR UBM   10168.55  9624.68    40
+UNBLOCK CIR UBM   10053.80 13841.99    40
+UNBLOCK CIR UBM   10128.95 13993.19    40
+UNBLOCK CIR UBM    9452.60 13841.99    40
+UNBLOCK CIR UBM    9602.90 13841.99    40
+UNBLOCK CIR UBM    9527.75 13690.79    40
+UNBLOCK CIR UBM   10354.40 13841.99    40
+UNBLOCK CIR UBM   10429.55 13690.79    40
+UNBLOCK CIR UBM   11538.08 15966.80    40
+UNBLOCK CIR UBM   14974.64 15510.50    40
+UNBLOCK CIR UBM   15404.21 15586.55    40
+UNBLOCK CIR UBM   15547.40 15662.60    40
+UNBLOCK CIR UBM   15261.02 15966.80    40
+UNBLOCK CIR UBM    9602.90 13228.19    40
+UNBLOCK CIR UBM    9527.75 13076.99    40
+UNBLOCK CIR UBM   10053.80 12925.79    40
+UNBLOCK CIR UBM   10354.40 13228.19    40
+UNBLOCK CIR UBM   10429.55 13076.99    40
+UNBLOCK CIR UBM   10429.55 13379.39    40
+UNBLOCK CIR UBM   10053.80 13228.19    40
+UNBLOCK CIR UBM    9452.60 13228.19    40
+UNBLOCK CIR UBM   10128.95 13379.39    40
+UNBLOCK CIR UBM    9527.75 13379.39    40
+UNBLOCK CIR UBM   15117.83 16042.85    40
+UNBLOCK CIR UBM   11824.46 15206.30    40
+UNBLOCK CIR UBM   10822.13 15136.82    40
+UNBLOCK CIR UBM   10822.13 14971.58    40
+UNBLOCK CIR UBM   15261.02 15510.50    40
+UNBLOCK CIR UBM   14974.64 15662.60    40
+UNBLOCK CIR UBM   15261.02 15662.60    40
+UNBLOCK CIR UBM    9452.60 10799.99    40
+UNBLOCK CIR UBM    9452.60 11102.39    40
+UNBLOCK CIR UBM   10053.80 11102.39    40
+UNBLOCK CIR UBM    9602.90 11102.39    40
+UNBLOCK CIR UBM   10128.95 10648.79    40
+UNBLOCK CIR UBM   10128.95 10951.19    40
+UNBLOCK CIR UBM   10354.40 11102.39    40
+UNBLOCK CIR UBM    9527.75 10951.19    40
+UNBLOCK CIR UBM    9828.35 11262.59    40
+UNBLOCK CIR UBM   10053.80 12623.39    40
+UNBLOCK CIR UBM    9602.90 12623.39    40
+UNBLOCK CIR UBM   10354.40 12623.39    40
+UNBLOCK CIR UBM   10053.80 12320.99    40
+UNBLOCK CIR UBM    9527.75 12774.59    40
+UNBLOCK CIR UBM    9602.90 12925.79    40
+UNBLOCK CIR UBM   10429.55 12774.59    40
+UNBLOCK CIR UBM    9527.75 12472.19    40
+UNBLOCK CIR UBM   10327.40 16036.28    40
+UNBLOCK CIR UBM   11043.35 15953.66    40
+UNBLOCK CIR UBM   11043.35 16118.90    40
+#
+# UNBLOCK CIR UBM   10756.97 15953.66    40  // Original Net_346_N
+# UNBLOCK CIR UBM   10756.97 16118.90    40  // Original Net_347_P
+UNBLOCK CIR UBM   10756.97 16036.28     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+UNBLOCK CIR UBM   10470.59 16118.90    40
+UNBLOCK CIR UBM   10470.59 15623.18    40
+UNBLOCK CIR UBM    9611.45 15953.66    40
+UNBLOCK CIR UBM    9611.45 16118.90    40
+#
+# UNBLOCK CIR UBM    9897.83 15953.66    40  // Original Net_352_N
+# UNBLOCK CIR UBM    9897.83 16118.90    40  // Original Net_353_P
+UNBLOCK CIR UBM    9897.83 16036.28     140  // 280-micron diameter hole for diff-pair pseudo-via
+#
+UNBLOCK CIR UBM   10184.21 16118.90    40
+UNBLOCK CIR UBM   10184.21 15623.18    40
+#
+# End of C4 pattern definition for layer UBM
+#
+
+
+
+#
+# Create the BGA pattern on layer 'BGA':
+#
+BLOCK ALL   BGA  // Block entire BGA layer, and then unblock areas for BGAs
+UNBLOCK CIR BGA  2500.00 22500.00  240
+UNBLOCK CIR BGA  9700.00 18500.00  240
+UNBLOCK CIR BGA  16900.00 20100.00  240
+UNBLOCK CIR BGA  8900.00 18500.00  240
+UNBLOCK CIR BGA  13700.00 6500.00  240
+UNBLOCK CIR BGA  16900.00 6500.00  240
+UNBLOCK CIR BGA  15300.00 19300.00  240
+UNBLOCK CIR BGA  5700.00 20100.00  240
+UNBLOCK CIR BGA  4100.00 12900.00  240
+UNBLOCK CIR BGA  3300.00 12900.00  240
+UNBLOCK CIR BGA  4100.00 13700.00  240
+UNBLOCK CIR BGA  4100.00 14500.00  240
+UNBLOCK CIR BGA  7300.00 14500.00  240
+UNBLOCK CIR BGA  23300.00 9700.00  240
+UNBLOCK CIR BGA  23300.00 14500.00  240
+UNBLOCK CIR BGA  22500.00 15300.00  240
+UNBLOCK CIR BGA  23300.00 15300.00  240
+UNBLOCK CIR BGA  23300.00 16100.00  240
+UNBLOCK CIR BGA  23300.00 16900.00  240
+UNBLOCK CIR BGA  22500.00 16900.00  240
+UNBLOCK CIR BGA  22500.00 8100.00  240
+UNBLOCK CIR BGA  23300.00 17700.00  240
+UNBLOCK CIR BGA  23300.00 4100.00  240
+UNBLOCK CIR BGA  22500.00 20100.00  240
+UNBLOCK CIR BGA  23300.00 20900.00  240
+UNBLOCK CIR BGA  23300.00 19300.00  240
+UNBLOCK CIR BGA  22500.00 9700.00  240
+UNBLOCK CIR BGA  23300.00 8100.00  240
+UNBLOCK CIR BGA  23300.00 8900.00  240
+UNBLOCK CIR BGA  23300.00 20100.00  240
+UNBLOCK CIR BGA  23300.00 5700.00  240
+UNBLOCK CIR BGA  22900.00 11300.00  660   // Wide opening for Net_35_P/Net_36_N diff pair
+UNBLOCK CIR BGA  22900.00 12100.00  660   // Wide opening for Net_37_P/Net_38_N diff pair
+UNBLOCK CIR BGA  22500.00 21700.00  240
+UNBLOCK CIR BGA  23300.00 21700.00  240
+UNBLOCK CIR BGA  23300.00 6500.00  240
+UNBLOCK CIR BGA  22500.00 5700.00  240
+UNBLOCK CIR BGA  22500.00 2500.00  240
+UNBLOCK CIR BGA  23300.00 3300.00  240
+UNBLOCK CIR BGA  23300.00 12900.00  240
+UNBLOCK CIR BGA  23300.00 10500.00  240
+UNBLOCK CIR BGA  18500.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 21700.00  240
+UNBLOCK CIR BGA  19300.00 19300.00  240
+UNBLOCK CIR BGA  21700.00 16100.00  240
+UNBLOCK CIR BGA  21700.00 10500.00  240
+UNBLOCK CIR BGA  20100.00 8100.00  240
+UNBLOCK CIR BGA  20100.00 4900.00  240
+UNBLOCK CIR BGA  20100.00 3300.00  240
+UNBLOCK CIR BGA  20100.00 13700.00  240
+UNBLOCK CIR BGA  17700.00 21700.00  240
+UNBLOCK CIR BGA  18500.00 23300.00  240
+UNBLOCK CIR BGA  21700.00 23300.00  240
+UNBLOCK CIR BGA  21700.00 22500.00  240
+UNBLOCK CIR BGA  17700.00 22500.00  240
+UNBLOCK CIR BGA  17700.00 23300.00  240
+UNBLOCK CIR BGA  20100.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 23300.00  240
+UNBLOCK CIR BGA  19300.00 21700.00  240
+UNBLOCK CIR BGA  20100.00 21700.00  240
+UNBLOCK CIR BGA  20900.00 19300.00  240
+UNBLOCK CIR BGA  21700.00 19300.00  240
+UNBLOCK CIR BGA  18500.00 20900.00  240
+UNBLOCK CIR BGA  19300.00 20900.00  240
+UNBLOCK CIR BGA  22500.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 20100.00  240
+UNBLOCK CIR BGA  19300.00 20100.00  240
+UNBLOCK CIR BGA  20100.00 20100.00  240
+UNBLOCK CIR BGA  19300.00 16900.00  240
+UNBLOCK CIR BGA  19300.00 16100.00  240
+UNBLOCK CIR BGA  18500.00 19300.00  240
+UNBLOCK CIR BGA  18500.00 17700.00  240
+UNBLOCK CIR BGA  19300.00 17700.00  240
+UNBLOCK CIR BGA  20100.00 16900.00  240
+UNBLOCK CIR BGA  21700.00 17700.00  240
+UNBLOCK CIR BGA  20900.00 16900.00  240
+UNBLOCK CIR BGA  21700.00 12900.00  240
+UNBLOCK CIR BGA  20900.00 13700.00  240
+UNBLOCK CIR BGA  20900.00 18500.00  240
+UNBLOCK CIR BGA  20900.00 17700.00  240
+UNBLOCK CIR BGA  21700.00 14500.00  240
+UNBLOCK CIR BGA  20900.00 14500.00  240
+UNBLOCK CIR BGA  20900.00 11300.00  240
+UNBLOCK CIR BGA  20900.00 10500.00  240
+UNBLOCK CIR BGA  21700.00 7300.00  240
+UNBLOCK CIR BGA  20900.00 7300.00  240
+UNBLOCK CIR BGA  20900.00 12900.00  240
+UNBLOCK CIR BGA  20900.00 12100.00  240
+UNBLOCK CIR BGA  21700.00 8900.00  240
+UNBLOCK CIR BGA  20900.00 8100.00  240
+UNBLOCK CIR BGA  20100.00 9700.00  240
+UNBLOCK CIR BGA  19300.00 8900.00  240
+UNBLOCK CIR BGA  18500.00 7300.00  240
+UNBLOCK CIR BGA  18500.00 5700.00  240
+UNBLOCK CIR BGA  18500.00 8900.00  240
+UNBLOCK CIR BGA  19300.00 9700.00  240
+UNBLOCK CIR BGA  20100.00 6500.00  240
+UNBLOCK CIR BGA  19300.00 6500.00  240
+UNBLOCK CIR BGA  21700.00 4900.00  240
+UNBLOCK CIR BGA  20900.00 4900.00  240
+UNBLOCK CIR BGA  19300.00 4900.00  240
+UNBLOCK CIR BGA  18500.00 4100.00  240
+UNBLOCK CIR BGA  20900.00 6500.00  240
+UNBLOCK CIR BGA  20900.00 5700.00  240
+UNBLOCK CIR BGA  19300.00 5700.00  240
+UNBLOCK CIR BGA  19300.00 4100.00  240
+UNBLOCK CIR BGA  20900.00 2500.00  240
+UNBLOCK CIR BGA  20900.00 1700.00  240
+UNBLOCK CIR BGA  18500.00 1700.00  240
+UNBLOCK CIR BGA  18500.00 3300.00  240
+UNBLOCK CIR BGA  21700.00 3300.00  240
+UNBLOCK CIR BGA  21700.00 1700.00  240
+UNBLOCK CIR BGA  19300.00 1700.00  240
+UNBLOCK CIR BGA  19300.00 3300.00  240
+#
+# UNBLOCK CIR BGA  20100.00 23300.00  260   // Original Net_120_P
+# UNBLOCK CIR BGA  19300.00 23300.00  260   // Original Net_121_N
+# UNBLOCK CIR BGA  19700.00 23300.00  660   // Wide opening for Net_120_P/Net_121_N diff pair (midpoint between original sites)
+UNBLOCK CIR BGA  19300.00 22900.00  660     // Wide opening for Net_120_P/Net_121_N diff pair (moved away from package edge)
+#
+# UNBLOCK CIR BGA  21700.00 20900.00  260   // Original Net_122_P
+# UNBLOCK CIR BGA  20900.00 20900.00  260   // Original Net_123_N
+UNBLOCK CIR BGA  21300.00 20900.00  660   // Wide opening for Net_122_P/Net_123_N diff pair
+#
+# UNBLOCK CIR BGA  20100.00 18500.00  260   // Original Net_124_P
+# UNBLOCK CIR BGA  19300.00 18500.00  260   // Original Net_125_N
+UNBLOCK CIR BGA  19700.00 18500.00  660   // Wide opening for Net_124_P/Net_125_N diff pair
+#
+# UNBLOCK CIR BGA  20900.00 15300.00  260   // Original Net_126_P
+# UNBLOCK CIR BGA  20900.00 16100.00  260   // Original Net_127_N
+UNBLOCK CIR BGA  20900.00 15700.00  660   // Wide opening for Net_126_P/Net_127_N diff pair
+#
+# UNBLOCK CIR BGA  20900.00 8900.00  260   // Original Net_128_P
+# UNBLOCK CIR BGA  20900.00 9700.00  260   // Original Net_129_N
+UNBLOCK CIR BGA  20900.00 9300.00   660   // Wide opening for Net_128_P/Net_129_N diff pair
+#
+# UNBLOCK CIR BGA  19300.00 7300.00  260   // Original Net_130_P
+# UNBLOCK CIR BGA  19300.00 8100.00  260   // Original Net_131_N
+UNBLOCK CIR BGA  19300.00 7700.00   660   // Wide opening for Net_130_P/Net_131_N diff pair
+#
+# UNBLOCK CIR BGA  20900.00 4100.00  260   // Original Net_132_P
+# UNBLOCK CIR BGA  20900.00 3300.00  260   // Original Net_133_N
+UNBLOCK CIR BGA  20900.00 3700.00   660   // Wide opening for Net_132_P/Net_133_N diff pair
+#
+# UNBLOCK CIR BGA  20100.00 2500.00  260   // Original Net_134_P
+# UNBLOCK CIR BGA  20100.00 1700.00  260   // Original Net_135_N
+UNBLOCK CIR BGA  20100.00 2100.00   660   // Wide opening for Net_134_P/Net_135_N diff pair
+#
+# UNBLOCK CIR BGA  19300.00 12100.00  260   // Original Net_136_P
+# UNBLOCK CIR BGA  19300.00 12900.00  260   // Original Net_137_N
+UNBLOCK CIR BGA  19300.00 12500.00  660   // Wide opening for Net_136_P/Net_137_N diff pair
+#
+UNBLOCK CIR BGA  20100.00 15300.00  240
+UNBLOCK CIR BGA  19300.00 13700.00  240
+UNBLOCK CIR BGA  19300.00 11300.00  240
+UNBLOCK CIR BGA  19300.00 10500.00  240
+UNBLOCK CIR BGA  19300.00 15300.00  240
+UNBLOCK CIR BGA  19300.00 14500.00  240
+UNBLOCK CIR BGA  20100.00 12100.00  240
+UNBLOCK CIR BGA  20100.00 11300.00  240
+UNBLOCK CIR BGA  23300.00 4900.00  240
+UNBLOCK CIR BGA  22500.00 4100.00  240
+UNBLOCK CIR BGA  16900.00 19300.00  240
+UNBLOCK CIR BGA  22500.00 6500.00  240
+UNBLOCK CIR BGA  16900.00 16900.00  240
+UNBLOCK CIR BGA  17700.00 16900.00  240
+UNBLOCK CIR BGA  12100.00 18900.00  660     // Wide opening for Net_153_P/Net_154_N diff pair
+UNBLOCK CIR BGA  7300.00 12900.00  240
+UNBLOCK CIR BGA  3300.00 3300.00  240
+UNBLOCK CIR BGA  3300.00 2500.00  240
+UNBLOCK CIR BGA  1700.00 4900.00  240
+UNBLOCK CIR BGA  2500.00 2500.00  240
+UNBLOCK CIR BGA  2500.00 3300.00  240
+UNBLOCK CIR BGA  1700.00 3300.00  240
+UNBLOCK CIR BGA  1700.00 4100.00  240
+UNBLOCK CIR BGA  2500.00 4900.00  240
+UNBLOCK CIR BGA  4100.00 3300.00  240
+UNBLOCK CIR BGA  3300.00 4100.00  240
+UNBLOCK CIR BGA  4100.00 4100.00  240
+UNBLOCK CIR BGA  3300.00 4900.00  240
+UNBLOCK CIR BGA  3300.00 5700.00  240
+UNBLOCK CIR BGA  3300.00 1700.00  240
+UNBLOCK CIR BGA  4100.00 1700.00  240
+UNBLOCK CIR BGA  5700.00 10500.00  240
+UNBLOCK CIR BGA  5700.00 9700.00  240
+UNBLOCK CIR BGA  7300.00 15300.00  240
+UNBLOCK CIR BGA  5700.00 20900.00  240
+UNBLOCK CIR BGA  4100.00 21700.00  240
+UNBLOCK CIR BGA  1700.00 21700.00  240
+UNBLOCK CIR BGA  2500.00 21700.00  240
+UNBLOCK CIR BGA  3300.00 21700.00  240
+UNBLOCK CIR BGA  16900.00 21700.00  240
+UNBLOCK CIR BGA  16900.00 22500.00  240
+UNBLOCK CIR BGA  15300.00 18500.00  240
+UNBLOCK CIR BGA  7300.00 3300.00  240
+UNBLOCK CIR BGA  7300.00 4100.00  240
+UNBLOCK CIR BGA  5700.00 5700.00  240
+UNBLOCK CIR BGA  5700.00 1700.00  240
+UNBLOCK CIR BGA  6500.00 1700.00  240
+UNBLOCK CIR BGA  7300.00 20100.00  240
+UNBLOCK CIR BGA  4900.00 21700.00  240
+UNBLOCK CIR BGA  5700.00 21700.00  240
+UNBLOCK CIR BGA  6500.00 20900.00  240
+UNBLOCK CIR BGA  6500.00 21700.00  240
+UNBLOCK CIR BGA  7300.00 20900.00  240
+UNBLOCK CIR BGA  7300.00 21700.00  240
+UNBLOCK CIR BGA  8900.00 20900.00  240
+UNBLOCK CIR BGA  8900.00 21700.00  240
+UNBLOCK CIR BGA  9700.00 20100.00  240
+UNBLOCK CIR BGA  9700.00 21700.00  240
+UNBLOCK CIR BGA  9700.00 20900.00  240
+UNBLOCK CIR BGA  10500.00 21700.00  240
+UNBLOCK CIR BGA  10500.00 20900.00  240
+UNBLOCK CIR BGA  10500.00 20100.00  240
+UNBLOCK CIR BGA  4100.00 23300.00  240
+UNBLOCK CIR BGA  4900.00 22500.00  240
+UNBLOCK CIR BGA  4900.00 23300.00  240
+UNBLOCK CIR BGA  5700.00 22500.00  240
+UNBLOCK CIR BGA  5700.00 23300.00  240
+UNBLOCK CIR BGA  6500.00 23300.00  240
+UNBLOCK CIR BGA  7300.00 22500.00  240
+UNBLOCK CIR BGA  7300.00 23300.00  240
+UNBLOCK CIR BGA  8100.00 22500.00  240
+UNBLOCK CIR BGA  8100.00 23300.00  240
+UNBLOCK CIR BGA  8900.00 23300.00  240
+UNBLOCK CIR BGA  9700.00 22500.00  240
+UNBLOCK CIR BGA  9700.00 23300.00  240
+UNBLOCK CIR BGA  10500.00 22500.00  240
+UNBLOCK CIR BGA  10500.00 23300.00  240
+UNBLOCK CIR BGA  11300.00 23300.00  240
+UNBLOCK CIR BGA  14500.00 20900.00  240
+UNBLOCK CIR BGA  12100.00 23300.00  240
+UNBLOCK CIR BGA  13700.00 19300.00  240
+UNBLOCK CIR BGA  14500.00 23300.00  240
+UNBLOCK CIR BGA  11300.00 21700.00  240
+UNBLOCK CIR BGA  12900.00 20100.00  240
+UNBLOCK CIR BGA  13700.00 20900.00  240
+UNBLOCK CIR BGA  13700.00 21700.00  240
+UNBLOCK CIR BGA  12100.00 20900.00  240
+UNBLOCK CIR BGA  13700.00 23300.00  240
+UNBLOCK CIR BGA  12900.00 20900.00  240
+UNBLOCK CIR BGA  12900.00 21700.00  240
+UNBLOCK CIR BGA  12100.00 21700.00  240
+UNBLOCK CIR BGA  12100.00 20100.00  240
+UNBLOCK CIR BGA  12900.00 22500.00  240
+UNBLOCK CIR BGA  12900.00 23300.00  240
+UNBLOCK CIR BGA  12100.00 22500.00  240
+UNBLOCK CIR BGA  11300.00 20900.00  240
+UNBLOCK CIR BGA  14500.00 19300.00  240
+UNBLOCK CIR BGA  1700.00 8900.00  240
+UNBLOCK CIR BGA  1700.00 9700.00  240
+UNBLOCK CIR BGA  3300.00 9700.00  240
+UNBLOCK CIR BGA  3300.00 8100.00  240
+UNBLOCK CIR BGA  3300.00 7300.00  240
+UNBLOCK CIR BGA  3300.00 6500.00  240
+UNBLOCK CIR BGA  3300.00 23300.00  240
+UNBLOCK CIR BGA  6500.00 19300.00  240
+UNBLOCK CIR BGA  3300.00 20900.00  240
+UNBLOCK CIR BGA  4100.00 6500.00  240
+UNBLOCK CIR BGA  4900.00 5700.00  240
+UNBLOCK CIR BGA  4100.00 15300.00  240
+UNBLOCK CIR BGA  3300.00 10500.00  240
+UNBLOCK CIR BGA  11300.00 19300.00  240
+UNBLOCK CIR BGA  9700.00 19300.00  240
+UNBLOCK CIR BGA  10500.00 19300.00  240
+UNBLOCK CIR BGA  3300.00 22500.00  240
+UNBLOCK CIR BGA  14500.00 22500.00  240
+UNBLOCK CIR BGA  8100.00 19300.00  240
+UNBLOCK CIR BGA  10500.00 7300.00  240
+UNBLOCK CIR BGA  16900.00 8100.00  240
+UNBLOCK CIR BGA  12900.00 8100.00  240
+UNBLOCK CIR BGA  12900.00 6500.00  240
+UNBLOCK CIR BGA  16100.00 8100.00  240
+UNBLOCK CIR BGA  16100.00 6500.00  240
+#
+# UNBLOCK CIR BGA  12100.00 7300.00  260   // Original Net_265_N
+# UNBLOCK CIR BGA  12100.00 6500.00  260   // Original Net_266_P
+UNBLOCK CIR BGA  12100.00 6900.00  660   // Wide opening for Net_265_N/Net_266_P diff pair
+#
+# UNBLOCK CIR BGA  15300.00 7300.00  260   // Original Net_267_N
+# UNBLOCK CIR BGA  15300.00 6500.00  260   // Original Net_268_P
+UNBLOCK CIR BGA  15300.00 6900.00  660   // Wide opening for Net_267_N/Net_268_P diff pair
+#
+# UNBLOCK CIR BGA  13700.00 2500.00  260   // Original Net_269_N
+# UNBLOCK CIR BGA  13700.00 1700.00  260   // Original Net_270_P
+UNBLOCK CIR BGA  13700.00 2100.00  660   // Wide opening for Net_269_N/Net_270_P diff pair
+#
+# UNBLOCK CIR BGA  14500.00 2500.00  260   // Original Net_271_N
+# UNBLOCK CIR BGA  14500.00 1700.00  260   // Original Net_272_P
+UNBLOCK CIR BGA  14500.00 2100.00  660   // Wide opening for Net_271_N/Net_272_P diff pair
+#
+# UNBLOCK CIR BGA  16100.00 2500.00  260   // Original Net_273_N
+# UNBLOCK CIR BGA  16100.00 1700.00  260   // Original Net_274_P
+UNBLOCK CIR BGA  16100.00 2100.00  660   // Wide opening for Net_273_N/Net_274_P diff pair
+#
+# UNBLOCK CIR BGA  16900.00 2500.00  260   // Original Net_275_N
+# UNBLOCK CIR BGA  16900.00 1700.00  260   // Original Net_276_P
+UNBLOCK CIR BGA  16900.00 2100.00  660   // Wide opening for Net_275_N/Net_276_P diff pair
+#
+# UNBLOCK CIR BGA  13700.00 4100.00  260   // Original Net_277_N
+# UNBLOCK CIR BGA  13700.00 4900.00  260   // Original Net_278_P
+UNBLOCK CIR BGA  13700.00 4500.00  660   // Wide opening for Net_277_N/Net_278_P diff pair
+#
+# UNBLOCK CIR BGA  14500.00 4100.00  260   // Original Net_279_N
+# UNBLOCK CIR BGA  14500.00 4900.00  260   // Original Net_280_P
+UNBLOCK CIR BGA  14500.00 4500.00  660   // Wide opening for Net_279_N/Net_280_P diff pair
+#
+# UNBLOCK CIR BGA  16100.00 4100.00  260   // Original Net_281_N
+# UNBLOCK CIR BGA  16100.00 4900.00  260   // Original Net_282_P
+UNBLOCK CIR BGA  16100.00 4500.00  660   // Wide opening for Net_281_N/Net_282_P diff pair
+#
+# UNBLOCK CIR BGA  16900.00 4100.00  260   // Original Net_283_N
+# UNBLOCK CIR BGA  16900.00 4900.00  260   // Original Net_284_P
+UNBLOCK CIR BGA  16900.00 4500.00  660   // Wide opening for Net_283_N/Net_284_P diff pair
+#
+UNBLOCK CIR BGA  4900.00 15300.00  240
+UNBLOCK CIR BGA  1700.00 16100.00  240
+UNBLOCK CIR BGA  3300.00 16100.00  240
+UNBLOCK CIR BGA  2500.00 15300.00  240
+UNBLOCK CIR BGA  4100.00 16100.00  240
+UNBLOCK CIR BGA  3300.00 15300.00  240
+UNBLOCK CIR BGA  1700.00 15300.00  240
+UNBLOCK CIR BGA  4900.00 14500.00  240
+UNBLOCK CIR BGA  16900.00 18500.00  240
+UNBLOCK CIR BGA  8900.00 6500.00  240
+UNBLOCK CIR BGA  16100.00 18500.00  240
+UNBLOCK CIR BGA  8100.00 6500.00  240
+UNBLOCK CIR BGA  1700.00 13700.00  240
+UNBLOCK CIR BGA  1700.00 14500.00  240
+UNBLOCK CIR BGA  2500.00 14500.00  240
+UNBLOCK CIR BGA  3300.00 14500.00  240
+UNBLOCK CIR BGA  3300.00 13700.00  240
+UNBLOCK CIR BGA  1700.00 12900.00  240
+UNBLOCK CIR BGA  2500.00 12900.00  240
+UNBLOCK CIR BGA  12900.00 18500.00  240
+UNBLOCK CIR BGA  15300.00 20100.00  240
+UNBLOCK CIR BGA  17700.00 20100.00  240
+UNBLOCK CIR BGA  17700.00 18500.00  240
+UNBLOCK CIR BGA  15300.00 23300.00  240
+UNBLOCK CIR BGA  2500.00 12100.00  240
+UNBLOCK CIR BGA  1700.00 10500.00  240
+UNBLOCK CIR BGA  2500.00 10500.00  240
+UNBLOCK CIR BGA  1700.00 12100.00  240
+UNBLOCK CIR BGA  1700.00 11300.00  240
+UNBLOCK CIR BGA  4100.00 12100.00  240
+UNBLOCK CIR BGA  3300.00 11300.00  240
+UNBLOCK CIR BGA  4100.00 10500.00  240
+UNBLOCK CIR BGA  3300.00 12100.00  240
+UNBLOCK CIR BGA  4100.00 11300.00  240
+UNBLOCK CIR BGA  15300.00 21700.00  240
+UNBLOCK CIR BGA  7300.00 18500.00  240
+UNBLOCK CIR BGA  8900.00 19300.00  240
+UNBLOCK CIR BGA  8100.00 18500.00  240
+UNBLOCK CIR BGA  16100.00 19300.00  240
+UNBLOCK CIR BGA  15300.00 22500.00  240
+UNBLOCK CIR BGA  16100.00 20900.00  240
+UNBLOCK CIR BGA  4900.00 3300.00  240
+UNBLOCK CIR BGA  6500.00 5700.00  240
+UNBLOCK CIR BGA  7300.00 5700.00  240
+UNBLOCK CIR BGA  6500.00 4900.00  240
+UNBLOCK CIR BGA  5700.00 4100.00  240
+UNBLOCK CIR BGA  7300.00 4900.00  240
+UNBLOCK CIR BGA  5700.00 6500.00  240
+UNBLOCK CIR BGA  4900.00 4100.00  240
+UNBLOCK CIR BGA  5700.00 11300.00  240
+UNBLOCK CIR BGA  2500.00 8100.00  240
+UNBLOCK CIR BGA  1700.00 8100.00  240
+UNBLOCK CIR BGA  1700.00 7300.00  240
+UNBLOCK CIR BGA  2500.00 7300.00  240
+UNBLOCK CIR BGA  4100.00 8100.00  240
+UNBLOCK CIR BGA  4100.00 9700.00  240
+UNBLOCK CIR BGA  4100.00 8900.00  240
+UNBLOCK CIR BGA  4100.00 7300.00  240
+UNBLOCK CIR BGA  4100.00 18500.00  240
+UNBLOCK CIR BGA  5700.00 19300.00  240
+UNBLOCK CIR BGA  4900.00 19300.00  240
+# UNBLOCK CIR BGA  2500.00 19300.00  240   // Original Net_347_P
+# UNBLOCK CIR BGA  1700.00 19300.00  240   // Original Net_346_N
+UNBLOCK CIR BGA  2100.00 19300.00  660   // Wide opening for Net_347_P/Net_346_N diff pair
+#
+UNBLOCK CIR BGA  4100.00 19300.00  240
+UNBLOCK CIR BGA  4100.00 20100.00  240
+UNBLOCK CIR BGA  4900.00 16900.00  240
+UNBLOCK CIR BGA  4900.00 17700.00  240
+# UNBLOCK CIR BGA  2500.00 17700.00  240   // Original Net_353_P
+# UNBLOCK CIR BGA  1700.00 17700.00  240   // Original Net_352_N
+UNBLOCK CIR BGA  2100.00 17700.00  660   // Wide opening for Net_353_P/Net_352_N diff pair
+#
+UNBLOCK CIR BGA  4100.00 17700.00  240
+UNBLOCK CIR BGA  4100.00 16900.00  240
+#
+# Following via-holes were added 4/6/2024:
+UNBLOCK CIR BGA  4900.00 1700.00  240
+UNBLOCK CIR BGA  4100.00 2500.00  240
+UNBLOCK CIR BGA  4900.00 2500.00  240
+UNBLOCK CIR BGA  5700.00 2500.00  240
+UNBLOCK CIR BGA  18500.00 2500.00  240
+UNBLOCK CIR BGA  21700.00 2500.00  240
+UNBLOCK CIR BGA  5700.00 3300.00  240
+UNBLOCK CIR BGA  6500.00 3300.00  240
+UNBLOCK CIR BGA  8100.00 3300.00  240
+UNBLOCK CIR BGA  8900.00 3300.00  240
+UNBLOCK CIR BGA  9700.00 3300.00  240
+UNBLOCK CIR BGA  10500.00 3300.00  240
+UNBLOCK CIR BGA  12900.00 3300.00  240
+UNBLOCK CIR BGA  15300.00 3300.00  240
+UNBLOCK CIR BGA  17700.00 3300.00  240
+UNBLOCK CIR BGA  22500.00 3300.00  240
+UNBLOCK CIR BGA  2500.00 4100.00  240
+UNBLOCK CIR BGA  6500.00 4100.00  240
+UNBLOCK CIR BGA  8100.00 4100.00  240
+UNBLOCK CIR BGA  8900.00 4100.00  240
+UNBLOCK CIR BGA  9700.00 4100.00  240
+UNBLOCK CIR BGA  10500.00 4100.00  240
+UNBLOCK CIR BGA  4100.00 4900.00  240
+UNBLOCK CIR BGA  4900.00 4900.00  240
+UNBLOCK CIR BGA  5700.00 4900.00  240
+UNBLOCK CIR BGA  8100.00 4900.00  240
+UNBLOCK CIR BGA  8900.00 4900.00  240
+UNBLOCK CIR BGA  9700.00 4900.00  240
+UNBLOCK CIR BGA  10500.00 4900.00  240
+UNBLOCK CIR BGA  18500.00 4900.00  240
+UNBLOCK CIR BGA  22500.00 4900.00  240
+UNBLOCK CIR BGA  4100.00 5700.00  240
+UNBLOCK CIR BGA  8100.00 5700.00  240
+UNBLOCK CIR BGA  8900.00 5700.00  240
+UNBLOCK CIR BGA  9700.00 5700.00  240
+UNBLOCK CIR BGA  10500.00 5700.00  240
+UNBLOCK CIR BGA  20100.00 5700.00  240
+UNBLOCK CIR BGA  21700.00 5700.00  240
+UNBLOCK CIR BGA  4900.00 6500.00  240
+UNBLOCK CIR BGA  6500.00 6500.00  240
+UNBLOCK CIR BGA  7300.00 6500.00  240
+UNBLOCK CIR BGA  17700.00 6500.00  240
+UNBLOCK CIR BGA  18500.00 6500.00  240
+UNBLOCK CIR BGA  21700.00 6500.00  240
+UNBLOCK CIR BGA  4900.00 7300.00  240
+UNBLOCK CIR BGA  5700.00 7300.00  240
+UNBLOCK CIR BGA  4900.00 8100.00  240
+UNBLOCK CIR BGA  5700.00 8100.00  240
+UNBLOCK CIR BGA  21700.00 8100.00  240
+UNBLOCK CIR BGA  2500.00 8900.00  240
+UNBLOCK CIR BGA  3300.00 8900.00  240
+UNBLOCK CIR BGA  4900.00 8900.00  240
+UNBLOCK CIR BGA  5700.00 8900.00  240
+UNBLOCK CIR BGA  20100.00 8900.00  240
+UNBLOCK CIR BGA  22500.00 8900.00  240
+UNBLOCK CIR BGA  2500.00 9700.00  240
+UNBLOCK CIR BGA  4900.00 9700.00  240
+UNBLOCK CIR BGA  4900.00 10500.00  240
+UNBLOCK CIR BGA  20100.00 10500.00  240
+UNBLOCK CIR BGA  2500.00 11300.00  240
+UNBLOCK CIR BGA  4900.00 11300.00  240
+UNBLOCK CIR BGA  4900.00 12100.00  240
+UNBLOCK CIR BGA  5700.00 12100.00  240
+UNBLOCK CIR BGA  4900.00 12900.00  240
+UNBLOCK CIR BGA  5700.00 12900.00  240
+UNBLOCK CIR BGA  2500.00 13700.00  240
+UNBLOCK CIR BGA  4900.00 13700.00  240
+UNBLOCK CIR BGA  5700.00 13700.00  240
+UNBLOCK CIR BGA  5700.00 14500.00  240
+UNBLOCK CIR BGA  20100.00 14500.00  240
+UNBLOCK CIR BGA  5700.00 15300.00  240
+UNBLOCK CIR BGA  21700.00 15300.00  240
+UNBLOCK CIR BGA  2500.00 16100.00  240
+UNBLOCK CIR BGA  4900.00 16100.00  240
+UNBLOCK CIR BGA  5700.00 16100.00  240
+UNBLOCK CIR BGA  22500.00 16100.00  240
+UNBLOCK CIR BGA  3300.00 16900.00  240
+UNBLOCK CIR BGA  5700.00 16900.00  240
+UNBLOCK CIR BGA  21700.00 16900.00  240
+UNBLOCK CIR BGA  5700.00 17700.00  240
+UNBLOCK CIR BGA  22500.00 17700.00  240
+UNBLOCK CIR BGA  4900.00 18500.00  240
+UNBLOCK CIR BGA  5700.00 18500.00  240
+UNBLOCK CIR BGA  6500.00 18500.00  240
+UNBLOCK CIR BGA  10500.00 18500.00  240
+UNBLOCK CIR BGA  13700.00 18500.00  240
+UNBLOCK CIR BGA  14500.00 18500.00  240
+UNBLOCK CIR BGA  21700.00 18500.00  240
+UNBLOCK CIR BGA  7300.00 19300.00  240
+UNBLOCK CIR BGA  22500.00 19300.00  240
+UNBLOCK CIR BGA  4900.00 20100.00  240
+UNBLOCK CIR BGA  6500.00 20100.00  240
+UNBLOCK CIR BGA  8100.00 20100.00  240
+UNBLOCK CIR BGA  8900.00 20100.00  240
+UNBLOCK CIR BGA  11300.00 20100.00  240
+UNBLOCK CIR BGA  13700.00 20100.00  240
+UNBLOCK CIR BGA  14500.00 20100.00  240
+UNBLOCK CIR BGA  16100.00 20100.00  240
+UNBLOCK CIR BGA  18500.00 20100.00  240
+UNBLOCK CIR BGA  4100.00 20900.00  240
+UNBLOCK CIR BGA  4900.00 20900.00  240
+UNBLOCK CIR BGA  15300.00 20900.00  240
+UNBLOCK CIR BGA  16900.00 20900.00  240
+UNBLOCK CIR BGA  17700.00 20900.00  240
+UNBLOCK CIR BGA  20100.00 20900.00  240
+UNBLOCK CIR BGA  22500.00 20900.00  240
+UNBLOCK CIR BGA  14500.00 21700.00  240
+UNBLOCK CIR BGA  16100.00 21700.00  240
+UNBLOCK CIR BGA  18500.00 21700.00  240
+UNBLOCK CIR BGA  4100.00 22500.00  240
+UNBLOCK CIR BGA  6500.00 22500.00  240
+UNBLOCK CIR BGA  8900.00 22500.00  240
+UNBLOCK CIR BGA  11300.00 22500.00  240
+UNBLOCK CIR BGA  13700.00 22500.00  240
+UNBLOCK CIR BGA  20900.00 22500.00  240
+#
+UNBLOCK CIR BGA  7300.00 2100.00  660
+UNBLOCK CIR BGA  9700.00 2100.00  660
+UNBLOCK CIR BGA  12100.00 2100.00  660
+UNBLOCK CIR BGA  12100.00 4500.00  660
+UNBLOCK CIR BGA  2100.00 5700.00  660
+UNBLOCK CIR BGA  22900.00 7300.00  660
+UNBLOCK CIR BGA  22900.00 13700.00  660
+UNBLOCK CIR BGA  22900.00 18500.00  660
+UNBLOCK CIR BGA  2100.00 20900.00  660
+UNBLOCK CIR BGA  8100.00 21300.00  660
+UNBLOCK CIR BGA  16100.00 22900.00  660
+#
+# End of BGA pattern definition for layer BGA
+#
+
+
+#
+# Create pattern for blocking vias directly above BGA balls (preventing via-in-pad)
+#
+BLOCK CIR V4-5  2500.00 22500.00  240
+BLOCK CIR V4-5  9700.00 18500.00  240
+BLOCK CIR V4-5  16900.00 20100.00  240
+BLOCK CIR V4-5  8900.00 18500.00  240
+BLOCK CIR V4-5  13700.00 6500.00  240
+BLOCK CIR V4-5  16900.00 6500.00  240
+BLOCK CIR V4-5  15300.00 19300.00  240
+BLOCK CIR V4-5  5700.00 20100.00  240
+BLOCK CIR V4-5  4100.00 12900.00  240
+BLOCK CIR V4-5  3300.00 12900.00  240
+BLOCK CIR V4-5  4100.00 13700.00  240
+BLOCK CIR V4-5  4100.00 14500.00  240
+BLOCK CIR V4-5  7300.00 14500.00  240
+BLOCK CIR V4-5  23300.00 9700.00  240
+BLOCK CIR V4-5  23300.00 14500.00  240
+BLOCK CIR V4-5  22500.00 15300.00  240
+BLOCK CIR V4-5  23300.00 15300.00  240
+BLOCK CIR V4-5  23300.00 16100.00  240
+BLOCK CIR V4-5  23300.00 16900.00  240
+BLOCK CIR V4-5  22500.00 16900.00  240
+BLOCK CIR V4-5  22500.00 8100.00  240
+BLOCK CIR V4-5  23300.00 17700.00  240
+BLOCK CIR V4-5  23300.00 4100.00  240
+BLOCK CIR V4-5  22500.00 20100.00  240
+BLOCK CIR V4-5  23300.00 20900.00  240
+BLOCK CIR V4-5  23300.00 19300.00  240
+BLOCK CIR V4-5  22500.00 9700.00  240
+BLOCK CIR V4-5  23300.00 8100.00  240
+BLOCK CIR V4-5  23300.00 8900.00  240
+BLOCK CIR V4-5  23300.00 20100.00  240
+BLOCK CIR V4-5  23300.00 5700.00  240
+BLOCK CIR V4-5  22900.00 11300.00  660   // Wide circle for Net_35_P/Net_36_N diff pair
+BLOCK CIR V4-5  22900.00 12100.00  660   // Wide circle for Net_37_P/Net_38_N diff pair
+BLOCK CIR V4-5  22500.00 21700.00  240
+BLOCK CIR V4-5  23300.00 21700.00  240
+BLOCK CIR V4-5  23300.00 6500.00  240
+BLOCK CIR V4-5  22500.00 5700.00  240
+BLOCK CIR V4-5  22500.00 2500.00  240
+BLOCK CIR V4-5  23300.00 3300.00  240
+BLOCK CIR V4-5  23300.00 12900.00  240
+BLOCK CIR V4-5  23300.00 10500.00  240
+BLOCK CIR V4-5  18500.00 22500.00  240
+BLOCK CIR V4-5  20900.00 21700.00  240
+BLOCK CIR V4-5  19300.00 19300.00  240
+BLOCK CIR V4-5  21700.00 16100.00  240
+BLOCK CIR V4-5  21700.00 10500.00  240
+BLOCK CIR V4-5  20100.00 8100.00  240
+BLOCK CIR V4-5  20100.00 4900.00  240
+BLOCK CIR V4-5  20100.00 3300.00  240
+BLOCK CIR V4-5  20100.00 13700.00  240
+BLOCK CIR V4-5  17700.00 21700.00  240
+BLOCK CIR V4-5  18500.00 23300.00  240
+BLOCK CIR V4-5  21700.00 23300.00  240
+BLOCK CIR V4-5  21700.00 22500.00  240
+BLOCK CIR V4-5  17700.00 22500.00  240
+BLOCK CIR V4-5  17700.00 23300.00  240
+BLOCK CIR V4-5  20100.00 22500.00  240
+BLOCK CIR V4-5  20900.00 23300.00  240
+BLOCK CIR V4-5  19300.00 21700.00  240
+BLOCK CIR V4-5  20100.00 21700.00  240
+BLOCK CIR V4-5  20900.00 19300.00  240
+BLOCK CIR V4-5  21700.00 19300.00  240
+BLOCK CIR V4-5  18500.00 20900.00  240
+BLOCK CIR V4-5  19300.00 20900.00  240
+BLOCK CIR V4-5  22500.00 22500.00  240
+BLOCK CIR V4-5  20900.00 20100.00  240
+BLOCK CIR V4-5  19300.00 20100.00  240
+BLOCK CIR V4-5  20100.00 20100.00  240
+BLOCK CIR V4-5  19300.00 16900.00  240
+BLOCK CIR V4-5  19300.00 16100.00  240
+BLOCK CIR V4-5  18500.00 19300.00  240
+BLOCK CIR V4-5  18500.00 17700.00  240
+BLOCK CIR V4-5  19300.00 17700.00  240
+BLOCK CIR V4-5  20100.00 16900.00  240
+BLOCK CIR V4-5  21700.00 17700.00  240
+BLOCK CIR V4-5  20900.00 16900.00  240
+BLOCK CIR V4-5  21700.00 12900.00  240
+BLOCK CIR V4-5  20900.00 13700.00  240
+BLOCK CIR V4-5  20900.00 18500.00  240
+BLOCK CIR V4-5  20900.00 17700.00  240
+BLOCK CIR V4-5  21700.00 14500.00  240
+BLOCK CIR V4-5  20900.00 14500.00  240
+BLOCK CIR V4-5  20900.00 11300.00  240
+BLOCK CIR V4-5  20900.00 10500.00  240
+BLOCK CIR V4-5  21700.00 7300.00  240
+BLOCK CIR V4-5  20900.00 7300.00  240
+BLOCK CIR V4-5  20900.00 12900.00  240
+BLOCK CIR V4-5  20900.00 12100.00  240
+BLOCK CIR V4-5  21700.00 8900.00  240
+BLOCK CIR V4-5  20900.00 8100.00  240
+BLOCK CIR V4-5  20100.00 9700.00  240
+BLOCK CIR V4-5  19300.00 8900.00  240
+BLOCK CIR V4-5  18500.00 7300.00  240
+BLOCK CIR V4-5  18500.00 5700.00  240
+BLOCK CIR V4-5  18500.00 8900.00  240
+BLOCK CIR V4-5  19300.00 9700.00  240
+BLOCK CIR V4-5  20100.00 6500.00  240
+BLOCK CIR V4-5  19300.00 6500.00  240
+BLOCK CIR V4-5  21700.00 4900.00  240
+BLOCK CIR V4-5  20900.00 4900.00  240
+BLOCK CIR V4-5  19300.00 4900.00  240
+BLOCK CIR V4-5  18500.00 4100.00  240
+BLOCK CIR V4-5  20900.00 6500.00  240
+BLOCK CIR V4-5  20900.00 5700.00  240
+BLOCK CIR V4-5  19300.00 5700.00  240
+BLOCK CIR V4-5  19300.00 4100.00  240
+BLOCK CIR V4-5  20900.00 2500.00  240
+BLOCK CIR V4-5  20900.00 1700.00  240
+BLOCK CIR V4-5  18500.00 1700.00  240
+BLOCK CIR V4-5  18500.00 3300.00  240
+BLOCK CIR V4-5  21700.00 3300.00  240
+BLOCK CIR V4-5  21700.00 1700.00  240
+BLOCK CIR V4-5  19300.00 1700.00  240
+BLOCK CIR V4-5  19300.00 3300.00  240
+#
+# BLOCK CIR V4-5  20100.00 23300.00  240   // Original Net_120_P
+# BLOCK CIR V4-5  19300.00 23300.00  240   // Original Net_121_N
+# BLOCK CIR V4-5  19700.00 23300.00  600   // Wide circle for Net_120_P/Net_121_N diff pair (midpoint between original sites)
+BLOCK CIR V4-5  19300.00 22900.00  660     // Wide circle for Net_120_P/Net_121_N diff pair (moved away from package edge)
+#
+# BLOCK CIR V4-5  21700.00 20900.00  240   // Original Net_122_P
+# BLOCK CIR V4-5  20900.00 20900.00  240   // Original Net_123_N
+BLOCK CIR V4-5  21300.00 20900.00  660   // Wide circle for Net_122_P/Net_123_N diff pair
+#
+# BLOCK CIR V4-5  20100.00 18500.00  240   // Original Net_124_P
+# BLOCK CIR V4-5  19300.00 18500.00  240   // Original Net_125_N
+BLOCK CIR V4-5  19700.00 18500.00  660   // Wide circle for Net_124_P/Net_125_N diff pair
+#
+# BLOCK CIR V4-5  20900.00 15300.00  240   // Original Net_126_P
+# BLOCK CIR V4-5  20900.00 16100.00  240   // Original Net_127_N
+BLOCK CIR V4-5  20900.00 15700.00  660   // Wide circle for Net_126_P/Net_127_N diff pair
+#
+# BLOCK CIR V4-5  20900.00 8900.00  240   // Original Net_128_P
+# BLOCK CIR V4-5  20900.00 9700.00  240   // Original Net_129_N
+BLOCK CIR V4-5  20900.00 9300.00   660   // Wide circle for Net_128_P/Net_129_N diff pair
+#
+# BLOCK CIR V4-5  19300.00 7300.00  240   // Original Net_130_P
+# BLOCK CIR V4-5  19300.00 8100.00  240   // Original Net_131_N
+BLOCK CIR V4-5  19300.00 7700.00   660   // Wide circle for Net_130_P/Net_131_N diff pair
+#
+# BLOCK CIR V4-5  20900.00 4100.00  240   // Original Net_132_P
+# BLOCK CIR V4-5  20900.00 3300.00  240   // Original Net_133_N
+BLOCK CIR V4-5  20900.00 3700.00   660   // Wide circle for Net_132_P/Net_133_N diff pair
+#
+# BLOCK CIR V4-5  20100.00 2500.00  240   // Original Net_134_P
+# BLOCK CIR V4-5  20100.00 1700.00  240   // Original Net_135_N
+BLOCK CIR V4-5  20100.00 2100.00   660   // Wide circle for Net_134_P/Net_135_N diff pair
+#
+# BLOCK CIR V4-5  19300.00 12100.00  240   // Original Net_136_P
+# BLOCK CIR V4-5  19300.00 12900.00  240   // Original Net_137_N
+BLOCK CIR V4-5  19300.00 12500.00  660   // Wide circle for Net_136_P/Net_137_N diff pair
+#
+BLOCK CIR V4-5  20100.00 15300.00  240
+BLOCK CIR V4-5  19300.00 13700.00  240
+BLOCK CIR V4-5  19300.00 11300.00  240
+BLOCK CIR V4-5  19300.00 10500.00  240
+BLOCK CIR V4-5  19300.00 15300.00  240
+BLOCK CIR V4-5  19300.00 14500.00  240
+BLOCK CIR V4-5  20100.00 12100.00  240
+BLOCK CIR V4-5  20100.00 11300.00  240
+BLOCK CIR V4-5  23300.00 4900.00  240
+BLOCK CIR V4-5  22500.00 4100.00  240
+BLOCK CIR V4-5  16900.00 19300.00  240
+BLOCK CIR V4-5  22500.00 6500.00  240
+BLOCK CIR V4-5  16900.00 16900.00  240
+BLOCK CIR V4-5  17700.00 16900.00  240
+BLOCK CIR V4-5  12100.00 18900.00  660     // Wide circle for Net_153_P/Net_154_N diff pair
+BLOCK CIR V4-5  7300.00 12900.00  240
+BLOCK CIR V4-5  3300.00 3300.00  240
+BLOCK CIR V4-5  3300.00 2500.00  240
+BLOCK CIR V4-5  1700.00 4900.00  240
+BLOCK CIR V4-5  2500.00 2500.00  240
+BLOCK CIR V4-5  2500.00 3300.00  240
+BLOCK CIR V4-5  1700.00 3300.00  240
+BLOCK CIR V4-5  1700.00 4100.00  240
+BLOCK CIR V4-5  2500.00 4900.00  240
+BLOCK CIR V4-5  4100.00 3300.00  240
+BLOCK CIR V4-5  3300.00 4100.00  240
+BLOCK CIR V4-5  4100.00 4100.00  240
+BLOCK CIR V4-5  3300.00 4900.00  240
+BLOCK CIR V4-5  3300.00 5700.00  240
+BLOCK CIR V4-5  3300.00 1700.00  240
+BLOCK CIR V4-5  4100.00 1700.00  240
+BLOCK CIR V4-5  5700.00 10500.00  240
+BLOCK CIR V4-5  5700.00 9700.00  240
+BLOCK CIR V4-5  7300.00 15300.00  240
+BLOCK CIR V4-5  5700.00 20900.00  240
+BLOCK CIR V4-5  4100.00 21700.00  240
+BLOCK CIR V4-5  1700.00 21700.00  240
+BLOCK CIR V4-5  2500.00 21700.00  240
+BLOCK CIR V4-5  3300.00 21700.00  240
+BLOCK CIR V4-5  16900.00 21700.00  240
+BLOCK CIR V4-5  16900.00 22500.00  240
+BLOCK CIR V4-5  15300.00 18500.00  240
+BLOCK CIR V4-5  7300.00 3300.00  240
+BLOCK CIR V4-5  7300.00 4100.00  240
+BLOCK CIR V4-5  5700.00 5700.00  240
+BLOCK CIR V4-5  5700.00 1700.00  240
+BLOCK CIR V4-5  6500.00 1700.00  240
+BLOCK CIR V4-5  7300.00 20100.00  240
+BLOCK CIR V4-5  4900.00 21700.00  240
+BLOCK CIR V4-5  5700.00 21700.00  240
+BLOCK CIR V4-5  6500.00 20900.00  240
+BLOCK CIR V4-5  6500.00 21700.00  240
+BLOCK CIR V4-5  7300.00 20900.00  240
+BLOCK CIR V4-5  7300.00 21700.00  240
+BLOCK CIR V4-5  8900.00 20900.00  240
+BLOCK CIR V4-5  8900.00 21700.00  240
+BLOCK CIR V4-5  9700.00 20100.00  240
+BLOCK CIR V4-5  9700.00 21700.00  240
+BLOCK CIR V4-5  9700.00 20900.00  240
+BLOCK CIR V4-5  10500.00 21700.00  240
+BLOCK CIR V4-5  10500.00 20900.00  240
+BLOCK CIR V4-5  10500.00 20100.00  240
+BLOCK CIR V4-5  4100.00 23300.00  240
+BLOCK CIR V4-5  4900.00 22500.00  240
+BLOCK CIR V4-5  4900.00 23300.00  240
+BLOCK CIR V4-5  5700.00 22500.00  240
+BLOCK CIR V4-5  5700.00 23300.00  240
+BLOCK CIR V4-5  6500.00 23300.00  240
+BLOCK CIR V4-5  7300.00 22500.00  240
+BLOCK CIR V4-5  7300.00 23300.00  240
+BLOCK CIR V4-5  8100.00 22500.00  240
+BLOCK CIR V4-5  8100.00 23300.00  240
+BLOCK CIR V4-5  8900.00 23300.00  240
+BLOCK CIR V4-5  9700.00 22500.00  240
+BLOCK CIR V4-5  9700.00 23300.00  240
+BLOCK CIR V4-5  10500.00 22500.00  240
+BLOCK CIR V4-5  10500.00 23300.00  240
+BLOCK CIR V4-5  11300.00 23300.00  240
+BLOCK CIR V4-5  14500.00 20900.00  240
+BLOCK CIR V4-5  12100.00 23300.00  240
+BLOCK CIR V4-5  13700.00 19300.00  240
+BLOCK CIR V4-5  14500.00 23300.00  240
+BLOCK CIR V4-5  11300.00 21700.00  240
+BLOCK CIR V4-5  12900.00 20100.00  240
+BLOCK CIR V4-5  13700.00 20900.00  240
+BLOCK CIR V4-5  13700.00 21700.00  240
+BLOCK CIR V4-5  12100.00 20900.00  240
+BLOCK CIR V4-5  13700.00 23300.00  240
+BLOCK CIR V4-5  12900.00 20900.00  240
+BLOCK CIR V4-5  12900.00 21700.00  240
+BLOCK CIR V4-5  12100.00 21700.00  240
+BLOCK CIR V4-5  12100.00 20100.00  240
+BLOCK CIR V4-5  12900.00 22500.00  240
+BLOCK CIR V4-5  12900.00 23300.00  240
+BLOCK CIR V4-5  12100.00 22500.00  240
+BLOCK CIR V4-5  11300.00 20900.00  240
+BLOCK CIR V4-5  14500.00 19300.00  240
+BLOCK CIR V4-5  1700.00 8900.00  240
+BLOCK CIR V4-5  1700.00 9700.00  240
+BLOCK CIR V4-5  3300.00 9700.00  240
+BLOCK CIR V4-5  3300.00 8100.00  240
+BLOCK CIR V4-5  3300.00 7300.00  240
+BLOCK CIR V4-5  3300.00 6500.00  240
+BLOCK CIR V4-5  3300.00 23300.00  240
+BLOCK CIR V4-5  6500.00 19300.00  240
+BLOCK CIR V4-5  3300.00 20900.00  240
+BLOCK CIR V4-5  4100.00 6500.00  240
+BLOCK CIR V4-5  4900.00 5700.00  240
+BLOCK CIR V4-5  4100.00 15300.00  240
+BLOCK CIR V4-5  3300.00 10500.00  240
+BLOCK CIR V4-5  11300.00 19300.00  240
+BLOCK CIR V4-5  9700.00 19300.00  240
+BLOCK CIR V4-5  10500.00 19300.00  240
+BLOCK CIR V4-5  3300.00 22500.00  240
+BLOCK CIR V4-5  14500.00 22500.00  240
+BLOCK CIR V4-5  8100.00 19300.00  240
+BLOCK CIR V4-5  10500.00 7300.00  240
+BLOCK CIR V4-5  16900.00 8100.00  240
+BLOCK CIR V4-5  12900.00 8100.00  240
+BLOCK CIR V4-5  12900.00 6500.00  240
+BLOCK CIR V4-5  16100.00 8100.00  240
+BLOCK CIR V4-5  16100.00 6500.00  240
+#
+# BLOCK CIR V4-5  12100.00 7300.00  240   // Original Net_265_N
+# BLOCK CIR V4-5  12100.00 6500.00  240   // Original Net_266_P
+BLOCK CIR V4-5  12100.00 6900.00  660   // Wide circle for Net_265_N/Net_266_P diff pair
+#
+# BLOCK CIR V4-5  15300.00 7300.00  240   // Original Net_267_N
+# BLOCK CIR V4-5  15300.00 6500.00  240   // Original Net_268_P
+BLOCK CIR V4-5  15300.00 6900.00  660   // Wide circle for Net_267_N/Net_268_P diff pair
+#
+# BLOCK CIR V4-5  13700.00 2500.00  240   // Original Net_269_N
+# BLOCK CIR V4-5  13700.00 1700.00  240   // Original Net_270_P
+BLOCK CIR V4-5  13700.00 2100.00  660   // Wide circle for Net_269_N/Net_270_P diff pair
+#
+# BLOCK CIR V4-5  14500.00 2500.00  240   // Original Net_271_N
+# BLOCK CIR V4-5  14500.00 1700.00  240   // Original Net_272_P
+BLOCK CIR V4-5  14500.00 2100.00  660   // Wide circle for Net_271_N/Net_272_P diff pair
+#
+# BLOCK CIR V4-5  16100.00 2500.00  240   // Original Net_273_N
+# BLOCK CIR V4-5  16100.00 1700.00  240   // Original Net_274_P
+BLOCK CIR V4-5  16100.00 2100.00  660   // Wide circle for Net_273_N/Net_274_P diff pair
+#
+# BLOCK CIR V4-5  16900.00 2500.00  240   // Original Net_275_N
+# BLOCK CIR V4-5  16900.00 1700.00  240   // Original Net_276_P
+BLOCK CIR V4-5  16900.00 2100.00  660   // Wide circle for Net_275_N/Net_276_P diff pair
+#
+# BLOCK CIR V4-5  13700.00 4100.00  240   // Original Net_277_N
+# BLOCK CIR V4-5  13700.00 4900.00  240   // Original Net_278_P
+BLOCK CIR V4-5  13700.00 4500.00  660   // Wide circle for Net_277_N/Net_278_P diff pair
+#
+# BLOCK CIR V4-5  14500.00 4100.00  240   // Original Net_279_N
+# BLOCK CIR V4-5  14500.00 4900.00  240   // Original Net_280_P
+BLOCK CIR V4-5  14500.00 4500.00  660   // Wide circle for Net_279_N/Net_280_P diff pair
+#
+# BLOCK CIR V4-5  16100.00 4100.00  240   // Original Net_281_N
+# BLOCK CIR V4-5  16100.00 4900.00  240   // Original Net_282_P
+BLOCK CIR V4-5  16100.00 4500.00  660   // Wide circle for Net_281_N/Net_282_P diff pair
+#
+# BLOCK CIR V4-5  16900.00 4100.00  240   // Original Net_283_N
+# BLOCK CIR V4-5  16900.00 4900.00  240   // Original Net_284_P
+BLOCK CIR V4-5  16900.00 4500.00  660   // Wide circle for Net_283_N/Net_284_P diff pair
+#
+BLOCK CIR V4-5  4900.00 15300.00  240
+BLOCK CIR V4-5  1700.00 16100.00  240
+BLOCK CIR V4-5  3300.00 16100.00  240
+BLOCK CIR V4-5  2500.00 15300.00  240
+BLOCK CIR V4-5  4100.00 16100.00  240
+BLOCK CIR V4-5  3300.00 15300.00  240
+BLOCK CIR V4-5  1700.00 15300.00  240
+BLOCK CIR V4-5  4900.00 14500.00  240
+BLOCK CIR V4-5  16900.00 18500.00  240
+BLOCK CIR V4-5  8900.00 6500.00  240
+BLOCK CIR V4-5  16100.00 18500.00  240
+BLOCK CIR V4-5  8100.00 6500.00  240
+BLOCK CIR V4-5  1700.00 13700.00  240
+BLOCK CIR V4-5  1700.00 14500.00  240
+BLOCK CIR V4-5  2500.00 14500.00  240
+BLOCK CIR V4-5  3300.00 14500.00  240
+BLOCK CIR V4-5  3300.00 13700.00  240
+BLOCK CIR V4-5  1700.00 12900.00  240
+BLOCK CIR V4-5  2500.00 12900.00  240
+BLOCK CIR V4-5  12900.00 18500.00  240
+BLOCK CIR V4-5  15300.00 20100.00  240
+BLOCK CIR V4-5  17700.00 20100.00  240
+BLOCK CIR V4-5  17700.00 18500.00  240
+BLOCK CIR V4-5  15300.00 23300.00  240
+BLOCK CIR V4-5  2500.00 12100.00  240
+BLOCK CIR V4-5  1700.00 10500.00  240
+BLOCK CIR V4-5  2500.00 10500.00  240
+BLOCK CIR V4-5  1700.00 12100.00  240
+BLOCK CIR V4-5  1700.00 11300.00  240
+BLOCK CIR V4-5  4100.00 12100.00  240
+BLOCK CIR V4-5  3300.00 11300.00  240
+BLOCK CIR V4-5  4100.00 10500.00  240
+BLOCK CIR V4-5  3300.00 12100.00  240
+BLOCK CIR V4-5  4100.00 11300.00  240
+BLOCK CIR V4-5  15300.00 21700.00  240
+BLOCK CIR V4-5  7300.00 18500.00  240
+BLOCK CIR V4-5  8900.00 19300.00  240
+BLOCK CIR V4-5  8100.00 18500.00  240
+BLOCK CIR V4-5  16100.00 19300.00  240
+BLOCK CIR V4-5  15300.00 22500.00  240
+BLOCK CIR V4-5  16100.00 20900.00  240
+BLOCK CIR V4-5  4900.00 3300.00  240
+BLOCK CIR V4-5  6500.00 5700.00  240
+BLOCK CIR V4-5  7300.00 5700.00  240
+BLOCK CIR V4-5  6500.00 4900.00  240
+BLOCK CIR V4-5  5700.00 4100.00  240
+BLOCK CIR V4-5  7300.00 4900.00  240
+BLOCK CIR V4-5  5700.00 6500.00  240
+BLOCK CIR V4-5  4900.00 4100.00  240
+BLOCK CIR V4-5  5700.00 11300.00  240
+BLOCK CIR V4-5  2500.00 8100.00  240
+BLOCK CIR V4-5  1700.00 8100.00  240
+BLOCK CIR V4-5  1700.00 7300.00  240
+BLOCK CIR V4-5  2500.00 7300.00  240
+BLOCK CIR V4-5  4100.00 8100.00  240
+BLOCK CIR V4-5  4100.00 9700.00  240
+BLOCK CIR V4-5  4100.00 8900.00  240
+BLOCK CIR V4-5  4100.00 7300.00  240
+BLOCK CIR V4-5  4100.00 18500.00  240
+BLOCK CIR V4-5  5700.00 19300.00  240
+BLOCK CIR V4-5  4900.00 19300.00  240
+# BLOCK CIR V4-5  2500.00 19300.00  240   // Original Net_347_P
+# BLOCK CIR V4-5  1700.00 19300.00  240   // Original Net_346_N
+BLOCK CIR V4-5  2100.00 19300.00  660   // Wide circle for Net_347_P/Net_346_N diff pair
+#
+BLOCK CIR V4-5  4100.00 19300.00  240
+BLOCK CIR V4-5  4100.00 20100.00  240
+BLOCK CIR V4-5  4900.00 16900.00  240
+BLOCK CIR V4-5  4900.00 17700.00  240
+# BLOCK CIR V4-5  2500.00 17700.00  240   // Original Net_353_P
+# BLOCK CIR V4-5  1700.00 17700.00  240   // Original Net_352_N
+BLOCK CIR V4-5  2100.00 17700.00  660   // Wide circle for Net_353_P/Net_352_N diff pair
+#
+BLOCK CIR V4-5  4100.00 17700.00  240
+BLOCK CIR V4-5  4100.00 16900.00  240
+#
+# The following blocks on V4-5 were added 4/6/2024:
+BLOCK CIR V4-5  4900.00 1700.00  240
+BLOCK CIR V4-5  4100.00 2500.00  240
+BLOCK CIR V4-5  4900.00 2500.00  240
+BLOCK CIR V4-5  5700.00 2500.00  240
+BLOCK CIR V4-5  18500.00 2500.00  240
+BLOCK CIR V4-5  21700.00 2500.00  240
+BLOCK CIR V4-5  5700.00 3300.00  240
+BLOCK CIR V4-5  6500.00 3300.00  240
+BLOCK CIR V4-5  8100.00 3300.00  240
+BLOCK CIR V4-5  8900.00 3300.00  240
+BLOCK CIR V4-5  9700.00 3300.00  240
+BLOCK CIR V4-5  10500.00 3300.00  240
+BLOCK CIR V4-5  12900.00 3300.00  240
+BLOCK CIR V4-5  15300.00 3300.00  240
+BLOCK CIR V4-5  17700.00 3300.00  240
+BLOCK CIR V4-5  22500.00 3300.00  240
+BLOCK CIR V4-5  2500.00 4100.00  240
+BLOCK CIR V4-5  6500.00 4100.00  240
+BLOCK CIR V4-5  8100.00 4100.00  240
+BLOCK CIR V4-5  8900.00 4100.00  240
+BLOCK CIR V4-5  9700.00 4100.00  240
+BLOCK CIR V4-5  10500.00 4100.00  240
+BLOCK CIR V4-5  4100.00 4900.00  240
+BLOCK CIR V4-5  4900.00 4900.00  240
+BLOCK CIR V4-5  5700.00 4900.00  240
+BLOCK CIR V4-5  8100.00 4900.00  240
+BLOCK CIR V4-5  8900.00 4900.00  240
+BLOCK CIR V4-5  9700.00 4900.00  240
+BLOCK CIR V4-5  10500.00 4900.00  240
+BLOCK CIR V4-5  18500.00 4900.00  240
+BLOCK CIR V4-5  22500.00 4900.00  240
+BLOCK CIR V4-5  4100.00 5700.00  240
+BLOCK CIR V4-5  8100.00 5700.00  240
+BLOCK CIR V4-5  8900.00 5700.00  240
+BLOCK CIR V4-5  9700.00 5700.00  240
+BLOCK CIR V4-5  10500.00 5700.00  240
+BLOCK CIR V4-5  20100.00 5700.00  240
+BLOCK CIR V4-5  21700.00 5700.00  240
+BLOCK CIR V4-5  4900.00 6500.00  240
+BLOCK CIR V4-5  6500.00 6500.00  240
+BLOCK CIR V4-5  7300.00 6500.00  240
+BLOCK CIR V4-5  17700.00 6500.00  240
+BLOCK CIR V4-5  18500.00 6500.00  240
+BLOCK CIR V4-5  21700.00 6500.00  240
+BLOCK CIR V4-5  4900.00 7300.00  240
+BLOCK CIR V4-5  5700.00 7300.00  240
+BLOCK CIR V4-5  4900.00 8100.00  240
+BLOCK CIR V4-5  5700.00 8100.00  240
+BLOCK CIR V4-5  21700.00 8100.00  240
+BLOCK CIR V4-5  2500.00 8900.00  240
+BLOCK CIR V4-5  3300.00 8900.00  240
+BLOCK CIR V4-5  4900.00 8900.00  240
+BLOCK CIR V4-5  5700.00 8900.00  240
+BLOCK CIR V4-5  20100.00 8900.00  240
+BLOCK CIR V4-5  22500.00 8900.00  240
+BLOCK CIR V4-5  2500.00 9700.00  240
+BLOCK CIR V4-5  4900.00 9700.00  240
+BLOCK CIR V4-5  4900.00 10500.00  240
+BLOCK CIR V4-5  20100.00 10500.00  240
+BLOCK CIR V4-5  2500.00 11300.00  240
+BLOCK CIR V4-5  4900.00 11300.00  240
+BLOCK CIR V4-5  4900.00 12100.00  240
+BLOCK CIR V4-5  5700.00 12100.00  240
+BLOCK CIR V4-5  4900.00 12900.00  240
+BLOCK CIR V4-5  5700.00 12900.00  240
+BLOCK CIR V4-5  2500.00 13700.00  240
+BLOCK CIR V4-5  4900.00 13700.00  240
+BLOCK CIR V4-5  5700.00 13700.00  240
+BLOCK CIR V4-5  5700.00 14500.00  240
+BLOCK CIR V4-5  20100.00 14500.00  240
+BLOCK CIR V4-5  5700.00 15300.00  240
+BLOCK CIR V4-5  21700.00 15300.00  240
+BLOCK CIR V4-5  2500.00 16100.00  240
+BLOCK CIR V4-5  4900.00 16100.00  240
+BLOCK CIR V4-5  5700.00 16100.00  240
+BLOCK CIR V4-5  22500.00 16100.00  240
+BLOCK CIR V4-5  3300.00 16900.00  240
+BLOCK CIR V4-5  5700.00 16900.00  240
+BLOCK CIR V4-5  21700.00 16900.00  240
+BLOCK CIR V4-5  5700.00 17700.00  240
+BLOCK CIR V4-5  22500.00 17700.00  240
+BLOCK CIR V4-5  4900.00 18500.00  240
+BLOCK CIR V4-5  5700.00 18500.00  240
+BLOCK CIR V4-5  6500.00 18500.00  240
+BLOCK CIR V4-5  10500.00 18500.00  240
+BLOCK CIR V4-5  13700.00 18500.00  240
+BLOCK CIR V4-5  14500.00 18500.00  240
+BLOCK CIR V4-5  21700.00 18500.00  240
+BLOCK CIR V4-5  7300.00 19300.00  240
+BLOCK CIR V4-5  22500.00 19300.00  240
+BLOCK CIR V4-5  4900.00 20100.00  240
+BLOCK CIR V4-5  6500.00 20100.00  240
+BLOCK CIR V4-5  8100.00 20100.00  240
+BLOCK CIR V4-5  8900.00 20100.00  240
+BLOCK CIR V4-5  11300.00 20100.00  240
+BLOCK CIR V4-5  13700.00 20100.00  240
+BLOCK CIR V4-5  14500.00 20100.00  240
+BLOCK CIR V4-5  16100.00 20100.00  240
+BLOCK CIR V4-5  18500.00 20100.00  240
+BLOCK CIR V4-5  4100.00 20900.00  240
+BLOCK CIR V4-5  4900.00 20900.00  240
+BLOCK CIR V4-5  15300.00 20900.00  240
+BLOCK CIR V4-5  16900.00 20900.00  240
+BLOCK CIR V4-5  17700.00 20900.00  240
+BLOCK CIR V4-5  20100.00 20900.00  240
+BLOCK CIR V4-5  22500.00 20900.00  240
+BLOCK CIR V4-5  14500.00 21700.00  240
+BLOCK CIR V4-5  16100.00 21700.00  240
+BLOCK CIR V4-5  18500.00 21700.00  240
+BLOCK CIR V4-5  4100.00 22500.00  240
+BLOCK CIR V4-5  6500.00 22500.00  240
+BLOCK CIR V4-5  8900.00 22500.00  240
+BLOCK CIR V4-5  11300.00 22500.00  240
+BLOCK CIR V4-5  13700.00 22500.00  240
+BLOCK CIR V4-5  20900.00 22500.00  240
+#
+BLOCK CIR V4-5  7300.00 2100.00  660
+BLOCK CIR V4-5  9700.00 2100.00  660
+BLOCK CIR V4-5  12100.00 2100.00  660
+BLOCK CIR V4-5  12100.00 4500.00  660
+BLOCK CIR V4-5  2100.00 5700.00  660
+BLOCK CIR V4-5  22900.00 7300.00  660
+BLOCK CIR V4-5  22900.00 13700.00  660
+BLOCK CIR V4-5  22900.00 18500.00  660
+BLOCK CIR V4-5  2100.00 20900.00  660
+BLOCK CIR V4-5  8100.00 21300.00  660
+BLOCK CIR V4-5  16100.00 22900.00  660
+#
+# End of pattern for blocking vias directly above BGA balls (no via-in-pad)
+#
+
+
+#
+# Define cost-multipliers for traces and vias;
+#
+#  trace_cost_multipliter  <multiplier index>     <multiplier value>
+#    via_cost_multipliter  <multiplier index>     <multiplier value>
+trace_cost_multiplier             1                      2
+trace_cost_multiplier             2                      4
+trace_cost_multiplier             3                      5
+trace_cost_multiplier             4                     20
+
+#
+# Define cost-zones for traces and vias:
+#
+# trace_cost_zone   <trace mult. index>     <rout. layer name>   <ALL|RECT|CIR|TRI>
+#   via_cost_zone     <via mult. index>       <via layer name>   <ALL|RECT|CIR|TRI>
+
+
+
+
+# Avoid routing in rectangle directly beneath center of die:
+trace_cost_zone              1                  Pkg_M1           RECT  11000 10000   14000 14000
+trace_cost_zone              1                  Pkg_M2           RECT  11000 10000   14000 14000
+trace_cost_zone              1                  Pkg_M3           RECT  11000 10000   14000 14000
+
+# Avoid excessive routing on die top-layer:
+# trace_cost_zone              3                  Die_top          ALL
+trace_cost_zone              1                  Die_top          ALL
+
+# Use Pkg_M4 as an 'overflow' layer:
+trace_cost_zone              2                  Pkg_M4           ALL
+
+# Minimize routing on package BGA layer or the PCB layer:
+trace_cost_zone              3                  Pkg_M5           ALL
+
+
+#
+# Design rules: #########################################
+#
+design_rule_set Die_Top_rules   Design Rules for top-level routing on die
+  line_width        = 8
+  line_spacing      = 8
+  via_up_diameter   = 8
+  via_down_diameter = 8
+
+  via_up_to_trace_spacing      = 8
+  via_down_to_trace_spacing    = 8
+  via_up_to_via_up_spacing     = 8
+  via_down_to_via_down_spacing = 8
+  via_up_to_via_down_spacing   = 8
+
+  allowed_directions = MANHATTAN
+
+  exception = PWR_GND   // Exception design rules for power and ground nets 
+    line_width      = 8
+  end_exception  // End of exception power and ground nets
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 20  // Center-to-center pitch
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 20  // Center-to-center pitch
+  end_exception  // End of exception for 100-ohm differential pairs
+
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set   No_NonDiffPair_C4s   Design Rules for diff-pair C4 vias
+  line_width        = 20
+  line_spacing      = 20
+  via_up_diameter   = 80  // C4 bump diameter is ~100 um
+  via_down_diameter = 8
+
+  via_up_to_trace_spacing      = 20  // These spacing rules on UBM layer are intentionally 
+  via_down_to_trace_spacing    = 20  // smaller than the actual spacing that's permitted 
+  via_up_to_via_up_spacing     = 40  // by the 165-micron pitch of the C4 locations. The
+  via_down_to_via_down_spacing = 40  // design rules are enforced by BLOCK/UNBLOCK statements
+  via_up_to_via_down_spacing   = 40  // and DR_zone statements.
+
+  allowed_directions = NONE         // Prevent non-diff-pair nets from having C4 vias in this area
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 165         // Center-to-center pitch matches C4 pitch
+    allowed_directions = UP_DOWN  // Allow diff-pair vias in this region
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 165         // Center-to-center pitch matches C4 pitch
+    allowed_directions = UP_DOWN  // Allow diff-pair vias in this region
+  end_exception  // End of exception for 100-ohm differential pairs
+end_design_rule_set
+
+
+design_rule_set  No_DiffPair_C4s     Design Rules for non-diff-pair C4 vias
+  line_width        = 20
+  line_spacing      = 20
+  via_up_diameter   = 80  // C4 bump diameter is ~100 um
+  via_down_diameter = 8
+
+  via_up_to_trace_spacing      = 20  // These spacing rules on UBM layer are intentionally 
+  via_down_to_trace_spacing    = 20  // smaller than the actual spacing that's permitted 
+  via_up_to_via_up_spacing     = 40  // by the 165-micron pitch of the C4 locations. The
+  via_down_to_via_down_spacing = 40  // design rules are enforced by BLOCK/UNBLOCK statements
+  via_up_to_via_down_spacing   = 40  // and DR_zone statements.
+
+  allowed_directions = UP_DOWN  // Prevent diff-pair nets from having C4 vias in this area
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 165         // Center-to-center pitch matches C4 pitch
+    allowed_directions = NONE     // Prevent diff-pair C4 vias in this region
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 165         // Center-to-center pitch matches C4 pitch
+    allowed_directions = NONE     // Prevent diff-pair C4 vias in this region
+  end_exception  // End of exception for 100-ohm differential pairs
+end_design_rule_set
+
+
+design_rule_set  No_C4s     Design Rules prohibiting all C4 vias
+  line_width        = 20
+  line_spacing      = 20
+  via_up_diameter   = 80  // C4 bump diameter is ~100 um
+  via_down_diameter = 8
+
+  via_up_to_trace_spacing      = 20  // These spacing rules on UBM layer are intentionally 
+  via_down_to_trace_spacing    = 20  // smaller than the actual spacing that's permitted 
+  via_up_to_via_up_spacing     = 40  // by the 165-micron pitch of the C4 locations. The
+  via_down_to_via_down_spacing = 40  // design rules are enforced by BLOCK/UNBLOCK statements
+  via_up_to_via_down_spacing   = 40  // and DR_zone statements.
+
+  allowed_directions = NONE    // Prevent non-diff-pair C4 vias in this region
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 165       // Center-to-center pitch matches C4 pitch
+    allowed_directions = NONE   // Prevent diff-pair C4 vias in this region
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 165       // Center-to-center pitch matches C4 pitch
+    allowed_directions = NONE   // Prevent diff-pair C4 vias in this region
+  end_exception  // End of exception for 100-ohm differential pairs
+end_design_rule_set
+
+
+design_rule_set Break_Out   Design Rules for break-out area on Pkg_M1 layer near die // Break-out rules
+  line_width        = 17   // Minimum linewidth is 17 um in breakout area
+  line_spacing      = 20   // Minimum trace-to-trace spacing is ~20um
+  via_up_diameter   = 100  // Pad diameter is 100um
+  via_down_diameter = 100  // Pad diameter is 100um
+
+  via_up_to_trace_spacing      = 20  // Trace-to-pad spacing is 20um
+  via_down_to_trace_spacing    = 20  // Trace-to-pad spacing is 20um
+  via_up_to_via_up_spacing     = 40  // Via pad-to-pad spacing is 40-50um
+  via_down_to_via_down_spacing = 40  // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   = 40  // Via pad-to-pad spacing is 40-50um
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 37  // Center-to-center pitch in break-out zone
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 37  // Center-to-center pitch in break-out zone
+  end_exception  // End of exception for 100-ohm differential pairs
+  
+end_design_rule_set   // End of design rule set
+
+design_rule_set Non_Bottom   Design Rules for all package layers except bottom layer and breakout area // Rules for routing layers
+  line_width        = 20   // Minimum linewidth is ~20 um
+  line_spacing      = 20   // Minimum trace-to-trace spacing is ~20um
+  via_up_diameter   = 100  // Pad diameter is 100um
+  via_down_diameter = 100  // Pad diameter is 100um
+
+  via_up_to_trace_spacing      = 20  // Trace-to-pad spacing is 20um
+  via_down_to_trace_spacing    = 20  // Trace-to-pad spacing is 20um
+  via_up_to_via_up_spacing     = 40  // Via pad-to-pad spacing is 40-50um
+  via_down_to_via_down_spacing = 40  // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   = 40  // Via pad-to-pad spacing is 40-50um
+
+  exception = PWR_GND   // Exception design rules for power and ground nets 
+    line_width        = 40   // Minimum linewidth is ~20 um
+  end_exception  // End of exception power and ground nets
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    line_width        = 25   //Linewidth is ~25 um on M1
+    line_spacing      = 32   //Line spacing is ~32um on M1
+
+    via_up_to_trace_spacing      = 30  // Trace-to-pad spacing is 20um
+    via_down_to_trace_spacing    = 30  // Trace-to-pad spacing is 20um
+    via_up_to_via_up_spacing     = 50  // Via pad-to-pad spacing is 40-50um
+    via_down_to_via_down_spacing = 50  // Via pad-to-pad spacing is 40-50um
+    via_up_to_via_down_spacing   = 50  // Via pad-to-pad spacing is 40-50um
+    
+    diff_pair_pitch = 58  // Center-to-center pitch forDiff pairs
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    line_width        = 35   //Linewidth is ~35 um on M1
+    line_spacing      = 50   //Line spacing is ~50 um on M1
+
+    via_up_to_trace_spacing      = 40  // Trace-to-pad spacing is 20um
+    via_down_to_trace_spacing    = 50  // Trace-to-pad spacing is 20um
+    via_up_to_via_up_spacing     = 50  // Via pad-to-pad spacing is 40-50um
+    via_down_to_via_down_spacing = 50  // Via pad-to-pad spacing is 40-50um
+    via_up_to_via_down_spacing   = 50  // Via pad-to-pad spacing is 40-50um
+    
+    diff_pair_pitch = 85  // Center-to-center pitch forDiff pairs
+  end_exception  // End of exception for 100-ohm differential pairs
+  
+end_design_rule_set   // End of design rule set
+
+design_rule_set Pkg_Bottom   Design Rules for bottom package layer  // Rules for bottom pkg layer
+  line_width        = 100  // Typical linewidth on bottomis ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um
+  via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+  
+  exception = PWR_GND   // Exception design rules for power and ground nets 
+    line_width        = 150
+  end_exception  // End of exception power and ground nets
+  
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 200  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 200
+  end_exception  // End of exception for 100-ohm differential pairs
+    
+end_design_rule_set   // End of design rule set
+
+
+design_rule_set   No_NonDiffPair_BGAs   Design Rules for diff-pair BGA vias
+
+  line_width        = 100  // Typical linewidth on bottom is ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
+  via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+
+  allowed_directions = ANY_LATERAL  // Prevent non-diff-pair nets from having vias in this area
+
+  exception = 50_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY  // Allow diff-pair nets in this region
+  end_exception
+
+  exception = 100_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY  // Allow diff-pair nets in this region
+  end_exception
+end_design_rule_set
+
+
+design_rule_set  No_DiffPair_BGAs     Design Rules for non-diff-pair BGA vias
+
+  line_width        = 100  // Typical linewidth on bottom is ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
+  via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+
+  allowed_directions = ANY   // Allow all non-diff-pair nets
+
+  exception = 50_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY_LATERAL  // Prevent diff-pair vias in this region
+  end_exception
+
+  exception = 100_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY_LATERAL // Prevent diff-pair vias in this region
+  end_exception
+end_design_rule_set
+
+
+design_rule_set  No_BGAs     Design Rules prohibiting all vias
+
+  line_width        = 100  // Typical linewidth on bottom is ~100 um
+  line_spacing      = 100  // Don't make minimum line spacing too large, or else we get DRC violations
+  via_up_diameter   = 500  // BGA pad diameter is 500um
+  via_down_diameter = 100  // Via pad diameter is 100um
+
+  via_up_to_trace_spacing      = 140 // Trace-to-pad spacing is 200-300um
+  via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
+  via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
+  via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
+  via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
+
+  allowed_directions = ANY_LATERAL   // Prevent non-diff-pair vias in this region
+
+  exception = 50_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY_LATERAL    // Prevent diff-pair vias in this region
+  end_exception
+
+  exception = 100_ohm
+    diff_pair_pitch = 200
+    allowed_directions = ANY_LATERAL   // Prevent diff-pair vias in this region
+  end_exception
+end_design_rule_set
+
+
+design_rule_set PCB_Top    Design Rules for top PCB layer  // Rules for top PCB layer
+  line_width        = 127  // 5 mils, based on example evaluation board from industry
+  line_spacing      = 102  // 4 mils, based on example evaluation board from industry
+  via_up_diameter   = 508  // 20-mil via pad diameter, based on example evaluation board
+  via_down_diameter = 500  // BGA pad diameter is 500um
+
+  via_up_to_trace_spacing      = 102 // 4 mils, based on example evaluation board from industry
+  via_down_to_trace_spacing    = 102 // 4 mils, based on example evaluation board from industry
+  via_up_to_via_up_spacing     = 102 // 4 mils (assumption)
+  via_down_to_via_down_spacing = 290 // BGA pad-to-pad spacing is 300 um
+  via_up_to_via_down_spacing   = 102 // 4 mils (assumption)
+
+  allowed_directions = MANHATTAN_X
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 260  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 320
+  end_exception  // End of exception for 100-ohm differential pairs
+
+end_design_rule_set   // End of design rule set
+
+design_rule_set PCB_Non-Top    Design Rules for non-top PCB layers  // Rules for non-top PCB layers
+  line_width        = 127  // 5 mils, based on example evaluation board from industry
+  line_spacing      = 102  // 4 mils, based on example evaluation board from industry
+  via_up_diameter   = 508  // 20-mil via pad diameter, based on example evaluation board
+  via_down_diameter = 508  // 20-mil via pad diameter, based on example evaluation board
+
+  via_up_to_trace_spacing      = 102 // 4 mils, based on example evaluation board from industry
+  via_down_to_trace_spacing    = 102 // 4 mils, based on example evaluation board from industry
+  via_up_to_via_up_spacing     = 102 // 4 mils (assumption)
+  via_down_to_via_down_spacing = 102 // 4 mils (assumption)
+  via_up_to_via_down_spacing   = 102 // 4 mils (assumption)
+
+  allowed_directions = MANHATTAN_X
+
+  exception = 50_ohm   // Exception design rules for 50-ohm differential pairs 
+    diff_pair_pitch = 260  
+  end_exception  // End of exception for 50-ohm differential pairs 
+
+  exception = 100_ohm   // Exception design rules for 100-ohm differential pairs 
+    diff_pair_pitch = 320
+  end_exception  // End of exception for 100-ohm differential pairs
+
+end_design_rule_set   // End of design rule set
+
+
+############ Define design-rule zones: #####################
+##
+## Specify which areas on each layer will use each design-rule set.
+## All coordinates are in microns.
+##
+##  DR_zone <DR name> <layer name>  RECT  X1 Y1 X2 Y2 // Use DR set 'DR name' in
+##                                                    // rectangle defined by
+##                                                    // (x1, y1) and (x2, y2)
+##                                                    // on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> TRI  X1 Y1 X2 Y2 X2 Y3 // User DR set 'DR name'
+##                                                        // in triangle defined by
+##                                                        // 3 x/y coordinates on
+##                                                        // layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> CIR  X Y R  // Use DR set 'DR name' in circle
+##                                             // defined by center (x,y) and radius
+##                                             // R on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> ALL      // Use DR set 'DR name' on all cells
+##                                          // on layer <layer name>.
+##
+DR_zone   Die_Top_rules   Die_top   ALL
+DR_zone   No_C4s          UBM       ALL  // Block the UBM layer for all C4s, and then unblock selected regions below
+DR_zone   Non_Bottom      Pkg_M1    ALL
+DR_zone   Break_Out       Pkg_M1    RECT   9352.6  8817.82     15647.4  16218.9  // Area within 100 um of C4 bump array 
+DR_zone   Non_Bottom      Pkg_M2    ALL
+DR_zone   Non_Bottom      Pkg_M3    ALL
+DR_zone   Non_Bottom      Pkg_M4    ALL
+DR_zone   Pkg_Bottom      Pkg_M5    ALL
+DR_zone   PCB_Top         PCB_M1    ALL
+DR_zone   PCB_Non-Top     PCB_M2    ALL
+DR_zone   PCB_Non-Top     PCB_M3    ALL
+
+
+# Create circular design-rule zones on layer 'UBM' above each C4 via for diff-pairs, to prevent non-diff-pair nets
+# routing through these extra-large C4 via holes. Each diff-pair requires 4 DR_zone statements:
+#   (1) Large circle that prevents *all* vias
+#   (2) Small circle that allows only diff-pair vias at center of C4 (for pseudo-path's centerline)
+#   (3) Small circle that allows only diff-pair vias where first diff-pair centerline via should be located
+#   (4) Small circle that allows only diff-pair vias where second diff-pair centerline via should be located
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 12647.06  123    // Wide opening for diff pair Net_35_P/Net_36_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 12647.06    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 12647.06    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 12647.06    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 12360.68  123    // Wide opening for diff pair Net_37_P/Net_38_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 12360.68    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 12360.68    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 12360.68    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 14905.16  123    // Wide opening for diff pair Net_120_P/Net_121_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 14905.16    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 14905.16    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 14905.16    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 14453.54  123    // Wide opening for diff pair Net_122_P/Net_123_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 14453.54    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 14453.54    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 14453.54    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 14001.92  123    // Wide opening for diff pair Net_124_P/Net_125_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 14001.92    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 14001.92    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 14001.92    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 13550.30  123    // Wide opening for diff pair Net_126_P/Net_127_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 13550.30    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 13550.30    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 13550.30    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 11171.06  123    // Wide opening for diff pair Net_128_P/Net_129_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 11171.06    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 11171.06    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 11171.06    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 10719.44  123    // Wide opening for diff pair Net_130_P/Net_131_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 10719.44    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 10719.44    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 10719.44    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 10267.82  123    // Wide opening for diff pair Net_132_P/Net_133_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 10267.82    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 10267.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 10267.82    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78  9816.20  123    // Wide opening for diff pair Net_134_P/Net_135_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78  9816.20    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40  9816.20    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16  9816.20    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  15464.78 13098.68  123    // Wide opening for diff pair Net_136_P/Net_137_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15464.78 13098.68    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15547.40 13098.68    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  15382.16 13098.68    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  11466.485 16080.875  123    // Wide opening for diff pair Net_153_P/Net_154_N
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11466.485 16080.875    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11538.08 16118.90    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11394.89 16042.85    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  11416.40  9000.62  123    // Wide opening for diff pair Net_265_N/Net_266_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11416.40  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11416.40  9083.42    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11416.40  8917.82    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  13276.70  9000.62  123    // Wide opening for diff pair Net_267_N/Net_268_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  13276.70  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  13276.70  9083.42    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  13276.70  8917.82    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  11913.20  9000.62  123    // Wide opening for diff pair Net_269_N/Net_270_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11913.20  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11913.20  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  11913.20  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  12410.00  9000.62  123    // Wide opening for diff pair Net_271_N/Net_272_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12410.00  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12410.00  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12410.00  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  12575.60  9000.62  123    // Wide opening for diff pair Net_273_N/Net_274_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12575.60  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12575.60  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12575.60  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  13072.40  9000.62  123    // Wide opening for diff pair Net_275_N/Net_276_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  13072.40  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  13072.40  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  13072.40  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  12078.80  9000.62  123    // Wide opening for diff pair Net_277_N/Net_278_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12078.80  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12078.80  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12078.80  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  12244.40  9000.62  123    // Wide opening for diff pair Net_279_N/Net_280_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12244.40  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12244.40  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12244.40  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  12741.20  9000.62  123    // Wide opening for diff pair Net_281_N/Net_282_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12741.20  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12741.20  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12741.20  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  12906.80  9000.62  123    // Wide opening for diff pair Net_283_N/Net_284_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12906.80  9000.62    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12906.80  8917.82    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  12906.80  9083.42    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR  10756.97 16036.28  123    // Wide opening for diff pair Net_346_N/Net_347_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR  10756.97 16036.28    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR  10756.97 15953.66    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR  10756.97 16118.90    0    // Small opening for diff-pair centerline #2
+#
+DR_zone  No_C4s             UBM    CIR   9897.83 16036.28  123    // Wide opening for diff pair Net_352_N/Net_353_P
+DR_zone  No_NonDiffPair_C4s UBM    CIR   9897.83 16036.28    0    // Small opening for pseudo-path centerline
+DR_zone  No_NonDiffPair_C4s UBM    CIR   9897.83 15953.66    0    // Small opening for diff-pair centerline #1
+DR_zone  No_NonDiffPair_C4s UBM    CIR   9897.83 16118.90    0    // Small opening for diff-pair centerline #2
+#
+# End of design-rule zones for diff-pair C4 vias
+#
+
+
+# Create circular design-rule zones on layer 'UBM' above each C4 via for non-diff-pairs,
+# to prevent diff-pair nets routing through these smaller C4 via-holes:
+DR_zone  No_DiffPair_C4s UBM    CIR   12110.84 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 15051.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15382.16 12074.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10822.13 14641.10    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11747.60  8917.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13607.90  8917.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14974.64 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11681.27 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 13530.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 13530.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 13530.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 13530.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9828.35 13690.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 11479.49    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 11622.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 11622.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 11787.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 11787.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 12360.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 12360.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 12503.87    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 12360.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 12647.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 11336.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 12647.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 12647.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58  9221.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 15048.35    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 15048.35    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 11787.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 11622.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 11336.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 11336.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15299.54 15048.35    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72  9364.58    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 15191.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 15191.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44  9364.58    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15382.16  9078.20    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96  9364.58    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44  9078.20    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 11787.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15382.16 11787.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 14618.78    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 14167.16    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 13715.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 13263.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 10884.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 10433.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40  9981.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40  9529.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 12812.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 14905.16    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 14905.16    0 
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 14905.16    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 14761.97    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 14761.97    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 14618.78    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 14618.78    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 14618.78    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 14453.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 14453.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 14453.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 14310.35    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 14310.35    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 14167.16    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 14167.16    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 14167.16    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 14001.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 14001.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 14001.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 13858.73    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 13858.73    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 13715.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 13715.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 13715.54    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 13550.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 13550.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 13550.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 13407.11    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 13407.11    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 13263.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 13263.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 13263.92    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 11171.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 11171.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 11171.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 11027.87    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 11027.87    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 10884.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 10884.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 10884.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 10719.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 10719.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 10719.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 10576.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 10576.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 10433.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 10433.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 10433.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 10267.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 10267.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 10267.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 10124.63    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 10124.63    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44  9981.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20  9981.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72  9981.44    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44  9816.20    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96  9816.20    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72  9816.20    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78  9673.01    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58  9673.01    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44  9529.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20  9529.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72  9529.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 13098.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14555.96 13098.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 13098.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78 12955.49    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14638.58 12955.49    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14886.44 12812.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20 12812.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14390.72 12812.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15464.78  9221.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14721.20  9078.20    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40  9364.58    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15216.92 12074.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15382.16  9364.58    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15134.30 11931.11    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 12074.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9828.35 12472.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 11716.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 12018.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 12169.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 11564.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 12018.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 12169.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 12169.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 12018.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 11564.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 11716.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 11867.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 12018.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 11867.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 11716.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 11716.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 11413.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 11262.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9828.35 14295.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12397.22 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11967.65 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12254.03 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11824.46 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12110.84 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15404.21 15890.75    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 15814.70    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15404.21 15738.65    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 10799.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 10799.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 10951.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 10799.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 10648.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11967.65 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12826.79 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12826.79 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12683.60 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13256.36 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12826.79 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12969.98 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12683.60 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13113.17 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12540.41 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12969.98 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12540.41 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13113.17 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12683.60 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13256.36 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12969.98 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12683.60 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13829.12 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13685.93 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13113.17 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13256.36 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13256.36 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13542.74 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13542.74 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13542.74 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13542.74 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13972.31 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13972.31 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13399.55 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14115.50 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13829.12 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14115.50 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14545.07 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14688.26 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14688.26 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13829.12 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14974.64 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15261.02 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13685.93 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13399.55 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14115.50 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14688.26 15662.60    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13685.93 15434.45    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14831.45 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13829.12 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14258.69 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13972.31 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13399.55 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14401.88 15662.60    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14401.88 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14401.88 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12969.98 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14401.88 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 12623.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 12774.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 12925.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 12472.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 12320.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 12320.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12397.22 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11824.46 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11681.27 15130.25    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 11413.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 11867.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 13993.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 12925.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12254.03 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 14749.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 15051.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11681.27 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14688.26 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   12110.84 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11212.10  9083.42    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13773.50  9083.42    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11664.80  9226.97    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11499.20  9226.97    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13525.10  9226.97    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13359.50  9226.97    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 14144.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 14446.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 14446.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 14295.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 14446.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 14295.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 14295.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 13993.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13256.36 14393.24    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10025.36  9542.06    0
+DR_zone  No_DiffPair_C4s UBM    CIR   13399.55 14475.86    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10168.55  9624.68    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 13841.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 13993.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 13841.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 13841.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 13690.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 13841.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 13690.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11538.08 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14974.64 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15404.21 15586.55    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15547.40 15662.60    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15261.02 15966.80    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 13228.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 13076.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 12925.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 13228.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 13076.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 13379.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 13228.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 13228.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 13379.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 13379.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15117.83 16042.85    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11824.46 15206.30    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10822.13 15136.82    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10822.13 14971.58    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15261.02 15510.50    0
+DR_zone  No_DiffPair_C4s UBM    CIR   14974.64 15662.60    0
+DR_zone  No_DiffPair_C4s UBM    CIR   15261.02 15662.60    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 10799.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9452.60 11102.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 11102.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 11102.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 10648.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10128.95 10951.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 11102.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 10951.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9828.35 11262.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 12623.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 12623.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10354.40 12623.39    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10053.80 12320.99    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 12774.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9602.90 12925.79    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10429.55 12774.59    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9527.75 12472.19    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10327.40 16036.28    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11043.35 15953.66    0
+DR_zone  No_DiffPair_C4s UBM    CIR   11043.35 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10470.59 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10470.59 15623.18    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9611.45 15953.66    0
+DR_zone  No_DiffPair_C4s UBM    CIR    9611.45 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10184.21 16118.90    0
+DR_zone  No_DiffPair_C4s UBM    CIR   10184.21 15623.18    0
+#
+# End of design-rule zones for non-diff-pair C4 vias
+#
+
+
+
+# Create circular design-rule zones on Pkg_M5 above each BGA via for diff-pairs, to prevent non-diff-pair nets
+# routing through these extra-large BGA via holes. Each diff-pair requires 4 DR_zone statements:
+#   (1) Large circle that prevents *all* vias
+#   (2) Small circle that allows only diff-pair vias at center of BGA via-hole (for pseudo-path's centerline)
+#   (3) Small circle that allows only diff-pair vias where first diff-pair centerline via should be located
+#   (4) Small circle that allows only diff-pair vias where second diff-pair centerline via should be located
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  22900.00 11300.00  660   // Wide opening for Net_35_P/Net_36_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22900.00 11300.00    0   // Small opening for Net_35_P/Net_36_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22500.00 11300.00    0   // Small opening for Net_35_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  23300.00 11300.00    0   // Small opening for Net_36_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  22900.00 12100.00  660   // Wide opening for Net_37_P/Net_38_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22900.00 12100.00    0   // Small opening for Net_37_P/Net_38_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22500.00 12100.00    0   // Small opening for Net_37_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  23300.00 12100.00    0   // Small opening for Net_38_N centerline
+#
+# DR_zone  No_BGAs             Pkg_M5     CIR  19700.00 23300.00  660   // Wide opening for Net_120_P/Net_121_N diff pair (midpoint between original sites)
+DR_zone  No_BGAs             Pkg_M5     CIR  19300.00 22900.00  660   // Wide opening for Net_120_P/Net_121_N diff pair (moved away from package edge)
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 22900.00    0   // Small opening for Net_120_P/Net_121_N pseudo-path centerline (moved away from package edge)
+# DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20100.00 23300.00    0   // Original Net_120_P coordinate
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 22500.00    0   // Small opening for Net_120_P centerline (moved away from package edge)
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 23300.00    0   // Small opening for Net_121_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  21300.00 20900.00  660   // Wide opening for Net_122_P/Net_123_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  21300.00 20900.00    0   // Small opening for Net_122_P/Net_123_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  21700.00 20900.00    0   // Small opening for Net_122_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 20900.00    0   // Small opening for Net_123_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  19700.00 18500.00  660   // Wide opening for Net_124_P/Net_125_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19700.00 18500.00    0   // Small opening for Net_124_P/Net_125_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20100.00 18500.00    0   // Small opening for Net_124_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 18500.00    0   // Small opening for Net_125_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  20900.00 15700.00  660   // Wide opening for Net_126_P/Net_127_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 15700.00    0   // Small opening for Net_126_P/Net_127_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 15300.00    0   // Small opening for Net_126_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 16100.00    0   // Small opening for Net_127_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  20900.00 9300.00   660   // Wide opening for Net_128_P/Net_129_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 9300.00     0   // Small opening for Net_128_P/Net_129_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 8900.00     0   // Small opening for Net_128_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 9700.00     0   // Small opening for Net_129_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  19300.00 7700.00   660   // Wide opening for Net_130_P/Net_131_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 7700.00     0   // Small opening for Net_130_P/Net_131_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 7300.00     0   // Small opening for Net_130_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 8100.00     0   // Small opening for Net_131_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  20900.00 3700.00   660   // Wide opening for Net_132_P/Net_133_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 3700.00     0   // Small opening for Net_132_P/Net_133_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 4100.00     0   // Small opening for Net_132_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20900.00 3300.00     0   // Small opening for Net_133_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  20100.00 2100.00   660   // Wide opening for Net_134_P/Net_135_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20100.00 2100.00     0   // Small opening for Net_134_P/Net_135_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20100.00 2500.00     0   // Small opening for Net_134_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  20100.00 1700.00     0   // Small opening for Net_135_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  19300.00 12500.00  660   // Wide opening for Net_136_P/Net_137_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 12500.00    0   // Small opening for Net_136_P/Net_137_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 12100.00    0   // Small opening for Net_136_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  19300.00 12900.00    0   // Small opening for Net_137_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  12100.00 18900.00  660     // Wide opening for Net_153_P/Net_154_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 18900.00    0   // Small opening for Net_153_P/Net_154_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 18500.00    0   // Small opening for Net_153_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 19300.00    0   // Small opening for Net_154_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  12100.00 6900.00  660   // Wide opening for Net_265_N/Net_266_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 6900.00    0   // Small opening for Net_265_N/Net_266_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 7300.00    0   // Small opening for Net_265_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 6500.00    0   // Small opening for Net_266_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  15300.00 6900.00  660   // Wide opening for Net_267_N/Net_268_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  15300.00 6900.00    0   // Small opening for Net_267_N/Net_268_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  15300.00 7300.00    0   // Small opening for Net_267_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  15300.00 6500.00    0   // Small opening for Net_268_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  13700.00 2100.00  660   // Wide opening for Net_269_N/Net_270_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  13700.00 2100.00    0   // Small opening for Net_269_N/Net_270_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  13700.00 2500.00    0   // Small opening for Net_269_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  13700.00 1700.00    0   // Small opening for Net_270_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  14500.00 2100.00  660   // Wide opening for Net_271_N/Net_272_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  14500.00 2100.00    0   // Small opening for Net_271_N/Net_272_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  14500.00 2500.00    0   // Small opening for Net_271_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  14500.00 1700.00    0   // Small opening for Net_272_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  16100.00 2100.00  660   // Wide opening for Net_273_N/Net_274_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 2100.00    0   // Small opening for Net_273_N/Net_274_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 2500.00    0   // Small opening for Net_273_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 1700.00    0   // Small opening for Net_274_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  16900.00 2100.00  660   // Wide opening for Net_275_N/Net_276_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16900.00 2100.00    0   // Small opening for Net_275_N/Net_276_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16900.00 2500.00    0   // Small opening for Net_275_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16900.00 1700.00    0   // Small opening for Net_276_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  13700.00 4500.00  660   // Wide opening for Net_277_N/Net_278_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  13700.00 4500.00    0   // Small opening for Net_277_N/Net_278_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  13700.00 4100.00    0   // Small opening for Net_277_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  13700.00 4900.00    0   // Small opening for Net_278_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  14500.00 4500.00  660   // Wide opening for Net_279_N/Net_280_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  14500.00 4500.00    0   // Small opening for Net_279_N/Net_280_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  14500.00 4100.00    0   // Small opening for Net_279_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  14500.00 4900.00    0   // Small opening for Net_280_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  16100.00 4500.00  660   // Wide opening for Net_281_N/Net_282_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 4500.00    0   // Small opening for Net_281_N/Net_282_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 4100.00    0   // Small opening for Net_281_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 4900.00    0   // Small opening for Net_282_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  16900.00 4500.00  660   // Wide opening for Net_283_N/Net_284_P diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16900.00 4500.00    0   // Small opening for Net_283_N/Net_284_P pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16900.00 4100.00    0   // Small opening for Net_283_N centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16900.00 4900.00    0   // Small opening for Net_284_P centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  2100.00 19300.00  660   // Wide opening for Net_347_P/Net_346_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2100.00 19300.00    0   // Small opening for Net_347_P/Net_346_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2500.00 19300.00    0   // Small opening for Net_347_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  1700.00 19300.00    0   // Small opening for Net_346_N centerline
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  2100.00 17700.00  660   // Wide opening for Net_353_P/Net_352_N diff pair
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2100.00 17700.00    0   // Small opening for Net_353_P/Net_352_N pseudo-path centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2500.00 17700.00    0   // Small opening for Net_353_P centerline
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  1700.00 17700.00    0   // Small opening for Net_352_N centerline
+#
+# The following DR_zones were added 4/6/2024 for diff-pair vias:
+DR_zone  No_BGAs             Pkg_M5     CIR  7300.00 2100.00   660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  7300.00 2100.00     0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  7300.00 1700.00     0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  7300.00 2500.00     0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  9700.00 2100.00   660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  9700.00 2100.00     0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  9700.00 1700.00     0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  9700.00 2500.00     0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  12100.00 2100.00  660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 2100.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 1700.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 2500.00    0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  12100.00 4500.00  660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 4500.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 4100.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  12100.00 4900.00    0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  2100.00 5700.00   660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2100.00 5700.00     0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  1700.00 5700.00     0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2500.00 5700.00     0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  22900.00 7300.00  660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22900.00 7300.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22500.00 7300.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  23300.00 7300.00    0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  22900.00 13700.00 660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22900.00 13700.00   0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22500.00 13700.00   0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  23300.00 13700.00   0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  22900.00 18500.00 660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22900.00 18500.00   0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  22500.00 18500.00   0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  23300.00 18500.00   0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  2100.00 20900.00  660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2100.00 20900.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  1700.00 20900.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  2500.00 20900.00    0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  8100.00 21300.00  660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  8100.00 21300.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  8100.00 20900.00    0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  8100.00 21700.00    0
+#
+DR_zone  No_BGAs             Pkg_M5     CIR  16100.00 22900.00 660
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 22900.00   0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 22500.00   0
+DR_zone  No_NonDiffPair_BGAs Pkg_M5     CIR  16100.00 23300.00   0
+#
+# End of design-rule zones for diff-pair BGA vias
+#
+
+
+# Create circular design-rule zones on Pkg_M5 above each BGA via for non-diff-pairs,
+# to prevent diff-pair nets routing through these smaller BGA via-holes:
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  19300.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  23300.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  11300.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12100.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  11300.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12100.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12100.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12100.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12100.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  11300.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  11300.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 23300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  1700.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 16900.00   0
+#
+# The following DR_zone statements were added 4/6/2024:
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 1700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 2500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  12900.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 3300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 4100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 4900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  9700.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 5700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 6500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 7300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 8100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 8900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 9700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 10500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 11300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 12100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 12900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 13700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 14500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 15300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  2500.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 16100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  3300.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 16900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 17700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  5700.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  10500.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  21700.00 18500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  7300.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 19300.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8100.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  11300.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 20100.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4900.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  15300.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16900.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  17700.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20100.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  22500.00 20900.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  14500.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  16100.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  18500.00 21700.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  4100.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  6500.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  8900.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  11300.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  13700.00 22500.00   0
+DR_zone  No_DiffPair_BGAs  Pkg_M5     CIR  20900.00 22500.00   0
+#
+# End of design-rule zones for non-diff-pair BGA vias
+#
+
+#################################################################################
+#################################################################################
+#################################################################################
+#
+# The following parameters affect the final routed solution and run-time, but
+# should not be modified without extreme caution:
+#
+#
+
+# The parameter 'maxIterations' is the maximum number of iterations the program
+# will make to find a crossing-free solution.
+maxIterations = 2000
+
+# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
+# solutions that program will find before deciding that it has found the
+# optimal solution.
+violationFreeThreshold = 50
+
+# The parameter 'vertCost' is the cost of routing up or down to a different
+# routing layer, i.e., the cost of a layer-to-layer via. The value is in
+# microns, and should be interpreted as half the trace-length that could be
+# avoided by adding a via to a different layer.
+vertCost  = 5000   // in microns of equivalent trace length
+
+# The parameter 'runsPerPngMap' is the number of iterations to run between
+# writing PNG versions of the routing maps.
+runsPerPngMap =  1

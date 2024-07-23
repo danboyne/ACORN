@@ -1,0 +1,179 @@
+#12345678901234567890123456789012345678901234567890123456789012345678901234567890
+# Any line that begins with a '#' character is a comment and is disregarded by
+# the auto-router program. Blank lines are allowed. Use them to add clarity to 
+# the input file.
+#
+# You can add additional comments following two consecutive slash characters:
+# grid_resolution = 5  // 5 micron grid is fine enough for 20um line/space
+#
+
+
+# Specify the dimension in microns of the grid that the auto-router will use.
+# Use a dimension that is less than one half to one quarter of the smallest
+# linewidth or spacing in the design.
+grid_resolution = 0.5  // in microns
+
+# Specify the dimensions in millimeters of the grid:
+width  = 0.100  // in millimeters
+height = 0.100  // in millimeters
+
+# Specify the number of routing layers. Typical values are 1, 2, 4, 6, and 8.
+number_layers = 2
+
+# Specify the name of each routing layer and (for multiple layers) the name
+# of each intervening via layer. Examples:
+# 
+#   layer_names = M1 V1-2 M2 V2-3 M3 V3-4 M4  // For 4-layer substrate
+#   layer_names = M   // for single-layer
+#
+layer_names = M1 V12 M2
+
+#
+# Specify the origin that the start/end-locations are relative to. Allowed 
+# values are: center, lower_left, upper_left, lower_right, upper_right
+#
+origin = lower_left
+
+################ Define nets: ##########################
+#
+# Specify the start- and end-locations of the paths to be routed. Dimensions are
+# in microns, relative to the origin specified with the 'origin' statement.
+# Start- and End-Layers are specified using the names from the 'layer_names'
+# statement.
+#
+start_nets
+# Net        Start  Start Start    End    End   End     Net-specific     Diff Pair Partner
+# Name       Layer    X     Y     Layer    X     Y      Rule (optional)  (optional)
+# --------  ------- ----- -----  ------- ----- -----    ---------------  -----------------
+   N0_p        M1     40    20      M2     40    90         50_ohm            N0_n
+   N0_n        M1     40    10      M2     40    80         50_ohm            N0_p
+end_nets
+
+############ Define keep-out areas: #####################
+# 
+# Specify which areas on each layer to block from routing. By default, all areas
+# are routable. Use the following BLOCK or UNBLOCK statements to define 
+# unroutable areas. All coordinates are in microns.
+#
+#  BLOCK RECT <layer name> X1 Y1 X2 Y2 // Block the rectangle defined by 
+#                                      // (x1, y1) and (x2, y2)
+#
+#  BLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Block triangle defined by 
+#                                            // 3 x/y coordinates
+#
+#  BLOCK CIR  <layer name> X Y R  // Block circle defined by center (x,y) and 
+#                                 // radius R
+#
+#  BLOCK ALL <layer name>         // Block all cells on layer <layer name>
+#
+#  UNBLOCK RECT <layer name> X1 Y1 X2 Y2 // Unblock the rectangle defined by 
+#                                        // (x1, y1) and (x2, y2)
+#
+#  UNBLOCK TRI  <layer name> X1 Y1 X2 Y2 X2 Y3 // Unblock triangle defined 
+#                                              // by 3 x/y coordinates
+#
+#  UNBLOCK CIR  <layer name> X Y R  // Unblock circle defined by center (x,y) 
+#                                   // and radius R
+#
+#  UNBLOCK ALL <layer name>         // Unblock all cells on layer <layer name> 
+#
+# As an example, to create a keep-out zone on the perimeter of layer M1,
+# use the folowing two commands:
+#
+#    BLOCK ALL M1                    // Block all of M1
+#    UNBLOCK RECT M1 20 20 16.8 16.8 // Unblock a large rectangle in middle of M1
+#
+BLOCK RECT V12   0   0    50 99
+#
+####### Define design rules: #########################################
+#
+design_rule_set M1_5_um_pitch   Design Rules with 5-um diff-pair pitch 
+  line_width = 1
+  line_spacing = 1
+  via_up_diameter = 2
+  via_down_diameter = 2
+
+  via_up_to_trace_spacing = 1
+  via_down_to_trace_spacing = 1
+  via_up_to_via_up_spacing = 1
+  via_down_to_via_down_spacing = 1
+  via_up_to_via_down_spacing = 1
+  
+  exception = 50_ohm
+    diff_pair_pitch = 5  // Center-to-center pitch for diff pairs
+  end_exception
+  
+end_design_rule_set   // End of design rule set
+
+design_rule_set M2_8_um_pitch   Design Rules with 8-um diff-pair pitch 
+  line_width = 1
+  line_spacing = 1
+  via_up_diameter = 2
+  via_down_diameter = 2
+
+  via_up_to_trace_spacing = 1
+  via_down_to_trace_spacing = 1
+  via_up_to_via_up_spacing = 1
+  via_down_to_via_down_spacing = 1
+  via_up_to_via_down_spacing = 1
+  
+  exception = 50_ohm
+    diff_pair_pitch = 8  // Center-to-center pitch for diff pairs
+  end_exception
+  
+end_design_rule_set   // End of design rule set
+
+
+############ Define design-rule zones: #####################
+##
+## Specify which areas on each layer will use each design-rule set.
+## All coordinates are in microns.
+##
+##  DR_zone <DR name> <layer name>  RECT  X1 Y1 X2 Y2 // Use DR set 'DR name' in
+##                                                    // rectangle defined by
+##                                                    // (x1, y1) and (x2, y2)
+##                                                    // on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> TRI  X1 Y1 X2 Y2 X2 Y3 // User DR set 'DR name'
+##                                                        // in triangle defined by
+##                                                        // 3 x/y coordinates on
+##                                                        // layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> CIR  X Y R  // Use DR set 'DR name' in circle
+##                                             // defined by center (x,y) and radius
+##                                             // R on layer 'layer name'.
+##
+##  DR_zone <DR name> <layer name> ALL      // Use DR set 'DR name' on all cells
+##                                          // on layer <layer name>.
+##
+DR_zone   M1_5_um_pitch      M1    ALL
+DR_zone   M2_8_um_pitch      M2    ALL 
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+#
+# The following parameters affect the final routed solution and run-time, but
+# should not be modified without extreme caution:
+#
+#
+
+# The parameter 'maxIterations' is the maximum number of iterations the program
+# will make to find a crossing-free solution.
+maxIterations = 30
+
+# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
+# solutions that program will find before deciding that it has found the
+# optimal solution.
+# violationFreeThreshold = 50
+
+# The parameter 'vertCost' is the cost of routing up or down to a different
+# routing layer, i.e., the cost of a layer-to-layer via.
+# vertCost  = 300
+
+# The parameter 'runsPerPngMap' is the number of iterations to run between
+# writing PNG versions of the routing maps.
+runsPerPngMap =  1
+
+
