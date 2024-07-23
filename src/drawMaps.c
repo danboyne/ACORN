@@ -38,7 +38,7 @@ FILE * start_HTML_table_of_contents(const char *input_filename, const InputValue
   fp_TOC = fopen(output_filename, "w");
 
   setbuf(fp_TOC, NULL); // Don't buffer the file. This allows user to view PNG files when they're written
-  fprintf(fp_TOC, "<!DOCTYPE HTML>\n<HEAD><TITLE>Routing Progress</TITLE>\n");
+  fprintf(fp_TOC, "<!DOCTYPE HTML>\n<HTML>\n<HEAD><TITLE>Routing Progress</TITLE>\n");
 
   fprintf(fp_TOC, " <script type=\"text/javascript\">\n");
   fprintf(fp_TOC, "   function toggleMe(a){\n");
