@@ -6,6 +6,6 @@ I am likewise inexperienced with collaborating on software projects. For this re
 
 If you are still interested in contributing to Acorn after reading the above, please contact me via email at danboyne (at) gmail-dot-com.
 
-With sincere thanks,
-&nbsp; Dan Boyne
+With sincere thanks,  
+&nbsp; Dan Boyne  
 &nbsp; &nbsp; Austin, Texas, USA
