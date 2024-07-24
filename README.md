@@ -14,7 +14,7 @@ Once you've compiled Acorn into the `acorn.exe` executable, copy this file to a 
 
 >acorn.exe &nbsp; &nbsp; \<input file\>&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
 
-The `<input file>` is a text file that describes the silicon chip, package, and/or PCB, in addition to the locations of the start- and end-terminals of each net. There are hundreds of examples of such input files in the `ACORN_TESTS` subdirectory. To get started, try a small example such as `4n_800x_500y_4L_obstacles_wide_vias.txt`. In other words, copy this text file to the working directory that contains `acorn.exe`, and type the following command:
+The `<input file>` is a text file that describes the silicon chip, package, and/or PCB, in addition to the locations of the start- and end-terminals of each net. There are hundreds of examples of such input files in the `tests` subdirectory. To get started, try a small example such as `4n_800x_500y_4L_obstacles_wide_vias.txt`. In other words, copy this text file to the working directory that contains `acorn.exe`, and type the following command:
 
 >acorn.exe &nbsp; &nbsp; 4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
 
