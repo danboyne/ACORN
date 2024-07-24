@@ -8,7 +8,7 @@ There are many proprietary autorouters that focus on only one part of the microe
 Acorn was developed and tested in a Linux environment, and requires the user to download and then compile the C source code into the Acorn executable file, `acorn.exe`. In the directory that contains the `makefile`, `.c` and `.h` files, type the following command from a command-line:
  >make
 
-For the `make` command to work, your system must have the GNU Compiler Collection, `gcc`. The compiler must also have access to the following three libraries: Math (which is included in GCC), [LibPng](http://www.libpng.org/), and [OpenMP](https://www.openmp.org/).
+For the `make` command to work, your system must have the GNU Compiler Collection, `gcc`, and the GNU Make software. The compiler must also have access to the following three libraries: Math (which is included in GCC), [LibPng](http://www.libpng.org/), and [OpenMP](https://www.openmp.org/).
 
 Once you've compiled Acorn into the `acorn.exe` executable, copy this file to a working directory and launch Acorn from the command-line using the following command:
 
