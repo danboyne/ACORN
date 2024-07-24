@@ -5,8 +5,56 @@
   </HEAD>
 
   <BODY>
-    <H1>Acorn Autorouter</H1>
+    <FONT size="8"><B>Acorn Autorouter</B></FONT>
     <BR>
-    End of web page is here.
+    <FONT size="2" color="#999999"><I><B><U>A</U></B>nt-<B><U>C</U></B>olony <B><U>O</U></B>ptimization for <B><U>R</U></B>outing <B><U>N</U></B>ets</I></FONT>
+
+    <!-- Following table contains 1 row and 5 columns with navigation links: -->
+    <TABLE style="width:100%" border="1" bordercolor="#dddddd" bgcolor="#cccccc">
+      <TR>
+        <TD style="width:20%"><B><A href=".">Home</A></B></TD>
+        <TD style="width:20%"><B><A href="user_guide/">User Guide</A></B></TD>
+        <TD style="width:20%"><B><A href="examples/">Examples</A></B></TD>
+        <TD style="width:20%"><B><A href="https://github.com/danboyne/ACORN">Download</A></B>
+            <BR><FONT size="1">(from GitHub)</FONT></TD>
+        <TD style="width:20%"><B><A href="theory/">How It Works</A></B></TD>
+      </TR>
+    </TABLE>
+
+    <BR><BR>
+
+    <!-- Following table contains 1 row and 2 columns with text and Acorn image: -->
+    <TABLE style="width:100%" border="0" bordercolor="#ffffff" bgcolor="#ffffff">
+      <TR>
+        <TD style="width:80%" valign="top">
+          <H2>Overview</H2>
+
+            Acorn is an open-source software utility for routing wires (nets) in microelectronic
+            systems, including the top layer of a silicon chip, the surrounding package, and
+            the printed-circuit board (PCB). Routing software is often optimized for only one of
+            these three domains. However, system-level architects must ensure that physical
+            connectivity can be achieved within and between <B><I>each</I></B> of these domains, in
+            addition to satisfying system-level electrical performance requirements. Simply achieving
+            connectivity can require weeks or months of engineering effort, with experts in each
+            domain iteratively adjusting their physical designs using specialized software tools.
+
+            <P>To address system-level connectivity, the Acorn utility was developed for routing nets
+            from the silicon chip’s upper wiring layers to regions on the PCB, including the intervening
+            package. Given the person-weeks of effort often required for traditional chip/package/PCB
+            co-design, this utility prioritizes capability over speed. This proof-of-concept version
+            achieves full connectivity within four days for an industry-like routing configuration
+            that include a PCB, a ball-grid-array (BGA) package with a C4-bumped chip, and coarse
+            routing on the silicon chip. The rip-up-and-reroute algorithm employs A* ("<I>A star</I>")
+            pathfinding in a three-dimensional, grid-based array; negotiated congestion that dissipates
+            over time, similar to inverted ant colony optimization (ACO); and concepts borrowed from
+            simulated annealing to avoid local minima in the routing cost.
+
+        </TD>
+        <TD style="width:20%"><IMG src="images/acorn_with_ant_1024x1024.jpeg" alt="Ant on an acorn" width="256" height="256">
+      </TR>
+    </TABLE>
+
+    <BR><BR><BR><HR>
+    <FONT size="2" color="grey">Copyright &copy; 2024 Dan Boyne</FONT>
   </BODY>
 </HTML>
