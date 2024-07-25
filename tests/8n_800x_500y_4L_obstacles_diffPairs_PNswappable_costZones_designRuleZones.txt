@@ -49,8 +49,8 @@ start_nets
    N0_n        M1    40     30      M4    750   430         50_ohm           N0_p             PN_swappable
    N1_p        M1    50    140      M4    700   250        100_ohm           N1_n             PN_swappable
    N1_n        M1    50    150      M4    700   270        100_ohm           N1_p             PN_swappable
-   N2_p        M1   650     30      M4     80   466         50_ohm           N2_n             PN_swappable
-   N2_n        M1   660     40      M4     90   476         50_ohm           N2_p             PN_swappable
+   N2_p        M1   650     30      M4     80   466         50_ohm           N2_n
+   N2_n        M1   660     40      M4     90   476         50_ohm           N2_p
    N3_p        M1   500    476      M4     23    18        100_ohm           N3_n             PN_swappable
    N3_n        M1   510    476      M4     23    28        100_ohm           N3_p             PN_swappable
 end_nets

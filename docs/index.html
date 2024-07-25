@@ -2,6 +2,11 @@
 <HTML>
   <HEAD>
     <TITLE>Acorn Autorouter</TITLE>
+
+    <STYLE> .indented20
+      { padding-left: 20pt; }
+    </STYLE>
+
   </HEAD>
 
   <BODY>
@@ -30,31 +35,37 @@
         <TD style="width:80%" valign="top">
           <H2>Overview</H2>
 
-            Acorn is an open-source software utility for routing wires (nets) in microelectronic
-            systems, including the top layer of a silicon chip, the surrounding package, and
-            the printed-circuit board (PCB). Routing software is often optimized for only one of
-            these three domains. However, system-level architects must ensure that physical
-            connectivity can be achieved within and between <B><I>each</I></B> of these domains, in
-            addition to satisfying system-level electrical performance requirements. Simply achieving
-            connectivity can require weeks or months of engineering effort, with experts in each
-            domain iteratively adjusting their physical designs using specialized software tools.
+            <P class="indented20">Acorn is an open-source software utility for routing wires (nets)
+            in microelectronic systems, including the top layer of a silicon chip, the surrounding
+            package, and the printed-circuit board (PCB). Routing software is often optimized for
+            only one of these three domains. However, system-level architects must ensure that
+            physical connectivity can be achieved within and between <B><I>each</I></B> of these
+            domains, in addition to satisfying system-level electrical performance requirements.
+            Simply achieving connectivity can require weeks or months of engineering effort, with
+            experts in each domain iteratively adjusting their physical designs using specialized
+            software tools.
 
-            <P>To address system-level connectivity, the Acorn utility was developed for routing nets
-            from the silicon chip’s upper wiring layers to regions on the PCB, including the intervening
-            package. Given the person-weeks of effort often required for traditional chip/package/PCB
-            co-design, this utility prioritizes capability over speed. This proof-of-concept version
-            achieves full connectivity within four days for an industry-like routing configuration
-            that include a PCB, a ball-grid-array (BGA) package with a C4-bumped chip, and coarse
-            routing on the silicon chip. The rip-up-and-reroute algorithm employs A* ("<I>A star</I>")
-            pathfinding in a three-dimensional, grid-based array; negotiated congestion that dissipates
-            over time, similar to inverted ant colony optimization (ACO); and concepts borrowed from
-            simulated annealing to avoid local minima in the routing cost.
+            <P class="indented20">To address system-level connectivity, the Acorn utility was
+            developed for routing nets from the silicon chip’s upper wiring layers to regions on the
+            PCB, including the intervening package. Given the person-weeks of effort often required
+            for traditional chip/package/PCB co-design, this utility prioritizes capability over
+            speed. This proof-of-concept version achieves full connectivity within four days for an
+            industry-like routing configuration that include a PCB, a ball-grid-array (BGA) package
+            with a C4-bumped chip, and coarse routing on the silicon chip. The rip-up-and-reroute
+            algorithm employs A* ("<I>A star</I>") pathfinding in a three-dimensional, grid-based
+            array; negotiated congestion that dissipates over time, similar to inverted ant colony
+            optimization (ACO); and concepts borrowed from simulated annealing to avoid local minima
+            in the routing cost.
 
         </TD>
         <TD style="width:20%" valign="top"><IMG src="images/acorn_with_ant_1024x1024.jpeg" 
             alt="Ant on an acorn" width="256" height="256">
       </TR>
     </TABLE>
+
+    <P class="indented20"><FONT color="red">Add images that randomly appear showing cross-sectional
+    and top-down views of routed chip/package/PCB systems.</FONT>
+
 
     <BR><BR><BR><HR>
     <FONT size="2" color="grey">Copyright &copy; 2024 Dan Boyne</FONT>
