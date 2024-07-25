@@ -3,10 +3,21 @@
   <HEAD>
     <TITLE>Acorn Autorouter</TITLE>
 
-    <STYLE> .indented20
-      { padding-left: 20pt; }
-    </STYLE>
+    <STYLE>
+        .indented20 { 
+            padding-left: 20pt;
+        }
 
+        #image-container {
+            text-align: center;
+        }
+        img {
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </STYLE>
   </HEAD>
 
   <BODY>
@@ -63,9 +74,36 @@
       </TR>
     </TABLE>
 
-    <P class="indented20"><FONT color="red">Add images that randomly appear showing cross-sectional
-    and top-down views of routed chip/package/PCB systems.</FONT>
+    <TABLE border="0">
+      <TR>
+        <TD id="image-container">
+          <img id="random-image" src="" alt="Acorn images">
+        </TD>
+      </TR>
+    </TABLE>
 
+    <SCRIPT>
+      const images = [
+        'images/chip_package_PCB_routing_example.png', 
+        'images/cross_section_of_chip_package_PCB.png', 
+        'images/package_PCB_routing_example.png', 
+        'images/package_routing_example.png',
+        'images/perspective_view_of_chip_package_PCB.png',
+        'images/Designer_a.ant_paths.15Apr2024.jpeg'
+      ];
+
+      function displayRandomImage() {
+        const randomIndex = Math.floor(Math.random() * images.length);
+        const selectedImage = images[randomIndex];
+        document.getElementById('random-image').src = selectedImage;
+      }
+
+      setInterval(displayRandomImage, 10000); // Change image every 10 seconds
+
+      // Display an image immediately on page load
+      displayRandomImage();
+
+    </SCRIPT>
 
     <BR><BR><BR><HR>
     <FONT size="2" color="grey">Copyright &copy; 2024 Dan Boyne</FONT>
