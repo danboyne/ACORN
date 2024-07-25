@@ -1570,6 +1570,8 @@ void defineCellCosts(CellInfo_t ***cellInfo, MapInfo_t *mapInfo,
     //
     all_layer_num = -1;
     for (i = 0; i < 2 * mapInfo->numLayers - 1; i++)  {
+      // printf("DEBUG: In defineCellCosts, comparing '%s' layer name from via_cost_zone statement with layer name #%d: '%s'\n...",
+      //        layer_name, i, user_inputs->layer_names[i]);
       if (strcasecmp(layer_name, user_inputs->layer_names[i]) == 0)  {
         all_layer_num = i;
         break;

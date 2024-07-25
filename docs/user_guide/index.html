@@ -56,77 +56,145 @@
       </TR>
     </TABLE>
 
-          <HR>
-          <div id="installation"></div>
-          <H2>Installation</H2>
+    <HR>
+    <div id="installation"></div>
+    <H2>Installation</H2>
 
-            <P class="indented20">Acorn was developed and tested in a Linux environment, and requires the user to download and then compile the C source code into the Acorn executable file, `acorn.exe`. In the directory that contains the `makefile`, `.c` and `.h` files, type the following command from a command-line:
- >make
+      <!-- Following table contains 1 row and 2 columns: -->
+      <TABLE style="width:100%" border="1" bordercolor="#ffffff" bgcolor="#ffffff">
+        <TR>
+          <!-- Left cell contains text instructions: -->
+          <TD valign="top">
+            <P class="indented20">Acorn was developed and tested in a Linux environment, and requires the user
+            to download and then compile the C source code into the Acorn executable file,
+            <SPAN style="font-family:monospace"><B>acorn.exe</B></SPAN>. In the directory that contains the
+            <SPAN style="font-family:monospace"><B>makefile</B></SPAN>,
+            <SPAN style="font-family:monospace"><B>.c</B></SPAN>, and
+            <SPAN style="font-family:monospace"><B>.h</B></SPAN> files, type the following command from a
+            command-line:<BR>
 
-For the `make` command to work, your system must have the GNU Compiler Collection, `gcc`, and the GNU Make software. The compiler must also have access to the following three libraries: Math (which is included in GCC), [LibPng](http://www.libpng.org/), and [OpenMP](https://www.openmp.org/).
+            <P class="indented20"><SPAN style="font-family:monospace"><B>&nbsp;$ make </B></SPAN> <BR>
 
-Once you've compiled Acorn into the `acorn.exe` executable, copy this file to a working directory and launch Acorn from the command-line using the following command:
+            <P class="indented20">For the <SPAN style="font-family:monospace"><B>make</B></SPAN> command to
+            work, your system must have the GNU Compiler Collection, <SPAN style="font-family:monospace"><B>
+            gcc</B></SPAN>, and the GNU Make software. The compiler must also have access to the following
+            three libraries: Math (which is included in GCC), <A href="http://www.libpng.org/">LibPng</A>,
+            and <A href="https://www.openmp.org/">OpenMP</A>.<BR>
 
->acorn.exe &nbsp; &nbsp; \<input file\>&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
+            <P class="indented20">Once you've compiled Acorn into the <SPAN style="font-family:monospace"><B>
+            acorn.exe</B></SPAN> executable, copy this file to a working directory and launch Acorn from the
+            command-line using the following command:
 
-The `<input file>` is a text file that describes the silicon chip, package, and/or PCB, in addition to the locations of the start- and end-terminals of each net. There are hundreds of examples of such input files in the `tests` subdirectory. To get started, try a small example such as `4n_800x_500y_4L_obstacles_wide_vias.txt`. In other words, copy this text file to the working directory that contains `acorn.exe`, and type the following command:
+            <P class="indented20"><SPAN style="font-family:monospace"><B>&nbsp;$ acorn.exe &nbsp;  
+            &lt;input file&gt; &nbsp; > &nbsp; logfile.txt</B></SPAN><BR>
 
->acorn.exe &nbsp; &nbsp; 4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
+            <P class="indented20">The <SPAN style="font-family:monospace"><B>&lt;input file&gt;</B></SPAN>
+            is a text file that describes the silicon chip, package, and/or PCB, in addition to the locations
+            of the start- and end-terminals of each net. There are hundreds of examples of such input files
+            in the <SPAN style="font-family:monospace"><B>tests</B></SPAN> subdirectory. To get started, try
+            a small example such as <SPAN style="font-family:monospace"><B>
+            4n_800x_500y_4L_obstacles_wide_vias.txt</B></SPAN>. In other words, copy this text file to the
+            working directory that contains <SPAN style="font-family:monospace"><B>acorn.exe</B></SPAN>,
+            and type the following command:<BR>
 
-Depending on how fast your computer is, and how many cores it contains, the program should take a few minutes to complete. (30 seconds with 16 threads is typical.) As it's running, you can monitor two output files: the `logfile.txt` file (using the `less` program, for example) and the `routingProgress.html` file using your favorite web browser. The latter file will be created in the working directory from which you launched Acorn. As a reminder, you can open this file from a browser using CTL-o (or CMD-o on Macs) and navigating to the working directory to open `routingProgress.html`.  Scroll down to the bottom of the web page to access the final iteration, which is listed just before the message 'Program completed successfully'. Click the hyperlink of the final iteration to view the routing of the 4 nets through the 4 layers of routing (M1, M2, M3, and M4), which include triangular and rectangular obstacles.
+            <P class="indented20"><SPAN style="font-family:monospace"><B>&nbsp;$ acorn.exe &nbsp;
+            4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp;&nbsp;>&nbsp;  
+            logfile.txt</B></SPAN><BR>
 
-Incidentally, if you'd like Acorn to use fewer threads than are available on your system, you can use the `-t` switch to specify the number of threads. For example, if you'd like Acorn to use only 2 threads, invoke Acorn like so:
+            <P class="indented20">Depending on how fast your computer is, and how many cores it contains, the
+            program should take a few minutes to complete. (30 seconds with 16 threads is typical.) As it's
+            running, you can monitor two output files: the <SPAN style="font-family:monospace"><B>logfile.txt
+            </B></SPAN> file (using the Linux <SPAN style="font-family:monospace"><B>less</B></SPAN> program,
+            for example) and the <SPAN style="font-family:monospace"><B>routingProgress.html</B></SPAN> file
+            using your favorite web browser. The latter file will be created in the working directory from
+            which you launched Acorn. As a reminder, you can open this file from a browser using CTL-o (or
+            CMD-o on Macs) and navigating to the working directory to open
+            <SPAN style="font-family:monospace"><B>routingProgress.html</B></SPAN>. Scroll down to the bottom
+            of the web page to access the final iteration, which is listed just before the message 
+            <SPAN style="font-family:monospace"><B>'Program completed successfully'</B></SPAN>. Click the
+            hyperlink of the final iteration to view the routing of the 4 nets through the 4 layers of
+            routing (layers M1, M2, M3, and M4), which include routing obstacles shapes as triangles and
+            rectangles.
 
->acorn.exe &nbsp; &nbsp; -t &nbsp; 2 &nbsp; &nbsp; 4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
+            <P class="indented20">Incidentally, if you'd like Acorn to use <B><I>fewer</I></B> threads than
+            are available on your system, you can use the <SPAN style="font-family:monospace"><B>-t</B></SPAN>
+            switch to specify the number of threads. For example, if you'd like Acorn to use only 2 threads,
+            invoke Acorn like so:<BR>
 
+            <P class="indented20"><SPAN style="font-family:monospace"><B>&nbsp;$ acorn.exe&nbsp; 
+            <FONT color="red">-t 2</FONT> 
+            &nbsp; 4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp;&nbsp;&gt;
+            &nbsp;logfile.txt
+          </TD>
 
-          <HR>
-          <div id="running_test_case"></div>
-          <H2>Running a Test Case</H2>
+          <!-- Right cell contains screenshot of a Linux session for downloading, compiling, testing Acorn: -->
+          <TD valign="top">
+            <IMG src="../images/installation_session.png" alt="Linux installation session" width="687" height="563">
+          </TD>
+        </TR>
+      </TABLE>
 
-            <P class="indented20">Explanation goes here.
+    <HR>
+    <div id="running_test_case"></div>
+    <H2>Running a Test Case</H2>
 
-          <HR>
-          <div id="create_test_case"></div>
-          <H2>Creating Your Own Routing Cases</H2>
+      <P class="indented20">As noted above in the <A href="installation">Installation</A> section, Acorn
+      is launched from a Linux command-line with a text file as an argument. The 
+      <SPAN style="font-family:monospace"><B>STDOUT</B></SPAN> output of this command should be redirected
+      to a log file for potential analysis during/after the Acorn run. For example, fatal errors will result
+      in descriptive error messages at the bottom of this log file.<BR>
 
-            <P class="indented20">Explanation goes here.
+      <P class="indented20">The input text file describes the silicon chip, package, and/or PCB, in
+      addition to the locations of the start- and end-terminals of each net. Instructions for creating such
+      input files are provided below in the <A href="#create_test_case">Creating Your Own Routing Cases</A>
+      section. But to demonstrate the output of Acorn, let's first use one of the existing input files from
+      the <SPAN style="font-family:monospace"><B>tests</B></SPAN> directory.
 
-          <div id="layers_and_resolution"></div>
-          <H3>Layers and Grid Resolution</H3>
+      <P class="indented20"><FONT color="red">We need an 8-net, 4-layer test-cases that includes obstacles,
+      trace cost-zones, via cost-zones, diff-pairs, P/N-swappability, and design-rule zones. Let's combine 
+      4n_800x_500y_4L_obstacles_wide_vias and 8n_800x_500y_2L_wideVias_diffPairs_PNswappable.</FONT>
 
-            <P class="indented20">Explanation goes here.
+    <HR>
+    <div id="create_test_case"></div>
+    <H2>Creating Your Own Routing Cases</H2>
 
-          <div id="netlist"></div>
-          <H3>Net List</H3>
+      <P class="indented20">Explanation goes here.
 
-            <P class="indented20">Explanation goes here.
+      <div id="layers_and_resolution"></div>
+      <H3>Layers and Grid Resolution</H3>
 
-          <div id="keep_out_areas"></div>
-          <H3>Keep-out Areas</H3>
+        <P class="indented20">Explanation goes here.
 
-            <P class="indented20">Explanation goes here.
+      <div id="netlist"></div>
+      <H3>Net List</H3>
 
-          <div id="design_rules"></div>
-          <H3>Design Rules</H3>
+        <P class="indented20">Explanation goes here.
 
-            <P class="indented20">Explanation goes here.
+      <div id="keep_out_areas"></div>
+      <H3>Keep-out Areas</H3>
 
-          <div id="cost_zones"></div>
-          <H3>Cost Zones</H3>
+        <P class="indented20">Explanation goes here.
 
-            <P class="indented20">Explanation goes here.
+      <div id="design_rules"></div>
+      <H3>Design Rules</H3>
 
-          <div id="pin_swap_zones"></div>
-          <H3>Pin-Swap Zones</H3>
+        <P class="indented20">Explanation goes here.
 
-            <P class="indented20">Explanation goes here.
+      <div id="cost_zones"></div>
+      <H3>Cost Zones</H3>
 
-          <HR>
-          <div id="running_acorn"></div>
-          <H2>Running Acorn on Your Own Routing Cases</H2>
+        <P class="indented20">Explanation goes here.
 
-            <P class="indented20">Explanation goes here.
+      <div id="pin_swap_zones"></div>
+      <H3>Pin-Swap Zones</H3>
+
+        <P class="indented20">Explanation goes here.
+
+    <HR>
+    <div id="running_acorn"></div>
+    <H2>Running Acorn on Your Own Routing Cases</H2>
+
+      <P class="indented20">Explanation goes here.
 
 
     <BR><BR><BR><HR>
