@@ -419,9 +419,8 @@ typedef struct RoutingMetrics_t  {
                                   // of cost-zones.
 
   unsigned short latestAlgorithmChange; // The most recent iteration number for which the routing algorithm was changed. Such
-                                        // changes include (a) swapping start-/end-terminals, (b) changing the evaporation
-                                        // rate, (c) starting to apply TRACE congestion near crowded pseudo-vias, or (d) increasing
-                                        // the congestion multiplier.
+                                        // changes include (a) swapping start-/end-terminals, (b) changing the trace and/or via
+                                        // congestion sensitivity, or (c) starting to apply TRACE congestion near crowded pseudo-vias.
 
   unsigned short num_startEnd_terminal_swaps; // The number of times the autorouter has swapped the start/end-terminals
                                               // of nets that contain design-rule violations (in order to improve routing).

@@ -5160,19 +5160,33 @@ void calcRoutabilityMetrics(const MapInfo_t *mapInfo, const int pathLength[],
 
   //
   // If the number of user-defined nets with DRCs is 2 or more, and the iteration number has
-  // exceeded the value of 20*log(numPaths), then randomly assign which of the DRC-containing
+  // exceeded the value of 20*log(numPaths),
+
+//// The following was added as an experiment on 7/7/2024:
+  // and the iteration number is at least 30 iterations (1.5 x numIterationsToReEquilibrate) beyond
+  // the (non-zero) iteration number of the last algorithm change,
+
+  // then randomly assign which of the DRC-containing
   // paths will be handled differently in the next iteration. This pseudo-randomization helps
   // to eliminate oscillatory behavior between nets, and also helps to avoid getting stuck in
   // a routing configuration that's a local minimum in overall cost.
   //
   unsigned int seed = mapInfo->current_iteration;  // Create a seed in current thread for random numbers
-  if ((routability->num_paths_with_DRCs > 1) && (mapInfo->current_iteration > 20*log10(mapInfo->numPaths)))  {
+//if ((routability->num_paths_with_DRCs > 1) && (mapInfo->current_iteration > 20*log10(mapInfo->numPaths)))  {
+  if (   (routability->num_paths_with_DRCs > 1) && (mapInfo->current_iteration > 20*log10(mapInfo->numPaths))
+      && (   (routability->latestAlgorithmChange == 0)
+          || (mapInfo->current_iteration < routability->latestAlgorithmChange + (int)(1.5 * numIterationsToReEquilibrate))) )  {
 
-    #ifdef DEBUG_routability
-    if (DEBUG_ON)  {
-      printf("\nDEBUG: Two or more paths have DRCs, so we'll randomly select paths to modify their congestion-related G-cost in next iteration...\n");
-    }
-    #endif
+////#ifdef DEBUG_routability
+////if (DEBUG_ON)  {
+      printf("\nDEBUG: Two or more paths have DRCs after iteration %d, so we'll randomly select paths to modify their congestion-related G-cost in next iteration.\n",
+              mapInfo->current_iteration);
+      printf(  "DEBUG:                                          num_paths_with_DRCs = %d\n", routability->num_paths_with_DRCs);
+      printf(  "DEBUG:                                          20 * log(num_paths) = %d\n", (int)(20*log10(mapInfo->numPaths)));
+      printf(  "DEBUG:                                        latestAlgorithmChange = iteration %d\n", routability->latestAlgorithmChange);
+      printf(  "DEBUG:   latestAlgorithmChange + 1.5 x numIterationsToReEquilibrate = %d\n", routability->latestAlgorithmChange + (int)(1.5 * numIterationsToReEquilibrate));
+////}
+////#endif
 
     // Iterate over all paths, including pseudo-paths:
     for (int path = 0; path < total_nets; path++)  {
@@ -5221,8 +5235,6 @@ void calcRoutabilityMetrics(const MapInfo_t *mapInfo, const int pathLength[],
 ////      int dice_roll = rand_r(&seed) % total_nets;
 
 
-
-
           #ifdef DEBUG_routability
           if (DEBUG_ON)  {
             printf("DEBUG:     Dice roll resulted in value of %d\n", dice_roll);
@@ -5233,8 +5245,11 @@ void calcRoutabilityMetrics(const MapInfo_t *mapInfo, const int pathLength[],
 //// The following if-statement was commented out 7/4/2024 as an experiment and replaced with the subsequent line
 //// to subject 2 DRC-nets (not 1) to randomized sensitivity:
 ////      if (dice_roll == 0)  {
-          if (dice_roll <= 1)  {
 
+//// The following if-statement was commented out 7/7/2024 and replaced with the subsequent compound if-statement:
+////      if (dice_roll <= 1)  {
+          if (   ((  user_inputs->isPseudoNet[path]) && (dice_roll == 0))
+              || ((! user_inputs->isPseudoNet[path]) && (dice_roll <= 1)))  {
 
           // Following line causes, on average, the minimum of the DRC-nets or 20% of the total nets
           // (with a minimum of 1 net) to be selected to have their congestion sensitivity modified

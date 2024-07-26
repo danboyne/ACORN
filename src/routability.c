@@ -2430,9 +2430,12 @@ void addTraceCongestionNearPseudoViasWithDRCs(const MapInfo_t *mapInfo, const in
         int congestion_amount = (distance_Gcost + congestion_Gcost) / cong_radius;
 
 
-        // We increase the congestion_amount by 50x to absolutely ensure that it repels traces from all
+        // We increase the congestion_amount by a large factor to absolutely ensure that it repels traces from all
         // pseudo-paths, no matter how congested the nearby region becomes:
-        congestion_amount *= 50;
+
+//// The following line was commented out 7/7/2024 and replaced with the subsequent line:
+////    congestion_amount *= 50;
+        congestion_amount *= 100;
 
 
         #ifdef DEBUG_addTraceCongestionNearPseudoViasWithDRCs
