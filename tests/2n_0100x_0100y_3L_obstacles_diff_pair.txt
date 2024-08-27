@@ -138,5 +138,7 @@ violationFreeThreshold = 30
 # writing PNG versions of the routing maps.
 runsPerPngMap =  1
 
-
+# (OPTIONAL!) Omit selected layers from the composite PNG files (and therefore,
+# from the animated routing evolution of the entire map):
+omit_layers_from_composite_images = V1_2 V2_3
 

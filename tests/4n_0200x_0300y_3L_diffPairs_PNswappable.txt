@@ -271,3 +271,8 @@ vertCost  = 3000   // in microns of equivalent trace length
 # The parameter 'runsPerPngMap' is the number of iterations to run between
 # writing PNG versions of the routing maps.
 runsPerPngMap =  1
+
+# (OPTIONAL!) Omit selected layers from the composite PNG files (and therefore,
+# from the animated routing evolution of the entire map):
+omit_layers_from_composite_images = V1_5 BGA
+
