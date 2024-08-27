@@ -68,7 +68,7 @@ void update_iterationDependent_parameters(MapInfo_t *mapInfo, RoutingMetrics_t *
 
 
 //-----------------------------------------------------------------------------
-// Name: determineBestIteration
+// Name: determineBestIterations
 // Desc: Determine the iteration with the best routing metrics. The best
 //       iteration is the one with the lowest number of cells with DRCs. If
 //       multiple iterations contain zero DRC cells, then the best iteration
@@ -79,14 +79,15 @@ void update_iterationDependent_parameters(MapInfo_t *mapInfo, RoutingMetrics_t *
 //       of routing, but Acorn disregards these zones only for iteration
 //       #1 in order to display a "rat's nest" routing.
 //-----------------------------------------------------------------------------
-void determineBestIteration(const MapInfo_t *mapInfo, RoutingMetrics_t *routability,
-                            int cost_multipliers_used);
+void determineBestIterations(const MapInfo_t *mapInfo, RoutingMetrics_t *routability,
+                             int cost_multipliers_used);
 
 
 //-----------------------------------------------------------------------------
 // Name: swap_start_and_end_terminals_of_DRC_paths
 // Desc: Swap the start- and end-terminals of nets that have DRCs. The function
-//       returns the number of nets whose terminals were swapped.
+//       returns the number of nets whose terminals were swapped, or were
+//       eligible to be swapped.
 //
 //       If the input parameter 'countOnly' is TRUE, then this function merely
 //       counts the number of nets that are eligible for having their start-

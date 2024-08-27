@@ -309,6 +309,81 @@ void printRoutabilityMetrics(FILE *fp, const RoutingMetrics_t *routability, cons
 
 
 //-----------------------------------------------------------------------------
+// Name: add_HTML_message
+// Desc: Add an HTML-encoded text string 'text_string'  to the array
+//       routability->HTML_message_strings[], and add the integer 'iteration'
+//       to array routability->HTML_message_iter_nums[]. Add category number
+//       'category_num' to the array routability->HTML_message_categories. Also,
+//       increment the number of HTML messages, routability->num_HTML_messages.
+//-----------------------------------------------------------------------------
+void add_HTML_message(char* HTML_message, short int iteration, unsigned char category_num,
+                      RoutingMetrics_t *routability)  {
+
+  // printf("\nDEBUG: Entered function add_HTML_message in iteration %d with message '%s'\n", iteration, HTML_message);
+
+  // Extend the memory allocated to 'HTML_message_strings' array to accommodate one more message:
+  routability->HTML_message_strings = realloc(routability->HTML_message_strings, (routability->num_HTML_messages + 1)
+                                                                              * sizeof(routability->HTML_message_strings));
+  if (routability->HTML_message_strings == 0)  {
+    printf("\nERROR: Unable to re-allocate memory for %d elements of 'routability->HTML_message_strings' in function 'add_HTML_message'.\n",
+           routability->num_HTML_messages + 1);
+    exit(1);
+  }
+
+  // Extend the memory allocated to 'HTML_message_iter_nums' array to accommodate one more message:
+  routability->HTML_message_iter_nums = realloc(routability->HTML_message_iter_nums, (routability->num_HTML_messages + 1)
+                                                                              * sizeof(short int));
+  if (routability->HTML_message_iter_nums == 0)  {
+    printf("\nERROR: Unable to re-allocate memory for %d elements of 'routability->HTML_message_iter_nums' in function 'add_HTML_message'.\n",
+           routability->num_HTML_messages + 1);
+    exit(1);
+  }
+
+  // Extend the memory allocated to 'HTML_message_categories' array to accommodate one more message:
+  routability->HTML_message_categories = realloc(routability->HTML_message_categories, (routability->num_HTML_messages + 1)
+                                                                               * sizeof(routability->HTML_message_categories));
+  if (routability->HTML_message_categories == 0)  {
+    printf("\nERROR: Unable to re-allocate memory for %d elements of 'routability->HTML_message_categories' in function 'add_HTML_message'.\n",
+           routability->num_HTML_messages + 1);
+    exit(1);
+  }
+
+
+  // Get the length of the message string so we can allocate the appropriate amount of memory for its length. Note that
+  // 'message_length' does not include the the extra byte needed for the terminating NULL character.
+  int message_length = strlen(HTML_message);
+  // printf("\nDEBUG: In function add_HTML_message, message_length = %d (excluding NULL character).\n\n", message_length);
+  routability->HTML_message_strings[routability->num_HTML_messages] = malloc((message_length + 1) * sizeof(char));
+  if (routability->HTML_message_strings[routability->num_HTML_messages] == 0)  {
+    printf("\nERROR: Unable to re-allocate memory for %d bytes of 'routability->HTML_message_strings[%d]' in function 'add_HTML_message'.\n",
+           message_length + 1, routability->num_HTML_messages);
+    exit(1);
+  }
+
+  // Copy the text string into the 'routability' structure:
+  strncpy(routability->HTML_message_strings[routability->num_HTML_messages], HTML_message, message_length + 1);
+  // printf("\nDEBUG: In function add_HTML_message, routability->HTML_message_strings[%d] = '%s'\n\n",
+  //         routability->num_HTML_messages, routability->HTML_message_strings[routability->num_HTML_messages]);
+
+  // Capture the iteration number that this message is associated with:
+  routability->HTML_message_iter_nums[routability->num_HTML_messages] = iteration;
+  // printf("\nDEBUG: In function add_HTML_message, routability->HTML_message_iter_nums[%d] = '%d'\n\n",
+  //        routability->num_HTML_messages, routability->HTML_message_iter_nums[routability->num_HTML_messages]);
+
+  // Capture the category number that applies to this message:
+  routability->HTML_message_categories[routability->num_HTML_messages] = category_num;
+
+
+  // Increment the number of HTML messages:
+  routability->num_HTML_messages++;
+
+  // printf("\nDEBUG: In function add_HTML_message, num_HTML_messages was incremented to %d\n\n", routability->num_HTML_messages);
+
+
+}  // End of function 'add_HTML_message'
+
+
+//-----------------------------------------------------------------------------
 // Name: get_unwalkable_barrier_proximity_by_path
 // Desc: Reads the 'forbiddenProximityBarrier' element of the 3D cellInfo
 //       matrix at location (x,y,z). This function returns whether this cell is
@@ -3457,9 +3532,8 @@ void calcRoutabilityMetrics(const MapInfo_t *mapInfo, const int pathLength[],
                             Coordinate_t *pathCoords[], int contiguousPathLength[],
                             Coordinate_t *contigPathCoords[], RoutingMetrics_t *routability,
                             const InputValues_t *user_inputs, CellInfo_t ***cellInfo,
-                            DRC_details_t DRC_details[], int addCongestionFlag,
-                            int addCongOnlyForDiffPair, int exitIfInvalidJump, int beQuiet,
-                            int parallelProcessing)  {
+                            int addCongestionFlag, int addCongOnlyForDiffPair,
+                            int exitIfInvalidJump, int beQuiet, int parallelProcessing)  {
 
   // Get the upper bound on the number of threads that could be used to form a new team if
   // 'omp parallel' construct were encountered without a num_threads clause:
@@ -4893,15 +4967,15 @@ void calcRoutabilityMetrics(const MapInfo_t *mapInfo, const int pathLength[],
       if (total_non_pseudo_DRC_count < maxRecordedDRCs)  {
         // printf("    DEBUG: Adding non-pseudo DRC #%d from thread #%d to 'DRC_details[%d]...\n",
         //         j, i, total_non_pseudo_DRC_count);
-        DRC_details[total_non_pseudo_DRC_count].x                      = DRC_details_per_thread[i][j].x;
-        DRC_details[total_non_pseudo_DRC_count].y                      = DRC_details_per_thread[i][j].y;
-        DRC_details[total_non_pseudo_DRC_count].z                      = DRC_details_per_thread[i][j].z;
-        DRC_details[total_non_pseudo_DRC_count].pathNum                = DRC_details_per_thread[i][j].pathNum;
-        DRC_details[total_non_pseudo_DRC_count].shapeType              = DRC_details_per_thread[i][j].shapeType;
-        DRC_details[total_non_pseudo_DRC_count].offendingPathNum       = DRC_details_per_thread[i][j].offendingPathNum;
-        DRC_details[total_non_pseudo_DRC_count].offendingShapeType     = DRC_details_per_thread[i][j].offendingShapeType;
-        DRC_details[total_non_pseudo_DRC_count].minimumAllowedDistance = DRC_details_per_thread[i][j].minimumAllowedDistance;
-        DRC_details[total_non_pseudo_DRC_count].minimumAllowedSpacing  = DRC_details_per_thread[i][j].minimumAllowedSpacing;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].x                      = DRC_details_per_thread[i][j].x;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].y                      = DRC_details_per_thread[i][j].y;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].z                      = DRC_details_per_thread[i][j].z;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].pathNum                = DRC_details_per_thread[i][j].pathNum;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].shapeType              = DRC_details_per_thread[i][j].shapeType;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].offendingPathNum       = DRC_details_per_thread[i][j].offendingPathNum;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].offendingShapeType     = DRC_details_per_thread[i][j].offendingShapeType;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].minimumAllowedDistance = DRC_details_per_thread[i][j].minimumAllowedDistance;
+        routability->DRC_details[mapInfo->current_iteration][total_non_pseudo_DRC_count].minimumAllowedSpacing  = DRC_details_per_thread[i][j].minimumAllowedSpacing;
       }  // End of if-block for (total_DRC_count < maxRecordedDRCs)
 
       // Increment the non-pseudo DRC count from all threads:

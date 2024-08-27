@@ -13,11 +13,7 @@
 // Name: main
 // Desc: Top-level C program
 //----------------------------------------------------------------------------------  
-//
-// Define 'DEBUG_main' and re-compile if you want verbose debugging print-statements enabled:
-//
-// #define DEBUG_main 1
-#undef DEBUG_main
+
 
 int main(int argc, char *argv[])  {
 
@@ -32,155 +28,15 @@ int main(int argc, char *argv[])  {
   // Print version number 'VERSION', which is extracted from GIT repository at compile-time.
   printf("INFO: ACORN version %s\n\n", VERSION);
 
-  // Capture the start-time so we can report the total elapsed time at end of autorouter program:
-  time_t start_autorouter, end_autorouter;
-  start_autorouter = time(NULL); // Get number of seconds since the Epoch (Jan 1, 1970)
-
-  // printf("DEBUG: sizeof(int) is %lu bytes\n", sizeof(int));
-  // printf("DEBUG: sizeof(char) is %lu bytes\n", sizeof(char));
-  // printf("DEBUG: sizeof(short) is %lu bytes\n", sizeof(short));
-  // printf("DEBUG: sizeof(long) is %lu bytes\n", sizeof(long));
-  // printf("DEBUG: sizeof(float) is %lu bytes\n", sizeof(float));
-  // printf("DEBUG: sizeof(double) is %lu bytes\n", sizeof(double));
-  // printf("DEBUG: sizeof(long double) is %lu bytes\n", sizeof(long double));
-  // printf("DEBUG: sizeof(RoutingMetrics_t) is %lu bytes\n", sizeof(RoutingMetrics_t));
-  // printf("DEBUG: sizeof(DesignRuleSet_t) is %lu bytes\n", sizeof(DesignRuleSubset_t));
-  // printf("DEBUG: sizeof(InputValues_t) is %lu bytes\n", sizeof(InputValues_t));
-  // printf("DEBUG: sizeof(CellInfo_t) is %lu bytes\n", sizeof(CellInfo_t));
-  // printf("DEBUG:   offsetof element congestion is %lu bytes in CellInfo_t structure\n", offsetof(struct CellInfo_t, congestion));
-  // printf("DEBUG:   offsetof element pathCenters is %lu bytes in CellInfo_t structure\n", offsetof(struct CellInfo_t, pathCenters));
-  // printf("DEBUG:   offsetof element swap_zone is %lu bytes in CellInfo_t structure\n", offsetof(struct CellInfo_t, swap_zone));
-  // printf("DEBUG: sizeof(Congestion_t) is %lu bytes\n", sizeof(Congestion_t));
-  // printf("DEBUG: sizeof(Congestion_t *) is %lu bytes\n", sizeof(Congestion_t *));
-  // printf("DEBUG: sizeof(MapInfo_t) is %lu bytes\n", sizeof(MapInfo_t));
-  // printf("DEBUG: sizeof(PathAndShapeInfo_t) is %lu bytes\n", sizeof(PathAndShapeInfo_t));
-  // printf("DEBUG: sizeof(PathAndShapeInfo_t *) is %lu bytes\n", sizeof(PathAndShapeInfo_t *));
-  // printf("DEBUG: sizeof(Coordinate_t) is %lu bytes\n", sizeof(Coordinate_t));
-  // printf("DEBUG: sizeof(RoutingRestriction_t) is %lu bytes\n", sizeof(RoutingRestriction_t));
-  // printf("DEBUG: sizeof(ShoulderConnection_t) is %lu bytes\n", sizeof(ShoulderConnection_t));
-  // printf("DEBUG: sizeof(ShoulderConnections_t) is %lu bytes\n", sizeof(ShoulderConnections_t));
-  // printf("\n\n");
-
-  // #define DEBUG_SUBROUTINE 1
-  #undef DEBUG_SUBROUTINE
-  ////////////////////////////////////////////////////////////////////////////////////////////
-  //
-  // Testing/debugging of new subroutines takes place here:
-  //
-  #ifdef DEBUG_SUBROUTINE
-
-  // Enclose in braces to avoid polluting the variable namespace
-  { // New, experimental code on 3/21/2024:
-    // Design rules are based on test-case 6n_200x_300y_7L_diffPairs_perimPCB_terms_symmetric, design-rule
-    // set 'Pkg_Bottom', exception '50_ohm':
-    float diffPair_halfPitch_TRACE    =  5.0;  // 200-micron pitch, 20-micron resolution
-    float diffPair_halfPitch_VIA_UP   = 19.5;  // 780-um pitch
-    float diffPair_halfWidth_TRACE    =  2.5;  // 100-um linewidth
-    float diffPair_halfWidth_VIA_UP   = 12.5;  // 500-um diameter
-    float spacing_TRACE_TRACE         =  5.0;  // 100-um spacing
-    float spacing_TRACE_VIA_UP        =  7.0;  // 140-um spacing
-    float spacing_VIA_UP_VIA_UP       = 14.0;  // 280-um spacing
-    float DRC_radius_TrVia = spacing_TRACE_VIA_UP + diffPair_halfWidth_VIA_UP;
-    float DRC_radius_ViaTr = spacing_TRACE_VIA_UP + diffPair_halfWidth_TRACE;
-    float DRC_radius_TrTr = spacing_TRACE_TRACE + diffPair_halfWidth_TRACE;
-    float DRC_radius_ViaVia = spacing_VIA_UP_VIA_UP + diffPair_halfWidth_VIA_UP;
-    float pseudo_halfWidth_TRACE  = 0.0;
-    float pseudo_halfWidth_VIA_UP = 0.0;
-
-    // Try TRACE-to-VIA_UP:
-    printf("\nDEBUG: About to enter calc_diffPair_design_rules testing TRACE-to-VIA_UP:\n");
-    printf("DEBUG:    diffPair_halfWidth_TRACE = %.3f\n", diffPair_halfWidth_TRACE);
-    printf("DEBUG:   diffPair_halfWidth_VIA_UP = %.3f\n", diffPair_halfWidth_VIA_UP);
-    printf("DEBUG:            DRC_radius_TrVia = %.3f\n", DRC_radius_TrVia);
-    printf("DEBUG:            DRC_radius_ViaTr = %.3f\n", DRC_radius_ViaTr);
-    printf("DEBUG:    diffPair_halfPitch_TRACE = %.3f\n", diffPair_halfPitch_TRACE);
-    printf("DEBUG:   diffPair_halfPitch_VIA_UP = %.3f\n", diffPair_halfPitch_VIA_UP);
-    printf("DEBUG:      pseudo_halfWidth_TRACE = %.3f\n", pseudo_halfWidth_TRACE);
-    printf("DEBUG:     pseudo_halfWidth_VIA_UP = %.3f\n", pseudo_halfWidth_VIA_UP);
-
-    calc_diffPair_design_rules(diffPair_halfWidth_TRACE,
-                               diffPair_halfWidth_VIA_UP,
-                               DRC_radius_TrVia, DRC_radius_ViaTr,
-                               &diffPair_halfPitch_TRACE, &diffPair_halfPitch_VIA_UP,
-                               &pseudo_halfWidth_TRACE,   &pseudo_halfWidth_VIA_UP);
-
-    printf("\nDEBUG: After calc_diffPair_design_rules:  diffPair_halfPitch_TRACE = %.3f,  pseudo_halfWidth_TRACE = %.3f\n",
-           diffPair_halfPitch_TRACE, pseudo_halfWidth_TRACE);
-    printf(  "DEBUG: After calc_diffPair_design_rules: diffPair_halfPitch_VIA_UP = %.3f, pseudo_halfWidth_VIA_UP = %.3f\n\n",
-           diffPair_halfPitch_VIA_UP, pseudo_halfWidth_VIA_UP);
-
-    // Try TRACE-to-TRACE:
-    float diffPair_halfPitch_TRACE_A =  5.0;  // 200-micron pitch, 20-micron resolution
-    float diffPair_halfPitch_TRACE_B =  5.0;  // 200-micron pitch, 20-micron resolution
-    float pseudo_halfWidth_TRACE_A   =  0.0;
-    float pseudo_halfWidth_TRACE_B   =  0.0;
-
-    printf("\nDEBUG: About to enter calc_diffPair_design_rules testing TRACE-to-TRACE:\n");
-    printf("DEBUG:    diffPair_halfWidth_TRACE = %.3f\n", diffPair_halfWidth_TRACE);
-    printf("DEBUG:    diffPair_halfWidth_TRACE = %.3f\n", diffPair_halfWidth_TRACE);
-    printf("DEBUG:             DRC_radius_TrTr = %.3f\n", DRC_radius_TrTr);
-    printf("DEBUG:             DRC_radius_TrTr = %.3f\n", DRC_radius_TrTr);
-    printf("DEBUG:  diffPair_halfPitch_TRACE_A = %.3f\n", diffPair_halfPitch_TRACE_A);
-    printf("DEBUG:  diffPair_halfPitch_TRACE_B = %.3f\n", diffPair_halfPitch_TRACE_B);
-    printf("DEBUG:    pseudo_halfWidth_TRACE_A = %.3f\n", pseudo_halfWidth_TRACE_A);
-    printf("DEBUG:    pseudo_halfWidth_TRACE_B = %.3f\n", pseudo_halfWidth_TRACE_B);
-
-    calc_diffPair_design_rules(diffPair_halfWidth_TRACE,
-                               diffPair_halfWidth_TRACE,
-                               DRC_radius_TrTr, DRC_radius_TrTr,
-                               &diffPair_halfPitch_TRACE_A, &diffPair_halfPitch_TRACE_B,
-                               &pseudo_halfWidth_TRACE_A,   &pseudo_halfWidth_TRACE_B);
-
-    printf("\nDEBUG: After calc_diffPair_design_rules:  diffPair_halfPitch_TRACE_A = %.3f,  pseudo_halfWidth_TRACE_A = %.3f\n",
-            diffPair_halfPitch_TRACE_A, pseudo_halfWidth_TRACE_A);
-    printf(  "DEBUG: After calc_diffPair_design_rules:  diffPair_halfPitch_TRACE_B = %.3f,  pseudo_halfWidth_TRACE_B = %.3f\n\n",
-            diffPair_halfPitch_TRACE_B, pseudo_halfWidth_TRACE_B);
-
-
-    // Try VIA_UP-to-VIA_UP:
-    float diffPair_halfPitch_VIA_UP_A = 19.5;  // 780-um pitch
-    float diffPair_halfPitch_VIA_UP_B = 19.5;  // 780-um pitch
-    float pseudo_halfWidth_VIA_UP_A   =  0.0;
-    float pseudo_halfWidth_VIA_UP_B   =  0.0;
-
-    printf("\nDEBUG: About to enter calc_diffPair_design_rules testing VIA_UP-to-VIA_UP:\n");
-    printf("DEBUG:    diffPair_halfWidth_VIA_UP = %.3f\n", diffPair_halfWidth_VIA_UP);
-    printf("DEBUG:    diffPair_halfWidth_VIA_UP = %.3f\n", diffPair_halfWidth_VIA_UP);
-    printf("DEBUG:            DRC_radius_ViaVia = %.3f\n", DRC_radius_ViaVia);
-    printf("DEBUG:            DRC_radius_ViaVia = %.3f\n", DRC_radius_ViaVia);
-    printf("DEBUG:  diffPair_halfPitch_VIA_UP_A = %.3f\n", diffPair_halfPitch_VIA_UP_A);
-    printf("DEBUG:  diffPair_halfPitch_VIA_UP_B = %.3f\n", diffPair_halfPitch_VIA_UP_B);
-    printf("DEBUG:    pseudo_halfWidth_VIA_UP_A = %.3f\n", pseudo_halfWidth_VIA_UP_A);
-    printf("DEBUG:    pseudo_halfWidth_VIA_UP_B = %.3f\n", pseudo_halfWidth_VIA_UP_B);
-
-    calc_diffPair_design_rules(diffPair_halfWidth_VIA_UP,
-                               diffPair_halfWidth_VIA_UP,
-                               DRC_radius_ViaVia, DRC_radius_ViaVia,
-                               &diffPair_halfPitch_VIA_UP_A, &diffPair_halfPitch_VIA_UP_B,
-                               &pseudo_halfWidth_VIA_UP_A,   &pseudo_halfWidth_VIA_UP_B);
-
-    printf("\nDEBUG: After calc_diffPair_design_rules:  diffPair_halfPitch_VIA_UP_A = %.3f,  pseudo_halfWidth_VIA_UP_A = %.3f\n",
-            diffPair_halfPitch_VIA_UP_A, pseudo_halfWidth_VIA_UP_A);
-    printf(  "DEBUG: After calc_diffPair_design_rules:  diffPair_halfPitch_VIA_UP_B = %.3f,  pseudo_halfWidth_VIA_UP_B = %.3f\n\n",
-            diffPair_halfPitch_VIA_UP_B, pseudo_halfWidth_VIA_UP_B);
-
-    exit(0);
-  }
-
-  #endif
-  //
-  ////////////////////////////////////////////////////////////////////////////////////////////
+  // Capture the start-time so we can report the total elapsed time at end of each iteration:
+  time_t start_autorouter = time(NULL); // Get number of seconds since the Epoch (Jan 1, 1970)
 
   //
   // Define 'mapInfo' object that contains general info about the map (width, height, etc). 
   //
   MapInfo_t mapInfo;
-  mapInfo.current_iteration = 1;  // Initialize the iteration to #1 because this will trigger certain actions in other functions
-
-  // Define 'DRC_details' array that contains details of DRC violations for the 
-  // first N violations, with N = maxRecordedDRCs:
-  // printf("DEBUG: About to dimension 'DRC_details' (of type 'DRC_details_t') with %d elements.\n", maxRecordedDRCs);
-  DRC_details_t DRC_details[maxRecordedDRCs];
+  // Initialize the iteration to 0. It will be incremented at start of each iteration:
+  mapInfo.current_iteration = 0;
 
   // Print a time-stamp to STDOUT:
   time_t tim = time(NULL);
@@ -343,6 +199,22 @@ int main(int argc, char *argv[])  {
   RoutingMetrics_t routability;
   createRoutability(&routability, &mapInfo);
   initializeRoutability(&routability, &mapInfo, TRUE);
+
+  // Initialize 'adequateSolutionFound' to FALSE. It will be changed to TRUE only after
+  // all criteria are met for an adequate solution:
+  int adequateSolutionFound = FALSE;
+
+  //
+  // Create a preliminary version of the 'routingStatus.html' file:
+  //
+  if (create_routingStatus_HTML_file(input_filename, "routingStatus.html", &mapInfo, &routability, &user_inputs, shapeTypeNames, adequateSolutionFound, DRC_free_threshold, num_threads) == 0)  {
+    printf("\nINFO: Output file 'routingStatus.html' was successfully created.\n");
+  }
+  else  {
+    printf("\n\nERROR: The file 'routingStatus.html' was not successfully created in function main(). This behavior is not expected.\n");
+    printf(    "       Please inform the software developer of this fatal error message.\n\n");
+    exit(1);
+  }
 
   //
   // Array 'subMapRoutability' contains elements that describe the 'goodness' of the routed
@@ -561,7 +433,7 @@ int main(int argc, char *argv[])  {
   // Create HTML page showing map without any routing:
   //
   makeHtmlIterationSummary(0, &mapInfo, cellInfo, &user_inputs, &routability,
-                           "Title", DRC_details, shapeTypeNames);
+                           "Title", shapeTypeNames);
 
 
   //
@@ -582,24 +454,22 @@ int main(int argc, char *argv[])  {
     sequence[path] = path;  // Initial sequence is simply the order of the path numbers
   }
 
-  //
+
+  // Capture the cumulative time (in seconds) required to parse the user's input file and
+  // prepare the routing map. Save this time as 'iteration number zero':
+  routability.iteration_cumulative_time[0] = (int) (time(NULL) - start_autorouter);
+
   //
   // Run a maximum of 'maxIterations' iterations of the path-finding algorithm, updating 
   // the 'cellInfo' matrix after each run:
   //
-  mapInfo.current_iteration = 0;  // Counter for number of path-finding iterations
-  int solutionFound = FALSE;
   int addCongestion = TRUE; // Flag to add congestion after each iteration. Set to FALSE only
                             // for 1st iteration if non-unity cost-multipliers exist.
 
-  while ((mapInfo.current_iteration < user_inputs.maxIterations) && (! solutionFound))  {
+  while ((mapInfo.current_iteration < user_inputs.maxIterations) && (! adequateSolutionFound))  {
 
     mapInfo.current_iteration++;
     printf("\n---\nINFO: Starting iteration number %d...\n", mapInfo.current_iteration);
-
-    // Keep track of how much elapsed time this iteration takes:
-    time_t start_iteration, end_iteration;
-    start_iteration = time(NULL); // Get number of seconds since the Epoch (Jan 1, 1970)
 
     // Update the 'congestionMultiplier' factor, which depends on the iteration number:
     update_iterationDependent_parameters(&mapInfo, &routability, fp_TOC);
@@ -648,11 +518,7 @@ int main(int argc, char *argv[])  {
     //
     // For each start- and end-location, find the most efficient path:
     //
-    #ifdef DEBUG_main
-    #pragma omp parallel for if ((mapInfo.current_iteration != 119) && (mapInfo.current_iteration != 120)) schedule(dynamic, 1)
-    #else
     #pragma omp parallel for schedule(dynamic, 1)
-    #endif
     for (int pathFindingSequence = 0; pathFindingSequence < max_routed_nets; pathFindingSequence++)  {
 
       int pathNum = sequence[pathFindingSequence];
@@ -745,8 +611,9 @@ int main(int argc, char *argv[])  {
     // at/near the nets and vias (if addCongestion is TRUE):
     calcRoutabilityMetrics(&mapInfo, pathLengths, pathCoords,
                            contiguousPathLengths, contigPathCoords, &routability,
-                           &user_inputs, cellInfo, DRC_details, addCongestion,
+                           &user_inputs, cellInfo, addCongestion,
                            ADD_CONGESTION_FOR_ALL_NETS, TRUE, FALSE, TRUE);
+
     // printf("DEBUG: Returned from function 'calcRoutabilityMetrics' in thread %d.\n", omp_get_thread_num());
 
     //
@@ -763,20 +630,22 @@ int main(int argc, char *argv[])  {
       addCongestionAroundAllTerminals(&user_inputs, &mapInfo, cellInfo, contigPathCoords, contiguousPathLengths);
     }
 
-    // Determine the iteration with the best routing metrics. The best iteration is the one with
+    // Determine the iterations with the best routing metrics. The lowest-cost iteration is the one with
     // the lowest number of cells with DRCs. If multiple iterations contain zero DRC cells, then
-    // the best iteration is the DRC-free iteration with the lowest routing cost.
-    determineBestIteration(&mapInfo, &routability, cost_multipliers_used);
-    printf("DEBUG: After returning from function determineBestIteration after iteration %d, the iteration with the lowest-cost routing metrics is %d.\n",
-            mapInfo.current_iteration, routability.best_iteration);
+    // the best iteration is the DRC-free iteration with the lowest routing cost. This function also
+    // finds the iteration with the shortest aggregate path-length which has the fewest number of DRC-cells.
+    determineBestIterations(&mapInfo, &routability, cost_multipliers_used);
+    printf("DEBUG: After returning from function determineBestIterations after iteration %d, the iteration with the lowest-cost routing metrics is %d.\n",
+            mapInfo.current_iteration, routability.lowest_cost_iteration);
+    printf("DEBUG: The iteration with the shortest aggregate path-length is %d.\n", routability.shortest_path_iteration);
 
     printRoutabilityMetrics(stdout, &routability, &user_inputs, &mapInfo, max_routed_nets, 30);
 
     if (mapInfo.current_iteration >= 3)  {
-      printf("DEBUG: Last 3 path non-pseudo lengths are %'8.3f, %'8.3f, and %'8.3f\n",
+      printf("INFO: Last 3 path non-pseudo lengths are %'8.3f, %'8.3f, and %'8.3f\n",
               routability.nonPseudoPathLengths[mapInfo.current_iteration], routability.nonPseudoPathLengths[mapInfo.current_iteration-1],
               routability.nonPseudoPathLengths[mapInfo.current_iteration-2]);
-      printf("DEBUG: Last 3 non-pseudo DRC counts are %d, %d, and %d\n",
+      printf("INFO: Last 3 non-pseudo DRC counts are %d, %d, and %d\n",
               routability.nonPseudo_num_DRC_cells[mapInfo.current_iteration], routability.nonPseudo_num_DRC_cells[mapInfo.current_iteration-1],
               routability.nonPseudo_num_DRC_cells[mapInfo.current_iteration-2]);
     }  // End if if-block for current_iteration >= 3
@@ -803,33 +672,23 @@ int main(int argc, char *argv[])  {
     printf("INFO: *********** End of sequence list *********\n");
 
 
-    // Calculate elapsed (wall-clock) time to complete this iteration:
-    end_iteration = time(NULL);
-    routability.iteration_elapsed_time[mapInfo.current_iteration] = (int) (end_iteration - start_iteration);
-    printf("INFO: Iteration %d took %'d seconds.\n", mapInfo.current_iteration, routability.iteration_elapsed_time[mapInfo.current_iteration]);
-
-    // Create a PNG thumbnail file of this iteration's routing, with a maximum height/width of 200 pixels:
-    char thumbnailFileName[80];
-    sprintf(thumbnailFileName, "map_thumbnail_iter%04d.png", mapInfo.current_iteration);
-    makePngPathThumbnail(200, thumbnailFileName, &mapInfo, &user_inputs, cellInfo, "Title");
-
-
     // Update the HTML table-of-contents file with the results of
     // iteration # 'current_iteration', including the generation of PNG map-files
     // and a new HTML file to display these PNG files.
     updateHtmlTableOfContents(fp_TOC, &mapInfo, cellInfo, &user_inputs, &routability,
-                              DRC_details, shapeTypeNames, cost_multipliers_used);
+                              shapeTypeNames, cost_multipliers_used);
+
     // printf("DEBUG: Returned successfully from function 'updateHtmlTableOfContents'.\n");
 
 
     //
     // Check whether we can exit the path-finding algorithm:
     //
-    solutionFound = determineIfSolved(mapInfo.current_iteration, DRC_free_threshold,
+    adequateSolutionFound = determineIfSolved(mapInfo.current_iteration, DRC_free_threshold,
                                       user_inputs.num_nets - user_inputs.num_pseudo_nets,
                                       user_inputs.maxIterations, &routability);
-    printf("DEBUG: determineIfSolved returned '%d'\n", solutionFound);
-    // fprintf(fp_TOC, "  <UL><LI><FONT color=\"#FF3300\">solutionFound is %d.</FONT></UL>\n", solutionFound);
+    printf("DEBUG: determineIfSolved returned '%d'\n", adequateSolutionFound);
+    // fprintf(fp_TOC, "  <UL><LI><FONT color=\"#FF3300\">adequateSolutionFound is %d.</FONT></UL>\n", adequateSolutionFound);
 
 
     // Determine which changes (if any) should be made to the routing algorithm. The
@@ -838,7 +697,6 @@ int main(int argc, char *argv[])  {
     //       (2) Change the congestion sensitivity
     //       (3) Enable the application of TRACE pseudo-congestion near pseudo-vias
     determineAlgorithmChanges(&mapInfo, DRC_free_threshold, &routability, &user_inputs);
-
 
     //
     // If we need to swap start- and end-terminals of paths that have DRCs, then do so.
@@ -852,15 +710,21 @@ int main(int argc, char *argv[])  {
       int num_nonPseudo_terminals_swapped = swap_start_and_end_terminals_of_DRC_paths(max_routed_nets, &mapInfo,
                                                                                       &routability, &user_inputs, FALSE);
 
-      // Increment the counter that tracks how many times we've swapped start/end terminals:
-      routability.num_startEnd_terminal_swaps++;
-
-      // Update the HTML file to show that terminals were swapped, and how many (excluding pseudo-paths):
+      // Update the HTML file to show that terminals will be swapped for the next iteration, and how many nets are involved (excluding pseudo-paths):
       if (num_nonPseudo_terminals_swapped > 0)  {
         printf("INFO: Due to stagnant routability metrics, start- and end-terminals were swapped for %d nets to improve routing (swap #%d).\n",
                 num_nonPseudo_terminals_swapped, routability.num_startEnd_terminal_swaps);
         fprintf(fp_TOC, "  <UL><LI><FONT color=\"#00CC00\">Start- and end-terminals were swapped for %d nets to improve routing (swap #%d).</FONT></UL>\n",
                 num_nonPseudo_terminals_swapped, routability.num_startEnd_terminal_swaps);
+
+
+        // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+        // eventually printed out to the HTML file:
+        char HTML_message[500];
+        sprintf(HTML_message, "<FONT color=\"#00CC00\">Start- and end-terminals were swapped for %d nets to improve routing (swap #%d).</FONT>",
+                num_nonPseudo_terminals_swapped, routability.num_startEnd_terminal_swaps);
+        // printf("\nDEBUG: In function main, HTML_message = '%s'\n\n", HTML_message);
+        add_HTML_message(HTML_message, mapInfo.current_iteration, SWAP_TERMS, &routability);
       }
     }  // End of if-block for swapStartAndEndTerms == TRUE
 
@@ -908,6 +772,19 @@ int main(int argc, char *argv[])  {
                 routability.viaCongSensitivityMetrics[mapInfo.currentViaCongSensIndex].dynamicParameter,
                 routability.num_viaCongSensitivity_changes, routability.num_viaCongSensitivity_stableRoutingMetrics,
                 routability.num_traceCongSensitivity_stableRoutingMetrics);
+
+
+        // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+        // eventually printed out to the HTML file:
+        char HTML_message[500];
+        sprintf(HTML_message, "<FONT color=\"#00CC00\">Via Congestion Sensitivity increased from %d%% to %d%% due to stagnant results <FONT size=\"1\">(via change #%d, %d stable via metrics, %d stable trace metrics)</FONT>.</FONT>",
+                routability.viaCongSensitivityMetrics[old_via_cong_sensitivity_index].dynamicParameter,
+                routability.viaCongSensitivityMetrics[mapInfo.currentViaCongSensIndex].dynamicParameter,
+                routability.num_viaCongSensitivity_changes, routability.num_viaCongSensitivity_stableRoutingMetrics,
+                routability.num_traceCongSensitivity_stableRoutingMetrics);
+        // printf("\nDEBUG: In function main, HTML_message = '%s'\n\n", HTML_message);
+        add_HTML_message(HTML_message, mapInfo.current_iteration, VIA_CONG_SENS_UP, &routability);
+
       }  // End of if-block for changeViaCongSensitivity == INCREASE
       else if (routability.changeViaCongSensitivity[mapInfo.current_iteration] == DECREASE) {
         printf("INFO: Due to stagnant routability metrics, via congestion sensitivity reduced from %d%% to %d%% (via change #%d, via reduction #%d, %d stable via metrics, %d stable trace metrics).\n",
@@ -920,12 +797,21 @@ int main(int argc, char *argv[])  {
                 routability.viaCongSensitivityMetrics[mapInfo.currentViaCongSensIndex].dynamicParameter,
                 routability.num_viaCongSensitivity_changes, routability.num_viaCongSensitivity_reductions,
                 routability.num_viaCongSensitivity_stableRoutingMetrics, routability.num_traceCongSensitivity_stableRoutingMetrics);
+
+
+        // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+        // eventually printed out to the HTML file:
+        char HTML_message[500];
+        sprintf(HTML_message, "<FONT color=\"#00CC00\">Via Congestion Sensitivity reduced from %d%% to %d%% due to stagnant results <FONT size=\"1\">(via change #%d, via reduction #%d, %d stable via metrics, %d stable trace metrics)</FONT>.</FONT>",
+                routability.viaCongSensitivityMetrics[old_via_cong_sensitivity_index].dynamicParameter,
+                routability.viaCongSensitivityMetrics[mapInfo.currentViaCongSensIndex].dynamicParameter,
+                routability.num_viaCongSensitivity_changes, routability.num_viaCongSensitivity_reductions,
+                routability.num_viaCongSensitivity_stableRoutingMetrics, routability.num_traceCongSensitivity_stableRoutingMetrics);
+        // printf("\nDEBUG: In function main, HTML_message = '%s'\n\n", HTML_message);
+        add_HTML_message(HTML_message, mapInfo.current_iteration, VIA_CONG_SENS_DOWN, &routability);
+
       }  // End of if/else-block for changeViaCongSensitivity == DECREASE
     } // End of if-statement for changeViaCongSensitivity == TRUE
-
-
-
-    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
     //
@@ -971,6 +857,18 @@ int main(int argc, char *argv[])  {
                 routability.traceCongSensitivityMetrics[mapInfo.currentTraceCongSensIndex].dynamicParameter,
                 routability.num_traceCongSensitivity_changes, routability.num_traceCongSensitivity_stableRoutingMetrics,
                 routability.num_viaCongSensitivity_stableRoutingMetrics);
+
+        // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+        // eventually printed out to the HTML file:
+        char HTML_message[500];
+        sprintf(HTML_message, "<FONT color=\"#00CC00\">Trace Congestion Sensitivity increased from %d%% to %d%% due to stagnant results <FONT size=\"1\">(trace change #%d, %d stable trace metrics, %d stable via metrics)</FONT>.</FONT>",
+                routability.traceCongSensitivityMetrics[old_trace_cong_sensitivity_index].dynamicParameter,
+                routability.traceCongSensitivityMetrics[mapInfo.currentTraceCongSensIndex].dynamicParameter,
+                routability.num_traceCongSensitivity_changes, routability.num_traceCongSensitivity_stableRoutingMetrics,
+                routability.num_viaCongSensitivity_stableRoutingMetrics);
+        // printf("\nDEBUG: In function main, HTML_message = '%s'\n\n", HTML_message);
+        add_HTML_message(HTML_message, mapInfo.current_iteration, TR_CONG_SENS_UP, &routability);
+
       }  // End of if-block for changeTraceCongSensitivity == INCREASE
       else if (routability.changeTraceCongSensitivity[mapInfo.current_iteration] == DECREASE) {
         printf("INFO: Due to stagnant routability metrics, trace congestion sensitivity reduced from %d%% to %d%% (trace change #%d, trace reduction #%d, %d stable trace metrics, %d stable via metrics).\n",
@@ -983,17 +881,20 @@ int main(int argc, char *argv[])  {
                 routability.traceCongSensitivityMetrics[mapInfo.currentTraceCongSensIndex].dynamicParameter,
                 routability.num_traceCongSensitivity_changes, routability.num_traceCongSensitivity_reductions,
                 routability.num_traceCongSensitivity_stableRoutingMetrics, routability.num_viaCongSensitivity_stableRoutingMetrics);
+
+        // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+        // eventually printed out to the HTML file:
+        char HTML_message[500];
+        sprintf(HTML_message, "<FONT color=\"#00CC00\">Trace Congestion Sensitivity reduced from %d%% to %d%% due to stagnant results <FONT size=\"1\">(trace change #%d, trace reduction #%d, %d stable trace metrics, %d stable via metrics)</FONT>.</FONT>",
+                routability.traceCongSensitivityMetrics[old_trace_cong_sensitivity_index].dynamicParameter,
+                routability.traceCongSensitivityMetrics[mapInfo.currentTraceCongSensIndex].dynamicParameter,
+                routability.num_traceCongSensitivity_changes, routability.num_traceCongSensitivity_reductions,
+                routability.num_traceCongSensitivity_stableRoutingMetrics, routability.num_viaCongSensitivity_stableRoutingMetrics);
+        // printf("\nDEBUG: In function main, HTML_message = '%s'\n\n", HTML_message);
+        add_HTML_message(HTML_message, mapInfo.current_iteration, TR_CONG_SENS_DOWN, &routability);
+
       }  // End of if/else-block for changeTraceCongSensitivity == DECREASE
     } // End of if-statement for changeTraceCongSensitivity == TRUE
-
-
-
-
-    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-
-
-
 
 
     //
@@ -1001,6 +902,14 @@ int main(int argc, char *argv[])  {
     // do so. Add comments to the log file and HTML output file reflecting this change:
     //
     if (routability.enablePseudoTraceCongestion[mapInfo.current_iteration])  {
+
+      // 'HTML_full_message' is a text string to be added to routability->HTML_message_strings and eventually
+      // printed out to the HTML file for adding TRACE pseudo-congestion. 'HTML_partial_message' is a text
+      // string that is sequentially concatenated to 'HTML_full_message' to create the latter.
+      char HTML_full_message[1024];             // Allocate memory for HTML_full_message text string.
+      strncpy(HTML_full_message, "\0", 1);      // Initialize HTML_full_message text string.
+      char HTML_partial_message[512];           // Allocate memory for HTML_partial_message text string.
+      strncpy(HTML_partial_message, "\0", 1);   // Initialize HTML_partial_message text string.
 
       // Variables 'num_pseudoPathsLayers_toggled_on' and 'num_pseudoPathsLayers_continued_on'
       // keep track of how many combinations of pseudo-paths and routing layers were toggled on
@@ -1110,6 +1019,12 @@ int main(int argc, char *argv[])  {
                num_pseudoPathsLayers_toggled_on);
         fprintf(fp_TOC, "  <UL><LI><FONT color=\"#00CC00\">Due to stagnant routing metrics, TRACE pseudo-congestion will be deposited on %d combinations of pseudo-paths and routing-layers with DRCs to repel traces near pseudo-vias.</FONT></UL>\n",
                num_pseudoPathsLayers_toggled_on);
+
+        // Concatenate additional information to the HTML message that will be printed to the HTML page:
+        sprintf(HTML_partial_message, "<FONT color=\"#00CC00\">Due to stagnant routing metrics, TRACE pseudo-congestion will be deposited on %d combinations<BR>of pseudo-paths and routing-layers with DRCs to repel traces near pseudo-vias.</FONT>",
+               num_pseudoPathsLayers_toggled_on);
+        strcat(HTML_full_message, HTML_partial_message);
+
       }  // End of if-block for multiple combinations
       else if (num_pseudoPathsLayers_toggled_on == 1)  {
         // Issue notifications to user using singular nouns:
@@ -1117,6 +1032,12 @@ int main(int argc, char *argv[])  {
                num_pseudoPathsLayers_toggled_on);
         fprintf(fp_TOC, "  <UL><LI><FONT color=\"#00CC00\">Due to stagnant routing metrics, TRACE pseudo-congestion will be deposited on %d combination of pseudo-path and routing-layer with DRCs to repel traces near a pseudo-via.</FONT></UL>\n",
                num_pseudoPathsLayers_toggled_on);
+
+        // Concatenate additional information to the HTML message that will be printed to the HTML page:
+        sprintf(HTML_partial_message, "<FONT color=\"#00CC00\">Due to stagnant routing metrics, TRACE pseudo-congestion will be deposited on %d combination<BR>of pseudo-path and routing-layer with DRCs to repel traces near a pseudo-via.</FONT>",
+               num_pseudoPathsLayers_toggled_on);
+        strcat(HTML_full_message, HTML_partial_message);
+
       }  // End of if-block for a single combination
 
       // Notify the user that TRACE pseudo-congestion will **CONTINUE** being added for selected
@@ -1126,12 +1047,24 @@ int main(int argc, char *argv[])  {
                num_pseudoPathsLayers_continued_on);
         fprintf(fp_TOC, "  <UL><LI>Due to stagnant routing metrics, TRACE pseudo-congestion will again be deposited on %d combinations of pseudo-paths and routing-layers with DRCs to repel traces near pseudo-vias.</UL>\n",
                 num_pseudoPathsLayers_continued_on);
+
+        // Concatenate additional information to the HTML message that will be printed to the HTML page:
+        sprintf(HTML_partial_message, "Due to stagnant routing metrics, TRACE pseudo-congestion will again be deposited on %d combinations of pseudo-paths and routing-layers with DRCs to repel traces near pseudo-vias.",
+                num_pseudoPathsLayers_continued_on);
+        strcat(HTML_full_message, HTML_partial_message);
+
       }  // End of if-block for multiple combinations
       else if (num_pseudoPathsLayers_continued_on == 1)  {
         printf("INFO: Due to stagnant routing metrics, TRACE pseudo-congestion will again be deposited on %d combination of pseudo-path and routing-layer with DRCs to repel traces near a pseudo-via.\n",
                num_pseudoPathsLayers_continued_on);
         fprintf(fp_TOC, "  <UL><LI>Due to stagnant routing metrics, TRACE pseudo-congestion will again be deposited on %d combination of pseudo-path and routing-layer with DRCs to repel traces near a pseudo-via.</UL>\n",
                 num_pseudoPathsLayers_continued_on);
+
+        // Concatenate additional information to the HTML message that will be printed to the HTML page:
+        sprintf(HTML_partial_message, "Due to stagnant routing metrics, TRACE pseudo-congestion will again be deposited on %d combination of pseudo-path and routing-layer with DRCs to repel traces near a pseudo-via.",
+                num_pseudoPathsLayers_continued_on);
+        strcat(HTML_full_message, HTML_partial_message);
+
       }  // End of if-block for a single combination
 
 
@@ -1140,20 +1073,40 @@ int main(int argc, char *argv[])  {
         if (num_layers_with_pseudoCongestion > 1)  {
           printf("INFO: These changes will occur on routing layers:");
           fprintf(fp_TOC, "  <UL><LI>These changes will occur on routing layers:");
+
+          // Concatenate additional information to the HTML message that will be printed to the HTML page:
+          strcat(HTML_full_message, "<UL><LI>These changes will occur on routing layers:");
+
         }
         else if (num_layers_with_pseudoCongestion == 1)  {
           printf("INFO: These changes will occur on routing layer");
           fprintf(fp_TOC, "  <UL><LI>These changes will occur on routing layer");
+
+          // Concatenate additional information to the HTML message that will be printed to the HTML page:
+          strcat(HTML_full_message, "<UL><LI>These changes will occur on routing layer");
+
         }
         for (int layer = 0; layer < mapInfo.numLayers; layer++)  {
           if (pseudoCongestion_by_layer[layer] == TRUE)  {
             printf(" %s", user_inputs.routingLayerNames[layer]);
             fprintf(fp_TOC, "&nbsp;%s", user_inputs.routingLayerNames[layer]);
+
+            // Concatenate the layer names to the HTML message that will be printed to the HTML page:
+            sprintf(HTML_partial_message, "&nbsp;%s", user_inputs.routingLayerNames[layer]);
+            strcat(HTML_full_message, HTML_partial_message);
+
           }  // End of if-block
         }  // End of for-loop for index 'layer'
         printf(".\n");
         fprintf(fp_TOC, ".</UL>\n");
+        strcat(HTML_full_message, "</LI></UL>\n");
       }  // End of if-block for (num_layers_with_pseudoCongestion > 0)
+
+
+      // Send the temporary string variable 'HTML_full_message' routability->HTML_message_strings and
+      // eventually printed out to the HTML file:
+      // printf("\nDEBUG: In function main, HTML_full_message = '%s'\n\n", HTML_full_message);
+      add_HTML_message(HTML_full_message, mapInfo.current_iteration, ADD_PSEUDO_CONG, &routability);
 
       //
       // Add congestion near pseudo-vias intended to repel pseudo-TRACE routing on routing layers that
@@ -1163,12 +1116,60 @@ int main(int argc, char *argv[])  {
 
     }  // End of if-block for toggleTraceCongestionNearPseudoVias == TRUE
 
-  }  // End of while-loop for (current_iteration <= maxIterations) && (! solutionFound)
+
+    // Calculate cumulative (wall-clock) time to complete this iteration:
+    routability.iteration_cumulative_time[mapInfo.current_iteration] = (int) (time(NULL) - start_autorouter);
+    printf("INFO: Iteration %d took %'d seconds.\n", mapInfo.current_iteration,
+           routability.iteration_cumulative_time[mapInfo.current_iteration] - routability.iteration_cumulative_time[mapInfo.current_iteration - 1]);
 
 
-  // Calculate total elapsed (wall-clock) time for entire run:
-  end_autorouter = time(NULL);
-  routability.total_elapsed_time = (int) (end_autorouter - start_autorouter);
+    //
+    // Replace the 'routingStatus.html' file with a new file by the same name that contains the results from the current iteration.
+    // While the new file is being created, rename the old 'routingStatus.html' file to a temporary file before deleting it.
+    //
+    rename("routingStatus.html", "routingStatus_old.html");
+
+    //
+    // DEBUG code follows:
+    //
+    // printf("\nDEBUG: -----------------------------------------------------------\n");
+    // if (routability.num_HTML_messages == 0)  {
+    //   printf("DEBUG: At iteration %d, there are no HTML messages in function main() before calling create_routingStatus_HTML_file:\n",
+    //          mapInfo.current_iteration);
+    // }
+    // else  {
+    //   printf("DEBUG: At iteration %d, printing out %d HTML messages from function main() before calling create_routingStatus_HTML_file:\n",
+    //          mapInfo.current_iteration, routability.num_HTML_messages);
+    //   for (int msg_num = 0; msg_num < routability.num_HTML_messages; msg_num++)  {
+    //     printf("DEBUG:    msg #%d for iteration %d has length %lu: '%s'\n", msg_num, routability.HTML_message_iter_nums[msg_num],
+    //            strlen(routability.HTML_message_strings[msg_num]), routability.HTML_message_strings[msg_num]);
+    //   }
+    // }
+    // printf("DEBUG: -----------------------------------------------------------\n");
+    //
+    // End of DEBUG code
+    //
+
+
+    if (create_routingStatus_HTML_file(input_filename, "routingStatus.html", &mapInfo, &routability, &user_inputs, shapeTypeNames, adequateSolutionFound, DRC_free_threshold, num_threads) == 0)  {
+      if (remove("routingStatus_old.html") != 0)  {
+        printf("\n\nERROR: The file 'routingStatus_old.html' was not successfully deleted in function main(). This behavior is not expected.\n");
+        printf(    "       Please inform the software developer of this fatal error message.\n\n");
+        exit(1);
+      }
+    }
+    else  {
+      printf("\n\nERROR: The file 'routingStatus.html' was not successfully created in function main(). This behavior is not expected.\n");
+      printf(    "       Please inform the software developer of this fatal error message.\n\n");
+      exit(1);
+    }
+
+
+  }  // End of main while-loop for (current_iteration <= maxIterations) && (! adequateSolutionFound)
+  //
+  // The above line is the end of the main loop for the iterative rip-up and re-route algorithm.
+  //
+
 
   //
   // Print final status to log file and HTML file:
@@ -1179,36 +1180,36 @@ int main(int argc, char *argv[])  {
     fprintf(fp_TOC, "<FONT color=\"red\">ERROR: Conflicts were detected between <A href=\"designRules.html\">design-rule zones on adjacent layers</A>. \n");
     fprintf(fp_TOC, "Correct these errors and re-start the program.</FONT><BR>\n<BR>\n");
   }
-  else if ((mapInfo.current_iteration >= user_inputs.maxIterations) && (! solutionFound))  {
+  else if ((mapInfo.current_iteration >= user_inputs.maxIterations) && (! adequateSolutionFound))  {
     printf("INFO: %d DRC-free iterations were found (%d required).\n",
            routability.cumulative_DRCfree_iterations[mapInfo.current_iteration], DRC_free_threshold);
     printf("\n\nERROR: No solution was found after reaching the maximum number of iterations (%d) after %'d seconds, exploring %'lu cells.\n",
-            user_inputs.maxIterations, routability.total_elapsed_time, routability.total_explored_cells);
-    printf(    "       The iteration with the lowest-cost routing results is iteration %d.\n\n", routability.best_iteration);
+            user_inputs.maxIterations, routability.iteration_cumulative_time[mapInfo.current_iteration], routability.total_explored_cells);
+    printf(    "       The iteration with the lowest-cost routing results is iteration %d.\n\n", routability.lowest_cost_iteration);
     fprintf(fp_TOC, "<FONT color=\"red\"><B>ERROR:</B></FONT> No solution was found after reaching the maximum number of iterations (%d) in ", user_inputs.maxIterations);
-    if (routability.total_elapsed_time > 1)
-      fprintf(fp_TOC, "%'d seconds, exploring %'lu cells.\n", routability.total_elapsed_time, routability.total_explored_cells);
-    else if (routability.total_elapsed_time == 1)
-      fprintf(fp_TOC, "~%'d second, exploring %'lu cells.\n", routability.total_elapsed_time, routability.total_explored_cells);
+    if (routability.iteration_cumulative_time[mapInfo.current_iteration] > 1)
+      fprintf(fp_TOC, "%'d seconds, exploring %'lu cells.\n", routability.iteration_cumulative_time[mapInfo.current_iteration], routability.total_explored_cells);
+    else if (routability.iteration_cumulative_time[mapInfo.current_iteration] == 1)
+      fprintf(fp_TOC, "~%'d second, exploring %'lu cells.\n", routability.iteration_cumulative_time[mapInfo.current_iteration], routability.total_explored_cells);
     else
       fprintf(fp_TOC, "<1 second, exploring %'lu cells.\n", routability.total_explored_cells);
     fprintf(fp_TOC, "The lowest-cost routing results are in <A href=\"iteration%04d.html\">iteration %d</A>. %d DRC-free iterations were found (%d required).<BR>\n<BR>",
-            routability.best_iteration, routability.best_iteration, routability.cumulative_DRCfree_iterations[mapInfo.current_iteration], DRC_free_threshold);
+            routability.lowest_cost_iteration, routability.lowest_cost_iteration, routability.cumulative_DRCfree_iterations[mapInfo.current_iteration], DRC_free_threshold);
   }
   else {
     printf("\n\nINFO: Solution was found in %'d seconds with %'lu cells explored. The lowest-cost routing results are in iteration %d.\n",
-           routability.total_elapsed_time, routability.total_explored_cells, routability.best_iteration);
+           routability.iteration_cumulative_time[mapInfo.current_iteration], routability.total_explored_cells, routability.lowest_cost_iteration);
     printf(    "INFO: %d DRC-free iterations were found (%d required).\n",
            routability.cumulative_DRCfree_iterations[mapInfo.current_iteration], DRC_free_threshold);
     fprintf(fp_TOC, "<FONT color=\"black\"><B>Program completed successfully in ");
-    if (routability.total_elapsed_time > 1)
-      fprintf(fp_TOC, "%'d seconds after exploring %'lu cells.\n", routability.total_elapsed_time, routability.total_explored_cells);
-    else if (routability.total_elapsed_time == 1)
-      fprintf(fp_TOC, "~%'d second after exploring %'lu cells.\n", routability.total_elapsed_time, routability.total_explored_cells);
+    if (routability.iteration_cumulative_time[mapInfo.current_iteration] > 1)
+      fprintf(fp_TOC, "%'d seconds after exploring %'lu cells.\n", routability.iteration_cumulative_time[mapInfo.current_iteration], routability.total_explored_cells);
+    else if (routability.iteration_cumulative_time[mapInfo.current_iteration] == 1)
+      fprintf(fp_TOC, "~%'d second after exploring %'lu cells.\n", routability.iteration_cumulative_time[mapInfo.current_iteration], routability.total_explored_cells);
     else
       fprintf(fp_TOC, "<1 second after exploring %'lu cells.\n", routability.total_explored_cells);
     fprintf(fp_TOC,"The lowest-cost routing results are in <A href=\"iteration%04d.html\">iteration %d</A>. %d DRC-free iterations were found (%d required).</B></FONT><BR>\n<BR>",
-            routability.best_iteration, routability.best_iteration, routability.cumulative_DRCfree_iterations[mapInfo.current_iteration], DRC_free_threshold);
+            routability.lowest_cost_iteration, routability.lowest_cost_iteration, routability.cumulative_DRCfree_iterations[mapInfo.current_iteration], DRC_free_threshold);
   }
   fprintf(fp_TOC, "</BODY>\n</HTML>\n");
   fclose(fp_TOC); // Close the output HTML file

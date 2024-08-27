@@ -21,13 +21,14 @@ FILE * start_HTML_table_of_contents(const char *input_filename, const InputValue
 
 
 //-----------------------------------------------------------------------------
-// Name: makePngPathThumbnail
+// Name: makeCompositePngPathMap
 // Desc: Create a single PNG file that overlays all the routing and via layers
-//       into a single image with maximum height or width of 'maxDimension'
-//       pixels. Images will retain their original aspect ratio.
+//       into a single image with the same height and width as the original
+//       PNG images. Images are skipped if their entry is FALSE in the array
+//       user_inputs->include_layer_in_composite_images.
 //-----------------------------------------------------------------------------
-int makePngPathThumbnail(int maxDimension, char *thumbnailFileName, const MapInfo_t *mapInfo,
-                         const InputValues_t *user_inputs, CellInfo_t ***cellInfo, char *title);
+int makeCompositePngPathMap(char *compositeFileName, const MapInfo_t *mapInfo,
+                            const InputValues_t *user_inputs, CellInfo_t ***cellInfo, char *title);
 
 
 //-----------------------------------------------------------------------------
@@ -44,7 +45,6 @@ int makePngPathThumbnail(int maxDimension, char *thumbnailFileName, const MapInf
 int makeHtmlIterationSummary(int iteration, const MapInfo_t *mapInfo,
                    CellInfo_t ***cellInfo,  const InputValues_t *user_inputs,
                    const RoutingMetrics_t *routability, char *title,
-                   const DRC_details_t DRC_details[maxRecordedDRCs],
                    char *shapeTypeNames[NUM_SHAPE_TYPES]);
 
 
@@ -56,7 +56,6 @@ int makeHtmlIterationSummary(int iteration, const MapInfo_t *mapInfo,
 //-----------------------------------------------------------------------------
 void updateHtmlTableOfContents(FILE *fp_TOC, MapInfo_t *mapInfo, CellInfo_t ***cellInfo,
                                InputValues_t *user_inputs, RoutingMetrics_t *routability,
-                               DRC_details_t DRC_details[maxRecordedDRCs],
                                char *shapeTypeNames[NUM_SHAPE_TYPES], int cost_multipliers_used );
 
 
@@ -104,3 +103,14 @@ int makeCostZonePngMaps(CellInfo_t ***cellInfo, MapInfo_t *mapInfo, InputValues_
 //-----------------------------------------------------------------------------
 void makeCostMapReport(CellInfo_t ***cellInfo, InputValues_t *user_inputs, MapInfo_t *mapInfo);
 
+
+//-----------------------------------------------------------------------------
+// Name: create_routingStatus_HTML_file
+// Desc: Create HTML report that summarizes the entire Acorn run. If the function
+//       is not able to create the output file successfully, it returns a non-zero
+//       return-code.
+//-----------------------------------------------------------------------------
+int create_routingStatus_HTML_file(const char *input_text_filename, const char *output_HTML_filename,
+                                   const MapInfo_t *mapInfo, const RoutingMetrics_t *routability,
+                                   InputValues_t *user_inputs, char *shapeTypeNames[NUM_SHAPE_TYPES],
+                                   int adequateSolutionFound, int DRC_free_threshold, int num_threads);

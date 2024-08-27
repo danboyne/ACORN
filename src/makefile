@@ -70,12 +70,13 @@ INCLUDES = -I/usr/include
 LFLAGS = -L/usr/lib64
 
 # define any libraries to link into executable:
+#   lgd is the open-source code library for the dynamic creation of images by programmers.
 #   lpng is the PNG library
 #   lgomp is the GNU Open MP library
 #   lm is the math library
 #   lgsl is the GNU Scientific Library
 #   option, something like (this will link in libmylib.so and libm.so:
-LIBS = -lpng -lgomp -lm
+LIBS = -lgd -lpng -lgomp -lm
 
 # The main rule
 all: $(TARGET)

@@ -143,11 +143,6 @@ summary_file.write("<HTML>\n<HEAD>\n  <TITLE>Regression Results</TITLE></HEAD>\n
 # summary_file.write("  <meta http-equiv=\"refresh\" content=\"15\"></HEAD>\n")
 summary_file.write("<BODY><H1>Autorouter Regression Test Results</H1>\n\n")
 summary_file.write("<BODY><H3>" + str(test_count) + " tests using " + str(max_threads) + " thread(s):</H2>\n\n")
-summary_file.write("<!-- This CSS is needed to overlay multiple images: -->\n")
-summary_file.write("<STYLE type=\"text/css\">\n")
-summary_file.write("  .container_0 { float: left; position: relative; }\n")
-summary_file.write("  .container_1 { position: absolute; top: 0; right: 0; }\n")
-summary_file.write("</STYLE>\n\n")
 summary_file.write("<TABLE border=\"1\" cellpadding=\"1\">\n")
 summary_file.write("  <TR>\n")
 summary_file.write("    <TD><B><U>Test Name</U></B><FONT size=\"1\"><UL><LI>Run time<LI>Explored Cells</UL></FONT></TD>\n")
@@ -572,53 +567,34 @@ for test_name in (test_names):
   # print "DEBUG: final DRC count = " + str(final_DRC_count)
 
   # 
-  # From the output directory for this test, extract the names of the .png
-  # graphics files for (a) the initial iteration, (b) the final iteration,
-  # and (c) the best iteration:
+  # From the output directory for this test, extract the names of the composite .png
+  # graphics files for (a) the initial iteration, (b) the final iteration, and
+  # (c) the best iteration:
   #
-  initial_PNG_files = []  # Array of file name strings
-  final_PNG_files = []    # Array of file name strings
-  best_PNG_files = []     # Array of file name strings
-  for filename in os.listdir(working_dir_name):
-    # print "DEBUG: Checking file '" + str(filename) + "'..."
-    # Extract initial PNG files from directory listing:
-    try:
-      initial_layer = (re.search(r'map_iter0001.*\.png', filename)).group(0)
-      initial_PNG_files.append(filename)
-      # print "DEBUG:   Found PNG file for initial iteration: '" + filename + "'."
-    except:
-      pass  # Do nothing if file name does not match regex
-
-    # Extract final PNG files from directory listing:
-    try:
-      final_layer = (re.search(r"map_iter" + str('{:04d}'.format(num_iterations)) 
-                                + ".*\.png", filename)).group(0)
-      final_PNG_files.append(filename)
-      # print "DEBUG:   Found PNG file for final iteration: '" + filename + "'."
-    except:
-      pass  # Do nothing if file name does not match regex
-
-    # Extract best PNG files from directory listing:
-    try:
-      best_layer = (re.search(r"map_iter" + str('{:04d}'.format(best_iteration)) 
-                                + ".*\.png", filename)).group(0)
-      best_PNG_files.append(filename)
-      # print "DEBUG:   Found PNG file for best iteration: '" + filename + "'."
-    except:
-      # print "DEBUG:   Found no PNG file for best iteration"
-      pass  # Do nothing if file name does not match regex
+  # File name of composite PNG file for initial iteration:
+  initial_PNG_file = "map_composite_iter" + str('{:04d}'.format(1)) + ".png"
+  print("DEBUG:   initial_PNG_file PNG file: '" + initial_PNG_file + "'.")
+  
+  # File name of composite PNG file for final iteration:
+  final_PNG_file = "map_composite_iter" + str('{:04d}'.format(num_iterations)) + ".png"
+  print("DEBUG:   final_PNG_file PNG file: '" + final_PNG_file + "'.")
+  
+  # File name of composite PNG file for best iteration:
+  best_PNG_file = "map_composite_iter" + str('{:04d}'.format(best_iteration)) + ".png"
+  print("DEBUG:   best_PNG_file PNG file: '" + best_PNG_file + "'.")
+  
 
   #
   # Write a summary of the regression test results to the HTML summary file:
   #
   summary_file.write("  <TR>\n")
   summary_file.write("    <TD><FONT size=\"1\">Test " + str(test_number) + "/" + str(test_count) + ":</FONT><BR><BR><FONT size=\"2\"><A href=\"" + str(test_name) 
-                            + "/routingProgress.html\">" + test_name + "</A></FONT>\n")
+                            + "/routingStatus.html\">" + test_name + "</A></FONT>\n")
   summary_file.write("        <BR><FONT size=\"1\"><UL><LI>" + str(elapsed_time) + " seconds<BR><BR>\n")
   summary_file.write("        <LI>" + str(explored_cells) + " explored cells</UL></FONT>")
   if (test_number < test_count):
     summary_file.write("<BR>\n")
-    summary_file.write("        <FONT size=\"1\" color=\"grey\"><A href=\"" + str(test_names[test_number]) + "/routingProgress.html\">Next test</A></FONT></TD>\n")
+    summary_file.write("        <FONT size=\"1\" color=\"grey\"><A href=\"" + str(test_names[test_number]) + "/routingStatus.html\">Next test</A></FONT></TD>\n")
   else:
     summary_file.write("</TD>\n")
   summary_file.write("    <TD align=\"center\"><FONT size=\"2\">" + str(width_in_mm) + " mm<BR><BR>" 
@@ -636,37 +612,41 @@ for test_name in (test_names):
 
   # Print metrics from iteration #1:
   if (cost_multipliers_used):
-    summary_file.write("    <TD align=\"center\"><FONT size=\"2\">" + str(total_initial_length) 
+    summary_file.write("    <TD align=\"center\"><FONT size=\"1\"><I><U>Initial</U></I><BR></FONT><FONT size=\"2\">" + str(total_initial_length) 
                                + " mm<BR><FONT size=\"1\">(Disregarding<BR>cost-<BR>zones)</FONT><BR><BR>" 
                                + str(initial_via_count) + " vias<BR><BR>" + str(initial_DRC_count) 
                                + " X's<BR></FONT></TD>\n")
   else:
-    summary_file.write("    <TD align=\"center\"><FONT size=\"2\">" + str(total_initial_length) + " mm<BR><BR>" 
-                               + str(initial_via_count) + " vias<BR><BR>" + str(initial_DRC_count) + " X's</FONT></TD>\n")            
+    summary_file.write("    <TD align=\"center\"><FONT size=\"1\"><I><U>Initial</U></I><BR></FONT><FONT size=\"2\">" + str(total_initial_length) 
+                               + " mm<BR><BR>" + str(initial_via_count) + " vias<BR><BR>" + str(initial_DRC_count) + " X's</FONT></TD>\n")            
   
   # Print metrics from the final iteration:
-  summary_file.write("    <TD align=\"center\"><FONT size=\"2\">" + str(total_final_length) + " mm<BR><BR>" 
-                             + str(final_via_count) + " vias<BR><BR>" + str(final_DRC_count) + " X's</FONT></TD>\n")
+  summary_file.write("    <TD align=\"center\"><FONT size=\"1\"><I><U>Final</U></I><BR></FONT><FONT size=\"2\">" + str(total_final_length)  
+                               + " mm<BR><BR>" + str(final_via_count) + " vias<BR><BR>" + str(final_DRC_count) + " X's</FONT></TD>\n")
   
   # Print metrics from the best iteration:
-  summary_file.write("    <TD align=\"center\"><FONT size=\"2\">" + str(total_best_length) + " mm<BR><BR>" 
-                             + str(best_via_count) + " vias<BR><BR>" + str(best_DRC_count) + " X's</FONT></TD>\n")
+  summary_file.write("    <TD align=\"center\"><FONT size=\"1\"><I><U>Best</U></I><BR></FONT><FONT size=\"2\">" + str(total_best_length) 
+                               + " mm<BR><BR>" + str(best_via_count) + " vias<BR><BR>" + str(best_DRC_count) + " X's</FONT></TD>\n")
 
-  # If final iteration and best iteration both had DRCs, then highight the final iteration count with red background color:
+  # If final iteration and best iteration both had DRCs, then highlight the final iteration count with red background color:
   if ((final_DRC_count != '0') and (best_DRC_count != '0')):  
-    summary_file.write("    <TD bgcolor=\"#FF0000\" align=\"center\">" + str(num_iterations) + "</TD>\n")
+    summary_file.write("    <TD bgcolor=\"#FF0000\" align=\"center\"><FONT size=\"1\"><I>Final<BR><U>Iter</U></I><BR></FONT>"
+                        + str(num_iterations) + "</TD>\n")
   else:
     # If final iteration had DRCs, but best iteration had none, then highight the final iteration count with yellow background color:
     if (final_DRC_count != '0'):  
-      summary_file.write("    <TD bgcolor=\"#FFFF00\" align=\"center\">" + str(num_iterations) + "</TD>\n")
+      summary_file.write("    <TD bgcolor=\"#FFFF00\" align=\"center\"><FONT size=\"1\"><I>Final><BR><U>Iter</U></I><BR></FONT>"
+                          + str(num_iterations) + "</TD>\n")
     else:      
       # If final iteration had no DRCs, then add no highlighting to the final iteration count:
-      summary_file.write("    <TD align=\"center\">" + str(num_iterations) + "</TD>\n")
+      summary_file.write("    <TD align=\"center\"><FONT size=\"1\"><I>Final<BR><U>Iter</U></I><BR></FONT>"
+                          + str(num_iterations) + "</TD>\n")
     
   if (best_DRC_count != '0'):  # If best iteration had DRCs, then highight with red background color:
-    summary_file.write("    <TD bgcolor=\"#FF0000\" align=\"center\">" + str(best_iteration) + "</TD>\n")
+    summary_file.write("    <TD bgcolor=\"#FF0000\" align=\"center\"><FONT size=\"1\"><I>Best<BR><U>Iter</U></I><BR></FONT>"
+                        + str(best_iteration) + "</TD>\n")
   else:
-    summary_file.write("    <TD align=\"center\">" + str(best_iteration) + "</TD>\n")
+    summary_file.write("    <TD align=\"center\"><FONT size=\"1\"><I>Best<BR><U>Iter</U></I><BR></FONT>" + str(best_iteration) + "</TD>\n")
 
   # Calculate a scaling factor for the PNG image files so their maximum dimension is 200 pixels:
   max_pixels = float(200)
@@ -684,66 +664,38 @@ for test_name in (test_names):
   # print "DEBUG: thumbnail_Y is", thumbnail_Y
 
   #
-  # For the initial map files, write 1 image using container_0, and then overlay the remaining
-  # image files using container_1:
+  # Display the composite PNG image from the initial iteration:
   #
   try:
-    summary_file.write("    <TD><A href=\"" + test_name + "/iteration0001.html\"><DIV class=\"container_0\">\n")
-    summary_file.write("      <IMG border=\"1\" src=\"" + test_name + "/" + initial_PNG_files[len(initial_PNG_files)-1] + "\" \n")
-    summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\">\n")
-    for i in range(len(initial_PNG_files)-2, -1, -1):
-      summary_file.write("      <IMG class=\"container_1\" border=\"1\" src=\"" + test_name + "/" + initial_PNG_files[i] + "\" \n")
-      summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\">\n")
-    summary_file.write("    </DIV></A></TD>\n")
+    summary_file.write("    <TD><A href=\"" + test_name + "/iteration0001.html\">\n")
+    summary_file.write("      <FONT size=\"1\"><I><U>Initial</U></I><BR></FONT>\n")
+    summary_file.write("      <IMG border=\"1\" src=\"" + test_name + "/" + initial_PNG_file + "\" \n")
+    summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\"></A></TD>\n")
   except:
-    summary_file.write("    <TD><DIV class=\"container_0\">\n")
-    summary_file.write("      \n")
-    summary_file.write("        \n")
-    summary_file.write("    </DIV></TD>\n")      
+    summary_file.write("    <TD> </TD>\n")
 
   #
-  # Likewise, for the final map files, write 1 image using container_0, and then overlay 
-  # the remaining image files using container_1:
+  # Likewise, display the composite PNG image from the final iteration: 
   #
-  # print "DEBUG: test_name is", test_name
-  # print "DEBUG: num_iterations is", num_iterations
   try:
     summary_file.write("    <TD><A href=\"" + test_name + "/iteration" + str('{:04d}'.format(num_iterations)) + ".html\">\n")
-    summary_file.write("      <DIV class=\"container_0\">\n")
-    summary_file.write("      <IMG border=\"1\" src=\"" + test_name + "/" + final_PNG_files[len(final_PNG_files)-1] + "\" \n")
-    summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\">\n")
-    for i in range(len(final_PNG_files)-2, -1, -1):
-      summary_file.write("      <IMG class=\"container_1\" border=\"1\" src=\"" + test_name + "/" + final_PNG_files[i] + "\" \n")
-      summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\">\n")
-    summary_file.write("    </DIV></A></TD>\n")
+    summary_file.write("      <FONT size=\"1\"><I><U>Final</U></I><BR></FONT>\n")
+    summary_file.write("      <IMG border=\"1\" src=\"" + test_name + "/" + final_PNG_file + "\" \n")
+    summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\"></A></TD>\n")
   except:
-    summary_file.write("    <TD>\n")
-    summary_file.write("      <DIV class=\"container_0\">\n")
-    summary_file.write("      \n")
-    summary_file.write("        \n")
-    summary_file.write("    </DIV></TD>\n")      
-
+    summary_file.write("    <TD> </TD>\n")
+    
   #
-  # Likewise, for the best map files, write 1 image using container_0, and then overlay 
-  # the remaining image files using container_1:
+  # Finally, display the composite PNG image from the best iteration: 
   #
   try:
     summary_file.write("    <TD><A href=\"" + test_name + "/iteration" + str('{:04d}'.format(best_iteration)) + ".html\">\n")
-    summary_file.write("      <DIV class=\"container_0\">\n")
-    summary_file.write("      <IMG border=\"1\" src=\"" + test_name + "/" + best_PNG_files[len(best_PNG_files)-1] + "\" \n")
-    summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\">\n")
-    for i in range(len(best_PNG_files)-2, -1, -1):
-      summary_file.write("      <IMG class=\"container_1\" border=\"1\" src=\"" + test_name + "/" + best_PNG_files[i] + "\" \n")
-      summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\">\n")
-    summary_file.write("    </DIV></A></TD>\n")
+    summary_file.write("      <FONT size=\"1\"><I><U>Best</U></I><BR></FONT>\n")
+    summary_file.write("      <IMG border=\"1\" src=\"" + test_name + "/" + best_PNG_file + "\" \n")
+    summary_file.write("        width=\"" + str(thumbnail_X) + "\" height=\"" + str(thumbnail_Y) + "\"></A></TD>\n")
   except:
-    summary_file.write("    <TD>\n")
-    summary_file.write("      <DIV class=\"container_0\">\n")
-    summary_file.write("      \n")
-    summary_file.write("        \n")
-    summary_file.write("    </DIV></TD>\n")      
+    summary_file.write("    <TD> </TD>\n")
 
-  
   
 
   summary_file.write("    <TD><FONT size=\"1\">vertCostMicrons: " + str(vertCostMicrons) 

@@ -2992,10 +2992,6 @@ void optimizeDiffPairConnections(Coordinate_t *pathCoords[], int pathLengths[], 
           MapInfo_t subMapInfo;
           populate_subMapInfo(&subMapInfo, &(shoulderConnections[i].connection[j]), mapInfo, routability);
 
-          // Define 'DRC_details' array that contains details of DRC violations for the
-          // first N violations for each of the 2 wiring configs, with N = maxRecordedDRCs:
-          DRC_details_t DRC_details[2][maxRecordedDRCs];
-
           // Create variables that will hold the coordinates and lengths of paths in the sub-map for
           // each of the two wiring configurations:
           int *subMapPathLengths[2];
@@ -3717,7 +3713,7 @@ void optimizeDiffPairConnections(Coordinate_t *pathCoords[], int pathLengths[], 
               #endif
               calcRoutabilityMetrics(&subMapInfo, subMapPathLengths[config], subMapPathCoords[config],
                                      subMapContiguousPathLengths[config], subMapContigPathCoords[config], &(subMapRoutability[config]),
-                                     user_inputs, subMap_cellInfo[config], DRC_details[config], TRUE, shoulderConnections[i].pseudoPath, FALSE,
+                                     user_inputs, subMap_cellInfo[config], TRUE, shoulderConnections[i].pseudoPath, FALSE,
                                      doNotPrint_DRCs, TRUE);
 
 

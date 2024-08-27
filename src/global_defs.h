@@ -10,13 +10,20 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
+#include <float.h>
 #include <regex.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <libgen.h>  // Library that contains function 'basename()' for extracting base file name
 #include <locale.h>  // Included to enable 'setlocale' for formatting "9,876,543" integers
 #include <png.h>     // C library for reading/writing PNG graphics files
-#include "omp.h"     // OpenMP for parallel processing
+#include <omp.h>     // OpenMP for parallel processing
+#include <gd.h>      // Open-source code library for the dynamic creation of images
+#include <gdfontt.h>  // Tiny font used by 'GD'
+#include <gdfonts.h>  // Small font used by 'GD'
+#include <gdfontmb.h> // Medium bold font used by 'GD'
+#include <gdfontl.h>  // Large bold font used by 'GD'
+#include <gdfontg.h>  // Giant bold font used by 'GD'
 
 // Define value of PI if it's not already defined by 'math.h':
 #ifndef M_PI
@@ -216,7 +223,17 @@ enum {
 
   // Define Boolean values 'TRUE' and 'FALSE':
   TRUE  = 1,
-  FALSE = 0
+  FALSE = 0,
+
+  // Define constants for the categories of changes to the routing algorithm. These are used for concisely
+  // annotating the graph of routing metrics, and are stored in routability->HTML_message_categories[i]:
+  NO_ANNOTATION      = 0,  // No category (no annotation in graph)
+  SWAP_TERMS         = 1,  // Swapped start/end-terminals
+  TR_CONG_SENS_UP    = 2,  // Increased trace congestion sensitivity
+  TR_CONG_SENS_DOWN  = 3,  // Decreased trace congestion sensitivity
+  VIA_CONG_SENS_UP   = 4,  // Increased via congestion sensitivity
+  VIA_CONG_SENS_DOWN = 5,  // Decreased via congestion sensitivity
+  ADD_PSEUDO_CONG    = 6   // Added TRACE pseudo-congestion near pseudo-vias
 
 };  // End of enumerated constants
 
@@ -298,6 +315,27 @@ typedef struct DynamicAlgorithmMetrics_t  {
                                        //          = std. error in the routing cost for dynamic_state_index
 
 } DynamicAlgorithmMetrics_t;
+
+
+//
+// Define data structure that contains details of a single design-rule violation:
+//
+typedef struct DRC_details_t  {
+  float minimumAllowedDistance; // Minimum allowed separation between edge of shape-type 'shapeType'
+                                // and center of shape-type 'offendingShapeType' for the design-rule
+                                // set appropriate at location (x,y,z), in units of microns.
+  float minimumAllowedSpacing;  // Minimum allowed spacing between edges of shape-type 'shapeType'
+                                // and center of shape-type 'offendingShapeType' for the design-rule
+                                // set appropriate at location (x,y,z), in units of microns.
+  unsigned short int x;                        // X-location of DRC violation
+  unsigned short int y;                        // Y-location of DRC violation
+  unsigned short int pathNum;                  // Path-number at location (x,y,z)
+  unsigned short int offendingPathNum;         // Path-number of offending net
+  unsigned char z;                        // Z-location of DRC violation
+  unsigned char shapeType;                // Shape-type at location (x,y,z)
+  unsigned char offendingShapeType;       // Shape-type of offending net
+
+} DRC_details_t ;  // End of struct 'DRC_details_t'
 
 
 //
@@ -404,19 +442,22 @@ typedef struct RoutingMetrics_t  {
                          // Zero denotes no DRC violation. 1 denotes a single cell with a DRC violation, etc.
   int *path_elapsed_time;  // path_elapsed_time[i] is number of elapsed (wall-clock) seconds to find the path #i during most recent iteration.
                            // This time includes only the time in function 'findPath', and not any DRC checking or map-drawing.
-  int *iteration_elapsed_time; // Number of elapsed (wall-clock) seconds to find all paths within iteration #i,
-                               // including DRC-checking, but excluding the creation of PNG map-files.
-  int total_elapsed_time;      // Number of elapsed (wall-clock) seconds before the job found a
-                               // solution, or gave up trying. This is the sum of 'iteration_elapsed_time'
+  int *iteration_cumulative_time; // Number of (wall-clock) seconds from launching Acorn to completing iteration #i,
+                                  // including DRC-checking.
   unsigned long int *path_explored_cells;      // path_explored_cells[i] is number of cells explored to find path #i in most recent iteration.
   unsigned long int *iteration_explored_cells; // Number of cells explored to find all paths in iteration #j
                                                // (sum of path_explored_cells).
   unsigned long int total_explored_cells;      // Number of cells explored to find all paths across all iterations
                                                // (sum of iteration_explored_cells).
-  unsigned short best_iteration;  // The iteration number that has the 'best' routing metrics. This iteration is the one with (a) the
-                                  // lowest number of DRC cells, or (b) if multiple DRC-freeiterations exist, the number of the DRC-free
-                                  // iteration with the lowest routing cost (including lateral path cost, via cost, including the effects
-                                  // of cost-zones.
+  unsigned short lowest_cost_iteration;  // The iteration number that has the lowest routing cost. This iteration is the one with (a) the
+                                         // lowest number of DRC cells, or (b) if multiple DRC-freeiterations exist, the number of the DRC-free
+                                         // iteration with the lowest routing cost (including lateral path cost, via cost, including the effects
+                                         // of cost-zones.
+  unsigned short shortest_path_iteration;  // The iteration number that has the shortest aggregate path length. This iteration is the one that
+                                           // has the fewest number of DRC-cells and, among the iterations with the fewest DRC-cells, the iteration
+                                           // with the shortest aggregate path-length.
+  unsigned short fewest_DRCnets_iteration;  // The iteration number that has the fewest number of nets with design-rule violations. If multiple iterations have
+                                            // the same number of DRC-nets, then we select the first iteration with the minimum number of DRC-nets.
 
   unsigned short latestAlgorithmChange; // The most recent iteration number for which the routing algorithm was changed. Such
                                         // changes include (a) swapping start-/end-terminals, (b) changing the trace and/or via
@@ -454,27 +495,31 @@ typedef struct RoutingMetrics_t  {
   DynamicAlgorithmMetrics_t traceCongSensitivityMetrics[NUM_CONG_SENSITIVITES];
   DynamicAlgorithmMetrics_t viaCongSensitivityMetrics[NUM_CONG_SENSITIVITES];
 
+  // Variables to hold HTML-encoded messages for user:
+  short int num_HTML_messages;  // The number of messages to be displayed to the user. Normally, each iteration
+                                // can have up to one message, but most iterations will have none.
+  short int *HTML_message_iter_nums;  // The iteration numbers associated with each message.
+                                      //   HTML_message_iter_nums[i] = iteration number for message number 'i'
+  char **HTML_message_strings;  // The HTML-encoded string to be displayed to the user.
+                                //   HTML_message_strings[i] = string for message number 'i'
+  unsigned char *HTML_message_categories; // Category of the message, which is used for annotating the graph of
+                                          // the routing metrics: HTML_message_categories[i] = category for message
+                                          // number 'i'. Categories are:
+                                          //   0 = NO_ANNOTATION      = No category (no annotation in graph)
+                                          //   1 = SWAP_TERMS         = Swapped start/end-terminals
+                                          //   2 = TR_CONG_SENS_UP    = Increased trace congestion sensitivity
+                                          //   3 = TR_CONG_SENS_DOWN  = Decreased trace congestion sensitivity
+                                          //   4 = VIA_CONG_SENS_UP   = Increased via congestion sensitivity
+                                          //   5 = VIA_CONG_SENS_DOWN = Decreased via congestion sensitivity
+                                          //   6 = ADD_PSEUDO_CONG    = Added TRACE pseudo-congestion near pseudo-vias
+
+  // Define 'DRC_details' array that contains details of DRC violations for the first 'maxRecordedDRCs'
+  // violations for each iteration.
+  DRC_details_t **DRC_details;  // DRC_details[iter_num][DRC_num] contains the violation details for
+                                // iteration 'iter_num' and violation number 'DRC_num', where the latter
+                                // ranges from 0 to (maxRecordedDRCs - 1)
+
 } RoutingMetrics_t ;  // End of struct 'RoutingMetrics_t'
-
-//
-// Define data structure that contains details of design-rule violations:
-//
-typedef struct DRC_details_t  {
-  int x;                        // X-location of DRC violation
-  int y;                        // Y-location of DRC violation
-  int z;                        // Z-location of DRC violation
-  int pathNum;                  // Path-number at location (x,y,z)
-  int shapeType;                // Shape-type at location (x,y,z)
-  int offendingPathNum;         // Path-number of offending net
-  int offendingShapeType;       // Shape-type of offending net
-  float minimumAllowedDistance; // Minimum allowed separation between edge of shape-type 'shapeType'
-                                // and center of shape-type 'offendingShapeType' for the design-rule
-                                // set appropriate at location (x,y,z), in units of microns.
-  float minimumAllowedSpacing;  // Minimum allowed spacing between edges of shape-type 'shapeType'
-                                // and center of shape-type 'offendingShapeType' for the design-rule
-                                // set appropriate at location (x,y,z), in units of microns.
-
-} DRC_details_t ;  // End of struct 'DRC_details_t'
 
 
 //
@@ -738,6 +783,10 @@ typedef struct InputValues_t  {
   unsigned char *swap_num_params; // swap_num_params[i] = number of parameters for PIN_SWAP/NO_PIN_SWAP statement #i (0 to 6)
   float **swap_parameters; // swap_parameters[i][j] = floating-point parameter #j for pin-swap instruction #i
 
+  // Boolean array for which layers should be included in composite PNG images and animations:
+  unsigned char *include_layer_in_composite_images;  // include_layer_in_composite_images[PNG_layer_number] = TRUE or FALSE to
+                                                     // indicate if PNG layer should be included in composite PNG file.
+
 } InputValues_t ;  // End of struct 'InputValues_t'
 
 //
@@ -905,6 +954,8 @@ typedef struct MapInfo_t  {
                                     // can be adjusted dynamically based on routing metrics.
   int current_iteration;         // The number of the current iteration, starting with 1.
   int max_iterations;            // Maximum number of iterations allowed for the map.
+  int time_constant_iterations;  // A constant that depends on the number of user-defined nets as: max(1, (int)(20.0 * log10(mapInfo->numPaths))).
+                                 // This constant is used to determine how long to slowly increase congestion sensitivities.
   float maxInteractionRadiusCellsOnLayer[maxRoutingLayers];   // = max of all maxInteractionRadiusCellsInDR (in cell units) for all DR sets used on a layer.
   float maxInteractionRadiusSquaredOnLayer[maxRoutingLayers]; // = Square of 'maxInteractionRadiusCellsOnLayer', in units of cells squared, for a layer.
   float iterationDependentRatio; // This ratio will be initialized to 0.20 at the first iteration, and eventually reach 1.00 after an appropriate number
@@ -1083,6 +1134,18 @@ void getMemory(int* currRealMem, int* peakRealMem, int* currVirtMem, int* peakVi
 //-----------------------------------------------------------------------------
 void printRoutabilityMetrics(FILE *fp, const RoutingMetrics_t *routability, const InputValues_t *user_inputs,
                              const MapInfo_t *mapInfo, int numPaths, int maxNets);
+
+
+//-----------------------------------------------------------------------------
+// Name: add_HTML_message
+// Desc: Add an HTML-encoded text string 'text_string'  to the array
+//       routability->HTML_message_strings[], and add the integer 'iteration'
+//       to array routability->HTML_message_iter_nums[]. Add category number
+//       'category_num' to the array routability->HTML_message_categories. Also,
+//       increment the number of HTML messages, routability->num_HTML_messages.
+//-----------------------------------------------------------------------------
+void add_HTML_message(char* HTML_message, short int iteration, unsigned char category_num,
+                      RoutingMetrics_t *routability);
 
 
 //-----------------------------------------------------------------------------
@@ -1374,9 +1437,8 @@ void calcRoutabilityMetrics(const MapInfo_t *mapInfo, const int pathLength[],
                             Coordinate_t *pathCoords[], int contiguousPathLength[],
                             Coordinate_t *contigPathCoords[], RoutingMetrics_t *routability,
                             const InputValues_t *user_inputs, CellInfo_t ***cellInfo,
-                            DRC_details_t DRC_details[], int addCongestionFlag,
-                            int addCongOnlyForDiffPair, int exitIfInvalidJump, int beQuiet,
-                            int parallelProcessing);
+                            int addCongestionFlag, int addCongOnlyForDiffPair,
+                            int exitIfInvalidJump, int beQuiet, int parallelProcessing);
 
 
 

@@ -785,12 +785,21 @@ void initialize_input_values(InputValues_t *input_values)  {
   input_values->isPseudoNet[max_routed_nets - 1] = TRUE;
 
   // Allocate memory for data structures required for layer (routing layer and via layer)
+  input_values->include_layer_in_composite_images = malloc((2*maxRoutingLayers - 1) * sizeof(char));
+  if (input_values->include_layer_in_composite_images == 0)  {
+    printf("\nERROR: Failed to allocate memory for 'input_values->include_layer_in_composite_images' array.\n\n");
+    exit (1);
+  }
+
   for (int i = 0; i < 2*maxRoutingLayers - 1; i++ )  {
     input_values->layer_names[i] = malloc(maxLayerNameLength * sizeof(char));
     if (input_values->layer_names[i] == 0)  {
       printf("\nERROR: Failed to allocate memory for 'input_values->layer_names[%d]' string.\n\n", i);
       exit (1);
     }
+
+    // Initialize to TRUE all the elements in array 'include_layer_in_composite_images':
+    input_values->include_layer_in_composite_images[i] = TRUE;
   }  // End of for-loop for index i (0 to 2*maxRoutingLayers-1)
 
   // Allocate memory for data structures required for (only) the routing layers. Also initialize arrays
@@ -1290,6 +1299,7 @@ void freeMemory_input_values(InputValues_t *input_values)  {
   free(input_values->diffPairEndTermPitchMicrons);     input_values->diffPairEndTermPitchMicrons = NULL;
   free(input_values->diffPairStartTermPitch);   input_values->diffPairStartTermPitch = NULL;
   free(input_values->diffPairEndTermPitch);     input_values->diffPairEndTermPitch = NULL;
+  free(input_values->include_layer_in_composite_images); input_values->include_layer_in_composite_images  = NULL;
 
   // Free memory for data structures required for layer (routing layer and via layer)
   for (int i = 0; i < 2*maxRoutingLayers - 1; i++ )  {
@@ -2706,6 +2716,9 @@ void parse_input_file(char *input_filename, InputValues_t *user_inputs, MapInfo_
       // We've gotten to the end of the list of nets, so capture the number of net:
       user_inputs->num_nets = net_number;
       mapInfo->numPaths     = net_number;
+
+      // Also calculate the 'time_constant_iterations' variable that depends on the number of nets:
+      mapInfo->time_constant_iterations = max(1, (int)(20.0 * log10(mapInfo->numPaths)));
       continue;
     }
     else  {
@@ -3152,6 +3165,90 @@ void parse_input_file(char *input_filename, InputValues_t *user_inputs, MapInfo_
       regfree(&regex);
     }
 
+
+    //
+    // Check for line of the form 'omit_layers_from_composite_images = B D'
+    //
+    compile_regex("omit_layers_from_composite_images[[:blank:]]*=[[:blank:]]*(.*)[[:blank:]]*$", &regex);
+    if (regexec(&regex, line, 2, regex_match, 0) == 0)  {
+      regfree(&regex);
+      char layer_list[200] = "";
+      len = (int)(regex_match[1].rm_eo - regex_match[1].rm_so);
+      strncpy(layer_list, line + regex_match[1].rm_so, len);
+      layer_list[len] = '\0';  // Terminate string with NULL character
+
+      // printf("DEBUG: List of omitted layers is %s\n", layer_list);
+
+      char *src = line + regex_match[1].rm_so;
+      char *end = line + regex_match[1].rm_eo;
+      int num_omitted_layers = 0;
+      while (src < end)  {
+        num_omitted_layers++;
+
+        // Confirm that number of layer names doesn't exceed the number of previously defined layers:
+        if (num_omitted_layers > ((2 * user_inputs->num_routing_layers) - 1))  {
+          printf("\nERROR: Input file specifies more omitted layers (%d) than previously defined (%d).\n\n",
+             num_omitted_layers, (2 * user_inputs->num_routing_layers) - 1);
+          exit(1);
+        }
+        size_t len = strcspn(src, whitespace);
+        if (src + len > end)
+          len = end - src;
+        // printf("DEBUG: Omitted layer name: <<%.*s>>\n", (int)len, src);
+
+        // Capture the omitted layer name in the temporary variable 'omitted_layer_name':
+        char omitted_layer_name[maxLayerNameLength];
+        strncpy(omitted_layer_name, src, (int)len);
+        omitted_layer_name[(int)len] = '\0'; // Add a NULL char to terminate string
+
+        src += len;
+        src += strspn(src, whitespace);
+
+
+        // Confirm that name of omitted layer is a valid name from the previously defined list of
+        // user-supplied layer names. First, define a Boolean flag to keep track of whether the omitted
+        // layer name is a valid layer name:
+        unsigned char valid_omitted_layer_name = FALSE;
+
+        // Next, cycle through all the valid layer names to see which one matches the omitted layer name:
+        for (int i = 0; i < 2 * user_inputs->num_routing_layers - 1; i++)  {
+          if (0 == strcasecmp(omitted_layer_name, user_inputs->layer_names[i]))  {
+
+            // We got here, so the 'omitted_layer_name' string matches one of the previously defined
+            // layer names (from the 'layer_names' line in the input file). So we set to FALSE the
+            // corresponding Boolean element in array 'include_layer_in_composite_images':
+            user_inputs->include_layer_in_composite_images[i] = FALSE;
+
+            // printf("DEBUG: Set include_layer_in_composite_images[%d] to FALSE for layer name '%s'.\n", i, omitted_layer_name);
+
+            valid_omitted_layer_name = TRUE;
+
+            // Break out of the for-loop because we're done with the current 'omitted_layer_name'
+            break;
+
+          }  // End of if-block for comparing omitted layer-name to all valid layer-names
+        }  // End of for-loop for index 'i'
+
+        // Confirm that the omitted_layer_name was indeed found among the list of valid layer names:
+        if (! valid_omitted_layer_name)  {
+          printf("\n\nERROR: The name of omitted layer '%s' on the 'omit_layers_from_composite_images' line is not a valid layer name.\n", omitted_layer_name);
+          printf(    "       Valid names are: ");
+          for (int i = 0; i < 2 * user_inputs->num_routing_layers - 1; i++)  {
+            printf(" '%s'  ", user_inputs->layer_names[i]);
+          }
+          printf("\n");
+          printf(    "       Please correct the input file and re-start the program.\n\n");
+          exit(1);
+        }  // End of if-block for valid_omitted_layer_name == FALSE
+
+      }  // End of while-loop for (src < end)
+
+      continue;  // Skip to next line in input file
+
+    }  // End of if-block for matching 'omit_layers_from_composite_images = B D' line
+    else  {
+      regfree(&regex);
+    }
 
     //
     // Check for line of the form "A = B":

@@ -171,10 +171,10 @@ void createRoutability(RoutingMetrics_t *routability, const MapInfo_t *mapInfo) 
     exit (1);
   }  // End of if-block
 
-  // Allocate memory for 1-dimensional 'iteration_elapsed_time' array
-  routability->iteration_elapsed_time = malloc(sizeof(int) * (mapInfo->max_iterations + 1));
-  if (routability->iteration_elapsed_time == 0)  {
-    printf("Error: Failed to allocate memory for 'iteration_elapsed_time' array.\n");
+  // Allocate memory for 1-dimensional 'iteration_cumulative_time' array
+  routability->iteration_cumulative_time = malloc(sizeof(int) * (mapInfo->max_iterations + 1));
+  if (routability->iteration_cumulative_time == 0)  {
+    printf("Error: Failed to allocate memory for 'iteration_cumulative_time' array.\n");
     exit (1);
   }  // End of if-block
 
@@ -305,6 +305,43 @@ void createRoutability(RoutingMetrics_t *routability, const MapInfo_t *mapInfo) 
     exit (1);
   }  // End of if-block
 
+  // Allocate memory for 1-dimensional 'HTML_message_iter_nums' array
+  routability->HTML_message_iter_nums = malloc(sizeof(short int) * 0);
+  if (routability->HTML_message_iter_nums == 0)  {
+    printf("Error: Failed to allocate memory for 'HTML_message_iter_nums' array.\n");
+    exit (1);
+  }  // End of if-block
+
+  // Allocate memory for 1-dimensional 'HTML_message_categories' array
+  routability->HTML_message_categories = malloc(sizeof(char) * 0);
+  if (routability->HTML_message_categories == 0)  {
+    printf("Error: Failed to allocate memory for 'HTML_message_categories' array.\n");
+    exit (1);
+  }  // End of if-block
+
+  // Allocate memory for 1-dimensional 'HTML_message_strings' array
+  routability->HTML_message_strings = malloc(sizeof(char*) * 0);
+  if (routability->HTML_message_strings == 0)  {
+    printf("Error: Failed to allocate memory for 'HTML_message_strings' array.\n");
+    exit (1);
+  }  // End of if-block
+
+  // Allocate memory for first dimension of 2-dimensional 'DRC_details' matrix:
+  routability->DRC_details = malloc(sizeof(DRC_details_t*) * (mapInfo->max_iterations + 1));
+  if (routability->DRC_details == NULL)  {
+    printf("\n\nError: Failed to allocate memory for 'DRC_details' matrix.\n\n");
+    exit (1);
+  }  // End of if-block
+  // Allocate memory for second dimension of 2-dimensional 'DRC_details' matrix:
+  for (int i = 0; i < mapInfo->max_iterations + 1; i++)  {
+    routability->DRC_details[i] = malloc(sizeof(DRC_details_t) * maxRecordedDRCs);
+    if (routability->DRC_details[i] == NULL)  {
+      printf("\n\nError: Failed to allocate memory for 'DRC_details[%d]' array.\n\n", i);
+      exit (1);
+    }  // End of if-block
+  }  // End of for-loop
+
+
 }  // End of function 'createRoutability'
 
 
@@ -431,14 +468,31 @@ void freeMemory_routability(RoutingMetrics_t *routability, const MapInfo_t *mapI
   // Free memory for 1-dimensional 'randomize_congestion' array
   free(routability->randomize_congestion);      routability->randomize_congestion = NULL;
 
-  // Free memory for 1-dimensional 'iteration_elapsed_time' array
-  free(routability->iteration_elapsed_time);          routability->iteration_elapsed_time = NULL;
+  // Free memory for 1-dimensional 'iteration_cumulative_time' array
+  free(routability->iteration_cumulative_time);  routability->iteration_cumulative_time = NULL;
 
   // Free memory for the 1-dimensional 'path_explored_cells' array:
   free(routability->path_explored_cells);             routability->path_explored_cells = NULL;
 
   // Free memory for 1-dimensional 'iteration_explored_cells' array
   free(routability->iteration_explored_cells);        routability->iteration_explored_cells = NULL;
+
+  // Free memory for HTML message variables:
+  for (int i = 0; i < routability->num_HTML_messages; i++)  {
+    free(routability->HTML_message_strings[i]);
+    routability->HTML_message_strings[i] = NULL;
+  }  // End of for-loop for index 'i'
+  free(routability->HTML_message_strings);            routability->HTML_message_strings    = NULL;
+  free(routability->HTML_message_iter_nums);          routability->HTML_message_iter_nums  = NULL;
+  free(routability->HTML_message_categories);         routability->HTML_message_categories = NULL;
+
+  // Free memory for 2-dimensional DRC_details matrix:
+  for (int i = 0; i < mapInfo->max_iterations + 1; i++)  {
+    free(routability->DRC_details[i]);
+    routability->DRC_details[i] = NULL;
+  }  // End of for-loop for index 'i'
+  free(routability->DRC_details);
+  routability->DRC_details = NULL;
 
 }  // End of function 'freeMemory_routability'
 
@@ -602,9 +656,7 @@ void addCongestionAroundAllTerminals(const InputValues_t *user_inputs, const Map
 //-----------------------------------------------------------------------------
 void update_iterationDependent_parameters(MapInfo_t *mapInfo, RoutingMetrics_t *routability, FILE * fp)  {
 
-  int time_constant_iterations = max(1, (int)(20.0 * log10(mapInfo->numPaths)));
-
-  if (mapInfo->current_iteration <= time_constant_iterations)  {
+  if (mapInfo->current_iteration <= mapInfo->time_constant_iterations)  {
 
     mapInfo->iterationDependentRatio = 0.20;
 
@@ -614,30 +666,30 @@ void update_iterationDependent_parameters(MapInfo_t *mapInfo, RoutingMetrics_t *
                                          * defaultCellCost * defaultEvapRate / (100.0 - defaultEvapRate) / 100.0;
 
     printf("\nINFO: traceCongestionMultiplier remains %0.8f in iteration %d, which is less than time_constant_iterations (%d).\n",
-           mapInfo->traceCongestionMultiplier, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->traceCongestionMultiplier, mapInfo->current_iteration, mapInfo->time_constant_iterations);
     printf("INFO: viaCongestionMultiplier remains %0.8f in iteration %d, which is less than time_constant_iterations (%d).\n",
-           mapInfo->viaCongestionMultiplier, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->viaCongestionMultiplier, mapInfo->current_iteration, mapInfo->time_constant_iterations);
     printf("INFO: iterationDependentRatio remains %0.2f in iteration %d, which is less than time_constant_iterations (%d).\n\n",
-           mapInfo->iterationDependentRatio, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->iterationDependentRatio, mapInfo->current_iteration, mapInfo->time_constant_iterations);
 
   }
-  else if (mapInfo->current_iteration <= 5 * time_constant_iterations)  {
+  else if (mapInfo->current_iteration <= 5 * mapInfo->time_constant_iterations)  {
 
-    mapInfo->iterationDependentRatio = mapInfo->current_iteration / 5.0 / time_constant_iterations;
+    mapInfo->iterationDependentRatio = mapInfo->current_iteration / 5.0 / mapInfo->time_constant_iterations;
 
-    mapInfo->traceCongestionMultiplier = mapInfo->current_iteration / 5.0 / time_constant_iterations
+    mapInfo->traceCongestionMultiplier = mapInfo->current_iteration / 5.0 / mapInfo->time_constant_iterations
                                          * (routability->traceCongSensitivityMetrics[mapInfo->currentTraceCongSensIndex].dynamicParameter / 100.0)
                                          * defaultCellCost * defaultEvapRate / (100.0 - defaultEvapRate) / 100.0;
-    mapInfo->viaCongestionMultiplier   = mapInfo->current_iteration / 5.0 / time_constant_iterations
+    mapInfo->viaCongestionMultiplier   = mapInfo->current_iteration / 5.0 / mapInfo->time_constant_iterations
                                          * (routability->viaCongSensitivityMetrics[mapInfo->currentViaCongSensIndex].dynamicParameter / 100.0)
                                          * defaultCellCost * defaultEvapRate / (100.0 - defaultEvapRate) / 100.0;
 
     printf("\nINFO: traceCongestionMultiplier increased to %0.8f in iteration %d, which is between one and 5 times the time_constant_iterations (%d).\n",
-           mapInfo->traceCongestionMultiplier, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->traceCongestionMultiplier, mapInfo->current_iteration, mapInfo->time_constant_iterations);
     printf("INFO: viaCongestionMultiplier increased to %0.8f in iteration %d, which is between one and 5 times the time_constant_iterations (%d).\n",
-           mapInfo->viaCongestionMultiplier, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->viaCongestionMultiplier, mapInfo->current_iteration, mapInfo->time_constant_iterations);
     printf("INFO: iterationDependentRatio increased to %0.2f in iteration %d, which is between one and 5 times the time_constant_iterations (%d).\n\n",
-           mapInfo->iterationDependentRatio, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->iterationDependentRatio, mapInfo->current_iteration, mapInfo->time_constant_iterations);
 
     // Update the 'latestAlgorithmChange' parameter with the current iteration, which signals to other functions
     // that the congestion multiplier was changed during this iteration:
@@ -654,19 +706,37 @@ void update_iterationDependent_parameters(MapInfo_t *mapInfo, RoutingMetrics_t *
                                          * defaultCellCost * defaultEvapRate / (100.0 - defaultEvapRate) / 100.0;
 
     printf("\nINFO: traceCongestionMultiplier remains %0.8f in iteration %d, which is greater than five times the time_constant_iterations (%d).\n",
-           mapInfo->traceCongestionMultiplier, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->traceCongestionMultiplier, mapInfo->current_iteration, mapInfo->time_constant_iterations);
     printf("INFO: viaCongestionMultiplier remains %0.8f in iteration %d, which is greater than five times the time_constant_iterations (%d).\n",
-           mapInfo->viaCongestionMultiplier, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->viaCongestionMultiplier, mapInfo->current_iteration, mapInfo->time_constant_iterations);
     printf("INFO: iterationDependentRatio remains %0.2f in iteration %d, which is greater than five times the time_constant_iterations (%d).\n\n",
-           mapInfo->iterationDependentRatio, mapInfo->current_iteration, time_constant_iterations);
+           mapInfo->iterationDependentRatio, mapInfo->current_iteration, mapInfo->time_constant_iterations);
   }
 
-  if (mapInfo->current_iteration == time_constant_iterations)  {
+  if (mapInfo->current_iteration == mapInfo->time_constant_iterations)  {
+
+    // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+    // eventually printed out to the HTML file:
+    char HTML_message[500];
+    sprintf(HTML_message, "<FONT color=\"#00CC00\" size=\"1\">Trace and Via Congestion Sensitivities will increase linearly from 20%% to 100%% until iteration %d.</FONT>",
+            5 * mapInfo->time_constant_iterations);
+    // printf("\nDEBUG: In function update_iterationDependent_parameters, HTML_message = '%s'\n\n", HTML_message);
+    add_HTML_message(HTML_message, mapInfo->current_iteration, NO_ANNOTATION, routability);
+
     fprintf(fp, "  <UL><LI><FONT color=\"#00CC00\">Trace and Via Congestion Sensitivities will increase linearly from 20%% to 100%% until iteration %d.</FONT></UL>\n",
-            5 * time_constant_iterations);
-    printf("\nINFO: Trace and Via Congestion Sensitivities will increase linearly from 20%% to 100%% until iteration %d.\n\n", 5 * time_constant_iterations);
+            5 * mapInfo->time_constant_iterations);
+    printf("\nINFO: Trace and Via Congestion Sensitivities will increase linearly from 20%% to 100%% until iteration %d.\n\n", 5 * mapInfo->time_constant_iterations);
+
   }
-  else if (mapInfo->current_iteration == 5 * time_constant_iterations)  {
+  else if (mapInfo->current_iteration == 5 * mapInfo->time_constant_iterations)  {
+
+    // Create a temporary string variable to contain the message that will be stored in routability->HTML_message_strings and
+    // eventually printed out to the HTML file:
+    char HTML_message[500];
+    sprintf(HTML_message, "<FONT color=\"#00CC00\" size=\"1\">Trace and Via Congestion Sensitivities have reached their nominal values (100%%).</FONT>");
+    // printf("\nDEBUG: In function update_iterationDependent_parameters, HTML_message = '%s'\n\n", HTML_message);
+    add_HTML_message(HTML_message, mapInfo->current_iteration, NO_ANNOTATION, routability);
+
     fprintf(fp, "  <UL><LI><FONT color=\"#00CC00\">Trace and Via Congestion Sensitivities have reached their nominal values (100%%).</FONT></UL>\n");
     printf("\nINFO: Trace and Via Congestion Sensitivities have reached their nominal values (100%%).\n\n");
   }
@@ -675,28 +745,35 @@ void update_iterationDependent_parameters(MapInfo_t *mapInfo, RoutingMetrics_t *
 
 
 //-----------------------------------------------------------------------------
-// Name: determineBestIteration
-// Desc: Determine the iteration with the best routing metrics. The best
-//       iteration is the one with the lowest number of cells with DRCs. If
-//       multiple iterations contain zero DRC cells, then the best iteration
-//       is the DRC-free iteration with the lowest routing cost.
+// Name: determineBestIterations
+// Desc: Determine the iterations with (a) the lowest routing cost, (b) the
+//       shortest aggregate path-length, and (c) the fewest (non-pseudo) nets
+//       that have design-rule violations.
+//
+//       The lowest-cost iteration is the one with the lowest number of cells
+//       with DRCs. If multiple iterations contain zero DRC cells, then the lowest-
+//       cost iteration is the DRC-free iteration with the lowest routing cost.
 //
 //       The first iteration will not be reported if the user has
 //       defined cost-zones in the map. Such cost-zones increase the cost
 //       of routing, but Acorn disregards these zones only for iteration
 //       #1 in order to display a "rat's nest" routing.
+//
+//       The iteration with the shortest aggregate path-length is the one that
+//       has the fewest number of DRC-cells and, among the iterations with the
+//       fewest DRC-cells, the iteration with the shortest aggregate path-length.
 //-----------------------------------------------------------------------------
 //
 // Define 'DEBUG_postProcess' and re-compile if you want verbose debugging print-statements enabled:
 //
-// #define DEBUG_determineBestIteration 1
-#undef DEBUG_determineBestIteration
+// #define DEBUG_determineBestIterations 1
+#undef DEBUG_determineBestIterations
 
-void determineBestIteration(const MapInfo_t *mapInfo, RoutingMetrics_t *routability,
-                            int cost_multipliers_used)  {
+void determineBestIterations(const MapInfo_t *mapInfo, RoutingMetrics_t *routability,
+                             int cost_multipliers_used)  {
 
-  #ifdef DEBUG_determineBestIteration
-  printf("\nDEBUG: Entered function determineBestIteration in iteration %d.\n", mapInfo->current_iteration);
+  #ifdef DEBUG_determineBestIterations
+  printf("\nDEBUG: Entered function determineBestIterations in iteration %d.\n", mapInfo->current_iteration);
   #endif
 
   // Define the iteration that this function will begin searching for optimal
@@ -713,91 +790,170 @@ void determineBestIteration(const MapInfo_t *mapInfo, RoutingMetrics_t *routabil
 
   unsigned int iteration_with_fewest_DRC_cells = starting_iteration;
   unsigned int DRCfree_iteration_with_lowest_cost = starting_iteration;
-  unsigned int best_iteration = starting_iteration;
+  unsigned int lowest_cost_iteration = starting_iteration;
+  unsigned int iteration_with_shortest_path_length = starting_iteration;
+  unsigned int iteration_with_fewest_DRC_nets = starting_iteration;
+
 
   unsigned int num_DRCfree_iterations = routability->cumulative_DRCfree_iterations[mapInfo->current_iteration];
 
   // Initialize minimum routing cost to the largest possible unsigned long value:
   unsigned long min_routing_cost = ULONG_MAX;
 
-  // Initialize minimum number of DRC cells to the largest possible integer value:
-  // unsigned int min_DRC_cells = routability->nonPseudo_num_DRC_cells[1];
-  unsigned int min_DRC_cells = INT_MAX;
+  // Initialize minimum path-length to largest possible floating-point value:
+  float min_path_length = FLT_MAX;
 
-  //
-  // Iterate over all the iterations to find the one with the lowest number of
-  // DRC cells, or the DRC-free iteration with the lowest routing costs:
-  //
-  #ifdef DEBUG_determineBestIteration
-  printf("DEBUG: Checking all iterations for fewest DRC cells or lower routing cost:\n");
+  // Initialize minimum number of DRC cells and number of DRC nets:
+  unsigned int min_DRC_cells;
+  unsigned int min_DRC_nets;
+
+  // We don't know the minimum number of DRC-cells or the minimum number of DRC-nets across all iterations,
+  // so initialize the 'min_DRC_cells' and 'min_DRC_nets' variables to the largest possible integer value.
+  // Then iterate over all iterations to find the minimum values:
+  min_DRC_cells = INT_MAX;
+  min_DRC_nets  = INT_MAX;
+
+  #ifdef DEBUG_determineBestIterations
+  printf("\nDEBUG: Checking all iterations for fewest DRC cells and fewest DRC nets...\n");
   #endif
+
   for (int iteration = starting_iteration; iteration <= mapInfo->current_iteration; iteration++)  {
-    #ifdef DEBUG_determineBestIteration
-    printf("  DEBUG: Iteration #%d:\n", iteration);
-    #endif
-    if (num_DRCfree_iterations == 0)  {
-      if (routability->nonPseudo_num_DRC_cells[iteration] < min_DRC_cells)  {
 
-        #ifdef DEBUG_determineBestIteration
-        printf("    DEBUG: Iteration #%d has the fewest number of DRC cells (%'d).\n", iteration,
-               routability->nonPseudo_num_DRC_cells[iteration]);
-        #endif
+    // Check for minimum number of DRC-cells:
+    if (routability->nonPseudo_num_DRC_cells[iteration] < min_DRC_cells)  {
 
-        iteration_with_fewest_DRC_cells = iteration;
-        min_DRC_cells = routability->nonPseudo_num_DRC_cells[iteration];
+      #ifdef DEBUG_determineBestIterations
+      printf("    DEBUG: Iteration #%d has fewer number of DRC cells (%'d) than the previous minimum (%'d).\n", iteration,
+             routability->nonPseudo_num_DRC_cells[iteration], min_DRC_cells);
+      #endif
 
-      }  // End of if-block for nonPseudo_num_DRC_cells <= min_DRC_cells
-    }  // End of if-block for num_DRCfree_iterations == 0
+      iteration_with_fewest_DRC_cells = iteration;
+      min_DRC_cells = routability->nonPseudo_num_DRC_cells[iteration];
+    }  // End of if-block for nonPseudo_num_DRC_cells < min_DRC_cells
 
-    else  {
+
+    // Check for minimum number of DRC-nets:
+    if (routability->numNonPseudoDRCnets[iteration] < min_DRC_nets)  {
+
+      #ifdef DEBUG_determineBestIterations
+      printf("    DEBUG: Iteration #%d has fewer number of DRC nets (%'d) than the previous minimum (%'d).\n", iteration,
+             routability->numNonPseudoDRCnets[iteration], min_DRC_nets);
+      #endif
+
+      iteration_with_fewest_DRC_nets = iteration;
+      min_DRC_nets = routability->numNonPseudoDRCnets[iteration];
+    }  // End of if-block for numNonPseudoDRCnets < min_DRC_nets
+
+  }  // End of for-loop for index 'iteration'
+
+  //
+  // If the number of DRC-free iterations is zero, then define the lowest-cost iteration as the
+  // iteration with the fewest number of DRC-cells:
+  //
+  if (num_DRCfree_iterations == 0)  {
+    DRCfree_iteration_with_lowest_cost = iteration_with_fewest_DRC_cells;
+    min_routing_cost = routability->nonPseudoPathCosts[iteration_with_fewest_DRC_cells];
+  }  // End of if-block for num_DRCfree_iterations == 0
+
+  else  {
+    //
+    // We got here so there is at least one iteration with no DRC-cells. Iterate over all the
+    // iterations with zero DRC-cells to find the one with the lowest routing costs:
+    //
+    for (int iteration = starting_iteration; iteration <= mapInfo->current_iteration; iteration++)  {
+      #ifdef DEBUG_determineBestIterations
+      printf("  DEBUG: Checking iteration #%d for lowest routing cost...\n", iteration);
+      #endif
+
       if (    (routability->nonPseudo_num_DRC_cells[iteration] == 0)
            && (routability->nonPseudoPathCosts[iteration] < min_routing_cost))  {
 
-        #ifdef DEBUG_determineBestIteration
-        printf("    DEBUG: Iteration #%d has a lower DRC-free cost (%'ld) than iteration %d (%'ld).\n", iteration,
+        #ifdef DEBUG_determineBestIterations
+        printf("    DEBUG: Iteration #%d has a lower DRC-free cost (%'ld) than iteration %d (%'lu).\n", iteration,
                routability->nonPseudoPathCosts[iteration], DRCfree_iteration_with_lowest_cost, min_routing_cost);
         #endif
 
         DRCfree_iteration_with_lowest_cost = iteration;
         min_routing_cost = routability->nonPseudoPathCosts[iteration];
 
-      }  // End of if-block for nonPseudoPathCosts <= min_routing_cost
-      #ifdef DEBUG_determineBestIteration
+      }  // End of if-block for nonPseudoPathCosts < min_routing_cost
+      #ifdef DEBUG_determineBestIterations
       else  {
-        printf("    DEBUG: Iteration #%d has DRCs (%d), or has a higher DRC-free cost (%'ld) than iteration %d (%'ld).\n", iteration,
-                routability->nonPseudo_num_DRC_cells[iteration], routability->nonPseudoPathCosts[iteration],
-                DRCfree_iteration_with_lowest_cost, min_routing_cost);
+        printf("    DEBUG: Iteration #%d has a higher (or equal) DRC-free cost (%'ld) than iteration %d (%'lu).\n", iteration,
+                routability->nonPseudoPathCosts[iteration], DRCfree_iteration_with_lowest_cost, min_routing_cost);
       }  // End of else-block for nonPseudoPathCosts > min_routing_cost
       #endif
-    }  // End of else-block for num_DRCfree_iterations > 0
+
+    }  // End of for-loop for index 'iteration'
+  }  // End of else-block for num_DRCfree_iterations > 0
+
+  //
+  // Iterate again over the iterations to find the one with the shortest aggregate path-length,
+  // subject to the constraint that the iteration also has the minimum number of DRC-cells:
+  //
+
+  #ifdef DEBUG_determineBestIterations
+  printf("\nDEBUG: Now checking which iteration has the shortest aggregate path-length, including only those iterations\n");
+  printf(  "DEBUG:   with a %'d DRC-cells (the minimum in the run).\n\n", min_DRC_cells);
+  #endif
+
+  for (int iteration = starting_iteration; iteration <= mapInfo->current_iteration; iteration++)  {
+
+    #ifdef DEBUG_determineBestIterations
+    printf("DEBUG: Iteration %d: Comparing %d DRC-cells to minimum DRC-cells (%d),\n", iteration, routability->nonPseudo_num_DRC_cells[iteration], min_DRC_cells);
+    printf("DEBUG:   and comparing nonPseudoPathLengths (%'.4f mm) with min_path_length (%'.4f mm)\n", routability->nonPseudoPathLengths[iteration], min_path_length);
+    #endif
+
+    // Check if the current iteration has the fewest number of DRC-cells *and* has an aggregate path-length
+    // that's less than any other iterations:
+    if ((routability->nonPseudo_num_DRC_cells[iteration] == min_DRC_cells) && (routability->nonPseudoPathLengths[iteration] < min_path_length))  {
+
+      // We got here, so capture the current iteration's path length (which is the minimum) and the current iteration number:
+      min_path_length = routability->nonPseudoPathLengths[iteration];
+      iteration_with_shortest_path_length = iteration;
+
+      #ifdef DEBUG_determineBestIterations
+      printf("\nDEBUG: Found new iteration with minimum path-length: iteration #%d (%'.4f mm).\n\n", iteration_with_shortest_path_length, min_path_length);
+      #endif
+
+    }  // End if if-block
   }  // End of for-loop for index 'iteration'
 
 
   //
   // Depending on whether any DRC-free iterations have been found, record the
-  // 'best_iteration':
+  // 'lowest_cost_iteration':
   //
   if (num_DRCfree_iterations == 0)  {
-    best_iteration = iteration_with_fewest_DRC_cells;
+    lowest_cost_iteration = iteration_with_fewest_DRC_cells;
     printf("INFO: After %d iteration(s), iteration %d has the best routing metrics because it has the fewest DRC cells (%'d).\n",
            mapInfo->current_iteration, iteration_with_fewest_DRC_cells, min_DRC_cells);
   }
   else  {
-    best_iteration = DRCfree_iteration_with_lowest_cost;
+    lowest_cost_iteration = DRCfree_iteration_with_lowest_cost;
     printf("INFO: After %d iteration(s), iteration %d has the best routing metrics because it has the lowest cost (%'lu) of all DRC-free iterations.\n",
            mapInfo->current_iteration, DRCfree_iteration_with_lowest_cost, min_routing_cost);
   }
+  printf("INFO: After %d iteration(s), iteration %d has the shortest aggregate path-length (%'.4f mm) of all iterations with a minimum number of DRC-cells (%'d).\n",
+         mapInfo->current_iteration, iteration_with_shortest_path_length, min_path_length, min_DRC_cells);
+  printf("INFO: After %d iteration(s), iteration %d has the fewest number of nets with DRCs (%'d nets).\n",
+         mapInfo->current_iteration, iteration_with_fewest_DRC_nets, min_DRC_nets);
 
-  // Store the iteration with the best routing metrics into the 'routability' structure:
-  routability->best_iteration = best_iteration;
 
-}  // End of function 'determineBestIteration
+  // Store the iterations with the lowest-cost routing metrics, shortest path-length, and fewest DRC-nets
+  // into the 'routability' structure:
+  routability->lowest_cost_iteration = lowest_cost_iteration;
+  routability->shortest_path_iteration = iteration_with_shortest_path_length;
+  routability->fewest_DRCnets_iteration = iteration_with_fewest_DRC_nets;
+
+}  // End of function 'determineBestIterations
 
 
 //-----------------------------------------------------------------------------
 // Name: swap_start_and_end_terminals_of_DRC_paths
 // Desc: Swap the start- and end-terminals of nets that have DRCs. The function
-//       returns the number of nets whose terminals were swapped.
+//       returns the number of nets whose terminals were swapped, or were
+//       eligible to be swapped.
 //
 //       If the input parameter 'countOnly' is TRUE, then this function merely
 //       counts the number of nets that are eligible for having their start-
@@ -831,12 +987,12 @@ int swap_start_and_end_terminals_of_DRC_paths(const int max_routed_nets, MapInfo
       if (user_inputs->isDiffPair[path])  {
         swap_path[user_inputs->diffPairPartner[path]] = TRUE;  // Flag diff-pair's partner net
         swap_path[user_inputs->diffPairToPseudoNetMap[path]] = TRUE;  // Flag diff-pair's 'parent' pseudo-net
-        printf("DEBUG: Flagging pseudo-path %d and diff-pair paths %d and %d for start/end terminal-swapping because diff-pair path %d has %.3f%% recent iterations without DRCs.\n",
-                user_inputs->diffPairToPseudoNetMap[path], path, user_inputs->diffPairPartner[path], path, 100 * routability->fractionRecentIterationsWithoutPathDRCs[path]);
+        // printf("DEBUG: Flagging pseudo-path %d and diff-pair paths %d and %d for start/end terminal-swapping because diff-pair path %d has %.3f%% recent iterations without DRCs.\n",
+        //         user_inputs->diffPairToPseudoNetMap[path], path, user_inputs->diffPairPartner[path], path, 100 * routability->fractionRecentIterationsWithoutPathDRCs[path]);
       }  // End of if block for flagging diff-pair nets and their associated nets
       else  {
-        printf("DEBUG: Flagging standard path %d for start/end terminal-swapping because it has %.3f%% recent iterations without DRCs\n",
-                path, 100 * routability->fractionRecentIterationsWithoutPathDRCs[path]);
+        // printf("DEBUG: Flagging standard path %d for start/end terminal-swapping because it has %.3f%% recent iterations without DRCs\n",
+        //         path, 100 * routability->fractionRecentIterationsWithoutPathDRCs[path]);
       }
     }  // End of else/if-block for flagging non-pseudo nets.
   }  // End of for-loop for index 'path' for flagging nets to have their terminals swapped
@@ -861,7 +1017,14 @@ int swap_start_and_end_terminals_of_DRC_paths(const int max_routed_nets, MapInfo
     }  // End of if-block for path being flagged for terminal-swapping
   }  // End of for-loop for index 'path'
 
-  // Return the number of nets whose terminals were swapped:
+  // If any terminals were actually swapped, then increment the counter that
+  // tracks how many times we've swapped start/end terminals:
+  if (num_nonPseudo_terminals_swapped && ! countOnly)  {
+    routability->num_startEnd_terminal_swaps++;
+  }
+
+  // Return the number of nets whose terminals were swapped, or were eligible
+  // to be swapped:
   return(num_nonPseudo_terminals_swapped);
 
 }  // End of function 'swap_start_and_end_terminals_of_DRC_paths'
@@ -889,8 +1052,8 @@ int swap_start_and_end_terminals_of_DRC_paths(const int max_routed_nets, MapInfo
 //
 // Define 'DEBUG_compareRoutingMetrics' and re-compile if you want verbose debugging print-statements enabled:
 //
-#define DEBUG_compareRoutingMetrics 1
-/// #undef DEBUG_compareRoutingMetrics
+// #define DEBUG_compareRoutingMetrics 1
+#undef DEBUG_compareRoutingMetrics
 
 static int compareRoutingMetrics(const unsigned char dynamicParameter_1,
                                  const unsigned char dynamicParameter_2,
@@ -1104,8 +1267,8 @@ static int compareRoutingMetrics(const unsigned char dynamicParameter_1,
 // Define 'DEBUG_assessCongestionSensitivities' and re-compile if you want verbose
 // debugging print-statements enabled:
 //
-#define DEBUG_assessCongestionSensitivities 1
-// #undef DEBUG_assessCongestionSensitivities
+// #define DEBUG_assessCongestionSensitivities 1
+#undef DEBUG_assessCongestionSensitivities
 
 static void assessCongestionSensitivities(DynamicAlgorithmMetrics_t congSensitivityMetrics[], unsigned char *change_algorithm_during_this_iteration,
                                           unsigned char *changeCongSensitivity, unsigned short *num_congSensitivity_changes,
@@ -1557,8 +1720,8 @@ static void assessCongestionSensitivities(DynamicAlgorithmMetrics_t congSensitiv
 // Define 'DEBUG_determineAlgorithmChanges' and re-compile if you want verbose
 // debugging print-statements enabled:
 //
-#define DEBUG_determineAlgorithmChanges 1
-// #undef DEBUG_determineAlgorithmChanges
+// #define DEBUG_determineAlgorithmChanges 1
+#undef DEBUG_determineAlgorithmChanges
 
 void determineAlgorithmChanges(MapInfo_t *mapInfo, int DRC_free_threshold,
                                  RoutingMetrics_t *routability, const InputValues_t *user_inputs)  {
@@ -1930,9 +2093,6 @@ void determineAlgorithmChanges(MapInfo_t *mapInfo, int DRC_free_threshold,
         printf(  "DEBUG:     fraction_trace2trace_DRCs = %.3f\n", fraction_trace2trace_DRCs);
         printf(  "DEBUG:         fraction_via2via_DRCs = %.3f\n\n", fraction_via2via_DRCs);
 
-        /// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-
         //
         // Depending on the shape-types involved in recent DRCs, decide whether to increase via congestion
         // sensitivity, trace congestion sensitivity, or both:
@@ -1992,12 +2152,6 @@ void determineAlgorithmChanges(MapInfo_t *mapInfo, int DRC_free_threshold,
                                         &(routability->num_traceCongSensitivity_reductions), mapInfo->currentTraceCongSensIndex,
                                         mapInfo->current_iteration, routability->inMetricsPlateau[mapInfo->current_iteration]);
         }  // End of else-block for a mixture of trace-to-trace and via-to-via violations
-
-
-
-
-        /// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 
       }  // End of if-block for assessing whether to change the congestion sensitivity
     }  // End of if-block for enablePseudoTraceCongestion == FALSE

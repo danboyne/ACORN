@@ -3451,9 +3451,8 @@ void initializeRoutability(RoutingMetrics_t *routability, const MapInfo_t *mapIn
   routability->total_nonPseudo_vias               = 0;
   routability->num_DRCfree_paths                  = 0;
   routability->num_paths_with_DRCs                = 0;
-  routability->total_elapsed_time                 = 0;
   routability->total_explored_cells               = 0;
-  routability->best_iteration = 1;
+  routability->lowest_cost_iteration = 1;
 
   for (int i = 0; i < max_routed_nets; i++)  {
     routability->path_cost[i]                  = 0;
@@ -3497,6 +3496,10 @@ void initializeRoutability(RoutingMetrics_t *routability, const MapInfo_t *mapIn
   // parameter 'initialize_ALL_elements' us set to TRUE:
   //
   if (initialize_ALL_elements)  {
+
+    // Initialize to zero the num_HTML_messages variable, which keeps track of how many HTML-encoded messages
+    // are displayed to the user:
+    routability->num_HTML_messages = 0;
 
     // Initialize to 1.0 the fractionRecentIterationsWithoutMapDRCs variable, which is used on the 1st iteration,
     // before calcRoutabilityMetrics is even called:
@@ -3587,8 +3590,20 @@ void initializeRoutability(RoutingMetrics_t *routability, const MapInfo_t *mapIn
       routability->enablePseudoTraceCongestion[i]   = FALSE;
       routability->cumulative_DRCfree_iterations[i] = 0;
       routability->iteration_explored_cells[i]      = 0;
-      routability->iteration_elapsed_time[i]        = 0;
-    }
+      routability->iteration_cumulative_time[i]     = 0;
+
+      for (int j = 0; j < maxRecordedDRCs; j++)  {
+        routability->DRC_details[i][j].x                      = 0;
+        routability->DRC_details[i][j].y                      = 0;
+        routability->DRC_details[i][j].z                      = 0;
+        routability->DRC_details[i][j].pathNum                = 0;
+        routability->DRC_details[i][j].offendingPathNum       = 0;
+        routability->DRC_details[i][j].shapeType              = 0;
+        routability->DRC_details[i][j].offendingShapeType     = 0;
+        routability->DRC_details[i][j].minimumAllowedDistance = 0.0;
+        routability->DRC_details[i][j].minimumAllowedSpacing  = 0.0;
+      }  // End of for-loop for index 'j'
+    }  // End of for-loop for index 'i'
 
     // Initialize to zero the elements of array 'recent_path_DRC_cells[][]':
     for (int i = 0; i < max_routed_nets; i++)  {
