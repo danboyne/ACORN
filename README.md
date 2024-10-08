@@ -28,7 +28,7 @@ Depending on how fast your computer is, and how many cores it contains, the prog
 
 Incidentally, if you'd like Acorn to use fewer threads than are available on your system, you can use the `-t` switch to specify the number of threads. For example, if you'd like Acorn to use only 2 threads, invoke Acorn like so:
 
->acorn.exe &nbsp; &nbsp; `-t &nbsp; 2` &nbsp; &nbsp; 4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
+>acorn.exe &nbsp; &nbsp; `-t  2` &nbsp; &nbsp; 4n_800x_500y_4L_obstacles_wide_vias.txt&nbsp; &nbsp; &nbsp; > &nbsp; &nbsp; &nbsp; logfile.txt
 
  ### Where Can I Get More Help?
  Documentation for Acorn is a work-in-progress. Please be patient.
