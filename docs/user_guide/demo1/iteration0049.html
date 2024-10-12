@@ -1,0 +1,367 @@
+<HTML>
+<HEAD><TITLE>Iteration 49</TITLE>
+<SCRIPT language="javascript" type="text/javascript">
+
+  function checkAll(x) {
+    if (x.checked == true) {
+      document.getElementById('layer_00').style.visibility='visible';
+      document.getElementById('checkbox_00').checked=true;
+      document.getElementById('layer_01').style.visibility='visible';
+      document.getElementById('checkbox_01').checked=true;
+      document.getElementById('layer_02').style.visibility='visible';
+      document.getElementById('checkbox_02').checked=true;
+      document.getElementById('layer_03').style.visibility='visible';
+      document.getElementById('checkbox_03').checked=true;
+      document.getElementById('layer_04').style.visibility='visible';
+      document.getElementById('checkbox_04').checked=true;
+      document.getElementById('layer_05').style.visibility='visible';
+      document.getElementById('checkbox_05').checked=true;
+      document.getElementById('layer_06').style.visibility='visible';
+      document.getElementById('checkbox_06').checked=true;
+    } else {
+      document.getElementById('layer_00').style.visibility='hidden';
+      document.getElementById('checkbox_00').checked=false;
+      document.getElementById('layer_01').style.visibility='hidden';
+      document.getElementById('checkbox_01').checked=false;
+      document.getElementById('layer_02').style.visibility='hidden';
+      document.getElementById('checkbox_02').checked=false;
+      document.getElementById('layer_03').style.visibility='hidden';
+      document.getElementById('checkbox_03').checked=false;
+      document.getElementById('layer_04').style.visibility='hidden';
+      document.getElementById('checkbox_04').checked=false;
+      document.getElementById('layer_05').style.visibility='hidden';
+      document.getElementById('checkbox_05').checked=false;
+      document.getElementById('layer_06').style.visibility='hidden';
+      document.getElementById('checkbox_06').checked=false;
+    }
+  }
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<H1>Iteration 49</H1>
+Map is  0.800 mm wide by  0.500 mm high (4 layers). 
+Each path-finding cell is 1x1 pixels (1.000 x 1.000 microns).<BR>
+
+<!-- Hyperlinks to toggle the visibility of each image go here: -->
+<TABLE border="1" cellpadding="2">
+  <TR>
+    <TH rowspan="2">Layer</TH>
+    <TH align="center"><FONT size="1"><B>Visibility</B></FONT></TH>
+    <TH rowspan="2" align="center"><SPAN STYLE="writing-mode: vertical-lr; writing-mode: tb-rl; transform: rotate(180deg);"><FONT size="1">%&nbsp;&nbsp;DRCs</FONT></SPAN></TH>
+    <TH colspan="2" align="center"><A href="designRules.html">Design Rules</A></TH>
+    <TH colspan="3">Trace Cost<BR>Multipliers</TH>
+    <TH colspan="3">Via Cost<BR>Multipliers</TH>
+    <TH colspan="3" align="center"><FONT color="grey">Congestion</FONT></TH>
+    <TH colspan="2" align="center"><FONT color="grey">Explored Cells</FONT></TH>
+  </TR>
+  <TR>
+    <TH><input type="checkbox" name="check_uncheck_all" onchange='checkAll(this);'
+       value="false" id="id_check_uncheck_all" style="indeterminate:true"></TH>
+    <TH align="center"><FONT size="2">Fine_Design_Rules</FONT></TH>
+    <TH align="center"><FONT size="2">Coarse_Design_Rules</FONT></TH>
+    <TD align="center"><B>1x</B><FONT size="1"><BR>#0 (default)</FONT></TD>
+    <TD align="center"><B>2x</B><FONT size="1"><BR>#1</FONT></TD>
+    <TD align="center"><B>4x</B><FONT size="1"><BR>#2</FONT></TD>
+    <TD align="center"><B>1x</B><FONT size="1"><BR>#0 (default)</FONT></TD>
+    <TD align="center"><B>3x</B><FONT size="1"><BR>#1</FONT></TD>
+    <TD align="center"><B>6x</B><FONT size="1"><BR>#2</FONT></TD>
+    <TH align="center"><FONT size="1" color="grey">Trace</FONT></TH>
+    <TH align="center"><FONT size="1" color="grey">Via-Up</FONT></TH>
+    <TH align="center"><FONT size="1" color="grey">Via-<BR>Down</FONT></TH>
+    <TH align="center"><FONT size="2" color="grey">Normal</FONT></TH>
+    <TH align="center"><FONT size="1" color="grey">Post-<BR>Processing</FONT></TH>
+  </TR>
+  <TR>
+    <TD align="center"><B>M1</B></TD>
+    <TD style="background-color:rgba(255,0,0,0.50)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_00"
+        onclick="document.getElementById('layer_00').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;" checked>
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD bgcolor="white" align="center">
+      <input type="checkbox" onclick="document.getElementById('DRmap_00-00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center"><FONT color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer00_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer00_cost01').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer00_cost02').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_00-0').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_00-1').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_00-2').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('expl_00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('explPP_00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+  </TR>
+  <TR>
+    <TD align="center"><B>V12</B></TD>
+    <TD style="background-color:rgba(204,0,0,1.00)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_01"
+        onclick="document.getElementById('layer_01').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;">
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD align="center" colspan="2"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer01_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer01_cost01').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer01_cost02').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center" colspan="3"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center" colspan="2"><FONT size="1" color="grey">N/A</FONT></TD>
+  </TR>
+  <TR>
+    <TD align="center"><B>M2</B></TD>
+    <TD style="background-color:rgba(0,0,255,0.50)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_02"
+        onclick="document.getElementById('layer_02').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;" checked>
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD bgcolor="white" align="center">
+      <input type="checkbox" onclick="document.getElementById('DRmap_01-00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD bgcolor="white" align="center">
+      <input type="checkbox" onclick="document.getElementById('DRmap_01-01').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer02_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_02-0').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_02-1').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_02-2').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('expl_02').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('explPP_02').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+  </TR>
+  <TR>
+    <TD align="center"><B>V23</B></TD>
+    <TD style="background-color:rgba(0,0,204,1.00)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_03"
+        onclick="document.getElementById('layer_03').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;">
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD align="center" colspan="2"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer03_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer03_cost01').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer03_cost02').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center" colspan="3"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center" colspan="2"><FONT size="1" color="grey">N/A</FONT></TD>
+  </TR>
+  <TR>
+    <TD align="center"><B>M3</B></TD>
+    <TD style="background-color:rgba(0,255,0,0.50)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_04"
+        onclick="document.getElementById('layer_04').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;" checked>
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD bgcolor="white" align="center">
+      <input type="checkbox" onclick="document.getElementById('DRmap_02-00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD bgcolor="white" align="center">
+      <input type="checkbox" onclick="document.getElementById('DRmap_02-01').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer04_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_04-0').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_04-1').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_04-2').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('expl_04').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('explPP_04').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+  </TR>
+  <TR>
+    <TD align="center"><B>V34</B></TD>
+    <TD style="background-color:rgba(0,204,0,1.00)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_05"
+        onclick="document.getElementById('layer_05').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;">
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD align="center" colspan="2"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer05_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center" colspan="3"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center" colspan="2"><FONT size="1" color="grey">N/A</FONT></TD>
+  </TR>
+  <TR>
+    <TD align="center"><B>M4</B></TD>
+    <TD style="background-color:rgba(153,102,51,0.50)" align="center">&nbsp
+      <input type="checkbox" id="checkbox_06"
+        onclick="document.getElementById('layer_06').style.visibility=(this.checked)?'visible':'hidden';
+                 document.getElementById('id_check_uncheck_all').indeterminate=true;" checked>
+        &nbsp;
+    </TD>
+    <TD></TD>
+    <TD align="center"><FONT color="grey">N/A</FONT></TD>
+    <TD bgcolor="white" align="center">
+      <input type="checkbox" onclick="document.getElementById('DRmap_03-01').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('layer06_cost00').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">Not used</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center"><FONT size="1" color="grey">N/A</FONT></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_06-0').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_06-1').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('cong_06-2').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('expl_06').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+    <TD align="center">
+      <input type="checkbox" onclick="document.getElementById('explPP_06').style.visibility=(this.checked)?'visible':'hidden';"></TD>
+  </TR>
+</TABLE>
+
+<!-- This CSS is needed to overlay multiple images: -->
+<STYLE type="text/css">
+  .container_0 { float: left; position: relative; }
+  .container_1 { position: absolute; top: 0; right: 0; }
+</STYLE>
+
+<!-- Overlaid PNG images go here: -->
+<DIV class="container_0">
+  <IMG id="layer_06" border="1" src="map_iter0049_06_M4.png" alt="" width="800" height="500">
+  <IMG id="layer_05" class="container_1" border="1" src="map_iter0049_05_V34.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer_04" class="container_1" border="1" src="map_iter0049_04_M3.png" alt="" width="800" height="500">
+  <IMG id="layer_03" class="container_1" border="1" src="map_iter0049_03_V23.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer_02" class="container_1" border="1" src="map_iter0049_02_M2.png" alt="" width="800" height="500">
+  <IMG id="layer_01" class="container_1" border="1" src="map_iter0049_01_V12.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer_00" class="container_1" border="1" src="map_iter0049_00_M1.png" alt="" width="800" height="500">
+  <IMG id="expl_06" class="container_1" border="1" src="expl_iter0049_06_M4.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="explPP_06" class="container_1" border="1" src="explPP_iter0049_06_M4.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="expl_04" class="container_1" border="1" src="expl_iter0049_04_M3.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="explPP_04" class="container_1" border="1" src="explPP_iter0049_04_M3.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="expl_02" class="container_1" border="1" src="expl_iter0049_02_M2.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="explPP_02" class="container_1" border="1" src="explPP_iter0049_02_M2.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="expl_00" class="container_1" border="1" src="expl_iter0049_00_M1.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="explPP_00" class="container_1" border="1" src="explPP_iter0049_00_M1.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_03-00" class="container_1" border="1" src="DRmap_layer03_M4_DRset00_Fine_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_03-01" class="container_1" border="1" src="DRmap_layer03_M4_DRset01_Coarse_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_06-0" class="container_1" border="1" src="cong_iter0049_06-0_M4.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_06-1" class="container_1" border="1" src="cong_iter0049_06-1_M4.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_06-2" class="container_1" border="1" src="cong_iter0049_06-2_M4.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_02-00" class="container_1" border="1" src="DRmap_layer02_M3_DRset00_Fine_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_02-01" class="container_1" border="1" src="DRmap_layer02_M3_DRset01_Coarse_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_04-0" class="container_1" border="1" src="cong_iter0049_04-0_M3.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_04-1" class="container_1" border="1" src="cong_iter0049_04-1_M3.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_04-2" class="container_1" border="1" src="cong_iter0049_04-2_M3.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_01-00" class="container_1" border="1" src="DRmap_layer01_M2_DRset00_Fine_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_01-01" class="container_1" border="1" src="DRmap_layer01_M2_DRset01_Coarse_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_02-0" class="container_1" border="1" src="cong_iter0049_02-0_M2.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_02-1" class="container_1" border="1" src="cong_iter0049_02-1_M2.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_02-2" class="container_1" border="1" src="cong_iter0049_02-2_M2.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_00-00" class="container_1" border="1" src="DRmap_layer00_M1_DRset00_Fine_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="DRmap_00-01" class="container_1" border="1" src="DRmap_layer00_M1_DRset01_Coarse_Design_Rules.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_00-0" class="container_1" border="1" src="cong_iter0049_00-0_M1.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_00-1" class="container_1" border="1" src="cong_iter0049_00-1_M1.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="cong_00-2" class="container_1" border="1" src="cong_iter0049_00-2_M1.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer06_cost00" class="container_1" border="1" src="costMap_layer06_M4_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer05_cost00" class="container_1" border="1" src="costMap_layer05_V34_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer04_cost00" class="container_1" border="1" src="costMap_layer04_M3_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer03_cost00" class="container_1" border="1" src="costMap_layer03_V23_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer03_cost01" class="container_1" border="1" src="costMap_layer03_V23_cost01_3X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer03_cost02" class="container_1" border="1" src="costMap_layer03_V23_cost02_6X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer02_cost00" class="container_1" border="1" src="costMap_layer02_M2_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer01_cost00" class="container_1" border="1" src="costMap_layer01_V12_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer01_cost01" class="container_1" border="1" src="costMap_layer01_V12_cost01_3X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer01_cost02" class="container_1" border="1" src="costMap_layer01_V12_cost02_6X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer00_cost00" class="container_1" border="1" src="costMap_layer00_M1_cost00_1X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer00_cost01" class="container_1" border="1" src="costMap_layer00_M1_cost01_2X.png" alt="" width="800" height="500" style="visibility:hidden">
+  <IMG id="layer00_cost02" class="container_1" border="1" src="costMap_layer00_M1_cost02_4X.png" alt="" width="800" height="500" style="visibility:hidden">
+</DIV>
+
+<TABLE border="1" cellpadding="2"><TR><TD><PRE>
+
+Routability metrics:
+  Number of cells with non-pseudo-DRC violations: 0
+  Number of cells with pseudo-DRC violations: 0
+  Number of cells with any type of DRC violation: 0
+
+  DRC matrix (12 nets by 12 nets):
+     Net |      0       1       2       3       4       5       6       7  |      8       9      10      11  
+    -----| ------- ------- ------- ------- ------- ------- ------- ------- | ------- ------- ------- ------- 
+       0 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       1 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       2 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       3 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       4 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       5 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       6 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       7 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+  Pseudo:| - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - | - - - - - - - - - - - - - - - -
+       8 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+       9 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+      10 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+      11 |      0       0       0       0       0       0       0       0  |      0       0       0       0 
+
+  Lateral length and number of cells with DRC violations for each net:
+            Net   0:    0.8167 mm,     3 vias,          0 DRC cells, name 'N0_p' (partner: 'N0_n', swappable P/N terminals)
+            Net   1:    0.8233 mm,     3 vias,          0 DRC cells, name 'N0_n' (partner: 'N0_p', swappable P/N terminals)
+            Net   2:    0.6809 mm,     3 vias,          0 DRC cells, name 'N1_p' (partner: 'N1_n', swappable P/N terminals)
+            Net   3:    0.6950 mm,     3 vias,          0 DRC cells, name 'N1_n' (partner: 'N1_p', swappable P/N terminals)
+            Net   4:    0.8139 mm,     3 vias,          0 DRC cells, name 'N2_p' (partner: 'N2_n')
+            Net   5:    0.8157 mm,     3 vias,          0 DRC cells, name 'N2_n' (partner: 'N2_p')
+            Net   6:    0.7505 mm,     3 vias,          0 DRC cells, name 'N3_p' (partner: 'N3_n', P/N terminals swapped)
+            Net   7:    0.7392 mm,     3 vias,          0 DRC cells, name 'N3_n' (partner: 'N3_p', P/N terminals swapped)
+     Pseudo-net   8:    0.8190 mm,     3 vias,          0 DRC cells, name '_DIFF_PAIR_PSEUDO_NET_0008'
+     Pseudo-net   9:    0.6771 mm,     3 vias,          0 DRC cells, name '_DIFF_PAIR_PSEUDO_NET_0009'
+     Pseudo-net  10:    0.8150 mm,     3 vias,          0 DRC cells, name '_DIFF_PAIR_PSEUDO_NET_0010'
+     Pseudo-net  11:    0.7427 mm,     3 vias,          0 DRC cells, name '_DIFF_PAIR_PSEUDO_NET_0011'
+                     -------------  ----------   -----------------------------------
+  User-defined nets:    6.1351 mm,    24 vias,          0 cells with DRCs (0 / 2)
+        Pseudo-nets:    3.0539 mm,    12 vias,          0 cells with DRCs (0 / 2)
+           All nets:    9.1890 mm,    36 vias,          0 cells with DRCs (0 / 2)
+
+
+</PRE></TD></TR></TABLE>
+</BODY></HTML>

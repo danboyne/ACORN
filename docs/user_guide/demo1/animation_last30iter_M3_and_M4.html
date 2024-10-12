@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<!-- Filename 'animation_last30iter_M3_and_M4.html' -->
+
+  <TITLE>M3/M4 Animation (30)</TITLE>
+
+  <STYLE>
+    .overlay-container {
+      float: left;
+      position: relative;
+    }
+    .overlay-image {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  </STYLE>
+
+  <SCRIPT>
+    const firstImage = 25;
+    const lastImage = 54;
+    const imageCount = 30; // Total images from 25 through 54
+    const displayTime = 1000; // 1000 milliseconds for each image
+    const specialDisplayTime = 3000; // 3000 milliseconds for the first and last images
+    let currentIndex = firstImage;
+
+    // State variable 'intervalId' contains the ID of the current setTimeout, allowing you to pause/resume the slideshow:
+    let intervalId = null;
+
+    // State variable 'isReversed' tracks the direction of the slideshow:
+    let isReversed = false;
+
+    // Function showNextImage does the following:
+    //   o  Checks isReversed to determine whether to increment or decrement currentIndex.
+    //   o  Updates the images and the imageInfo text.
+    //   o  Sets the timeout for the next image display based on whether the current image is the first or last.
+    function showNextImage() {
+      const imgA = document.getElementById('layer_04');
+      const imgB = document.getElementById('layer_05');
+      const imgC = document.getElementById('layer_06');
+      
+      const imageInfoTop    = document.getElementById('imageInfoTop');
+      const imageInfoBottom = document.getElementById('imageInfoBottom');
+      
+      const baseName = `map_iter${String(currentIndex).padStart(4, '0')}_`;
+      imgA.src = baseName + '04_M3.png';
+      imgB.src = baseName + '05_V34.png';
+      imgC.src = baseName + '06_M4.png';
+      
+      if (currentIndex === 0)  {
+        imageInfoTop.textContent    = `Pre-routing configuration`;
+        imageInfoBottom.textContent = `Pre-routing configuration`;
+      } else {
+        imageInfoTop.textContent    = `Iteration ${currentIndex} of ${lastImage}`;
+        imageInfoBottom.textContent = `Iteration ${currentIndex} of ${lastImage}`;
+      }
+
+      let currentDisplayTime = 1000;  // Placeholder value
+      if (currentIndex === 0 || currentIndex === firstImage || currentIndex === lastImage) {
+        currentDisplayTime = specialDisplayTime;
+      }
+      else {
+        currentDisplayTime = displayTime;
+      }
+
+      intervalId = setTimeout(showNextImage, currentDisplayTime);
+      // Update the 'currentIndex' based on the 'isReversed' and previous 'currentIndex' values:
+      if (currentIndex === 0)  {
+        if (! isReversed)  {
+          currentIndex = firstImage;
+        } else {
+          currentIndex = lastImage;
+        }
+      }
+      else if (currentIndex === lastImage && ! isReversed) {
+        currentIndex = 0;
+      }
+      else if (currentIndex === firstImage && isReversed) {
+        currentIndex = 0;
+      }
+      else  {
+        if (! isReversed)  {
+          currentIndex = currentIndex + 1;
+        } else {
+          currentIndex = currentIndex - 1;
+        }
+      }
+    }  // End of function 'showNextImage'
+
+    // Function pauseSlideshow uses clearTimeout(intervalId) to pause the slideshow:
+    function pauseSlideshow() {
+      clearTimeout(intervalId);
+    }
+
+    // Function resumeSlideshow calls showNextImage to resume the slideshow.
+    function resumeSlideshow() {
+      showNextImage();
+    }
+
+    // Function reverseSlideshow does the following:
+    //   o  Toggles isReversed to change the direction of the slideshow.
+    //   o  Calls showNextImage to start the slideshow in the new direction.
+    function reverseSlideshow() {
+      isReversed = !isReversed;
+      showNextImage();
+    }
+
+    intervalId = setTimeout(showNextImage, specialDisplayTime);
+
+    function checkAll(x) {
+      if (x.checked == true) {
+        document.getElementById('layer_04').style.visibility='visible';
+        document.getElementById('checkbox_04').checked=true;
+        document.getElementById('layer_05').style.visibility='visible';
+        document.getElementById('checkbox_05').checked=true;
+        document.getElementById('layer_06').style.visibility='visible';
+        document.getElementById('checkbox_06').checked=true;
+      } else {
+        document.getElementById('layer_04').style.visibility='hidden';
+        document.getElementById('checkbox_04').checked=false;
+        document.getElementById('layer_05').style.visibility='hidden';
+        document.getElementById('checkbox_05').checked=false;
+        document.getElementById('layer_06').style.visibility='hidden';
+        document.getElementById('checkbox_06').checked=false;
+      }
+    }  // End of function checkAll
+
+  </SCRIPT>
+
+</HEAD>
+
+<BODY>
+  <H1>Animated Routing Evolution for Layers <B><FONT color="blue">M3</FONT></B> and <B><FONT color="blue">M4</FONT></B> from Iteration <B><FONT color="blue">25</FONT></B> Through <B><FONT color="blue">54</FONT></B></FONT></H1>
+  <TABLE border="0">
+    <TR>
+      <TD valign="bottom">
+        <DIV id="imageInfoTop">
+          Pre-routing configuration
+        </DIV>
+        <button onclick="pauseSlideshow()">Pause</button>
+        <button onclick="resumeSlideshow()">Resume</button>
+        <button onclick="reverseSlideshow()">Reverse</button>
+      </TD>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD valign="top">
+        <DIV class="overlay-container">
+          <IMG id="layer_04" border="1" src="map_iter0000_04_M3.png" alt="Layer M3">
+          <IMG id="layer_05" class="overlay-image" border="1" src="map_iter0000_05_V34.png" alt="Layer V34" style="visibility:hidden">
+          <IMG id="layer_06" class="overlay-image" border="1" src="map_iter0000_06_M4.png" alt="Layer M4">
+        </DIV>
+      </TD>
+      <TD valign="middle">
+        <TABLE border="1">
+          <TR>
+            <TH rowspan="2">Layer</TH>
+            <TH>Visibility</TH>
+          </TR>
+          <TR>
+            <TH><input type="checkbox" name="check_uncheck_all" onchange='checkAll(this);'
+                value="false" id="id_check_uncheck_all" style="indeterminate:true"></TH>
+          </TR>
+          <TR>
+            <TD align="center"><B>M3</B></TD>
+            <TD style="background-color:rgba(0,255,0,0.50)" align="center">&nbsp;
+              <input type="checkbox" id="checkbox_04" onclick="document.getElementById('layer_04').style.visibility=(this.checked)?'visible':'hidden';
+              document.getElementById('id_check_uncheck_all').indeterminate=true;" checked>
+              &nbsp;
+            </TD>
+          </TR>
+          <TR>
+            <TD align="center"><B>V34</B></TD>
+            <TD style="background-color:rgba(0,204,0,1.00)" align="center">&nbsp;
+              <input type="checkbox" id="checkbox_05" onclick="document.getElementById('layer_05').style.visibility=(this.checked)?'visible':'hidden';
+              document.getElementById('id_check_uncheck_all').indeterminate=true;">
+              &nbsp;
+            </TD>
+          </TR>
+          <TR>
+            <TD align="center"><B>M4</B></TD>
+            <TD style="background-color:rgba(153,102,51,0.50)" align="center">&nbsp;
+              <input type="checkbox" id="checkbox_06" onclick="document.getElementById('layer_06').style.visibility=(this.checked)?'visible':'hidden';
+              document.getElementById('id_check_uncheck_all').indeterminate=true;" checked>
+              &nbsp;
+            </TD>
+          </TR>
+        </TABLE>
+      </TD>
+    </TR>
+    <TR>
+      <TD valign="top">
+        <DIV id="imageInfoBottom">
+          Pre-routing configuration
+        </DIV>
+        <button onclick="pauseSlideshow()">Pause</button>
+        <button onclick="resumeSlideshow()">Resume</button>
+        <button onclick="reverseSlideshow()">Reverse</button>
+      </TD>
+      <TD>&nbsp;</TD>
+    </TR>
+  </TABLE>
+
+  <HR>
+
+  <TABLE border="0">
+    <TR>
+      <TD valign="bottom">
+        <FONT size="6"><B>Routing metrics:</B></FONT>
+      </TD>
+    </TR>
+    <TR>
+      <TD width="900px" valign="top">
+        <IMG border="1" src="metricsGraphLast30.png" alt="Graph of routing metrics">
+      </TD>
+    </TR>
+    <TR>
+      <TD valign="top">
+        Aggregate routing cost, including lateral traces and vertical vias, and accounting for user-defined
+        cost-zones. The vertical axis on the right shows the number of square cells involved with design-rule
+        violations. Each cell is 1.00 by 1.00 microns in size, as defined by the 'grid_resolution' parameter
+        in the input file.
+      </TD>
+    </TR>
+  </TABLE>
+
+  <BR><HR>
+  
+  <FONT size="2">Updated at 22:19 on 10-11-2024 from Acorn version 'v2024-08-26_New_User_Interface-2-g5948-dirty' using 8 threads.</FONT><BR><BR>
+</BODY>
+</HTML>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+<HEAD>
+  <meta charset="UTF-8">
+  <TITLE>Routing Status</TITLE>
+
+  <SCRIPT type="text/javascript">
+    function toggleMe(a){
+      var e=document.getElementById(a);
+      if(!e)return true;
+      if(e.style.display=="none"){
+        e.style.display="table-row"
+      }
+      else{
+        e.style.display="none"
+      }
+      return true;
+    }  // End of function 'toggleMe'
+
+  </SCRIPT>
+</HEAD>
+
+<BODY>
+  <H1>Routing Status: Preparing to Iterate</H1>
+  <TABLE><TR>
+    <TD valign="top">
+      <B><U>Pre-routing Information:</U></B>
+      <UL>
+        <LI>Input file: <FONT size="2"><A href="8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.txt">8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.txt</A></FONT></LI>
+        <LI><A href="preRouting_map.html">Pre-routing map</A></LI>
+        <LI><A href="designRules.html">Design rules</A></LI>
+      </UL>
+    </TD>
+    <TD width="200px">&nbsp;</TD>
+    <TD valign="top">
+      <FONT size="1" color="#B0B0B0">Key parameters:
+      <UL>
+        <LI>grid_resolution: 1.00 um</LI>
+        <LI>maxIterations: 200</LI>
+        <LI>violationFreeThreshold: 20</LI>
+        <LI>DRC_free_threshold: 51</LI>
+        <LI>baseVertCostMicrons:   37.0 um</LI>
+        <LI>baseVertCostCells: 37 cells</LI>
+        <LI>baseVertCost: 397,284,474,880</LI>
+        <LI>preEvaporationIterations: 2</LI>
+        <LI>runsPerPngMap: 1</LI>
+        <LI>baseCellCost: 10,737,418,240</LI>
+        <LI>baseDiagCost: 15,185,002,499</LI>
+        <LI>baseKnightCost: 24,009,597,087</LI>
+      </UL></FONT>
+    </TD>
+  </TR></TABLE>
+
+  <HR>
+  <FONT size="2">Updated at 10:08 on 10-12-2024 from Acorn version 'v2024-10-11-1-g82b7-dirty' using 8 threads.</FONT><BR><BR>
+</BODY>
+</HTML>

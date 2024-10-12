@@ -1,0 +1,926 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+<HEAD>
+  <meta charset="UTF-8">
+  <TITLE>Routing Status</TITLE>
+
+  <SCRIPT type="text/javascript">
+    function toggleMe(a){
+      var e=document.getElementById(a);
+      if(!e)return true;
+      if(e.style.display=="none"){
+        e.style.display="table-row"
+      }
+      else{
+        e.style.display="none"
+      }
+      return true;
+    }  // End of function 'toggleMe'
+
+    const imageCount = 55; // Total images from 0 to 54
+    const displayTime = 555; // 555 milliseconds for each image
+    const specialDisplayTime = 3000; // 3000 milliseconds for the first and last images
+    let currentIndex = 0;
+
+    // State variable 'intervalId' contains the ID of the current setTimeout, allowing you to pause/resume the slideshow:
+    let intervalId = null;
+
+    // State variable 'isReversed' tracks the direction of the slideshow:
+    let isReversed = false;
+
+    // Function showNextImage does the following:
+    //   o  Checks isReversed to determine whether to increment or decrement currentIndex.
+    //   o  Updates the images and the imageInfo text.
+    //   o  Sets the timeout for the next image display based on whether the current image is the first or last.
+    function showNextImage() {
+      const img = document.getElementById('slideshow');
+      const imageInfoTop    = document.getElementById('imageInfoTop');
+      const imageInfoBottom = document.getElementById('imageInfoBottom');
+
+      if (isReversed) {
+        currentIndex = (currentIndex - 1 + imageCount) % imageCount;
+      } else {
+        currentIndex = (currentIndex + 1) % imageCount;
+      }
+
+      const nextImage = `map_composite_iter${String(currentIndex).padStart(4, '0')}.png`;
+      img.src = nextImage;
+
+      if (currentIndex === 0)  {
+        imageInfoTop.textContent    = `Pre-routing configuration`;
+        imageInfoBottom.textContent = `Pre-routing configuration`;
+      } else {
+        imageInfoTop.textContent    = `Iteration ${currentIndex} of ${imageCount - 1}`;
+        imageInfoBottom.textContent = `Iteration ${currentIndex} of ${imageCount - 1}`;
+      }
+
+      let currentDisplayTime = 1000;  // Placeholder value
+      if (currentIndex === 0 || currentIndex === 1 || currentIndex === imageCount - 1) {
+        currentDisplayTime = specialDisplayTime;
+      } else {
+        currentDisplayTime = displayTime;
+      }
+
+      intervalId = setTimeout(showNextImage, currentDisplayTime);
+    }  // End of function 'showNextImage'
+
+    // Function pauseSlideshow uses clearTimeout(intervalId) to pause the slideshow:
+    function pauseSlideshow() {
+      clearTimeout(intervalId);
+    }
+
+    // Function resumeSlideshow calls showNextImage to resume the slideshow.
+    function resumeSlideshow() {
+      showNextImage();
+    }
+
+    // Function reverseSlideshow does the following:
+    //   o  Toggles isReversed to change the direction of the slideshow.
+    //   o  Calls showNextImage to start the slideshow in the new direction.
+    function reverseSlideshow() {
+      isReversed = !isReversed;
+      showNextImage();
+    }
+
+    intervalId = setTimeout(showNextImage, specialDisplayTime);
+
+  </SCRIPT>
+</HEAD>
+
+<BODY>
+  <H1>Routing Status: <FONT color="blue">Successfully Completed</FONT></H1>
+  <TABLE border="1" cellpadding="10">
+    <TR><TD width="900" bgcolor="#00FF66">
+      Program completed successfully after 54 iterations in 174 seconds, exploring 22,547,764 cells. 
+      51 violation-free iterations were found; at least 51 were required. 
+      The lowest-cost routing results are in <A href="iteration0022.html">iteration 22</A>.
+    </TD></TR>
+  </TABLE>
+  <HR>
+  <TABLE border="0">
+    <TR>
+      <TD valign="top">
+        <TABLE border="0">
+          <TR>
+            <TD valign="bottom">
+              <FONT size="6"><B>Routing metrics:</B></FONT>
+            </TD>
+          </TR>
+          <TR>
+            <TD width="900px" valign="top">
+              <IMG border="1" src="metricsGraphAll.png" alt="Graph of routing metrics">
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              Aggregate routing cost, including lateral traces and vertical vias, and accounting for user-defined
+              cost-zones. The vertical axis on the right shows the number of square cells involved with design-rule
+              violations. Each cell is 1.00 by 1.00 microns in size, as defined by the 'grid_resolution' parameter
+              in the input file.
+            </TD>
+          </TR>
+        </TABLE>
+      </TD>
+      <TD width="25px">&nbsp;</TD>
+      <TD valign="top">
+        <TABLE border="0">
+          <TR>
+            <TD valign="bottom">
+              <DIV id="imageInfoTop">
+                Pre-routing configuration
+              </DIV>
+              <button onclick="pauseSlideshow()">Pause</button>
+              <button onclick="resumeSlideshow()">Resume</button>
+              <button onclick="reverseSlideshow()">Reverse</button>
+            </TD>
+            <TD>&nbsp;</TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <IMG id="slideshow" border="1" src="map_composite_iter0000.png" alt="Animated routing evolution">
+            </TD>
+            <TD valign="middle">
+              <TABLE border="1">
+                <TR>
+                  <TH>Layer</TH>
+                  <TH>Color</TH>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M1</B></TD>
+                  <TD style="background-color:rgba(255,0,0,0.50)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>V12</B></TD>
+                  <TD style="background-color:rgba(204,0,0,1.00)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M2</B></TD>
+                  <TD style="background-color:rgba(0,0,255,0.50)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>V23</B></TD>
+                  <TD style="background-color:rgba(0,0,204,1.00)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M3</B></TD>
+                  <TD style="background-color:rgba(0,255,0,0.50)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>V34</B></TD>
+                  <TD style="background-color:rgba(0,204,0,1.00)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M4</B></TD>
+                  <TD style="background-color:rgba(153,102,51,0.50)" align="center">&nbsp;</TD>
+                </TR>
+              </TABLE>
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <DIV id="imageInfoBottom">
+                Pre-routing configuration
+              </DIV>
+              <button onclick="pauseSlideshow()">Pause</button>
+              <button onclick="resumeSlideshow()">Resume</button>
+              <button onclick="reverseSlideshow()">Reverse</button>
+            </TD>
+            <TD>&nbsp;</TD>
+          </TR>
+        </TABLE>
+      </TD>
+    </TR>
+  </TABLE>
+  
+  <BR><HR><BR>
+  
+  <TABLE border="0">
+    <TR>
+      <TD valign="top">
+        <B><FONT size="5">Metrics by Iteration:</FONT></B>
+        <TABLE border="1">
+          <TR>
+           <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">Iteration</TH>
+           <TH align="center" bgcolor="#CCCCCC">Nets with<BR>Violations</TH>
+           <TH align="center" bgcolor="#CCCCCC">Cells with<BR>Violations</TH>
+           <TH align="center" bgcolor="#CCCCCC">Aggregate Path<BR>Length (mm)</TH>
+           <TH align="center" bgcolor="#CCCCCC">Via<BR>Count</TH>
+           <TH align="center" bgcolor="#CCCCCC"><FONT size="1">Explored<BR>Cells</FONT></TH>
+           <TH align="center" bgcolor="#CCCCCC"><FONT size="1">Elapsed<BR>Time (seconds)</FONT></TH>
+           <TH align="center" bgcolor="#CCCCCC"><FONT size="1">Cumulative<BR>Time (seconds)</FONT></TH>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0054.html">&nbsp;54&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+            <TD align="center" bgcolor="#00FF66">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#51 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,228 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 174 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0053.html">&nbsp;53&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#50 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,223 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 171 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0052.html">&nbsp;52&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#49 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,226 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 168 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0051.html">&nbsp;51&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#48 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,222 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 164 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0050.html">&nbsp;50&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#47 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,219 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 161 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0049.html">&nbsp;49&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#46 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,217 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 158 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0048.html">&nbsp;48&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#45 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,218 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 154 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0047.html">&nbsp;47&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#44 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,217 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 151 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0046.html">&nbsp;46&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#43 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,223 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 148 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0045.html">&nbsp;45&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#42 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,226 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 144 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0044.html">&nbsp;44&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#41 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,230 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 141 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0043.html">&nbsp;43&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#40 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,227 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 138 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0042.html">&nbsp;42&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#39 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,240 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 135 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0041.html">&nbsp;41&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#38 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,250 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 131 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0040.html">&nbsp;40&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#37 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,265 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 128 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0039.html">&nbsp;39&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#36 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,253 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 125 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0038.html">&nbsp;38&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#35 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,249 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 122 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0037.html">&nbsp;37&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#34 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,246 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 119 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0036.html">&nbsp;36&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#33 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,245 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 115 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0035.html">&nbsp;35&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#32 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,241 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 112 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0034.html">&nbsp;34&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#31 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,240 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 109 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0033.html">&nbsp;33&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#30 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,239 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 106 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0032.html">&nbsp;32&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#29 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,198 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 103 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0031.html">&nbsp;31&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#28 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,222 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 99 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0030.html">&nbsp;30&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#27 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,337 </FONT></TD>
+            <TD align="center"> 4 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 96 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0029.html">&nbsp;29&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#26 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1351 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 420,382 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 92 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0028.html">&nbsp;28&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#25 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1358 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 423,204 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 89 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0027.html">&nbsp;27&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#24 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1210 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 422,729 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 86 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0026.html">&nbsp;26&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#23 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1210 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 422,211 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 83 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0025.html">&nbsp;25&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#22 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1227 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 421,800 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 80 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0024.html">&nbsp;24&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#21 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1227 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 419,750 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 77 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0023.html">&nbsp;23&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#20 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1227 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 419,863 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 74 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center" bgcolor="#00FF66"><A href="iteration0022.html">&nbsp;<B>22</B>&nbsp;</A><FONT size="1"><BR>Lowest cost</FONT></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#19 / 51)</FONT>
+            </TD>
+            <TD align="center" bgcolor="#00FF66"><B> 6.1204 <FONT size="1">mm</B><BR>Shortest without<BR>violations</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 408,938 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 71 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0021.html">&nbsp;21&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#18 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1212 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 407,961 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 68 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0020.html">&nbsp;20&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#17 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1212 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 407,976 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 65 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0019.html">&nbsp;19&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#16 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1212 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 408,011 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 62 <FONT size="1">s</FONT></TD>
+          </TR>
+    <TR>
+            <TD colspan="8">
+              <FONT color="#00CC00" size="1">Trace and Via Congestion Sensitivities will increase linearly from 20% to 100% until iteration 90.</FONT>
+            </TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0018.html">&nbsp;18&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#15 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1212 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 408,048 </FONT></TD>
+            <TD align="center"> 2 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 59 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0017.html">&nbsp;17&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#14 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1212 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 407,572 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 57 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0016.html">&nbsp;16&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#13 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1224 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 406,465 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 54 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0015.html">&nbsp;15&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#12 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1224 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 406,188 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 51 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0014.html">&nbsp;14&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#11 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1236 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 406,037 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 48 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0013.html">&nbsp;13&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#10 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1236 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 405,470 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 45 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0012.html">&nbsp;12&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#9 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1236 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 405,239 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 42 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0011.html">&nbsp;11&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#8 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1236 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 405,245 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 39 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0010.html">&nbsp;10&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#7 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 404,931 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 36 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0009.html">&nbsp;9&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#6 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 404,956 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 33 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0008.html">&nbsp;8&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#5 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 404,877 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 30 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0007.html">&nbsp;7&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#4 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 404,808 </FONT></TD>
+            <TD align="center"> 2 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 27 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0006.html">&nbsp;6&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#3 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 405,223 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 25 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0005.html">&nbsp;5&nbsp;</A></TD>
+            <TD align="center"> 0 / 8 </TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#2 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 405,803 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 22 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0004.html">&nbsp;4&nbsp;</A></TD>
+            <TD align="center" bgcolor="#00FF66"><B> 0 / 8 </B><FONT size="1"><BR>Fewest nets</FONT></TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#1 / 51)</FONT>
+            </TD>
+            <TD align="center"> 6.1219 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 408,056 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 19 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0003.html">&nbsp;3&nbsp;</A></TD>
+            <TD align="center"> 2 / 8 </TD>
+            <TD align="center">&nbsp;72 <FONT size="1">cells</FONT>
+            </TD>
+            <TD align="center"> 6.1180 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 416,677 </FONT></TD>
+            <TD align="center"> 5 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 16 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0002.html">&nbsp;2&nbsp;</A></TD>
+            <TD align="center"> 8 / 8 </TD>
+            <TD align="center">&nbsp;1,166 <FONT size="1">cells</FONT>
+            </TD>
+            <TD align="center"> 6.1167 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 450,512 </FONT></TD>
+            <TD align="center"> 5 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 11 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0001.html">&nbsp;1&nbsp;</A></TD>
+            <TD align="center"> 8 / 8 </TD>
+            <TD align="center">&nbsp;1,473 <FONT size="1">cells</FONT>
+            </TD>
+            <TD align="center"> 5.8068 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 502,931 </FONT></TD>
+            <TD align="center"> 3 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 6 <FONT size="1">s</FONT></TD>
+          </TR>
+        </TABLE>
+
+      </TD>
+      <TD width="50px">&nbsp;</TD>
+      <TD valign="top">
+        <B><FONT size="5">Other Animations:</FONT></B>
+        <TABLE border="1" cellpadding="5">
+          <TR>
+            <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">Routing<BR>Layer Pairs</TH>
+            <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">All<BR>Iterations</TH>
+            <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">Last 30<BR>Iterations</TH>
+          </TR>
+          <TR>
+            <TD align="center">M1<FONT size="1"><BR>&#38;<BR></FONT>M2</TD>
+            <TD align="center"><A href="animation_allIter_M1_and_M2.html" target="_all_M1_M2">LINK</A></TD>
+            <TD align="center"><A href="animation_last30iter_M1_and_M2.html" target="_last30_M1_M2">LINK</A></TD>
+          <TR>
+          <TR>
+            <TD align="center">M2<FONT size="1"><BR>&#38;<BR></FONT>M3</TD>
+            <TD align="center"><A href="animation_allIter_M2_and_M3.html" target="_all_M2_M3">LINK</A></TD>
+            <TD align="center"><A href="animation_last30iter_M2_and_M3.html" target="_last30_M2_M3">LINK</A></TD>
+          <TR>
+          <TR>
+            <TD align="center">M3<FONT size="1"><BR>&#38;<BR></FONT>M4</TD>
+            <TD align="center"><A href="animation_allIter_M3_and_M4.html" target="_all_M3_M4">LINK</A></TD>
+            <TD align="center"><A href="animation_last30iter_M3_and_M4.html" target="_last30_M3_M4">LINK</A></TD>
+          <TR>
+        </TABLE>
+      </TD>
+    </TR>
+  </TABLE>
+  <BR><HR>
+  <TABLE><TR>
+    <TD valign="top">
+      <B><U>Pre-routing Information:</U></B>
+      <UL>
+        <LI>Input file: <FONT size="2"><A href="8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.txt">8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.txt</A></FONT></LI>
+        <LI><A href="preRouting_map.html">Pre-routing map</A></LI>
+        <LI><A href="designRules.html">Design rules</A></LI>
+      </UL>
+    </TD>
+    <TD width="200px">&nbsp;</TD>
+    <TD valign="top">
+      <FONT size="1" color="#B0B0B0">Key parameters:
+      <UL>
+        <LI>grid_resolution: 1.00 um</LI>
+        <LI>maxIterations: 200</LI>
+        <LI>violationFreeThreshold: 20</LI>
+        <LI>DRC_free_threshold: 51</LI>
+        <LI>baseVertCostMicrons:   37.0 um</LI>
+        <LI>baseVertCostCells: 37 cells</LI>
+        <LI>baseVertCost: 397,284,474,880</LI>
+        <LI>preEvaporationIterations: 2</LI>
+        <LI>runsPerPngMap: 1</LI>
+        <LI>baseCellCost: 10,737,418,240</LI>
+        <LI>baseDiagCost: 15,185,002,499</LI>
+        <LI>baseKnightCost: 24,009,597,087</LI>
+      </UL></FONT>
+    </TD>
+  </TR></TABLE>
+
+  <HR>
+  <FONT size="2">Updated at 22:19 on 10-11-2024 from Acorn version 'v2024-08-26_New_User_Interface-2-g5948-dirty' using 8 threads.</FONT><BR><BR>
+</BODY>
+</HTML>

@@ -1,0 +1,745 @@
+<!DOCTYPE HTML>
+<HEAD><TITLE>Design Rules</TITLE>
+<SCRIPT language="javascript" type="text/javascript">
+
+function setImageVisible(id, visible) {
+  var img = document.getElementById(id);
+  img.style.visibility = (visible ? 'visible' : 'hidden');
+}
+</SCRIPT>
+</HEAD>
+
+<BODY>
+<H1><U>Design Rules</U></H1>
+
+<H3>2 design-rule sets are defined:</H3>
+
+  <IMG border="1" src="designRules.png" alt="" width="961" height="123"><BR><BR>
+  <TABLE border="1">
+    <TR><TD bgcolor="LightGray">
+      <TABLE border="0" cellpadding="1">
+        <TR>
+          <TH align="right">Name:</TH>
+          <TD colspan="6" align="left">Fine_Design_Rules</TD>
+        </TR>
+        <TR>
+          <TH align="right">Description:</TH>
+          <TD colspan="6" align="left">Fine Design Rules</TD>
+        </TR>
+        <TR>
+          <TH align="right"><FONT size="2">Number:</FONT></TH>
+          <TD colspan="6" align="left"><FONT size="2">1 (default set)</FONT></TD>
+        </TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Default Rules</I></U></B></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    2 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    2 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">    3 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">    3 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #1</U>: '50_ohm' for differential pairs</I></B><BR>&nbsp;&nbsp;( 5.0 um diff-pair pitch)<BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    2 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    2 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">    3 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">    3 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #2</U>: '50_ohm' for pseudo-nets</I></B><BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    8 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    2 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">   11 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">   11 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #3</U>: '100_ohm' for differential pairs</I></B><BR>&nbsp;&nbsp;( 8.0 um diff-pair pitch)<BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    2 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    2 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">    3 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">    3 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #4</U>: '100_ohm' for pseudo-nets</I></B><BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">   11 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    2 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center"><FONT color="grey">    3</FONT></TD>
+                <TD align="center">    3 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">   11 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">   11 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+    </TD>
+    <TD valign="middle">
+      <TABLE border="1" cellpadding="2">
+        <TR>
+          <TH>Layer</TH>
+          <TH colspan="2" align="center">Usage</TH>
+        </TR>
+        <TR>
+          <TD align="center"><B>M1</B></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer00_DR00', true)">Show</A></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer00_DR00', false)">Hide</A></TD>
+        </TR>
+        <TR>
+          <TD align="center"><B>M2</B></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer01_DR00', true)">Show</A></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer01_DR00', false)">Hide</A></TD>
+        </TR>
+        <TR>
+          <TD align="center"><B>M3</B></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer02_DR00', true)">Show</A></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer02_DR00', false)">Hide</A></TD>
+        </TR>
+        <TR>
+          <TD align="center"><B>M4</B></TD>
+          <TD colspan="2" align="center">N/A</TD>
+        </TR>
+      </TABLE>
+    </TD>
+    <TD><valign="middle">
+      <FONT size="2" color="grey">Usage of 'Fine_Design_Rules':</FONT><BR>
+      <!-- This CSS is needed to overlay multiple images: -->
+      <STYLE type="text/css">
+        .container_0 { float: left; position: relative; }
+        .container_1 { position: absolute; top: 0; right: 0; }
+      </STYLE>
+
+      <!-- Overlaid images go here: -->
+      <DIV class="container_0">
+        <IMG id="layer03_DR00" border="1" src="DRmap_layer03_M4_DRset00_Fine_Design_Rules.png" alt="" width="480" height="300">
+        <IMG id="layer02_DR00" class="container_1" border="1" src="DRmap_layer02_M3_DRset00_Fine_Design_Rules.png" alt="" width="480" height="300">
+        <IMG id="layer01_DR00" class="container_1" border="1" src="DRmap_layer01_M2_DRset00_Fine_Design_Rules.png" alt="" width="480" height="300">
+        <IMG id="layer00_DR00" class="container_1" border="1" src="DRmap_layer00_M1_DRset00_Fine_Design_Rules.png" alt="" width="480" height="300">
+      </DIV>
+
+    </TD>
+  </TR></TABLE><BR>
+
+  <TABLE border="1">
+    <TR><TD bgcolor="LightGray">
+      <TABLE border="0" cellpadding="1">
+        <TR>
+          <TH align="right">Name:</TH>
+          <TD colspan="6" align="left">Coarse_Design_Rules</TD>
+        </TR>
+        <TR>
+          <TH align="right">Description:</TH>
+          <TD colspan="6" align="left">Coarse Design Rules</TD>
+        </TR>
+        <TR>
+          <TH align="right"><FONT size="2">Number:</FONT></TH>
+          <TD colspan="6" align="left"><FONT size="2">2</FONT></TD>
+        </TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Default Rules</I></U></B></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    3 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    3 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">    4 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">    5 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #1</U>: '50_ohm' for differential pairs</I></B><BR>&nbsp;&nbsp;(10.0 um diff-pair pitch)<BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    3 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    3 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">    4 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">    5 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #2</U>: '50_ohm' for pseudo-nets</I></B><BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">   14 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    3 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">   15 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">   16 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #3</U>: '100_ohm' for differential pairs</I></B><BR>&nbsp;&nbsp;(15.0 um diff-pair pitch)<BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">    3 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    3 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">    4 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">    5 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+      <TABLE border="0" cellpadding="1">
+        <TR><TD bgcolor="black" colspan="7"></TD></TR>
+        <TR><TD colspan="7"><B><U><I>Exception #4</U>: '100_ohm' for pseudo-nets</I></B><BR><BR></TD></TR>
+        <TR>
+          <TH align="right">Trace Width:</TH>
+          <TD align="left">   19 um <FONT size="2">(1)</FONT></TD>
+          <TD>&nbsp;&nbsp;&nbsp;</TD>
+          <TH align="center" colspan="4"><U>Shape-to-Shape Spacings (um)</U></TH>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+          <TD colspan="4" rowspan="4">
+            <TABLE border="1">
+              <TR>
+                <TH align="center"></TH>
+                <TH align="center">Trace</TH>
+                <TH align="center">Via-Up</TH>
+                <TH align="center">Via-Down</TH>
+              </TR>
+              <TR>
+                <TH align="right">Trace</TH>
+                <TD align="center">    3 <FONT size="2">(4)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(5)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(6)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Up</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(7)</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(8)</FONT></TD>
+              </TR>
+              <TR>
+                <TH align="right">Via-Down</TH>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center"><FONT color="grey">    4</FONT></TD>
+                <TD align="center">    4 <FONT size="2">(9)</FONT></TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Up Diameter:</TH>
+          <TD align="left">   19 um <FONT size="2">(2)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TD colspan="2">&nbsp;</TD>
+          <TD></TD>
+        </TR>
+        <TR>
+          <TH align="right">Via-Down Diameter:</TH>
+          <TD align="left">   19 um <FONT size="2">(3)</FONT></TD>
+          <TD></TD>
+        </TR>
+        <TR><TD colspan="7" align="center"><FONT size="2">
+           Parenthetical values denote dimensions in <A href="designRules.png">figure</A>.</FONT></TD></TR>
+        <TR><TD colspan="7" align="left"><FONT size="3">
+           <BR><B>Allowed routing directions:</B> All directions<BR><center><FONT size="1">(N/NxNE/NE/ExNE/E/ExSE/SE/SxSE/S/SxSW/SW/WxSW/W/WxNW/NW/NxNW/up/down)</FONT></center></FONT></TD></TR>
+      </TABLE>
+    </TD>
+    <TD valign="middle">
+      <TABLE border="1" cellpadding="2">
+        <TR>
+          <TH>Layer</TH>
+          <TH colspan="2" align="center">Usage</TH>
+        </TR>
+        <TR>
+          <TD align="center"><B>M1</B></TD>
+          <TD colspan="2" align="center">N/A</TD>
+        </TR>
+        <TR>
+          <TD align="center"><B>M2</B></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer01_DR01', true)">Show</A></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer01_DR01', false)">Hide</A></TD>
+        </TR>
+        <TR>
+          <TD align="center"><B>M3</B></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer02_DR01', true)">Show</A></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer02_DR01', false)">Hide</A></TD>
+        </TR>
+        <TR>
+          <TD align="center"><B>M4</B></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer03_DR01', true)">Show</A></TD>
+          <TD bgcolor="white" align="center"><A href="javascript:setImageVisible('layer03_DR01', false)">Hide</A></TD>
+        </TR>
+      </TABLE>
+    </TD>
+    <TD><valign="middle">
+      <FONT size="2" color="grey">Usage of 'Coarse_Design_Rules':</FONT><BR>
+      <!-- This CSS is needed to overlay multiple images: -->
+      <STYLE type="text/css">
+        .container_0 { float: left; position: relative; }
+        .container_1 { position: absolute; top: 0; right: 0; }
+      </STYLE>
+
+      <!-- Overlaid images go here: -->
+      <DIV class="container_0">
+        <IMG id="layer03_DR01" border="1" src="DRmap_layer03_M4_DRset01_Coarse_Design_Rules.png" alt="" width="480" height="300">
+        <IMG id="layer02_DR01" class="container_1" border="1" src="DRmap_layer02_M3_DRset01_Coarse_Design_Rules.png" alt="" width="480" height="300">
+        <IMG id="layer01_DR01" class="container_1" border="1" src="DRmap_layer01_M2_DRset01_Coarse_Design_Rules.png" alt="" width="480" height="300">
+        <IMG id="layer00_DR01" class="container_1" border="1" src="DRmap_layer00_M1_DRset01_Coarse_Design_Rules.png" alt="" width="480" height="300">
+      </DIV>
+
+    </TD>
+  </TR></TABLE><BR>
+
+  <IMG border="1" src="designRules.png" alt="" width="961" height="123"><BR><BR>
+</HTML>

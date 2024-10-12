@@ -1,0 +1,309 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+<HEAD>
+  <meta charset="UTF-8">
+  <TITLE>Routing Status</TITLE>
+
+  <SCRIPT type="text/javascript">
+    function toggleMe(a){
+      var e=document.getElementById(a);
+      if(!e)return true;
+      if(e.style.display=="none"){
+        e.style.display="table-row"
+      }
+      else{
+        e.style.display="none"
+      }
+      return true;
+    }  // End of function 'toggleMe'
+
+    const imageCount = 5; // Total images from 0 to 4
+    const displayTime = 1000; // 1000 milliseconds for each image
+    const specialDisplayTime = 3000; // 3000 milliseconds for the first and last images
+    let currentIndex = 0;
+
+    // State variable 'intervalId' contains the ID of the current setTimeout, allowing you to pause/resume the slideshow:
+    let intervalId = null;
+
+    // State variable 'isReversed' tracks the direction of the slideshow:
+    let isReversed = false;
+
+    // Function showNextImage does the following:
+    //   o  Checks isReversed to determine whether to increment or decrement currentIndex.
+    //   o  Updates the images and the imageInfo text.
+    //   o  Sets the timeout for the next image display based on whether the current image is the first or last.
+    function showNextImage() {
+      const img = document.getElementById('slideshow');
+      const imageInfoTop    = document.getElementById('imageInfoTop');
+      const imageInfoBottom = document.getElementById('imageInfoBottom');
+
+      if (isReversed) {
+        currentIndex = (currentIndex - 1 + imageCount) % imageCount;
+      } else {
+        currentIndex = (currentIndex + 1) % imageCount;
+      }
+
+      const nextImage = `map_composite_iter${String(currentIndex).padStart(4, '0')}.png`;
+      img.src = nextImage;
+
+      if (currentIndex === 0)  {
+        imageInfoTop.textContent    = `Pre-routing configuration`;
+        imageInfoBottom.textContent = `Pre-routing configuration`;
+      } else {
+        imageInfoTop.textContent    = `Iteration ${currentIndex} of ${imageCount - 1}`;
+        imageInfoBottom.textContent = `Iteration ${currentIndex} of ${imageCount - 1}`;
+      }
+
+      let currentDisplayTime = 1000;  // Placeholder value
+      if (currentIndex === 0 || currentIndex === 1 || currentIndex === imageCount - 1) {
+        currentDisplayTime = specialDisplayTime;
+      } else {
+        currentDisplayTime = displayTime;
+      }
+
+      intervalId = setTimeout(showNextImage, currentDisplayTime);
+    }  // End of function 'showNextImage'
+
+    // Function pauseSlideshow uses clearTimeout(intervalId) to pause the slideshow:
+    function pauseSlideshow() {
+      clearTimeout(intervalId);
+    }
+
+    // Function resumeSlideshow calls showNextImage to resume the slideshow.
+    function resumeSlideshow() {
+      showNextImage();
+    }
+
+    // Function reverseSlideshow does the following:
+    //   o  Toggles isReversed to change the direction of the slideshow.
+    //   o  Calls showNextImage to start the slideshow in the new direction.
+    function reverseSlideshow() {
+      isReversed = !isReversed;
+      showNextImage();
+    }
+
+    intervalId = setTimeout(showNextImage, specialDisplayTime);
+
+  </SCRIPT>
+</HEAD>
+
+<BODY>
+  <H1>Routing Status: In Progress <FONT color="#B0B0B0">(4 iterations)</FONT></H1>
+  <TABLE border="0">
+    <TR>
+      <TD valign="top">
+        <TABLE border="0">
+          <TR>
+            <TD valign="bottom">
+              <FONT size="6"><B>Routing metrics:</B></FONT>
+            </TD>
+          </TR>
+          <TR>
+            <TD width="900px" valign="top">
+              <IMG border="1" src="metricsGraphAll_4iterations.png" alt="Graph of routing metrics">
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              Aggregate routing cost, including lateral traces and vertical vias, and accounting for user-defined
+              cost-zones. The vertical axis on the right shows the number of square cells involved with design-rule
+              violations. Each cell is 1.00 by 1.00 microns in size, as defined by the 'grid_resolution' parameter
+              in the input file.
+            </TD>
+          </TR>
+        </TABLE>
+      </TD>
+      <TD width="25px">&nbsp;</TD>
+      <TD valign="top">
+        <TABLE border="0">
+          <TR>
+            <TD valign="bottom">
+              <DIV id="imageInfoTop">
+                Pre-routing configuration
+              </DIV>
+              <button onclick="pauseSlideshow()">Pause</button>
+              <button onclick="resumeSlideshow()">Resume</button>
+              <button onclick="reverseSlideshow()">Reverse</button>
+            </TD>
+            <TD>&nbsp;</TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <IMG id="slideshow" border="1" src="map_composite_iter0000.png" alt="Animated routing evolution">
+            </TD>
+            <TD valign="middle">
+              <TABLE border="1">
+                <TR>
+                  <TH>Layer</TH>
+                  <TH>Color</TH>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M1</B></TD>
+                  <TD style="background-color:rgba(255,0,0,0.50)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>V12</B></TD>
+                  <TD style="background-color:rgba(204,0,0,1.00)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M2</B></TD>
+                  <TD style="background-color:rgba(0,0,255,0.50)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>V23</B></TD>
+                  <TD style="background-color:rgba(0,0,204,1.00)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M3</B></TD>
+                  <TD style="background-color:rgba(0,255,0,0.50)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>V34</B></TD>
+                  <TD style="background-color:rgba(0,204,0,1.00)" align="center">&nbsp;</TD>
+                </TR>
+                <TR>
+                  <TD align="center"><B>M4</B></TD>
+                  <TD style="background-color:rgba(153,102,51,0.50)" align="center">&nbsp;</TD>
+                </TR>
+              </TABLE>
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <DIV id="imageInfoBottom">
+                Pre-routing configuration
+              </DIV>
+              <button onclick="pauseSlideshow()">Pause</button>
+              <button onclick="resumeSlideshow()">Resume</button>
+              <button onclick="reverseSlideshow()">Reverse</button>
+            </TD>
+            <TD>&nbsp;</TD>
+          </TR>
+        </TABLE>
+      </TD>
+    </TR>
+  </TABLE>
+  
+  <BR><HR><BR>
+  
+  <TABLE border="0">
+    <TR>
+      <TD valign="top">
+        <B><FONT size="5">Metrics by Iteration:</FONT></B>
+        <TABLE border="1">
+          <TR>
+           <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">Iteration</TH>
+           <TH align="center" bgcolor="#CCCCCC">Nets with<BR>Violations</TH>
+           <TH align="center" bgcolor="#CCCCCC">Cells with<BR>Violations</TH>
+           <TH align="center" bgcolor="#CCCCCC">Aggregate Path<BR>Length (mm)</TH>
+           <TH align="center" bgcolor="#CCCCCC">Via<BR>Count</TH>
+           <TH align="center" bgcolor="#CCCCCC"><FONT size="1">Explored<BR>Cells</FONT></TH>
+           <TH align="center" bgcolor="#CCCCCC"><FONT size="1">Elapsed<BR>Time (seconds)</FONT></TH>
+           <TH align="center" bgcolor="#CCCCCC"><FONT size="1">Cumulative<BR>Time (seconds)</FONT></TH>
+          </TR>
+          <TR>
+            <TD align="center" bgcolor="#00FF66"><A href="iteration0004.html">&nbsp;<B>4</B>&nbsp;</A><FONT size="1"><BR>Lowest cost</FONT></TD>
+            <TD align="center" bgcolor="#00FF66"><B> 0 / 8 </B><FONT size="1"><BR>Fewest nets</FONT></TD>
+      <TD align="center" bgcolor="#7DF9FF">&nbsp;<B>0 <FONT size="1">cells</FONT></B>
+              <FONT size="1"><BR>(#1 / 51)</FONT>
+            </TD>
+            <TD align="center" bgcolor="#00FF66"><B> 6.1219 <FONT size="1">mm</B><BR>Shortest without<BR>violations</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 408,056 </FONT></TD>
+            <TD align="center"> 5 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 26 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0003.html">&nbsp;3&nbsp;</A></TD>
+            <TD align="center"> 2 / 8 </TD>
+            <TD align="center">&nbsp;72 <FONT size="1">cells</FONT>
+            </TD>
+            <TD align="center"> 6.1180 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 416,677 </FONT></TD>
+            <TD align="center"> 6 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 21 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0002.html">&nbsp;2&nbsp;</A></TD>
+            <TD align="center"> 8 / 8 </TD>
+            <TD align="center">&nbsp;1,166 <FONT size="1">cells</FONT>
+            </TD>
+            <TD align="center"> 6.1167 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 450,512 </FONT></TD>
+            <TD align="center"> 6 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 15 <FONT size="1">s</FONT></TD>
+          </TR>
+          <TR>
+            <TD align="center"><A href="iteration0001.html">&nbsp;1&nbsp;</A></TD>
+            <TD align="center"> 8 / 8 </TD>
+            <TD align="center">&nbsp;1,473 <FONT size="1">cells</FONT>
+            </TD>
+            <TD align="center"> 5.8068 <FONT size="1">mm</FONT></TD>
+            <TD align="center"> 24 <FONT size="1">vias</FONT></TD>
+            <TD align="center"><FONT size="1"> 502,931 </FONT></TD>
+            <TD align="center"> 5 <FONT size="1">s</FONT></TD>
+            <TD align="center"> 9 <FONT size="1">s</FONT></TD>
+          </TR>
+        </TABLE>
+
+      </TD>
+      <TD width="50px">&nbsp;</TD>
+      <TD valign="top">
+        <B><FONT size="5">Other Animations:</FONT></B>
+        <TABLE border="1" cellpadding="5">
+          <TR>
+            <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">Routing<BR>Layer Pairs</TH>
+            <TH align="center" bgcolor="#CCCCCC" "padding-left: 20px;">All<BR>Iterations</TH>
+          </TR>
+          <TR>
+            <TD align="center">M1<FONT size="1"><BR>&#38;<BR></FONT>M2</TD>
+            <TD align="center"><A href="animation_Iter1-4_M1_and_M2.html" target="_all_M1_M2">LINK</A></TD>
+          <TR>
+          <TR>
+            <TD align="center">M2<FONT size="1"><BR>&#38;<BR></FONT>M3</TD>
+            <TD align="center"><A href="animation_Iter1-4_M2_and_M3.html" target="_all_M2_M3">LINK</A></TD>
+          <TR>
+          <TR>
+            <TD align="center">M3<FONT size="1"><BR>&#38;<BR></FONT>M4</TD>
+            <TD align="center"><A href="animation_Iter1-4_M3_and_M4.html" target="_all_M3_M4">LINK</A></TD>
+          <TR>
+        </TABLE>
+      </TD>
+    </TR>
+  </TABLE>
+  <BR><HR>
+  <TABLE><TR>
+    <TD valign="top">
+      <B><U>Pre-routing Information:</U></B>
+      <UL>
+        <LI>Input file: <FONT size="2"><A href="8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.txt">8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.txt</A></FONT></LI>
+        <LI><A href="preRouting_map.html">Pre-routing map</A></LI>
+        <LI><A href="designRules.html">Design rules</A></LI>
+      </UL>
+    </TD>
+    <TD width="200px">&nbsp;</TD>
+    <TD valign="top">
+      <FONT size="1" color="#B0B0B0">Key parameters:
+      <UL>
+        <LI>grid_resolution: 1.00 um</LI>
+        <LI>maxIterations: 200</LI>
+        <LI>violationFreeThreshold: 20</LI>
+        <LI>DRC_free_threshold: 51</LI>
+        <LI>baseVertCostMicrons:   37.0 um</LI>
+        <LI>baseVertCostCells: 37 cells</LI>
+        <LI>baseVertCost: 397,284,474,880</LI>
+        <LI>preEvaporationIterations: 2</LI>
+        <LI>runsPerPngMap: 1</LI>
+        <LI>baseCellCost: 10,737,418,240</LI>
+        <LI>baseDiagCost: 15,185,002,499</LI>
+        <LI>baseKnightCost: 24,009,597,087</LI>
+      </UL></FONT>
+    </TD>
+  </TR></TABLE>
+
+  <HR>
+  <FONT size="2">Updated at 10:12 on 10-12-2024 from Acorn version 'v2024-10-11-1-g82b7-dirty' using 8 threads.</FONT><BR><BR>
+</BODY>
+</HTML>

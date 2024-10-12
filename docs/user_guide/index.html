@@ -61,10 +61,11 @@
     <H2>Installation</H2>
 
       <!-- Following table contains 1 row and 2 columns: -->
-      <TABLE style="width:100%" border="1" bordercolor="#ffffff" bgcolor="#ffffff">
+      <TABLE style="width:100% border:1px; bordercolor:#ffffff; bgcolor:#ffffff;">
         <TR>
           <!-- Left cell contains text instructions: -->
-          <TD style="min-width:650px; valign:top">
+          <TD style="min-width:650px; vertical-align:top;">
+
             <P class="indented20">Acorn was developed and tested in a Linux environment, and requires the user
             to download and then compile the C source code into the Acorn executable file,
             <SPAN style="font-family:monospace"><B>acorn.exe</B></SPAN>. In the directory that contains the
@@ -144,21 +145,121 @@
     <div id="running_test_case"></div>
     <H2>Running an Existing Test Case</H2>
 
-      <P class="indented20">As noted above in the <A href="installation">Installation</A> section, Acorn
-      is launched from a Linux command-line with a text file as an argument. The 
-      <SPAN style="font-family:monospace"><B>STDOUT</B></SPAN> output of this command should be redirected
-      to a log file for potential analysis during/after the Acorn run. For example, fatal errors will result
-      in descriptive error messages at the bottom of this log file.<BR>
+      <!-- Following table contains 1 row and 2 columns: -->
+      <TABLE style="width:100% border:1px; bordercolor:#ffffff; bgcolor:#ffffff;">
+        <TR>
+          <!-- Left cell contains text instructions: -->
+          <TD style="min-width:750px; vertical-align:top;">
 
-      <P class="indented20">The input text file describes the silicon chip, package, and/or PCB, in
-      addition to the locations of the start- and end-terminals of each net. Instructions for creating such
-      input files are provided below in the <A href="#create_test_case">Creating Your Own Routing Cases</A>
-      section. But to demonstrate the output of Acorn, let's first use one of the existing input files from
-      the <SPAN style="font-family:monospace"><B>tests</B></SPAN> directory.
+            <P class="indented20">As noted above in the <A href="installation">Installation</A> section, Acorn
+            is launched from a Linux command-line with a text file as an argument. The 
+            <SPAN style="font-family:monospace"><B>STDOUT</B></SPAN> output of this command should be redirected
+            to a log file for potential analysis during/after the Acorn run. For example, fatal errors will result
+            in descriptive error messages at the bottom of this log file.<BR>
 
-      <P class="indented20"><FONT color="red"><B>TBD:</B> We need an 8-net, 4-layer test-cases that includes 
-      obstacles, trace cost-zones, via cost-zones, diff-pairs, P/N-swappability, and design-rule zones. We'll 
-      use 8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones.</FONT>
+            <P class="indented20">The input text file describes the silicon chip, package, and/or PCB, in
+            addition to the locations of the start- and end-terminals of each net. Instructions for creating such
+            input files are provided below in the <A href="#create_test_case">Creating Your Own Routing Cases</A>
+            section. But to demonstrate the output of Acorn, let's first use one of the existing input files from
+            the <SPAN style="font-family:monospace"><B>tests</B></SPAN> directory:
+            <SPAN style="font-family:monospace"><B>
+            8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones</B></SPAN>. This small 
+            test-case contains 8 nets consisting of 4 differential pairs. As shown in the perspective view
+            at right, there are 4 routing layers and 3 intervening via layers. As shown, there are various
+            obstacles of various shapes and sizes.
+
+            <P class="indented20">After copying this file to an empty working directory, we launch this test-case
+            using the following command, directing the <SPAN style="font-family:monospace"><B>STDOUT</B></SPAN>
+            output to file <SPAN style="font-family:monospace"><B>logfile.txt</B></SPAN>. 
+
+            <P class="indented20"><SPAN style="font-family:monospace"><B>&nbsp;$ acorn.exe
+            8n_800x_500y_4L_obstacles_diffPairs_PNswappable_costZones_designRuleZones >
+            logfile.txt</B></SPAN><BR>
+
+            <P class="indented20">Within moments, the new file <SPAN style="font-family:monospace"><B>
+            routingStatus.html</B></SPAN> will be available in the working directory. Open this file using your
+            favorite web-browser to display Acorn's output, which should look like the image below. (Click on
+            the image below to open a live version in a new browser tab.)
+
+          </TD>
+
+          <!-- Right cell contains perspective view of 4-layer test-case: -->
+          <TD valign="top">
+            <IMG src="../images/demo1_perspective_view.png" alt="Perspective view of demo" width="500" height="453">
+          </TD>
+
+        </TR>
+      </TABLE>
+
+
+      <!-- Table with caption and image of the initial 'routingStatus.html' page:  -->
+      <!-- (Outer table is used to indent the inner table.)                        -->
+      <TABLE style="padding-left:40px;"><TR><TD>
+        <TABLE style="border:1px solid;">
+          <TR>
+            <TD valign="top">
+              <A href="demo1/routingStatus_A.html" target="_blank">
+                <IMG src="../images/routingStatus_A_demo1.png" alt="Initial routing status screen" width="838" height="320">
+              </A>
+            </TD>
+            <TD valign="middle">
+              <P class="indented20">View of the Acorn output immediately after launching Acorn (in routingStatus.html).
+              Click within the image to open a live version in a new browser tab.
+            </TD>
+          </TR>
+        </TABLE>
+      </TD></TR></TABLE>
+
+
+      <P class="indented20">After each iteration, Acorn updates the output page above. For example, after the 
+      fourth iteration, the same page will appear as shown below. (Click on the image to open a live version
+      in a new browser tab.)
+
+      <!-- Table with caption and image of the 'routingStatus.html' page after 4 iterations:  -->
+      <!-- (Outer table is used to indent the inner table.)                                   -->
+      <TABLE style="padding-left:40px;"><TR><TD>
+        <TABLE style="border:1px solid;">
+          <TR>
+            <TD valign="top">
+              <A href="demo1/routingStatus_B.html" target="_blank">
+                <IMG src="../images/routingStatus_B_demo1.png" alt="Routing status screen after 4 iterations"
+                width="1192" height="885">
+              </A>
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <P class="indented20">View of the Acorn output after 4 iterations. Click within the image above
+              to open a live version in a new browser tab.
+            </TD>
+          </TR>
+        </TABLE>
+      </TD></TR></TABLE>
+
+
+      <P class="indented20">When Acorn completes the routing, the above page will be updated to reflect the
+      completed status, as shown below. (Click on the image below to open a live version in a new browser tab.)
+
+      <!-- Table with caption and image of the final 'routingStatus.html' page:  -->
+      <!-- (Outer table is used to indent the inner table.)                      -->
+      <TABLE style="padding-left:40px;"><TR><TD>
+        <TABLE style="border:1px solid;">
+          <TR>
+            <TD valign="top">
+              <A href="demo1/routingStatus_C.html" target="_blank">
+                <IMG src="../images/routingStatus_C_demo1.png" alt="Final routing status"
+                width="1009" height="697">
+              </A>
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <P class="indented20">View of the Acorn output upon completion. Click within the image above 
+              to open a live version in a new browser tab.
+            </TD>
+          </TR>
+        </TABLE>
+      </TD></TR></TABLE>
 
     <HR>
     <div id="create_test_case"></div>
