@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<HTML>
+  <HEAD>
+    <TITLE>Input File Syntax</TITLE>
+
+    <STYLE> .indented20
+      { padding-left: 20pt; }
+    </STYLE>
+
+  </HEAD>
+
+  <BODY>
+
+    <FONT size="8" color="#cccccc"><B>Acorn Autorouter &#8594;
+      User Guide &#8594;</FONT><FONT size="8" color="#000000"> Input File Syntax</B></FONT>
+    <BR>
+    <FONT size="2" color="#999999"><I><B><U>A</U></B>nt-<B><U>C</U></B>olony <B><U>O</U></B>ptimization
+       for <B><U>R</U></B>outing <B><U>N</U></B>ets</I></FONT>
+
+    <!-- Following table contains 1 row and 5 columns with navigation links: -->
+    <TABLE style="width:100%" border="1" bordercolor="#dddddd" bgcolor="#cccccc">
+      <TR>
+        <TD style="width:20%"><B><A href="../">Home</A></B></TD>
+        <TD style="width:20%"><B><A href=".">User Guide</A></B></TD>
+        <TD style="width:20%"><B><A href="../examples/">Examples</A></B></TD>
+        <TD style="width:20%"><B><A href="https://github.com/danboyne/ACORN">Download</A></B>
+            <BR><FONT size="1">(from GitHub)</FONT></TD>
+        <TD style="width:20%"><B><A href="../theory/">How It Works</A></B></TD>
+      </TR>
+    </TABLE>
+
+    <BR><BR>
+
+    <H1>Acorn Input File Syntax</H1>
+
+      <H2>Introduction</H2>
+
+        <P class="indented20">Acorn uses a simple text file for the netlist, layer definitions, and basic
+        control of the Acorn autorouter.</LI>
+
+      <H2>Syntax</H2>
+
+        <UL>
+          <LI>All statements are case-<U><B>in</B></U>sensitive. However, user-defined strings, such
+              as net names or layer names, are case-sensitive.</LI>
+          <LI>Each statement is written on its own line, and each net in the netlist likewise is
+              written on its own line.</LI>
+          <LI>A hash (<CODE><B>#</B></CODE>) character in the first column of a line creates a full-line
+              comment.</LI>
+          <LI>Two consecutive forward slashes (<CODE><B>//</B></CODE>) denote the beginning of a comment that
+              continues to the end of the line.
+        </UL>
+
+
+      <H2>Conventions</H2>
+
+        <UL>
+          <LI>All units are either millimeters or micrometers (microns), and are documented appropriately.</LI>
+          <LI>All coordinates are relative to the origin, which is located at the lower-left
+              corner of the routing map.</LI>
+          <LI>Integers are denoted by <CODE>&LT;N&GT;</CODE>. Floating-point values are denoted by
+              <CODE>&LT;NN.N&GT;</CODE>.</LI>
+          <LI>Some tokens have a limited number of possible attribute values which are separated by a
+              logical <CODE>OR</CODE> character '|'.</LI> 
+        </UL>
+
+      <H2>General Outline</H2>
+        <UL>
+          <LI><A href="#layers_and_resolution">Layers and Grid Resolution</A></LI>
+          <LI><A href="#netlist">Net List</A></LI>
+          <LI><A href="#keep_out_areas">Keep-out Areas</A></LI>
+          <LI><A href="#design_rules">Design Rules</A></LI>
+          <LI><A href="#cost_zones">Cost Zones</A></LI>
+          <LI><A href="#pin_swap_zones">Pin-Swap Zones</A></LI>
+          <LI><A href="#control_statements">Routing Control Statements</A></LI>
+        </UL>
+
+    <HR>
+    <div id="layers_and_resolution"></div>
+    <H2>Layers and Grid Resolution</H2>
+
+
+
+    <HR>
+    <div id="netlist"></div>
+    <H2>Net List</H2>
+
+
+    <HR>
+    <div id="keep_out_areas"></div>
+    <H2>Keep-out Areas</H2>
+
+
+
+    <HR>
+    <div id="design_rules"></div>
+    <H2>Design Rules</H2>
+
+
+
+    <HR>
+    <div id="cost_zones"></div>
+    <H2>Cost Zones</H2>
+
+
+    <HR>
+    <div id="pin_swap_zones"></div>
+    <H2>Pin-Swap Zones</H2>
+
+
+    <HR>
+    <div id="control_statements"></div>
+    <H2>Routing Control Statements</H2>
+
+
+
+
+    <BR><BR><BR><HR>
+    <FONT size="2" color="grey">Copyright &copy; 2024 Dan Boyne</FONT>
+
+    <!-- Following line-breaks create a scroll-bar in browser for consistency with other pages -->
+    <!-- in this HTML documentation:                                                           -->
+    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+
+  </BODY>
+</HTML>
