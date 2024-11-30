@@ -3,13 +3,32 @@
   <HEAD>
     <TITLE>Input File Syntax</TITLE>
 
-    <STYLE> .indented20
-      { padding-left: 20pt; }
+    <STYLE> .indented20  {
+      padding-left: 20pt;
+    }
     </STYLE>
 
-    <STYLE> .indented40
-      { padding-left: 40pt; }
+    <STYLE> .indented40  {
+      padding-left: 40pt;
+    }
     </STYLE>
+
+    <STYLE> .indented60  {
+      padding-left: 60pt;
+    }
+    </STYLE>
+
+    <STYLE> .highlight  {
+      background-color: LightYellow;
+      font-family: monospace;
+      padding: 0px;
+      outline-width: 1px;
+      outline-style: solid;
+      outline-color: Bisque;
+    }
+    </STYLE> 
+
+
 
   </HEAD>
 
@@ -49,23 +68,28 @@
               as net names or layer names, are case-sensitive.</LI>
           <LI>Each statement is written on its own line, and each net in the netlist likewise is
               written on its own line.</LI>
-          <LI>A hash (<CODE><B>#</B></CODE>) character in the first column of a line creates a full-line
-              comment.</LI>
-          <LI>Two consecutive forward slashes (<CODE><B>//</B></CODE>) anywhere on a line denote the
-              beginning of a comment that continues to the end of the line.
+          <LI>A hash (<CODE class="highlight"><B>#</B></CODE>) character in the first column of a line
+              creates a full-line comment.</LI>
+          <LI>Two consecutive forward slashes (<CODE class="highlight"><B>//</B></CODE>) anywhere on a line
+              denote the beginning of a comment that continues to the end of the line.
+          <LI>Blank lines are disregarded, but can be useful to aid in readability.
         </UL>
 
 
       <H2>Conventions</H2>
 
         <UL>
-          <LI>All units are either millimeters or micrometers (microns), and are documented appropriately.</LI>
+          <LI>All units are either millimeters or micrometers (microns), and are documented
+              appropriately.</LI>
           <LI>All coordinates are relative to the origin, which is located at the lower-left
               corner of the routing map.</LI>
-          <LI>Integers are denoted by <CODE>&LT;N&GT;</CODE>. Floating-point values are denoted by
-              <CODE>&LT;NN.N&GT;</CODE>.</LI>
+          <LI>Integers are denoted by <CODE class="highlight">&LT;N&GT;</CODE>. Floating-point values 
+              are denoted by <CODE class="highlight">&lt;NN.N&gt;</CODE>.</LI>
+          <LI>Optional parameters are enclosed in square brackets:
+              <CODE class="highlight">[</CODE>optional<CODE class="highlight">]</CODE>.
           <LI>Some tokens have a limited number of possible attribute values which are separated by a
-              logical <CODE>OR</CODE> character '|'.</LI> 
+              logical <B><I>OR</I></B> character: <CODE class="highlight">|</CODE>, as in 
+              <CODE class="highlight">THIS | THAT</CODE>.</LI> 
         </UL>
 
       <H2>General Outline</H2>
@@ -83,29 +107,142 @@
     <div id="layers_and_resolution"></div>
     <H2>Layers and Grid Resolution</H2>
 
-      <H3 class="indented20"><CODE>grid_resolution</CODE></H3>
+      <H3 class="indented20"><CODE class="highlight">grid_resolution</CODE></H3>
 
-        <P class="indented40"><U>Purpose</U>: blah blah blah
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">grid_resolution</CODE> statement
+           specifies the size, in microns, of each square cell in the grid. 
 
-        <P class="indented40"><U>Syntax</U>: blah blah blah
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">grid_resolution = &LT;NN.N&GT;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: blah blah blah
+        <P class="indented40"><U>Required or Optional</U>: Required.
 
-        <P class="indented40"><U>Example</U>: blah blah blah
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">grid_resolution = 12.5 // Grid size in
+           microns</CODE>
 
-      <H3 class="indented20"><CODE>width</CODE></H3>
 
-        <P class="indented40"><U>Purpose</U>: blah blah blah
+      <H3 class="indented20"><CODE class="highlight">width</CODE></H3>
 
-        <P class="indented40"><U>Syntax</U>: blah blah blah
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">width</CODE> statement specifies the
+           lateral width, in millimeters, of the entire routing area.
 
-        <P class="indented40"><U>Required or Optional</U>: blah blah blah
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">width = &lt;NN.N&gt;</CODE>
 
-        <P class="indented40"><U>Example</U>: blah blah blah
+        <P class="indented40"><U>Required or Optional</U>: Required.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">width = 25.25 // 25.25 millimeters 
+           wide</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">height</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">height</CODE> statement specifies the
+           lateral height, in millimeters, of the entire routing area.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">height = &lt;NN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: Required.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">height = 19 // 19 millimeters 
+           high</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">number_layers</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">number_layers</CODE> statement 
+           specifies the number of routing, excluding the intervening via layers.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">number_layers = &lt;N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: Required.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">number_layers = 4 // Routing layers
+           M1, M2, M3, and M4</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">layer_names</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">layer_names</CODE> statement 
+           specifies the names for each routing layer and intervening via layer. If there are <B><I>N</I></B>
+           routing layers, as defined in the <CODE class="highlight">number_layers</CODE> statement, then the
+           <CODE class="highlight">layer_names</CODE> statement must include the names of <B><I>2*N - 1</I></B>
+           layers, because this list includes the intervening via layers.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">layer_names = &lt;layerName1&gt;
+           &lt;layerName2&gt; ...</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: Required.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">layer_names = M1 V12 M2 V23 M3 V34 M4
+           </CODE>
 
     <HR>
     <div id="netlist"></div>
     <H2>Net List</H2>
+
+      <H3 class="indented20"><CODE class="highlight">start_nets</CODE> and <CODE class="highlight">end_nets
+        </CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">start_nets</CODE> statement denotes
+           the start of the list of nets. The end of this list is denoted by the <CODE class="highlight">
+           end_nets</CODE> statement. Up to 1023 nets are allowed, as specified by the <CODE class="highlight">
+           maxNets</CODE> parameter in file <CODE>global_defs.h</CODE>. 
+
+
+        <P class="indented40"><U>Syntax</U>: 
+<PRE class="indented60"><CODE class="highlight"><B>start_nets</B>
+  &lt;netName_1&gt; &lt;startLayer_1&gt; &lt;startX_1&gt; &lt;startY_1&gt;   &lt;endLayer_1&gt; &lt;endX_1&gt; &lt;endY_1&gt;   [&lt;design_rule_exception_name&gt;] [&lt;diff-pair_partner_net_name&gt;] [PN_swappable]
+  &lt;netName_2&gt; &lt;startLayer_2&gt; &lt;startX_2&gt; &lt;startY_2&gt;   &lt;endLayer_2&gt; &lt;endX_2&gt; &lt;endY_2&gt;   [&lt;design_rule_exception_name&gt;] [&lt;diff-pair_partner_net_name&gt;] [PN_swappable]
+  &lt;netName_3&gt; &lt;startLayer_3&gt; &lt;startX_3&gt; &lt;startY_3&gt;   &lt;endLayer_3&gt; &lt;endX_3&gt; &lt;endY_3&gt;   [&lt;design_rule_exception_name&gt;] [&lt;diff-pair_partner_net_name&gt;] [PN_swappable]
+  ...   
+  &lt;netName_N&gt; &lt;startLayer_N&gt; &lt;startX_N&gt; &lt;startY_N&gt;   &lt;endLayer_N&gt; &lt;endX_N&gt; &lt;endY_N&gt;   [&lt;design_rule_exception_name&gt;] [&lt;diff-pair_partner_net_name&gt;] [PN_swappable]
+<B>end_nets</B></CODE></PRE>
+
+        <P class="indented40">Between the <CODE class="highlight">start_nets</CODE> and
+           <CODE class="highlight">end_nets</CODE> statements, each line contains the following 
+           information about a single net:
+
+             <P class="indented60">The first token, <CODE class="highlight">&lt;netName_i&gt</CODE>, is the case-sensitive name
+                 of the i<SUP>th</SUP> net. The name cannot contain whitespace characters.
+             <P class="indented60">The second token, <CODE class="highlight">&lt;startLayer_i&gt</CODE>, is the case-sensitive 
+                 name of the layer on which the i<SUP>th</SUP> net starts. This name must match the name of
+                 one of the routing layers in the <CODE class="highlight">layer_names</CODE> statement.
+             <P class="indented60">The third and fourth tokens, <CODE class="highlight">&lt;startX_i&gt</CODE> and
+                 <CODE class="highlight">&lt;startY_i&gt</CODE>, are the (X,Y) coordinates of the start-
+                 terminal on layer <CODE class="highlight">&lt;startLayer_i&gt</CODE> for the i<SUP>th</SUP>
+                 net. The units for the (X,Y) coordinates are microns.
+             <P class="indented60">The fifth token, <CODE class="highlight">&lt;endLayer_i&gt</CODE>, is the case-sensitive 
+                 name of the layer on which the i<SUP>th</SUP> net terminates. This name must match the name of
+                 one of the routing layers in the <CODE class="highlight">layer_names</CODE> statement.
+             <P class="indented60">The sixth and seventh tokens, <CODE class="highlight">&lt;endX_i&gt</CODE> and
+                 <CODE class="highlight">&lt;endY_i&gt</CODE>, are the (X,Y) coordinates of the end-
+                 terminal on layer <CODE class="highlight">&lt;endLayer_i&gt</CODE> for the i<SUP>th</SUP>
+                 net. The units for the (X,Y) coordinates are microns.
+             <P class="indented60">The optional eighth token, <CODE class="highlight">&lt;design_rule_exception_name&gt;</CODE>,
+                 specifies the name of a design-rule exception which will be applied to this net. The
+                 name of the design-rule exception must match the name of one of the 
+                 <CODE class="highlight">exception</CODE> statements within a <CODE class="highlight">
+                 design_rule_set</CODE> block. The 
+                 <CODE class="highlight">&lt;design_rule_exception_name&gt;</CODE> token is required
+                 for all differential pair nets, but may also be used for other nets.
+             <P class="indented60">The ninth token, <CODE class="highlight">&lt;diff-pair_partner_net_name&gt;</CODE>, is
+                 required only for differential pairs. This token specifies the case-sensitive net name
+                 that is the partner net of the current differential pair net. This name must exactly
+                 match one of the other <CODE class="highlight">&lt;netName_i&gt;</CODE> names in the
+                 list of nets.
+             <P class="indented60">The optional tenth token, <CODE class="highlight">PN_SWAPPABLE</CODE>, specifies that
+                 the current net, which must be part of a differential pair, may be swapped with its
+                 partner in order to optimize the physical routing. If one one of the two nets in a differential
+                 pair is marked as <CODE class="highlight">PN_SWAPPABLE</CODE>, then its partner-net must likewise
+                 be marked as <CODE class="highlight">PN_SWAPPABLE</CODE>.
+
+        <P class="indented40"><U>Required or Optional</U>: Required.
+
+        <P class="indented40"><U>Example</U>:
+<PRE  class="indented60"><CODE class="highlight"><B>start_nets</B>
+  net1    M1 15 15    M4 95 95
+  VDD     M1 15 25    M4 95 85   PWR_GND
+  DP1_P   M1 15 45    M4 95 60   100_ohm DP1_N
+  DP1_N   M1 15 50    M4 95 65   100_ohm DP1_P
+  DP2_P   M1 15 65    M4 95 30   100_ohm DP2_N PN_swappable
+  DP2_N   M1 15 70    M4 95 25   100_ohm DP2_P PN_swappable
+<B>end_nets</B></CODE></PRE>
 
 
     <HR>
@@ -117,6 +254,149 @@
     <HR>
     <div id="design_rules"></div>
     <H2>Design Rules</H2>
+
+      <H3 class="indented20"><CODE class="highlight">design_rule_set</CODE> and <CODE class="highlight">
+        end_design_rule_set</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">design_rule_set</CODE> statement
+           denotes the start of a block that defines design rules. The end of this block is denoted by the
+           <CODE class="highlight">end_design_rule_set</CODE> statement. Such blocks specify a set of design
+           rules that may be applied to the entire routing area, or to specific regions. These rules specify
+           the trace width, via diameters, and the minimum allowed spacings between adjacent traces and
+           vias. The rules also specify the allowed routing directions for traces and vias.
+
+        <P class="indented40">Up to 15 <CODE class="highlight">design_rule_set</CODE> blocks are allowed.
+
+        <P class="indented40">Optionally, exceptions to these rules may be defined for subsets of nets.
+           These exceptions also include the pitch of differential pairs.
+
+
+        <P class="indented40"><U>Syntax</U>: 
+<PRE class="indented60"><CODE class="highlight"><B>design_rule_set</B> &lt;name&gt; [&lt;comment&gt;]
+  &lt;Design-rule statements, as defined below&gt;
+
+  [exception = &lt;design_rule_exception_name_1&gt;
+    &lt;Design-rule statements, as defined below&gt;
+    [diff_pair_pitch = &lt;NN.N&gt;]
+  end_exception]
+
+  [exception = &lt;design_rule_exception_name_2&gt;
+    &lt;Design-rule statements, as defined below&gt;
+    [diff_pair_pitch = &lt;NN.N&gt;]
+  end_exception]
+
+  ...           
+
+  [exception = &lt;design_rule_exception_name_N&gt;
+    &lt;Design-rule statements, as defined below&gt;
+    [diff_pair_pitch = &lt;NN.N&gt;]
+  end_exception]
+
+<B>end_design_rule_set</B></CODE></PRE>
+
+        <P class="indented60">The <CODE class="highlight">&lt;name&gt;</CODE> token is a unique identifier
+           for each of the design-rule blocks. This name must contain no whitespace characters, and is
+           case-sensitive when referenced elsewhere in the Acorn input file.
+
+        <P class="indented60">The optional <CODE class="highlight">&lt;comment&gt;</CODE> is a set of words 
+           or characters that describe the set of design rules. It may contain whitespace characters. There
+           is no need for this comment to be unique.
+
+        <P class="indented60">The optional blocks that begin with '<CODE class="highlight">exception =</CODE>'
+           and end with '<CODE class="highlight">end_exception</CODE>' describe net-specific exceptions to 
+           a set of design rules. The case-sensitive name of the exception is linked to nets in the netlist. 
+           Up to 15 <CODE class="highlight">exception</CODE> blocks are allowed within any set of design rules.
+           However, each exception with a <CODE class="highlight">diff_pair_pitch</CODE> statement
+           generates an extra exception. In other words, each exception for diff-pair nets counts as two
+           exceptions towards the 15-exception limit.
+
+        <P class="indented60">Allowed design-rules statements are listed below and are detailed in
+           subsequent sections:
+
+<PRE class="indented60"><CODE class="highlight">[line_width        = &lt;NN.N&gt;]
+[line_spacing      = &lt;NN.N&gt;]
+[via_up_diameter   = &lt;NN.N&gt;]
+[via_down_diameter = &lt;NN.N&gt;]
+[via_up_to_trace_spacing      = &lt;NN.N&gt;]
+[via_down_to_trace_spacing    = &lt;NN.N&gt;]
+[via_up_to_via_up_spacing     = &lt;NN.N&gt;]
+[via_down_to_via_down_spacing = &lt;NN.N&gt;]
+[via_up_to_via_down_spacing   = &lt;NN.N&gt;]
+[allowed_directions = Any | None | Manhattan | X_Routing | North_South | East_West | Manhattan_X | Up_Down | Any_Lateral]</CODE></PRE>
+
+        <P class="indented40"><U>Required or Optional</U>: Optional. In the absense of a 
+           <CODE class="highlight">design_rule_set</CODE> block, or in the absense of defining
+           one or more design rules, the default rules below will take effect. The value
+           <CODE>&lt;grid_resolution&gt;</CODE> refers to the number of microns specified in
+           the <CODE class="highlight">grid_resolution</CODE> statement.
+
+          <P class="indented60"><CODE class="highlight">line_width = &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">line_spacing =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_up_diameter =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_down_diameter =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_up_to_trace_spacing =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_down_to_trace_spacing  =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_up_to_via_up_spacing =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_down_to_via_down_spacing =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">via_up_to_via_down_spacing =  &lt;grid_resolution&gt;</CODE>
+
+        <P class="indented40"><U>Example</U>:
+<PRE  class="indented60"><CODE class="highlight"><B>design_rule_set</B> Package   Design Rules for package layers 
+  line_width        = 20  // In microns
+  line_spacing      = 20  // In microns
+  via_up_diameter   = 100 // In microns
+  via_down_diameter = 100 // In microns
+
+  via_up_to_trace_spacing      = 20 // In microns
+  via_down_to_trace_spacing    = 20 // In microns
+  via_up_to_via_up_spacing     = 40 // In microns
+  via_down_to_via_down_spacing = 40 // In microns
+  via_up_to_via_down_spacing   = 40 // In microns
+
+  allowed_directions = Any   // Routing is allowed in any direction
+
+  // End of main design rules. What follows are three blocks of exceptions:
+
+  exception = PWR_GND    // Special rules for wider power/ground nets
+    line_width        = 40  // In microns
+    allowed_directions = Manhattan_X  // Only allow routing at 45-degree angles
+  end_exception
+
+  exception = 50_ohm     // Special rules for 50-ohm differential pairs
+    line_width        = 25   // In microns
+    line_spacing      = 32   // In microns
+
+    via_up_to_trace_spacing      = 30   // In microns
+    via_down_to_trace_spacing    = 30   // In microns
+    via_up_to_via_up_spacing     = 50   // In microns
+    via_down_to_via_down_spacing = 50   // In microns
+    via_up_to_via_down_spacing   = 50   // In microns
+
+    diff_pair_pitch = 58     // In microns
+  end_exception
+
+  exception = 100_ohm      // Special rules for 50-ohm differential pairs
+    line_width        = 35   // In microns
+    line_spacing      = 50   // In microns
+
+    via_up_to_trace_spacing      = 40   // In microns
+    via_down_to_trace_spacing    = 50   // In microns
+    via_up_to_via_up_spacing     = 50   // In microns
+    via_down_to_via_down_spacing = 50   // In microns
+    via_up_to_via_down_spacing   = 50   // In microns
+
+    diff_pair_pitch = 85   // In microns
+  end_exception
+
+<B>end_design_rule_set</B></CODE></PRE>
+
+
+
+
+
+
+
+
 
 
 
@@ -134,6 +414,62 @@
     <div id="control_statements"></div>
     <H2>Routing Control Statements</H2>
 
+      <H3 class="indented20"><CODE class="highlight">maxIterations</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">maxIterations</CODE> statement 
+           specifies the maximum number of iterations to be performed. Acorn will exit after this
+           number of iterations, regardless of whether a sufficient number of iterations were achieved
+           without design-rule violations.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">maxIterations = &ltN&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: Optional. The default value is 2000 iterations,
+           as specified by parameter <CODE class="highlight">defaultMaxIterations</CODE> in file
+           <CODE>global_defs.h</CODE>.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">maxIterations = 500</CODE>
+
+
+      <H3 class="indented20"><CODE class="highlight">vertCost</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">vertCost</CODE> statement
+           specifies the lateral distance, in microns, that Acorn should laterally route a trace 
+           <B><I>around</I></B> an obstacle rather than creating vias to route <B><I>above/below</I></B>
+           the obstacle. Larger values of <CODE class="highlight">vertCost</CODE> result in routing
+           with fewer vias
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">vertCost = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: Optional. The default value is calculated based
+           on the lateral dimensions of the routing area. Specifically, the default value is one fourth
+           of the square root of the area: 
+             <SPAN style="white-space: nowrap">
+               (&radic;<SPAN style="text-decoration:overline;">&nbsp;width x height&nbsp;</SPAN>&nbsp;) / 4,
+             </SPAN>
+           expressed in microns.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">vertCost = 1500 // 1500 microns</CODE>
+
+
+      <H3 class="indented20"><CODE class="highlight">violationFreeThreshold</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">violationFreeThreshold</CODE>
+           statement specifies an additional number of iterations that must be free of design-rule violations,
+           in addition to the minimum value enforced by Acorn, which is
+           <B>35∙log<sub>10</sub>(<I>N<sub>nets</sub></I>)</B>, where <B><I>N<sub>nets</sub></I></B> is
+           the number of nets. For example, if the netlist contains 100 nets, then Acorn will require at 
+           least 70 iterations [35∙log<sub>10</sub>(100)] to be free of design-rule violations before
+           terminating. If the user desires 100 such iterations, however, then the 
+           statement '<CODE class="highlight">violationFreeThreshold <B>30</B></CODE>' may be used to force
+           Acorn to achieve a total of 100 iterations that are free of design-rule violations.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">violationFreeThreshold = &ltN&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: Optional. The default value is 0 iterations,
+           as specified by parameter <CODE class="highlight">defaultDRCfreeThreshold</CODE> in file
+           <CODE>global_defs.h</CODE>.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">violationFreeThreshold = 30</CODE>
 
 
 
