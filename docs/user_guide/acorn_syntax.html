@@ -266,6 +266,82 @@
     <div id="keep_out_areas"></div>
     <H2>Keep-out Areas</H2>
 
+      <H3 class="indented20"><CODE class="highlight">block</CODE> and <CODE class="highlight">unblock</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">block</CODE> statement is used to
+           prevent routing in a given region. No traces or vias will be routed within the region defined by
+           the <CODE class="highlight">block</CODE> statement. Further, no traces or vias will be routed in
+           close proximity such that any part of the trace or via would overlap with the blocked region.
+
+        <P class="indented40">The effect of a <CODE class="highlight">block</CODE> statement can be reversed
+           with a subsequent <CODE class="highlight">unblock</CODE> statement for a given region. The
+           <CODE class="highlight">unblock</CODE> statement <B><I>enables</I></B> routing in a given region.
+           Traces and vias may be routed within the region defined by the <CODE class="highlight">unblock</CODE>
+           statement, which is intended to reverse, or invert, the effects of a previous 
+           <CODE class="highlight">block</CODE> statement. For example, to allow routing only in a circular
+           region on a given layer, one would first <CODE class="highlight">block</CODE> the entire layer,
+           and then <CODE class="highlight">unblock</CODE> a circular region on the layer. 
+
+        <P class="indented40"><U>Syntax</U>: The <CODE class="highlight">block</CODE> and
+           <CODE class="highlight">unblock</CODE> statements specify the name of the routing layer, 
+           <CODE class="highlight">&lt;layer name&gt;</CODE>, to which the statements apply.
+
+        <P class="indented40">The remaining tokens in the <CODE class="highlight">block</CODE> and
+           <CODE class="highlight">unblock</CODE> statements describe which region of the routing
+           layer is affected by the statements. The region can encompass the entire routing layer
+           or a subset of the layer in a shape of a rectangle, circle, or triangle, as described below.
+
+        <P class="indented40">To <CODE class="highlight">block</CODE> or 
+           <CODE class="highlight">unblock</CODE> an <B>entire routing layer</B>:
+
+          <P class="indented60"><CODE class="highlight"><B>block &nbsp; ALL</B> &lt;layer name&gt;<BR>
+          <B>unblock ALL</B> &lt;layer name&gt;</CODE>
+
+        <P class="indented40">To <CODE class="highlight">block</CODE> or 
+           <CODE class="highlight">unblock</CODE> a <B>rectangular region</B> on a routing layer
+           with diagonal corners <I>(X1,Y1)</I> and <I>(X2,Y2)</I>, in microns:
+
+          <P class="indented60"><CODE class="highlight"><B>block &nbsp; RECT</B> &lt;layer name&gt;
+             &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt;<BR>
+             <B>unblock RECT</B> &lt;layer name&gt; &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; 
+             &lt;X2&gt; &lt;Y2&gt;</CODE>
+
+        <P class="indented40">The following specifies the <CODE class="highlight">block</CODE> 
+           and <CODE class="highlight">unblock</CODE> syntax for a <B>circular</B> region on a 
+           routing layer with center <I>(X1,Y1)</I> and radius <I>R</I>. A radius of zero will
+           <CODE class="highlight">block</CODE> or <CODE class="highlight">unblock</CODE> a 
+           single cell at <I>(X1,Y1)</I>. All dimensions are in microns.
+
+          <P class="indented60"><CODE class="highlight"><B>block &nbsp; CIR</B> &lt;layer name&gt; 
+             &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;R&gt;<BR>
+             <B>unblock CIR</B> &lt;layer name&gt; &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; 
+             &lt;R&gt;</CODE>
+
+        <P class="indented40">Specify a <B>triangular</B> region on a routing layer to 
+           <CODE class="highlight">block</CODE> or <CODE class="highlight">unblock</CODE>
+           with vertices <I>(X1,Y1)</I>, <I>(X2,Y2)</I>, and <I>(X3,Y3)</I>, in microns:
+
+          <P class="indented60"><CODE class="highlight"><B>block &nbsp; TRI</B> &lt;layer name&gt; 
+              &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt; &nbsp; &lt;X3&gt; &lt;Y3&gt;<BR>
+             <B>unblock TRI</B> &lt;layer name&gt; &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; 
+             &lt;Y2&gt; &nbsp; &lt;X3&gt; &lt;Y3&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: By default, all regions are available
+           for routing; the <CODE class="highlight">block</CODE> and 
+           <CODE class="highlight">unblock</CODE> statements are <B>optional</B>. 
+
+        <P class="indented40"><U>Example</U>: Example <CODE class="highlight">block</CODE> and
+          <CODE class="highlight">unblock</CODE> statements are shown below.
+
+<PRE  class="indented60"><CODE class="highlight"><B>BLOCK    ALL</B>   Die_layer
+<B>BLOCK    RECT</B>  M1_layer      0   0    900 800
+<B>BLOCK    CIR</B>   BGA_layer   200 200     40
+<B>BLOCK    TRI</B>   M2_layer      0   0    100   0    0 100
+
+<B>UNBLOCK  ALL</B>   Die_layer
+<B>UNBLOCK  RECT</B>  M1_layer      0   0    900 800
+<B>UNBLOCK  CIR</B>   BGA_layer   200 200     40
+<B>UNBLOCK  TRI</B>   M2_layer      0   0    100   0    0 100</CODE></PRE>
 
 
     <HR>
