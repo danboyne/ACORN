@@ -28,7 +28,18 @@
     }
     </STYLE> 
 
-
+    <STYLE> .numberCircle {
+      display: flex;
+      width: 2ch; /* Set this to slightly wider than the longest string */
+      align-items: center;  
+      justify-content: center;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;  
+      border: 1px solid #666;
+      color:white;
+      background-color: grey;
+    }
+    </STYLE> 
 
   </HEAD>
 
@@ -114,7 +125,8 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">grid_resolution = &LT;NN.N&GT;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Required.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">grid_resolution</CODE>
+           statement is <B>required</B>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">grid_resolution = 12.5 // Grid size in
            microns</CODE>
@@ -127,7 +139,8 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">width = &lt;NN.N&gt;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Required.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">width</CODE> 
+           statement is <B>required</B>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">width = 25.25 // 25.25 millimeters 
            wide</CODE>
@@ -139,7 +152,8 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">height = &lt;NN.N&gt;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Required.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">height</CODE> 
+           statement is <B>required</B>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">height = 19 // 19 millimeters 
            high</CODE>
@@ -151,7 +165,8 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">number_layers = &lt;N&gt;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Required.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">number_layers</CODE> 
+           statement is <B>required</B>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">number_layers = 4 // Routing layers
            M1, M2, M3, and M4</CODE>
@@ -167,7 +182,8 @@
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">layer_names = &lt;layerName1&gt;
            &lt;layerName2&gt; ...</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Required.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">layer_names</CODE> 
+           statement is <B>required</B>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">layer_names = M1 V12 M2 V23 M3 V34 M4
            </CODE>
@@ -232,7 +248,8 @@
                  pair is marked as <CODE class="highlight">PN_SWAPPABLE</CODE>, then its partner-net must likewise
                  be marked as <CODE class="highlight">PN_SWAPPABLE</CODE>.
 
-        <P class="indented40"><U>Required or Optional</U>: Required.
+        <P class="indented40"><U>Required or Optional</U>: The block between the <CODE class="highlight">start_nets</CODE>
+           and <CODE class="highlight">end_nets</CODE> statements is required.
 
         <P class="indented40"><U>Example</U>:
 <PRE  class="indented60"><CODE class="highlight"><B>start_nets</B>
@@ -261,9 +278,10 @@
         <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">design_rule_set</CODE> statement
            denotes the start of a block that defines design rules. The end of this block is denoted by the
            <CODE class="highlight">end_design_rule_set</CODE> statement. Such blocks specify a set of design
-           rules that may be applied to the entire routing area, or to specific regions. These rules specify
-           the trace width, via diameters, and the minimum allowed spacings between adjacent traces and
-           vias. The rules also specify the allowed routing directions for traces and vias.
+           rules that may be applied to the entire routing area, or to specific regions using
+           <CODE class="highlight">DR_zone statements</CODE>. These rules specify the trace width, via
+           diameters, and the minimum allowed spacings between adjacent traces and vias. The rules also 
+           specify the allowed routing directions for traces and vias.
 
         <P class="indented40">Up to 15 <CODE class="highlight">design_rule_set</CODE> blocks are allowed.
 
@@ -310,25 +328,114 @@
            generates an extra exception. In other words, each exception for diff-pair nets counts as two
            exceptions towards the 15-exception limit.
 
-        <P class="indented60">Allowed design-rules statements are listed below and are detailed in
-           subsequent sections:
+        <P class="indented60">The widths and spacings of traces and vias are depicted in the figure below.<BR>
+          <IMG src="../images/designRules.png" alt="Design rules" width="641" height="82" border="1">
 
-<PRE class="indented60"><CODE class="highlight">[line_width        = &lt;NN.N&gt;]
-[line_spacing      = &lt;NN.N&gt;]
-[via_up_diameter   = &lt;NN.N&gt;]
-[via_down_diameter = &lt;NN.N&gt;]
-[via_up_to_trace_spacing      = &lt;NN.N&gt;]
-[via_down_to_trace_spacing    = &lt;NN.N&gt;]
-[via_up_to_via_up_spacing     = &lt;NN.N&gt;]
-[via_down_to_via_down_spacing = &lt;NN.N&gt;]
-[via_up_to_via_down_spacing   = &lt;NN.N&gt;]
-[allowed_directions = Any | None | Manhattan | X_Routing | North_South | East_West | Manhattan_X | Up_Down | Any_Lateral]</CODE></PRE>
 
-        <P class="indented40"><U>Required or Optional</U>: Optional. In the absense of a 
-           <CODE class="highlight">design_rule_set</CODE> block, or in the absense of defining
-           one or more design rules, the default rules below will take effect. The value
-           <CODE>&lt;grid_resolution&gt;</CODE> refers to the number of microns specified in
-           the <CODE class="highlight">grid_resolution</CODE> statement.
+        <P class="indented60">Referring to the figure above, the allowed design-rules statements are listed below
+           and are detailed in subsequent sections:
+
+        <TABLE class="indented60" cellpadding="3">
+          <TR>
+            <TD><div class="numberCircle">1</div></TD>
+            <TD><CODE class="highlight">[line_width        = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">2</div></TD>
+            <TD><CODE class="highlight">[via_up_diameter   = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">3</div></TD>
+            <TD><CODE class="highlight">[via_down_diameter   = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">4</div></TD>
+            <TD><CODE class="highlight">[line_spacing      = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">5</div></TD>
+            <TD><CODE class="highlight">[via_up_to_trace_spacing      = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">6</div></TD>
+            <TD><CODE class="highlight">[via_down_to_trace_spacing    = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">7</div></TD>
+            <TD><CODE class="highlight">[via_up_to_via_up_spacing     = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">8</div></TD>
+            <TD><CODE class="highlight">[via_up_to_via_down_spacing   = &lt;NN.N&gt;]</TD>
+          </TR>
+          <TR>
+            <TD><div class="numberCircle">9</div></TD>
+            <TD><CODE class="highlight">[via_down_to_via_down_spacing = &lt;NN.N&gt;]</TD>
+          </TR>
+        </TABLE>
+
+        <P class="indented60">To limit the direction of routing in the region where a design-rule set applies,
+           the optional <CODE class="highlight">allowed_directions</CODE> statement is used. It takes one of
+           nine values:
+
+        <P class="indented60"><CODE class="highlight">[allowed_directions = Any | None | Manhattan | X_Routing 
+           | North_South | East_West | Manhattan_X | Up_Down | Any_Lateral]</CODE>
+
+        <P class="indented60">These direction constraints are illustrated below, in which each diagram represents
+           three routing layers. In each, the <B>black</B> square represents the cell from which routing is progressing.
+           The grey squares represent the cells to which routing is allowed for each constraint.
+
+        <TABLE class="indented60" cellpadding="5">
+          <TR>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>Any</B></CODE>: <FONT size="2">All
+              18 possible directions are allowed, including 16 lateral and 2 vertical directions.</FONT><BR>
+              <IMG src="../images/allowed_directions_any.png" alt="Any direction" width="230" height="143" border="1">
+            </TD>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>None</B></CODE>: <FONT size="2">No
+              routing is allowed. This is similar to a region that is blocked from routing.</FONT><BR>
+              <IMG src="../images/allowed_directions_none.png" alt="No directions" width="230" height="143" border="1">
+            </TD>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>Manhattan</B></CODE>: <FONT size="2">North,
+              south, east, and west directions, plus 2 vertical directions.</FONT><BR>
+              <IMG src="../images/allowed_directions_manhattan.png" alt="Manhattan routing" width="230" height="143" border="1">
+            </TD>
+          </TR>
+          <TR>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>X_Routing</B></CODE>: <FONT size="2">NE,
+              SE, SW, and NW directions, plus 2 vertical directions.</FONT><BR>
+              <IMG src="../images/allowed_directions_x_routing.png" alt="Manhattan routing" width="230" height="143" border="1">
+            </TD>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>North_South</B></CODE>: <FONT size="2">North 
+              and south routing, plus 2 vertical directions.</FONT><BR>
+              <IMG src="../images/allowed_directions_north_south.png" alt="North/south routing" width="230" height="143" border="1">
+            </TD>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>East_West</B></CODE>: <FONT size="2">East 
+              and west routing, plus 2 vertical directions.</FONT><BR>
+              <IMG src="../images/allowed_directions_east_west.png" alt="East/west routing" width="230" height="143" border="1">
+            </TD>
+          </TR>
+          <TR>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>Manhattan_X</B></CODE>: <FONT size="2">N, 
+              S, E, W, NE, SE, SW, and NW directions, plus 2 vertical directions.</FONT><BR>
+              <IMG src="../images/allowed_directions_manhattan_x.png" alt="Manhattan-X routing" width="230" height="143" border="1">
+            </TD>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>Up_Down</B></CODE>: <FONT size="2">Only
+              vertical routing is allowed though vias.</FONT><BR>
+              <IMG src="../images/allowed_directions_up_down.png" alt="Up/down routing" width="230" height="143" border="1">
+            </TD>
+            <TD align="left" valign="bottom" width="240"><CODE class="highlight"><B>Any_Lateral</B></CODE>: <FONT size="2">All
+              16 lateral directions are allowed, but no vertical routing through vias is allowed.</FONT><BR>
+              <IMG src="../images/allowed_directions_any_lateral.png" alt="Any lateral routing" width="230" height="143" border="1">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <P class="indented40"><U>Required or Optional</U>: The 
+           <CODE class="highlight">design_rule_set</CODE> block is <B>optional</B>.
+           In the absense of a such a block, or in the absense of one or more design rules,
+           the default rules below take effect. The value <CODE>&lt;grid_resolution&gt;</CODE>
+           refers to the number of microns specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
 
           <P class="indented60"><CODE class="highlight">line_width = &lt;grid_resolution&gt;</CODE>
           <P class="indented60"><CODE class="highlight">line_spacing =  &lt;grid_resolution&gt;</CODE>
@@ -339,8 +446,10 @@
           <P class="indented60"><CODE class="highlight">via_up_to_via_up_spacing =  &lt;grid_resolution&gt;</CODE>
           <P class="indented60"><CODE class="highlight">via_down_to_via_down_spacing =  &lt;grid_resolution&gt;</CODE>
           <P class="indented60"><CODE class="highlight">via_up_to_via_down_spacing =  &lt;grid_resolution&gt;</CODE>
+          <P class="indented60"><CODE class="highlight">allowed_directions = Any</CODE>
 
-        <P class="indented40"><U>Example</U>:
+        <P class="indented40"><U>Example</U>: An example <CODE class="highlight">design_rule_set</CODE> block
+          is shown below, which includes design rules plus three sets of exceptions.
 <PRE  class="indented60"><CODE class="highlight"><B>design_rule_set</B> Package   Design Rules for package layers 
   line_width        = 20  // In microns
   line_spacing      = 20  // In microns
@@ -359,7 +468,7 @@
 
   exception = PWR_GND    // Special rules for wider power/ground nets
     line_width        = 40  // In microns
-    allowed_directions = Manhattan_X  // Only allow routing at 45-degree angles
+    allowed_directions = Manhattan_X  // Only allow routing at 90- and 45-degree angles
   end_exception
 
   exception = 50_ohm     // Special rules for 50-ohm differential pairs
@@ -390,8 +499,277 @@
 
 <B>end_design_rule_set</B></CODE></PRE>
 
+      <H3 class="indented20"><CODE class="highlight">line_width</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">line_width</CODE> statement 
+           specifies the width (in microns) of conducting traces in a given design-rule set or an 
+           exception to such design rules.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">line_width = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">line_width</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">line_width = 15.0  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">line_spacing</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">line_spacing</CODE> statement 
+           specifies the minimum spacing (in microns) between conducting traces in a given design-rule
+           set or in an exception to such design rules. This spacing can be different than the minimum
+           spacing between traces and vias.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">line_spacing = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">line_spacing</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">line_spacing = 20  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_up_diameter</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_up_diameter</CODE> statement 
+           specifies the diameter (in microns) of upward-going vias in a given design-rule set or an
+           exception to such design rules.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_up_diameter = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_up_diameter</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_up_diameter = 45.0  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_down_diameter</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_down_diameter</CODE> statement 
+           specifies the diameter (in microns) of downward-going vias in a given design-rule set or an
+           exception to such design rules.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_down_diameter = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_down_diameter</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_down_diameter = 45.0  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_up_to_trace_spacing</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_up_to_trace_spacing</CODE>
+           statement specifies the minimum spacing (in microns) between upward-going vias and conducting
+           traces in a given design-rule set or in an exception to such design rules. This spacing can
+           be different than the spacing between traces and other traces.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_up_to_trace_spacing = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_up_to_trace_spacing</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_up_to_trace_spacing = 37.5  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_down_to_trace_spacing</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_down_to_trace_spacing</CODE>
+           statement specifies the minimum spacing (in microns) between downward-going vias and conducting
+           traces in a given design-rule set or in an exception to such design rules. This spacing can
+           be different than the spacing between traces and other traces.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_down_to_trace_spacing = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_down_to_trace_spacing</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_down_to_trace_spacing = 47  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_up_to_via_up_spacing</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_up_to_via_up_spacing</CODE>
+           statement specifies the minimum spacing (in microns) between upward-going vias in a given
+           design-rule set or in an exception to such design rules. This spacing can be different than
+           the spacing between upward-going vias and other types of shapes, i.e., traces or
+           downward-going vias.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_up_to_via_up_spacing = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_up_to_via_up_spacing</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_up_to_via_up_spacing = 25.0  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_down_to_via_down_spacing</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_down_to_via_down_spacing</CODE>
+           statement specifies the minimum spacing (in microns) between downward-going vias in a given
+           design-rule set or in an exception to such design rules. This spacing can be different than
+           the spacing between downward-going vias and other types of shapes, i.e., traces or
+           upward-going vias.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_down_to_via_down_spacing = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_down_to_via_down_spacing</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_down_to_via_down_spacing = 62.5  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">via_up_to_via_down_spacing</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">via_up_to_via_down_spacing</CODE>
+           statement specifies the minimum spacing (in microns) between upward- and downward-going vias in
+           a given design-rule set or in an exception to such design rules. This spacing can be different
+           than the spacing between other pairs of shapes, e.g., between two upward-going vias.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">via_up_to_via_down_spacing = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">via_up_to_via_down_spacing</CODE>
+           statement is <B>optional</B>. The default value is the grid resolution, as specified in the
+           <CODE class="highlight">grid_resolution</CODE> statement.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">via_up_to_via_down_spacing = 30.0  // In microns</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">exception</CODE> and <CODE class="highlight">
+        end_exception</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">exception</CODE> statement
+           denotes the start of a block that defines net-specific design rules that can differ from
+           the rules that would ordinarily apply. The <CODE class="highlight">end_exception</CODE>
+           statement denotes the end of this block, which can only be located within a 
+           <CODE class="highlight">design_rule_set</CODE> block.
+
+        <P class="indented40">The name of the exception is linked to nets in the netlist. These 
+           exceptions specify the trace width, via diameters, and the minimum allowed spacings 
+           between adjacent traces and vias. The rules also specify the allowed routing directions
+           for traces and vias. In the case of differential pairs, the exceptions specify the
+           pitch of these pairs.
+
+        <P class="indented40">Up to 15 exception blocks are allowed within any set of design rules.
+           However, each exception with a <CODE class="highlight">diff_pair_pitch</CODE> statement
+           generates an extra exception. In other words, each exception for diff-pair nets counts
+           as <B></I>two</I></B> exceptions towards the 15-exception limit.
+
+       <P class="indented40"><U>Syntax</U>: 
+<PRE class="indented60"><CODE class="highlight"><B>exception</B> = &lt;name&gt;
+  &lt;Design-rule statements, as defined <A href="#design_rules">above</A>&gt;
+
+  [diff_pair_pitch = &lt;NN.N&gt;]
+<B>end_exception</B></CODE></PRE>
+
+        <P class="indented60">The <CODE class="highlight">&lt;name&gt;</CODE> token is a unique identifier
+           for each of the exception blocks within a <CODE class="highlight">design_rule_set</CODE> block.
+           This name must contain no whitespace characters, and is case-sensitive when referenced elsewhere
+           in the Acorn input file.
+
+        <P class="indented60">The <CODE class="highlight">diff_pair_pitch</CODE> statement specifies
+           the pitch, in microns, of differential pairs. This statement is unique to 
+           <CODE class="highlight">exception</CODE> statements. Therefore, differential pair nets
+           cannot be used without having at least one <CODE class="highlight">exception</CODE> block
+           and at least one accompanying <CODE class="highlight">diff_pair_pitch</CODE> statement.
+
+        <P class="indented40"><U>Required or Optional</U>: The 
+           <CODE class="highlight">exception</CODE> block is <B>optional</B> unless the netlist
+           contains differential pair nets, in which case the 
+           <CODE class="highlight">exception</CODE> block is required.
+           
+        <P class="indented40"> In the absense of one or more design rules within an
+           <CODE class="highlight">exception</CODE> block, the missing design rules take
+           on the values of those specified in the enclosing 
+           <CODE class="highlight">design_rule_set</CODE> block.
+
+        <P class="indented40"><U>Example</U>: An example <CODE class="highlight">exception</CODE> block
+          is shown below, which includes width and spacing rules, plus the pitch of differential pairs.
+
+<PRE  class="indented60"><CODE class="highlight"><B>exception</B> = 50_ohm   // Special rules for 50-ohm differential pairs
+  line_width        = 25   // In microns
+  line_spacing      = 32   // In microns
+
+  via_up_to_trace_spacing      = 30   // In microns
+  via_down_to_trace_spacing    = 30   // In microns
+  via_up_to_via_up_spacing     = 50   // In microns
+  via_down_to_via_down_spacing = 50   // In microns
+  via_up_to_via_down_spacing   = 50   // In microns
+
+  diff_pair_pitch = 58   // In microns
+<B>end_exception</B></CODE></PRE>
+
+      <H3 class="indented20"><CODE class="highlight">diff_pair_pitch</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">diff_pair_pitch</CODE> statement
+           specifies the pitch (in microns) of the two conducting traces of a differential pair in a given
+           design-rule <CODE class="highlight">exception</CODE>. This statement may only be placed between
+           the <CODE class="highlight">exception</CODE> and <CODE class="highlight">end_exception</CODE>
+           statements.
+
+        <P class="indented40"><U>Syntax</U>: <CODE class="highlight">diff_pair_pitch = &ltNN.N&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">diff_pair_pitch</CODE>
+           statement is <B>optional</B> unless the <CODE class="highlight">exception</CODE> block is 
+           associated with differential pair nets in the netlist. In other words, the 
+           <CODE class="highlight">diff_pair_pitch</CODE> statement is <B>required</B> only if the 
+           enclosing <CODE class="highlight">exception</CODE> block is associated with differential
+           pair nets in the netlist.
+
+        <P class="indented40"><U>Example</U>: <CODE class="highlight">diff_pair_pitch = 58.0  // In microns</CODE>
 
 
+      <H3 class="indented20"><CODE class="highlight">DR_zone</CODE></H3>
+
+        <P class="indented40"><U>Purpose</U>: The <CODE class="highlight">DR_zone</CODE> statement
+           specifies a region in which a design-rule set applies in the map. If multiple 
+           <CODE class="highlight">DR_zone</CODE> statements define conflicting design-rule sets
+           for a given region of the map, then the last <CODE class="highlight">DR_zone</CODE>
+           statement takes precedence.
+
+        <P class="indented40"><U>Syntax</U>: The <CODE class="highlight">DR_zone</CODE> statement specifies the
+           name of the design-rule set, <CODE class="highlight">&lt;DR name&gt;</CODE>. This name must match a name 
+           defined in a <CODE class="highlight">design_rule_set</CODE> statement. The 
+           <CODE class="highlight">DR_zone</CODE> statement specifies the name of the routing layer, 
+           <CODE class="highlight">&lt;layer name&gt;</CODE>, to which the design rules apply.
+
+        <P class="indented40">The remaining tokens in the <CODE class="highlight">DR_zone</CODE> statement 
+           describe which region of the routing layer is affected by the design rules. The region can
+           encompass the entire routing layer or a subset of the layer in a shape of a rectangle, 
+           circle, or triangle, as described below.
+
+        <P class="indented40">To specify the design-rule set for an <B>entire routing layer</B>:
+          <P class="indented60"><CODE class="highlight"><B>DR_zone</B> &lt;DR name&gt; &lt;layer name&gt;
+             <B>ALL</B></CODE>
+
+        <P class="indented40">To specify the design-rule set for a <B>rectangular region</B> on a routing layer
+           with diagonal corners <I>(X1,Y1)</I> and <I>(X2,Y2)</I>, in microns:
+          <P class="indented60"><CODE class="highlight"><B>DR_zone</B> &lt;DR name&gt; &lt;layer name&gt;
+             <B>RECT</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt;</CODE>
+
+        <P class="indented40">The following syntax specifies the design-rule set for a <B>circular</B> region
+           on a routing layer with center <I>(X1,Y1)</I> and radius <I>R</I>. A radius of zero will apply the
+           design-rule to a single cell at <I>(X1,Y1)</I>, in microns.
+          <P class="indented60"><CODE class="highlight"><B>DR_zone</B> &lt;DR name&gt; &lt;layer name&gt; 
+             <B>CIR</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;R&gt;</CODE>
+
+        <P class="indented40">Specify the design-rule set for a <B>triangular</B> region on a routing layer
+           with vertices <I>(X1,Y1)</I>, <I>(X2,Y2)</I>, and <I>(X3,Y3)</I>, in microns:
+          <P class="indented60"><CODE class="highlight"><B>DR_zone</B> &lt;DR name&gt; &lt;layer name&gt; 
+             <B>TRI</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt; &nbsp; &lt;X3&gt; &lt;Y3&gt;</CODE>
+
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">DR_zone</CODE>
+           statement is <B>optional</B>. By omitting this statement, the entire map will use the default
+           design-rule set. Likewise, if any regions of the map are not specified by a 
+           <CODE class="highlight">DR_zone</CODE> statement, then the default design-rule set will
+           apply to these regions. The default design-rule set is the one defined in the first
+           <CODE class="highlight">design_rule_set</CODE> statement. 
+
+        <P class="indented40"><U>Example</U>: Example <CODE class="highlight">DR_zone</CODE>
+          statements are shown below.
+
+<PRE  class="indented60"><CODE class="highlight"><B>DR_zone</B>  Die_rules  Die_layer  <B>ALL</B>                              // Use 'Die_rules' everywhere on layer 'Die_layer'
+<B>DR_zone</B>  M1_rules   M1_layer   <B>RECT</B>   0   0    900 800          // Use 'M1_rules' in 900x800 micron rectangular region on layer 'M1_layer'
+<B>DR_zone</B>  BGA_rules  BGA_layer  <B>CIR</B>  200 200     40              // Use 'BGA_rules' in circular region on layer 'BGA_layer'
+<B>DR_zone</B>  M2_rules   M2_layer   <B>TRI</B>    0   0    100   0    0 100 // Use 'M2_rules' in triangular region in lower-left corner of layer 'M2_layer'</CODE></PRE>
 
 
 
@@ -423,9 +801,9 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">maxIterations = &ltN&gt;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Optional. The default value is 2000 iterations,
-           as specified by parameter <CODE class="highlight">defaultMaxIterations</CODE> in file
-           <CODE>global_defs.h</CODE>.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">maxIterations</CODE>
+           statement is <B>optional</B>. The default value is 2000 iterations, as specified by parameter 
+           <CODE class="highlight">defaultMaxIterations</CODE> in file <CODE>global_defs.h</CODE>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">maxIterations = 500</CODE>
 
@@ -440,9 +818,10 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">vertCost = &ltNN.N&gt;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Optional. The default value is calculated based
-           on the lateral dimensions of the routing area. Specifically, the default value is one fourth
-           of the square root of the area: 
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">vertCost</CODE>
+           statement is <B>optional</B>. The default value is calculated based on the lateral dimensions
+           of the routing area. Specifically, the default value is one fourth of the square root of
+           the area: 
              <SPAN style="white-space: nowrap">
                (&radic;<SPAN style="text-decoration:overline;">&nbsp;width x height&nbsp;</SPAN>&nbsp;) / 4,
              </SPAN>
@@ -465,9 +844,9 @@
 
         <P class="indented40"><U>Syntax</U>: <CODE class="highlight">violationFreeThreshold = &ltN&gt;</CODE>
 
-        <P class="indented40"><U>Required or Optional</U>: Optional. The default value is 0 iterations,
-           as specified by parameter <CODE class="highlight">defaultDRCfreeThreshold</CODE> in file
-           <CODE>global_defs.h</CODE>.
+        <P class="indented40"><U>Required or Optional</U>: The <CODE class="highlight">violationFreeThreshold</CODE>
+           statement is <B>optional</B>. The default value is 0 iterations, as specified by parameter
+           <CODE class="highlight">defaultDRCfreeThreshold</CODE> in file <CODE>global_defs.h</CODE>.
 
         <P class="indented40"><U>Example</U>: <CODE class="highlight">violationFreeThreshold = 30</CODE>
 
