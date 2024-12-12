@@ -545,8 +545,8 @@
             &lt;grid_resolution&gt;</CODE>
           <P class="indented60"><CODE class="highlight">allowed_directions = Any</CODE>
 
-        <P class="indented40"><B><U>Example</U></B>: An example <CODE class="highlight">design_rule_set</CODE> block
-          is shown below, which includes design rules plus three sets of exceptions.
+        <P class="indented40"><B><U>Example</U></B>: An example <CODE class="highlight">design_rule_set</CODE> 
+          block is shown below, which includes design rules plus three sets of exceptions.
 
 <PRE  class="indented60"><CODE class="highlight"><B>design_rule_set</B> Package   Design Rules for package layers 
   line_width        = 20  // In microns
@@ -638,7 +638,8 @@
            statement is <B>optional</B>. The default value is the grid resolution, as specified in the
            <CODE class="highlight">grid_resolution</CODE> statement.
 
-        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_up_diameter = 45.0  // In microns</CODE>
+        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_up_diameter = 45.0  // In
+           microns</CODE>
 
       <H3 class="indented20"><CODE class="highlight">via_down_diameter</CODE></H3>
 
@@ -977,23 +978,85 @@
 
 
 
+      <H3 class="indented20"><CODE class="highlight">via_cost_multiplier</CODE> and
+          <CODE class="highlight">via_cost_zone</CODE></H3>
 
+        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_cost_multiplier</CODE>
+           and <CODE class="highlight">via_cost_zone</CODE> statements increase the cost of vertical
+           routing, i.e., vias, in a specific region. Relative to the baseline (non-increased) cost, the cost
+           increase is an integer multiple, e.g., 2, 5, 10, 25, etc.
 
+        <P class="indented40"><CODE class="highlight">Via_cost_multiplier</CODE> statements define up
+           to 7 distinct multipliers, each associated with a multiplier index from 1 to 7.
 
+        <P class="indented40"><CODE class="highlight">Via_cost_zone</CODE> statements define regions in
+           the routing map where each cost-multiplier is applied, referenced by its index. If multiple 
+           <CODE class="highlight">via_cost_zone</CODE> statements define conflicting costs for a given
+           region of the map, then the last <CODE class="highlight">via_cost_zone</CODE> statement
+           takes precedence.
 
+        <P class="indented40">Index #0 is automatically associated with the default cost-multiplier of 1.
+           Index #0 may be used in a <CODE class="highlight">via_cost_zone</CODE> statement to reverse
+           the cost increase of a previous <CODE class="highlight">via_cost_zone</CODE> statement for a
+           given region.
 
+        <P class="indented40"><B><U>Syntax</U></B>: The <CODE class="highlight">via_cost_multiplier</CODE>
+           statement associates the user-defined cost-multiplier, <CODE>&lt;cost multiplier&gt;</CODE>,
+           with a user-defined index, <CODE>&lt;multiplier index&gt;</CODE>: 
 
+          <P class="indented60"><CODE class="highlight"><B>via_cost_multiplier</B> &nbsp;
+             &lt;multiplier index&gt; &nbsp; &lt;cost multiplier&gt;</CODE>
 
+        <P class="indented40">The <CODE class="highlight">via_cost_zone</CODE> statement associates
+           a <CODE>&lt;multiplier index&gt;</CODE> (defined in a 
+           <CODE class="highlight">via_cost_multiplier</CODE> statement), with a region on a given
+           via layer with name <CODE>&lt;layer name&gt;</CODE>. The region can encompass the entire
+           via layer or a subset of the layer in a shape of a rectangle, circle, or triangle, as
+           described below.
 
+        <P class="indented40">To define an entire via layer to have increased via costs:
 
+          <P class="indented60"><CODE class="highlight"><B>via_cost_zone</B> &lt;multiplier index&gt; 
+            &lt;layer name&gt; <B>ALL</B></CODE>
 
+        <P class="indented40">To increase the via cost of a rectangular region on a via layer
+           with diagonal corners <I>(X1,Y1)</I> and <I>(X2,Y2)</I>, in microns:
 
+          <P class="indented60"><CODE class="highlight"><B>via_cost_zone</B> &lt;multiplier index&gt;
+             &lt;layer name&gt; <B>RECT</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt;</CODE>
 
+        <P class="indented40">To increase the via cost of a circular region on a via layer with
+           center <I>(X1,Y1)</I> and radius <I>R</I>, in microns:
 
+          <P class="indented60"><CODE class="highlight"><B>via_cost_zone</B> &lt;multiplier index&gt;
+             &lt;layer name&gt; <B>CIR</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;R&gt;</CODE>
 
+        <P class="indented40">To increase the via cost of a triangular region on a via layer with
+           vertices <I>(X1,Y1)</I>, <I>(X2,Y2)</I>, and <I>(X3,Y3)</I>, in microns.
 
+          <P class="indented60"><CODE class="highlight"><B>via_cost_zone</B> &lt;multiplier index&gt;
+             &lt;layer name&gt; <B>TRI</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt; 
+             &nbsp; &lt;X3&gt; &lt;Y3&gt;</CODE>
 
+        <P class="indented40"><B><U>Required or Optional</U></B>: The <CODE class="highlight">via_cost_zone</CODE>
+           statement is <B>optional</B>. If no <CODE class="highlight">via_cost_zone</CODE> statement is
+           used, then all regions will use the default cost for vias.
 
+        <P class="indented40">The <CODE class="highlight">via_cost_multiplier</CODE> statement is 
+           required only if a <CODE class="highlight">via_cost_zone</CODE> statements references a
+           non-zero <CODE>&lt;multiplier index&gt;</CODE>.
+
+        <P class="indented40"><B><U>Example</U></B>: Example <CODE class="highlight">via_cost_multiplier</CODE>
+           and <CODE class="highlight">via_cost_zone</CODE> statements are shown below.
+
+<PRE class="indented60"><CODE class="highlight"><B>via_cost_multiplier</B>    1         20    // Index #1 defined as a 20x cost-multiplier
+<B>via_cost_multiplier</B>    2         40    // Index #2 defined as a 40x cost-multiplier
+
+<B>via_cost_zone</B>   1   C4_via      <B>ALL</B>                             // Increase cost by 20x for entire C4_via layer over baseline cost
+<B>via_cost_zone</B>   2   C4_via      <B>CIR</B>  200 200   40               // Increase cost by 40x for circle over baseline cost
+<B>via_cost_zone</B>   0   C4_via      <B>RECT</B>   0   0   50 100           // Revert to baseline cost for rectangular region
+<B>via_cost_zone</B>   1   V1-2_layer  <B>TRI</B>    0   0    0  50    50  0  // Increase cost by 20x for triangular region of V1-2_layer</CODE>
+</PRE>
 
 
 
