@@ -103,7 +103,7 @@
               <CODE class="highlight">THIS | THAT</CODE>.</LI> 
         </UL>
 
-      <H2>General Outline</H2>
+      <H2>Outline</H2>
         <UL>
           <LI><A href="#layers_and_resolution">Layers and Grid Resolution</A></LI>
           <LI><A href="#netlist">Net List</A></LI>
@@ -112,6 +112,7 @@
           <LI><A href="#cost_zones">Cost Zones</A></LI>
           <LI><A href="#pin_swap_zones">Pin-Swap Zones</A></LI>
           <LI><A href="#control_statements">Routing Control Statements</A></LI>
+          <LI><A href="#unimplemented_statements">Unimplemented or Deprecated Statements</A></LI>
         </UL>
 
     <HR>
@@ -1074,12 +1075,14 @@
           <CODE class="highlight">no_pin_swap</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">pin_swap</CODE> and
-           <CODE class="highlight">no_pin_swap</CODE> statements define zones that have near-zero routing
-           costs, and in which all terminals become pin-swappable. If multiple <CODE class="highlight">pin_swap</CODE>
-           statements create contiguous or overlapping zones (either horizontally or vertically), then
-           these zones are merged into a single zone. The only nets that can route through a pin-swap region
-           are those that have a terminal in such regions. Other nets are prohibited from entering pin-swap
-           regions. A net is not allowed to have both of its terminals in a pin-swap region. The effect
+           <CODE class="highlight">no_pin_swap</CODE> statements, respectively, define and undefine
+           regions that have near-zero routing costs, and in which all terminals become pin-swappable.
+           If multiple <CODE class="highlight">pin_swap</CODE> statements create contiguous or
+           overlapping zones (either horizontally or vertically), then these zones are merged into a
+           single zone. Non-contiguous pin-swap regions are treated as separate pin-swap regions.
+           The only nets that can route through a contiguous pin-swap region are those that have a
+           terminal in such regions. Other nets are prohibited from entering pin-swap regions. 
+           A net is not allowed to have both of its terminals in a pin-swap region. The effect
            of a <CODE class="highlight">pin_swap</CODE> statement can be reversed with a subsequent
            <CODE class="highlight">no_pin_swap</CODE> statement for a given region.
 
@@ -1134,28 +1137,7 @@
 
 <B>pin_swap</B>    DIE_LAYER  CIR  200 200    40               // Define circular region on layer DIE_LAYER as a pin-swap region.
 
-<B>pin_swap</B>    Pkg_M1     TRI   20  20    20  50    50  20 // Define triangular region on layer Pkg_M1 as a pin-swap region.
-</PRE>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<B>pin_swap</B>    Pkg_M1     TRI   20  20    20  50    50  20 // Define triangular region on layer Pkg_M1 as a pin-swap region.</CODE></PRE>
 
 
     <HR>
@@ -1176,6 +1158,43 @@
            <CODE class="highlight">defaultMaxIterations</CODE> in file <CODE>global_defs.h</CODE>.
 
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">maxIterations = 500</CODE>
+
+
+      <H3 class="indented20"><CODE class="highlight">omit_layers_from_composite_images</CODE></H3>
+
+        <P class="indented40"><B><U>Purpose</U></B>: The 
+           <CODE class="highlight">omit_layers_from_composite_images</CODE> statement omits selected
+           trace and/or via layers from the composite (PNG) image files that are displayed in certain web
+           pages. In such web pages, omitting these layers with this statement hides them in the
+           animated routing evolution of the entire map
+
+        <P class="indented40"><B><U>Syntax</U></B>: <CODE class="highlight">omit_layers_from_composite_images = 
+           &lt;layerName 1&gt; &lt;layerName 2&gt; ...</CODE>
+
+        <P class="indented40"><B><U>Required or Optional</U></B>: The 
+           <CODE class="highlight">omit_layers_from_composite_images</CODE> statement is <B>optional</B>. 
+           Omitting this statement will result in all layers being displayed in the composite (PNG) image
+           files that are displayed in certain web pages.
+
+        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">omit_layers_from_composite_images
+           = Pass_via &nbsp; UBM &nbsp; C4 &nbsp; V4-5</CODE>
+
+      <H3 class="indented20"><CODE class="highlight">preEvaporationIterations</CODE></H3>
+
+        <P class="indented40"><B><U>Purpose</U></B>: The 
+           <CODE class="highlight">preEvaporationIterations</CODE> statement defines the number of
+           iterations before which no congestion is evaporated from the map. The minimum allowed value
+           for this value is 2, which prevents evaporation of congestion until after the third iteration. 
+
+        <P class="indented40"><B><U>Syntax</U></B>: <CODE class="highlight">preEvaporationIterations = &ltN&gt;</CODE>
+
+        <P class="indented40"><B><U>Required or Optional</U></B>: The 
+           <CODE class="highlight">preEvaporationIterations</CODE> statement is <B>optional</B>. The default
+           value is <B>2</B> iterations.
+
+        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">preEvaporationIterations = 5
+           // Delay the evapration of congestion until after the 6th iteration.</CODE>
+
 
 
       <H3 class="indented20"><CODE class="highlight">vertCost</CODE></H3>
@@ -1222,10 +1241,45 @@
 
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">violationFreeThreshold = 30</CODE>
 
+    <HR>
+    <div id="unimplemented_statements"></div>
+    <H2>Unimplemented and Deprecated Statements</H2>
 
+      <H3 class="indented20"><CODE class="highlight">iterationsPerPngMap</CODE></H3>
+
+        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">iterationsPerPngMap</CODE>
+           statement specifies the number of iterations between creating (PNG) images of the routing. This 
+           feature was intended to reduce run-times by eliminating the creation of PNG files for selected
+           iterations. However, this option is not aligned with other parts of the Acorn code that assume
+           that PNG files are generated for every iteration.
+
+        <P class="indented40"><B><U>Syntax</U></B>: <CODE class="highlight">iterationsPerPngMap = &ltN&gt;</CODE>
+
+        <P class="indented40"><B><U>Required or Optional</U></B>: The <CODE class="highlight">iterationsPerPngMap</CODE>
+           statement is <B>optional</B>. The default value is 1 iteration. That is, omitting this 
+           statement will cause Acorn to create PNG image-files for every iteration.
+
+        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">iterationsPerPngMap = 10</CODE>
+
+
+
+      <H3 class="indented20"><CODE class="highlight">origin</CODE></H3>
+
+        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">origin</CODE> statement
+           specifies the origin of the routing map. This feature is not yet implemented. Consequently,
+           the origin is fixed at the lower-left corner of the routing map.
+
+        <P class="indented40"><B><U>Syntax</U></B>: <CODE class="highlight">origin = center | 
+           lower_left | upper_left | lower_right | upper_right</CODE>
+
+        <P class="indented40"><B><U>Required or Optional</U></B>: The <CODE class="highlight">origin</CODE>
+           statement is <B>optional</B>. The default value is <CODE>lower_left</CODE>. However, specifying
+           other options for the origin (e.g., <CODE>center</CODE>) has no effect.
+
+        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">origin = lower_left</CODE>
 
     <BR><BR><BR><HR>
-    <FONT size="2" color="grey">Copyright &copy; 2024 Dan Boyne</FONT>
+    <FONT size="2" color="grey">Copyright &copy; 2024-2025 Dan Boyne</FONT>
 
     <!-- Following line-breaks create a scroll-bar in browser for consistency with other pages -->
     <!-- in this HTML documentation:                                                           -->
