@@ -1059,10 +1059,108 @@
 </PRE>
 
 
-
     <HR>
     <div id="pin_swap_zones"></div>
     <H2>Pin-Swap Zones</H2>
+
+      <P class="indented20">Pin-swap zones are special, user-defined regions with the following properties:
+         <UL class="indented60">
+           <LI>The routing cost is close to zero for lateral traces and vertical vias,</LI>
+           <LI>Nets do not affect each others' routing,</LI>
+           <LI>Design-rule violations are allowed.</LI>
+         </UL>
+
+      <H3 class="indented20"><CODE class="highlight">pin_swap</CODE> and
+          <CODE class="highlight">no_pin_swap</CODE></H3>
+
+        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">pin_swap</CODE> and
+           <CODE class="highlight">no_pin_swap</CODE> statements define zones that have near-zero routing
+           costs, and in which all terminals become pin-swappable. If multiple <CODE class="highlight">pin_swap</CODE>
+           statements create contiguous or overlapping zones, then these zones are merged into a single zone.
+           The only nets that can route through a pin-swap region are those that have a terminal
+           in such regions. Other nets are prohibited from entering pin-swap regions. A net is not allowed to
+           have both of its terminals in a pin-swap region. The effect of a <CODE class="highlight">pin_swap</CODE>
+           statement can be reversed with a subsequent <CODE class="highlight">no_pin_swap</CODE> statement
+           for a given region.
+
+
+        <P class="indented40"><B><U>Syntax</U></B>: The <CODE class="highlight">pin_swap</CODE>
+           statement associates the user-defined cost-multiplier, <CODE>&lt;cost multiplier&gt;</CODE>,
+           with a user-defined index, <CODE>&lt;multiplier index&gt;</CODE>: 
+
+          <P class="indented60"><CODE class="highlight"><B>trace_cost_multiplier</B> &nbsp;
+             &lt;multiplier index&gt; &nbsp; &lt;cost multiplier&gt;</CODE>
+
+        <P class="indented40">The <CODE class="highlight">trace_cost_zone</CODE> statement associates
+           a <CODE>&lt;multiplier index&gt;</CODE> (defined in a 
+           <CODE class="highlight">trace_cost_multiplier</CODE> statement), with a region on a given
+           routing layer with name <CODE>&lt;layer name&gt;</CODE>. The region can encompass the entire
+           routing layer or a subset of the layer in a shape of a rectangle, circle, or triangle, as
+           described below.
+
+        <P class="indented40">To define an entire routing layer to have increased trace costs:
+
+          <P class="indented60"><CODE class="highlight"><B>trace_cost_zone</B> &lt;multiplier index&gt; 
+            &lt;layer name&gt; <B>ALL</B></CODE>
+
+        <P class="indented40">To increase the trace cost of a rectangular region on a routing layer
+           with diagonal corners <I>(X1,Y1)</I> and <I>(X2,Y2)</I>, in microns:
+
+          <P class="indented60"><CODE class="highlight"><B>trace_cost_zone</B> &lt;multiplier index&gt;
+             &lt;layer name&gt; <B>RECT</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt;</CODE>
+
+        <P class="indented40">To increase the trace cost of a circular region on a routing layer with
+           center <I>(X1,Y1)</I> and radius <I>R</I>, in microns:
+
+          <P class="indented60"><CODE class="highlight"><B>trace_cost_zone</B> &lt;multiplier index&gt;
+             &lt;layer name&gt; <B>CIR</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;R&gt;</CODE>
+
+        <P class="indented40">To increase the trace cost of a triangular region on a routing layer with
+           vertices <I>(X1,Y1)</I>, <I>(X2,Y2)</I>, and <I>(X3,Y3)</I>, in microns.
+
+          <P class="indented60"><CODE class="highlight"><B>trace_cost_zone</B> &lt;multiplier index&gt;
+             &lt;layer name&gt; <B>TRI</B> &nbsp; &lt;X1&gt; &lt;Y1&gt; &nbsp; &lt;X2&gt; &lt;Y2&gt; 
+             &nbsp; &lt;X3&gt; &lt;Y3&gt;</CODE>
+
+        <P class="indented40"><B><U>Required or Optional</U></B>: The <CODE class="highlight">trace_cost_zone</CODE>
+           statement is <B>optional</B>. If no <CODE class="highlight">trace_cost_zone</CODE> statement is
+           used, then all regions will use the default cost for routing traces.
+
+        <P class="indented40">The <CODE class="highlight">trace_cost_multiplier</CODE> statement is 
+           required only if a <CODE class="highlight">trace_cost_zone</CODE> statements references a
+           non-zero <CODE>&lt;multiplier index&gt;</CODE>.
+
+        <P class="indented40"><B><U>Example</U></B>: Example <CODE class="highlight">trace_cost_multiplier</CODE>
+           and <CODE class="highlight">trace_cost_zone</CODE> statements are shown below.
+
+<PRE class="indented60"><CODE class="highlight"><B>trace_cost_multiplier</B>    1         20    // Index #1 defined as a 20x cost-multiplier
+<B>trace_cost_multiplier</B>    2         40    // Index #2 defined as a 40x cost-multiplier
+
+<B>trace_cost_zone</B>   1   Die_layer   <B>ALL</B>                             // Increase cost by 20x for entire Die_layer over baseline cost
+<B>trace_cost_zone</B>   2   Die_layer   <B>CIR</B>  200 200   40               // Increase cost by 40x for circle over baseline cost
+<B>trace_cost_zone</B>   0   Die_layer   <B>RECT</B>   0   0   50 100           // Revert to baseline cost for rectangular region
+<B>trace_cost_zone</B>   1   M1_layer    <B>TRI</B>    0   0    0  50    50  0  // Increase cost by 20x for triangular region of M1_layer</CODE>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <HR>
