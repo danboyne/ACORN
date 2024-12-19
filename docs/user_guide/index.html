@@ -7,6 +7,20 @@
       { padding-left: 20pt; }
     </STYLE>
 
+    <STYLE> .indented40
+      { padding-left: 40pt; }
+    </STYLE>
+
+    <STYLE> .highlight  {
+      background-color: LightYellow;
+      font-family: monospace;
+      padding: 0px;
+      outline-width: 1px;
+      outline-style: solid;
+      outline-color: Bisque;
+    }
+    </STYLE> 
+
   </HEAD>
 
   <BODY>
@@ -146,7 +160,7 @@
     <H2>Running an Existing Test Case</H2>
 
       <!-- Following table contains 1 row and 2 columns: -->
-      <TABLE style="width:100% border:1px; bordercolor:#ffffff; bgcolor:#ffffff;">
+      <TABLE style="width:100%; border:1px; bordercolor:#ffffff; bgcolor:#ffffff;">
         <TR>
           <!-- Left cell contains text instructions: -->
           <TD style="min-width:750px; vertical-align:top;">
@@ -275,17 +289,143 @@
       <div id="layers_and_resolution"></div>
       <H3>Layers and Grid Resolution</H3>
 
-        <P class="indented20">Explanation goes here.
+        <P class="indented20">Acorn requires that the input file contain the number of routing layers 
+           used for traces, in addition to names for these layers and the intervening via layers. 
+           Acorn also requires the lateral extents of the largest layer be included in the file. 
+           Another important dimension is the grid resolution that Acorn will use to break up the
+           layers into a grid. 
+
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+              As an example, assume we wanted to use Acorn on a design like that shown at right,
+              which includes two PCB routing layers, two layers on each of two packages, and
+              one routing layer on each of three silicon die. In this example, there are five
+              routing layers and four intervening via layers. Defining these would require
+              the following two statements in the input file:
+
+              <P class="indented20"><CODE class="highlight">number_layers = 5 &nbsp; // 5 routing layers<BR>
+                layer_names = Die_Top C4 Pkg_M1 Pkg_via Pkg_M2 BGA PCB_M1 PCB_via PCB_M2</CODE>
+
+              <P>The above two statements define information along the Z-axis, as denoted by
+              the coordinate system shown at right. Note the two consecutive forward slashes
+              (<CODE class="highlight"><B>//</B></CODE>) in the example above. These denote the
+              beginning of a comment that continues to the end of the line.
+
+            </TD>
+            <!-- Right cell contains image: -->
+            <TD>
+              <IMG src="../images/perspective_view_of_chip_package_PCB.png" alt="Chip-package-PCB system"
+                width="617" height="173">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <P class="indented20">To define the size in the X-Y plane, we specify the maximum extent of
+        the routing region in the X- and Y-directions using, respectively, 
+        <CODE class="highlight">width</CODE> and <CODE class="highlight">height</CODE> statements:
+
+        <P class="indented40"><CODE class="highlight">width &nbsp;= 14000 &nbsp; // 14,000 microns wide<BR>
+           height = &nbsp;7000 &nbsp; // 7,000 microns high</CODE>
+
+        <P class="indented20">The above two statements specify the lateral sizes of the 
+           <I><B>entire</B></I> routing region, regardless of the layer. In this example, only the
+           two PCB layers are 14 mm wide by 7 mm high. The package and die layers are subsets of
+           these sizes. We will define the smaller dimensions of the packages and die later on,
+           as described in the <A href="#keep_out_areas">Keep-out Areas</A> section.
+          
 
       <div id="netlist"></div>
       <H3>Net List</H3>
 
-        <P class="indented20">Explanation goes here.
+        <P class="indented20">The list of nets are contained between the following two statements:
+          <CODE class="highlight">start_nets</CODE> and <CODE class="highlight">end_nets</CODE>. 
+          Each line contains one net. A simple example with six nets is shown below:
+
+<PRE class="indented40"><CODE class="highlight"><B>start_nets</B>
+  # Net    Start    Start Start    End       End   End
+  # Name   Layer      X     Y      Layer      X     Y
+  # -----  ------- ----- -----     ------- ----- -----
+  net1     Die_Top  2500  3000     Die_Top  4900  2800  // Net connecting Die #1 and Die #2.
+  VDD      Die_Top  2600  3000     PCB_M1    100  6800  // Connection to Die #1.
+
+  DP1_P    Die_Top  5000  2800     PCB_M1   6000   100  // Connections to
+  DP1_N    Die_Top  5000  2900     PCB_M1   6100   100  //    Die #2.
+
+  DP2_P    Die_Top 11000  3100     PCB_M1  13800  4000  // Connections to
+  DP2_N    Die_Top 11080  3100     PCB_M1  13800  4150  //    Die #3.
+<B>end_nets</B></CODE></PRE>
+
+        <P class="indented20">In the above example, note the three lines that start with a hash 
+           (<CODE class="highlight"><B>#</B></CODE>) character in the first column. This character 
+           creates a full-line comment.
+
+        <P class="indented20">In each line of the example above, a case-sensitive net name is the 
+           first token on the line. This is followed by the the coordinates of the net's 
+           start-terminal, starting with the name of the routing layer and the X/Y coordinates, 
+           in microns. The origin of the X/Y coordinate system is always the lower-left corner of
+           the routing region, as indicated in the diagram above.
+
+        <P class="indented20">The next three tokens on the line are the coordinates of the net's
+           end-terminal. Again, a triple of tokens is used: layer name, followed by the X/Y
+           coordinates (again, in microns as measured from the system's origin).
+
+        <P class="indented20">Sometimes it is helpful to identify certain nets as special because,
+           e.g., because they should be routed with different design rules from other nets. 
+           Identifying such nets is done in the net list between the 
+           <CODE class="highlight">start_nets</CODE> and <CODE class="highlight">end_nets</CODE>
+           statements. Examples of these are covered below in the 
+           <A href="#design_rules">Design Rules</A> section.
 
       <div id="keep_out_areas"></div>
       <H3>Keep-out Areas</H3>
 
-        <P class="indented20">Explanation goes here.
+        <P class="indented20">
+
+
+
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+              To define which parts of a layer may be used for routing, Acorn uses
+              two types of statements: <CODE class="highlight">block</CODE> and 
+              <CODE class="highlight">unblock</CODE>. Complex shapes may be created using
+              combinations of these statements. Using the previous chip-package-PCB example,
+              a handful of <CODE class="highlight">block</CODE> and
+              <CODE class="highlight">unblock</CODE> statements can define the boundaries
+              for the routing layers on the three chips, as depicted at right. These 
+              boundaries could be achieved using a <CODE class="highlight">block</CODE>
+              statement to block the entire layer, followed by three 
+              <CODE class="highlight">unblock</CODE> statements to unblock rectangles for 
+              each die. These are shown below:
+              <BR>
+<PRE class="indented20"><CODE class="highlight"><B>block   ALL</B>  Die_Top   // Block the entire 'Die_Top' layer
+
+# Un-block a rectangular region for Die #1 with corners
+# at (800,2000) and (3200,4000), in microns
+<B>unblock RECT</B> Die_Top  800 2000    3200 4000 
+
+# Un-block a rectangular region for Die #2 with corners
+# at (3800,2000) and (6200,4000), in microns
+<B>unblock RECT</B> Die_Top 3800 2000    6200 4000 
+
+# Un-block a rectangular region for Die #2 with corners
+# at (9800,2500) and (12200,3500), in microns
+<B>unblock RECT</B> Die_Top 9800 2500   12200 3500</CODE></PRE>
+
+            </TD>
+            <TD>
+              <IMG src="../images/perspective_view_of_chip_package_PCB_with_XY_die_view.png"
+                alt="Chip-package-PCB system" width="606" height="261">
+            </TD>
+          </TR>
+        </TABLE>
+
+
 
       <div id="design_rules"></div>
       <H3>Design Rules</H3>
