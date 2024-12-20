@@ -11,6 +11,10 @@
       { padding-left: 40pt; }
     </STYLE>
 
+    <STYLE> .indented60
+      { padding-left: 40pt; }
+    </STYLE>
+
     <STYLE> .highlight  {
       background-color: LightYellow;
       font-family: monospace;
@@ -71,7 +75,7 @@
     </TABLE>
 
     <HR>
-    <div id="installation"></div>
+    <div id="installation"></DIV>
     <H2>Installation</H2>
 
       <!-- Following table contains 1 row and 2 columns: -->
@@ -156,7 +160,7 @@
       </TABLE>
 
     <HR>
-    <div id="running_test_case"></div>
+    <div id="running_test_case"></DIV>
     <H2>Running an Existing Test Case</H2>
 
       <!-- Following table contains 1 row and 2 columns: -->
@@ -276,7 +280,7 @@
       </TD></TR></TABLE>
 
     <HR>
-    <div id="create_test_case"></div>
+    <div id="create_test_case"></DIV>
     <H2>Creating Your Own Routing Cases</H2>
 
       <P class="indented20">Acorn does not currently read data from industry-standard files with 
@@ -286,14 +290,14 @@
       <P class="indented20">A full description of the input file's syntax is available <A 
       href="acorn_syntax.html">at this link</A>. 
 
-      <div id="layers_and_resolution"></div>
+      <div id="layers_and_resolution"></DIV>
       <H3>Layers and Grid Resolution</H3>
 
         <P class="indented20">Acorn requires that the input file contain the number of routing layers 
            used for traces, in addition to names for these layers and the intervening via layers. 
-           Acorn also requires the lateral extents of the largest layer be included in the file. 
-           Another important dimension is the grid resolution that Acorn will use to break up the
-           layers into a grid. 
+           Acorn also requires the lateral extents (dimensions) of the largest layer be included in
+           the file. Another important dimension is the grid resolution that Acorn will use to break
+           up the layers into a grid. 
 
         <!-- Following table contains 1 row and 2 columns: -->
         <TABLE style="width:100%">
@@ -303,8 +307,10 @@
               As an example, assume we wanted to use Acorn on a design like that shown at right,
               which includes two PCB routing layers, two layers on each of two packages, and
               one routing layer on each of three silicon die. In this example, there are five
-              routing layers and four intervening via layers. Defining these would require
-              the following two statements in the input file:
+              routing layers and four intervening via layers. Defining these would require the
+              <A href="acorn_syntax.html#number_layers"><CODE class="highlight">number_layers</CODE></A>
+              and <A href="acorn_syntax.html#layer_names"><CODE class="highlight">layer_names</CODE></A>
+              statements in the input file:
 
               <P class="indented20"><CODE class="highlight">number_layers = 5 &nbsp; // 5 routing layers<BR>
                 layer_names = Die_Top C4 Pkg_M1 Pkg_via Pkg_M2 BGA PCB_M1 PCB_via PCB_M2</CODE>
@@ -325,7 +331,8 @@
 
         <P class="indented20">To define the size in the X-Y plane, we specify the maximum extent of
         the routing region in the X- and Y-directions using, respectively, 
-        <CODE class="highlight">width</CODE> and <CODE class="highlight">height</CODE> statements:
+        <A href="acorn_syntax.html#width"><CODE class="highlight">width</CODE></A> and 
+        <A href="acorn_syntax.html#height"><CODE class="highlight">height</CODE></A> statements:
 
         <P class="indented40"><CODE class="highlight">width &nbsp;= 14000 &nbsp; // 14,000 microns wide<BR>
            height = &nbsp;7000 &nbsp; // 7,000 microns high</CODE>
@@ -336,13 +343,81 @@
            these sizes. We will define the smaller dimensions of the packages and die later on,
            as described in the <A href="#keep_out_areas">Keep-out Areas</A> section.
           
+        <P class="indented20">Finally, Acorn requires that the input file define a resolution. This
+           dimension, expressed in microns, defines the size of the square-shaped cells that Acorn
+           uses to define traces, vias, and all other shapes in the design. This is done with a 
+           <A href="acorn_syntax.html#grid_resolution"><CODE class="highlight">grid_resolution</CODE></A>
+           statement, as in the following example:
 
-      <div id="netlist"></div>
+        <P class="indented40"><CODE class="highlight"><B>grid_resolution</B> = 12.5 &nbsp; 
+           // Grid size in microns</CODE>
+
+        <P class="indented20">A reasonable rule-of-thumb is to define the grid resolution to be
+           approximately one third the width of the narrowest trace or via in your design.
+           For large designs, however, small grid resolutions will result in a large number
+           of grid cells, leading to longer run-times during the autorouting process. For a 
+           design of up to 10 layers, the number of cells in a given layer should not 
+           exceed approximately 2000 by 2000 cells (approximately 4 million cells per layer). 
+           To maintain reasonable run-times, the following table suggests the minimum
+           grid resolution values for a variety of design sizes. Larger grid resolutions 
+           can significantly reduce run-times.
+
+
+        <!-- Following table contains 7 rows and 2 columns:     -->
+        <!-- (Outer table is used to indent the inner table.)   -->
+        <TABLE style="padding-left:40px;"><TR><TD>
+          <TABLE>
+            <TR>
+              <TH style="border:1px #CCCCCC solid; background-color: #DDDDDD;">Design Size</TD>
+              <TH style="border:1px #CCCCCC solid; background-color: #DDDDDD;">Minimum Grid<BR>Resolution</TD>
+            </TR>
+            <TR>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">5 mm X 5 mm</TD>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">2.5 &mu;m</TD>
+            </TR>
+            <TR>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">10 mm X 10 mm</TD>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">5 &mu;m</TD>
+            </TR>
+
+            <TR>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">20 mm X 20 mm</TD>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">10 &mu;m</TD>
+            </TR>
+
+            <TR>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">30 mm X 30 mm</TD>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">15 &mu;m</TD>
+            </TR>
+
+            <TR>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">40 mm X 40 mm</TD>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">20 &mu;m</TD>
+            </TR>
+
+            <TR>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">50 mm X 50 mm</TD>
+              <TD style="border:1px #AAAAAA solid; text-align:center;">25 &mu;m</TD>
+            </TR>
+
+            <TR>
+              <TD colspan="2" style="text-align:center;"><FONT size="2">Minimum grid
+                resolutions to maintain fewer than 4 million grid cells
+                <BR>
+                per layer. Larger grid resolutions can significantly reduce 
+                run-times.</FONT></TD>
+            </TR>
+          </TABLE>
+        </TABLE>
+
+
+      <div id="netlist"></DIV>
       <H3>Net List</H3>
 
         <P class="indented20">The list of nets are contained between the following two statements:
-          <CODE class="highlight">start_nets</CODE> and <CODE class="highlight">end_nets</CODE>. 
-          Each line contains one net. A simple example with six nets is shown below:
+          <A href="acorn_syntax.html#netlist"><CODE class="highlight">start_nets</CODE> and
+          <CODE class="highlight">end_nets</CODE></A>. Each line contains one net. A simple
+          example with six nets is shown below:
 
 <PRE class="indented40"><CODE class="highlight"><B>start_nets</B>
   # Net    Start    Start Start    End       End   End
@@ -379,12 +454,10 @@
            statements. Examples of these are covered below in the 
            <A href="#design_rules">Design Rules</A> section.
 
-      <div id="keep_out_areas"></div>
+      <div id="keep_out_areas"></DIV>
       <H3>Keep-out Areas</H3>
 
         <P class="indented20">
-
-
 
         <!-- Following table contains 1 row and 2 columns: -->
         <TABLE style="width:100%">
@@ -392,16 +465,17 @@
             <!-- Left cell contains text: -->
             <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
               To define which parts of a layer may be used for routing, Acorn uses
-              two types of statements: <CODE class="highlight">block</CODE> and 
-              <CODE class="highlight">unblock</CODE>. Complex shapes may be created using
+              two types of statements:
+              <A href="acorn_syntax.html#keep_out_areas"><CODE class="highlight">block</CODE> and 
+              <CODE class="highlight">unblock</CODE></A>. Complex shapes may be created using
               combinations of these statements. Using the previous chip-package-PCB example,
               a handful of <CODE class="highlight">block</CODE> and
               <CODE class="highlight">unblock</CODE> statements can define the boundaries
               for the routing layers on the three chips, as depicted at right. These 
               boundaries could be achieved using a <CODE class="highlight">block</CODE>
               statement to block the entire layer, followed by three 
-              <CODE class="highlight">unblock</CODE> statements to unblock rectangles for 
-              each die. These are shown below:
+              <CODE class="highlight">unblock</CODE> statements to unblock rectangular
+              regions for each of the three die. These statements are shown below:
               <BR>
 <PRE class="indented20"><CODE class="highlight"><B>block   ALL</B>  Die_Top   // Block the entire 'Die_Top' layer
 
@@ -418,6 +492,8 @@
 <B>unblock RECT</B> Die_Top 9800 2500   12200 3500</CODE></PRE>
 
             </TD>
+
+            <!-- Right cell contains image: -->
             <TD>
               <IMG src="../images/perspective_view_of_chip_package_PCB_with_XY_die_view.png"
                 alt="Chip-package-PCB system" width="606" height="261">
@@ -425,25 +501,142 @@
           </TR>
         </TABLE>
 
+        <P class="indented20">The effect of the above four statements is to create three
+           rectangular routing regions, as indicated by the white rectangles in the inset
+           figure above.
+
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+              Keep-out regions are likewise defined on other layers. For example, the regions
+              for the two packages can be defined with <CODE class="highlight">block</CODE>
+              and <CODE class="highlight">unblock</CODE> statements like those below. These
+              are similar to the statements above for defining the die layers, but with the
+              addition of triangular keep-out regions at the corners of each package, using
+              the <CODE class="highlight">block TRI</CODE> statements: 
+
+              <BR>
+<PRE class="indented20"><CODE class="highlight"><B>block   ALL</B>  Pkg_M1   // Block the entire 'Pkg_M1' layer
+
+# Un-block a rectangular region for Package #1 with 
+# corners at (600,1000) and (8000,6000), in microns
+<B>unblock RECT</B> Pkg_M1   600 1000    8000 6000 
+
+# Un-block a rectangular region for Package #2 with 
+# corners at (9000,1000) and (13000,6000), in microns
+<B>unblock RECT</B> Pkg_M1  9000 1000   13000 6000 
+
+# Block triangular regions at the four corners of Package #1:
+<B>block   TRI</B>  Pkg_M1    600 1000    600 1200    800 1000  // Lower-left corner
+<B>block   TRI</B>  Pkg_M1    600 6000    600 5800    800 6000  // Upper-left corner
+<B>block   TRI</B>  Pkg_M1   8000 1000   8000 1200   7800 1000  // Lower-right corner
+<B>block   TRI</B>  Pkg_M1   8000 6000   8000 5800   7800 6000  // Upper-right corner
+
+# Block triangular regions at the four corners of Package #2:
+<B>block   TRI</B>  Pkg_M1   9000 1000   9000 1200   9200 1000  // Lower-left corner
+<B>block   TRI</B>  Pkg_M1   9000 6000   9000 5800   9200 6000  // Upper-left corner
+<B>block   TRI</B>  Pkg_M1  13000 1000  13000 1200  12800 1000  // Lower-right corner
+<B>block   TRI</B>  Pkg_M1  13000 6000  13000 5800  12800 6000  // Upper-right corner</CODE></PRE>
+
+            </TD>
+
+            <!-- Right cell contains image: -->
+            <TD>
+              <IMG src="../images/perspective_view_of_chip_package_PCB_with_XY_pkg_view.png"
+                alt="Chip-package-PCB system" width="605" height="253">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <P class="indented20">The effect of the above 11 statements is to create the two
+           regions for package routing, as indicated by the white areas in the inset figure
+           above. Note that the order of the <CODE class="highlight">block</CODE>
+           and <CODE class="highlight">unblock</CODE> statements is very important. Each
+           <CODE class="highlight"><B>un</B>block</CODE> statement 'erases' the effects of a
+           previous <CODE class="highlight">block</CODE> statement, but has no effect on 
+           subsequent <CODE class="highlight">block</CODE> statements.
+
+        <P class="indented20">A similar series of statements must be repeated for each 
+           routing layer in the package. In the example depicted in the figure above, 
+           which contains two routing layers in each package, the 11 
+           <CODE class="highlight">block</CODE> / <CODE class="highlight">unblock</CODE> 
+           statements would be repeated with '<CODE>Pkg_M1</CODE>' replaced by 
+           '<CODE>Pkg_M2</CODE>'.
+           
 
 
-      <div id="design_rules"></div>
+
+
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+              Keep-out regions are not limited to routing layers. The 
+              <CODE class="highlight">block</CODE> and <CODE class="highlight">unblock</CODE>
+              statements can also define keep-out areas on <B><I>via</I></B> layers. This is
+              helpful in defining locations for vias with predefined arrays, such as C4 bumps,
+              copper pillars, solder balls, etc. The necessary statements are similar to the
+              those above for defining the die and package layers, but with the use of
+              circular regions at the site of each via, using
+              <CODE class="highlight">unblock CIR</CODE> statements, as shown below: 
+
+              <BR>
+              <BR>
+<PRE class="indented20"><CODE class="highlight"><B>block   ALL</B>  C4    // Block the entire 'C4' layer
+
+# Un-block a circular region for each C4 bump of Die #1:
+<B>unblock CIR</B>  C4   2800 2400    50  // C4 centered at (2800,2400) with radius 50 microns
+<B>unblock CIR</B>  C4   3200 2400    50
+<B>unblock CIR</B>  C4   3600 2400    50
+<B>unblock CIR</B>  C4   4200 2400    50</CODE>
+  etc., etc., etc.</PRE>
+
+            </TD>
+
+            <!-- Right cell contains image: -->
+            <TD>
+              <IMG src="../images/perspective_view_of_chip_package_PCB_with_XY_vias_view.png"
+                alt="Chip-package-PCB system" width="605" height="267">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <P class="indented20">The effect of statements like the above
+           <CODE class="highlight">block</CODE> and <CODE class="highlight">unblock</CODE>
+           statements is to create arrays of vias like those shown in the two insets
+           of the diagram above. In this case, layer <CODE>'C4'</CODE> would contain three
+           arrays of vias (one for each die). Layer <CODE>'BGA'</CODE> would require 
+           another set of <CODE class="highlight">block</CODE> and 
+           <CODE class="highlight">unblock</CODE> statements to define the sites of allowed
+           vias between the PCB and the two packages.
+
+        <P class="indented20">Large arrays of vias, of course, require many 
+           <CODE class="highlight">unblock</CODE> statements (one for each via). But once 
+           these statements are created, they can be reused again and again for common
+           arrays of vias. 
+
+
+
+      <div id="design_rules"></DIV>
       <H3>Design Rules</H3>
 
         <P class="indented20">Explanation goes here.
 
-      <div id="cost_zones"></div>
+      <div id="cost_zones"></DIV>
       <H3>Cost Zones</H3>
 
         <P class="indented20">Explanation goes here.
 
-      <div id="pin_swap_zones"></div>
+      <div id="pin_swap_zones"></DIV>
       <H3>Pin-Swap Zones</H3>
 
         <P class="indented20">Explanation goes here.
 
     <HR>
-    <div id="running_acorn"></div>
+    <div id="running_acorn"></DIV>
     <H2>Running Acorn on Your Own Routing Cases</H2>
 
       <P class="indented20">Explanation goes here.

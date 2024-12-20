@@ -119,11 +119,13 @@
         </UL>
 
     <HR>
-    <div id="layers_and_resolution"></div>
+    <DIV id="layers_and_resolution"></DIV>
     <H2>Layers and Grid Resolution</H2>
 
+      <DIV id="grid_resolution"></DIV>
       <H3 class="indented20"><CODE class="highlight">grid_resolution</CODE></H3>
 
+        <DIV id="layers_and_resolution"></DIV>
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">grid_resolution</CODE> statement
            specifies the size, in microns, of each square cell in the grid. 
 
@@ -135,7 +137,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">grid_resolution = 12.5 // Grid size in
            microns</CODE>
 
-
+      <DIV id="width"></DIV>
       <H3 class="indented20"><CODE class="highlight">width</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">width</CODE> statement specifies the
@@ -149,6 +151,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">width = 25.25 // 25.25 millimeters 
            wide</CODE>
 
+      <DIV id="height"></DIV>
       <H3 class="indented20"><CODE class="highlight">height</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">height</CODE> statement specifies the
@@ -162,6 +165,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">height = 19 // 19 millimeters 
            high</CODE>
 
+      <DIV id="number_layers"></DIV>
       <H3 class="indented20"><CODE class="highlight">number_layers</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">number_layers</CODE> statement 
@@ -175,6 +179,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">number_layers = 4 // Routing layers
            M1, M2, M3, and M4</CODE>
 
+      <DIV id="layer_names"></DIV>
       <H3 class="indented20"><CODE class="highlight">layer_names</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">layer_names</CODE> statement 
@@ -193,7 +198,7 @@
            </CODE>
 
     <HR>
-    <div id="netlist"></div>
+    <DIV id="netlist"></DIV>
     <H2>Net List</H2>
 
       <H3 class="indented20"><CODE class="highlight">start_nets</CODE> and <CODE class="highlight">end_nets
@@ -269,7 +274,7 @@
 <B>end_nets</B></CODE></PRE>
 
     <HR>
-    <div id="keep_out_areas"></div>
+    <DIV id="keep_out_areas"></DIV>
     <H2>Keep-out Areas</H2>
 
       <H3 class="indented20"><CODE class="highlight">block</CODE> and <CODE class="highlight">unblock</CODE></H3>
@@ -351,9 +356,10 @@
 
 
     <HR>
-    <div id="design_rules"></div>
+    <DIV id="design_rules"></DIV>
     <H2>Design Rules</H2>
 
+      <DIV id="design_rule_set"></DIV>
       <H3 class="indented20"><CODE class="highlight">design_rule_set</CODE> and <CODE class="highlight">
         end_design_rule_set</CODE></H3>
 
@@ -419,39 +425,39 @@
 
         <TABLE class="indented60" cellpadding="3">
           <TR>
-            <TD><div class="numberCircle">1</div></TD>
+            <TD><DIV class="numberCircle">1</DIV></TD>
             <TD><CODE class="highlight">[line_width        = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">2</div></TD>
+            <TD><DIV class="numberCircle">2</DIV></TD>
             <TD><CODE class="highlight">[via_up_diameter   = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">3</div></TD>
+            <TD><DIV class="numberCircle">3</DIV></TD>
             <TD><CODE class="highlight">[via_down_diameter   = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">4</div></TD>
+            <TD><DIV class="numberCircle">4</DIV></TD>
             <TD><CODE class="highlight">[line_spacing      = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">5</div></TD>
+            <TD><DIV class="numberCircle">5</DIV></TD>
             <TD><CODE class="highlight">[via_up_to_trace_spacing      = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">6</div></TD>
+            <TD><DIV class="numberCircle">6</DIV></TD>
             <TD><CODE class="highlight">[via_down_to_trace_spacing    = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">7</div></TD>
+            <TD><DIV class="numberCircle">7</DIV></TD>
             <TD><CODE class="highlight">[via_up_to_via_up_spacing     = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">8</div></TD>
+            <TD><DIV class="numberCircle">8</DIV></TD>
             <TD><CODE class="highlight">[via_up_to_via_down_spacing   = &lt;NN.N&gt;]</TD>
           </TR>
           <TR>
-            <TD><div class="numberCircle">9</div></TD>
+            <TD><DIV class="numberCircle">9</DIV></TD>
             <TD><CODE class="highlight">[via_down_to_via_down_spacing = &lt;NN.N&gt;]</TD>
           </TR>
         </TABLE>
@@ -601,6 +607,7 @@
 
 <B>end_design_rule_set</B></CODE></PRE>
 
+      <DIV id="line_width"></DIV>
       <H3 class="indented20"><CODE class="highlight">line_width</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">line_width</CODE> statement 
@@ -615,6 +622,7 @@
 
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">line_width = 15.0  // In microns</CODE>
 
+      <DIV id="line_spacing"></DIV>
       <H3 class="indented20"><CODE class="highlight">line_spacing</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">line_spacing</CODE> statement 
@@ -630,6 +638,7 @@
 
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">line_spacing = 20  // In microns</CODE>
 
+      <DIV id="via_up_diameter"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_up_diameter</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_up_diameter</CODE> statement 
@@ -645,6 +654,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_up_diameter = 45.0  // In
            microns</CODE>
 
+      <DIV id="via_down_diameter"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_down_diameter</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_down_diameter</CODE> statement 
@@ -660,6 +670,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_down_diameter = 45.0  
           // In microns</CODE>
 
+      <DIV id="via_up_to_trace_spacing"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_up_to_trace_spacing</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_up_to_trace_spacing</CODE>
@@ -676,6 +687,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_up_to_trace_spacing = 37.5  
           // In microns</CODE>
 
+      <DIV id="via_down_to_trace_spacing"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_down_to_trace_spacing</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_down_to_trace_spacing</CODE>
@@ -694,6 +706,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_down_to_trace_spacing = 47  
            // In microns</CODE>
 
+      <DIV id="via_up_to_via_up_spacing"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_up_to_via_up_spacing</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_up_to_via_up_spacing</CODE>
@@ -712,6 +725,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_up_to_via_up_spacing = 25.0  
            // In microns</CODE>
 
+      <DIV id="via_down_to_via_down_spacing"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_down_to_via_down_spacing</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_down_to_via_down_spacing</CODE>
@@ -731,6 +745,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_down_to_via_down_spacing = 62.5  
            // In microns</CODE>
 
+      <DIV id="via_up_to_via_down_spacing"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_up_to_via_down_spacing</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">via_up_to_via_down_spacing</CODE>
@@ -749,6 +764,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">via_up_to_via_down_spacing = 30.0  
            // In microns</CODE>
 
+      <DIV id="exception"></DIV>
       <H3 class="indented20"><CODE class="highlight">exception</CODE> and <CODE class="highlight">
         end_exception</CODE></H3>
 
@@ -813,6 +829,7 @@
   diff_pair_pitch = 58   // In microns
 <B>end_exception</B></CODE></PRE>
 
+      <DIV id="diff_pair_pitch"></DIV>
       <H3 class="indented20"><CODE class="highlight">diff_pair_pitch</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">diff_pair_pitch</CODE> statement
@@ -834,6 +851,7 @@
            // In microns</CODE>
 
 
+      <DIV id="DR_zone"></DIV>
       <H3 class="indented20"><CODE class="highlight">DR_zone</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">DR_zone</CODE> statement
@@ -890,7 +908,7 @@
 <B>DR_zone</B>  M2_rules   M2_layer   <B>TRI</B>    0   0    100   0    0 100 // Use 'M2_rules' in triangular region in lower-left corner of layer 'M2_layer'</CODE></PRE>
 
     <HR>
-    <div id="cost_zones"></div>
+    <DIV id="cost_zones"></DIV>
     <H2>Cost Zones</H2>
 
       <P class="indented20">Each length of lateral routing has a default cost which Acorn attempts to
@@ -900,6 +918,8 @@
          default costs in specific areas using the statements described in this section. Increasing the
          routing costs in a region has the effect of reducing the routing in that region.
 
+
+      <DIV id="trace_cost_multiplier"></DIV>
       <H3 class="indented20"><CODE class="highlight">trace_cost_multiplier</CODE> and
           <CODE class="highlight">trace_cost_zone</CODE></H3>
 
@@ -981,7 +1001,7 @@
 </PRE>
 
 
-
+      <DIV id="via_cost_multiplier"></DIV>
       <H3 class="indented20"><CODE class="highlight">via_cost_multiplier</CODE> and
           <CODE class="highlight">via_cost_zone</CODE></H3>
 
@@ -1064,7 +1084,7 @@
 
 
     <HR>
-    <div id="pin_swap_zones"></div>
+    <DIV id="pin_swap_zones"></DIV>
     <H2>Pin-Swap Zones</H2>
 
       <P class="indented20">Pin-swap zones are special, user-defined regions with the following properties:
@@ -1144,9 +1164,10 @@
 
 
     <HR>
-    <div id="control_statements"></div>
+    <DIV id="control_statements"></DIV>
     <H2>Routing Control Statements</H2>
 
+      <DIV id="maxIterations"></DIV>
       <H3 class="indented20"><CODE class="highlight">maxIterations</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">maxIterations</CODE> statement 
@@ -1163,6 +1184,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">maxIterations = 500</CODE>
 
 
+      <DIV id="omit_layers_from_composite_images"></DIV>
       <H3 class="indented20"><CODE class="highlight">omit_layers_from_composite_images</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The 
@@ -1182,6 +1204,8 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">omit_layers_from_composite_images
            = Pass_via &nbsp; UBM &nbsp; C4 &nbsp; V4-5</CODE>
 
+
+      <DIV id="preEvaporationIterations"></DIV>
       <H3 class="indented20"><CODE class="highlight">preEvaporationIterations</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The 
@@ -1199,7 +1223,7 @@
            // Delay the evapration of congestion until after the 6th iteration.</CODE>
 
 
-
+      <DIV id="vertCost"></DIV>
       <H3 class="indented20"><CODE class="highlight">vertCost</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">vertCost</CODE> statement
@@ -1222,6 +1246,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">vertCost = 1500 // 1500 microns</CODE>
 
 
+      <DIV id="violationFreeThreshold"></DIV>
       <H3 class="indented20"><CODE class="highlight">violationFreeThreshold</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">violationFreeThreshold</CODE>
@@ -1245,9 +1270,10 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">violationFreeThreshold = 30</CODE>
 
     <HR>
-    <div id="unimplemented_statements"></div>
+    <DIV id="unimplemented_statements"></DIV>
     <H2>Unimplemented and Deprecated Statements</H2>
 
+      <DIV id="iterationsPerPngMap"></DIV>
       <H3 class="indented20"><CODE class="highlight">iterationsPerPngMap</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">iterationsPerPngMap</CODE>
@@ -1265,7 +1291,7 @@
         <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">iterationsPerPngMap = 10</CODE>
 
 
-
+      <DIV id="origin"></DIV>
       <H3 class="indented20"><CODE class="highlight">origin</CODE></H3>
 
         <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">origin</CODE> statement
