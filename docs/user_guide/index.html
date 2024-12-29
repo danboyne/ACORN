@@ -623,7 +623,100 @@
       <div id="design_rules"></DIV>
       <H3>Design Rules</H3>
 
-        <P class="indented20">Explanation goes here.
+        <P class="indented20">In Acorn, design rules define the minimum widths of traces and
+           vias, in addition to the minimum spacings between these shapes. Also, design rules
+           specify the distance between the two traces of a differential pair. Finally,
+           design rules specify the allowed directions that nets can be routed. For example,
+           Manhattan (90&deg;) routing could be used on the die while 45&deg; routing could 
+           be used on the PCB.
+
+        <P class="indented20">Acorn groups design rules into sets. For example, a design-rule
+           set can specify the minimum linewidths, via diameters, and spacings. Each set
+           of design rules is then applied to one or more regions of the routing space. For
+           example, design rules for PCB routing could be applied to multiple layers of a
+           circuit board. A separate set of design rules could be applied to the layers of
+           a package. A third design-rule set could be applied to the topmost layer of the
+           die. In this manner, traces and vias can have different sizes depending on their
+           location in the design.
+
+        <P class="indented20">Defining a design-rule set is done using the 
+           <A href="acorn_syntax.html#design_rule_set"><CODE class="highlight">
+           design_rule_set</CODE> and <CODE class="highlight">end_design_rule_set</CODE>
+           statements</A> in the Acorn input file. To apply a given design-rule set
+           to one or more specific regions of the design, 
+           <A href="acorn_syntax.html#DR_zone"><CODE class="highlight">DR_zone</CODE>
+           (design-rule zone) statements</A> are used. The combination of design-rule sets
+           and zones provides significant flexibility in defining the routing rules 
+           throughout the design.
+
+        <P class="indented20">Acorn also allows for net-specific design rules. For example,
+           if you want all power and ground nets to be wider than signal nets, this can be
+           accomplished using <A href="acorn_syntax.html#design_rule_set">
+           <CODE class="highlight">exception</CODE> statements</A>. Such statements could 
+           also be used to increase the spacing between an especially sensitive analog net
+           and its neighbors. As noted in the syntax documentation for 
+           <A href="acorn_syntax.html#design_rule_set">
+           <CODE class="highlight">exception</CODE> statements</A>, each exception is
+           assigned a unique name. You can associate these names with one or more nets 
+           in the netlist, as shown in the following example:
+
+
+<PRE class="indented40"><CODE><B>start_nets</B>
+  # Net    Start    Start Start    End       End   End   <CODE class="highlight">Exception</CODE>
+  # Name   Layer      X     Y      Layer      X     Y    <CODE class="highlight">(optional)</CODE>
+  # -----  ------- ----- -----     ------- ----- -----  <CODE class="highlight">---------------</CODE>
+  net1     Die_Top  2500  3000     Die_Top  4900  2800   <CODE class="highlight">Large_Spacing</CODE>
+  VDD      Die_Top  2600  3000     PCB_M1    100  6800   <CODE class="highlight">POWER_GROUND </CODE>
+
+  DP1_P    Die_Top  5000  2800     PCB_M1   6000   100
+  DP1_N    Die_Top  5000  2900     PCB_M1   6100   100
+
+  DP2_P    Die_Top 11000  3100     PCB_M1  13800  4000
+  DP2_N    Die_Top 11080  3100     PCB_M1  13800  4150
+<B>end_nets</B></CODE></PRE>
+
+        <P class="indented20">In the above example, net <CODE><B>net_1</B></CODE> would be
+           routed using the design rules defined in the exception named 
+           <CODE><B>Large_Spacing</B></CODE>. Likewise, net <CODE><B>VDD</B></CODE> would be
+           routed using the design rules defined in the exception named 
+           <CODE><B>POWER_GROUND</B></CODE>.
+
+        <P class="indented20">As a net routes from one design-rule zone to another, e.g., from the
+           package to the PCB, its linewidth and spacing may naturally change. The same applies
+           to nets that are associated with an exception design-rule set. This is why it's
+           important to name each <CODE class="highlight">exception</CODE> consistently from 
+           design-rule set to design-rule set. For example, the design-rule set for the PCB should
+           have an <CODE class="highlight">exception</CODE> named '<B><CODE>Large_Spacing</CODE>
+           </B>', as should an exception within the design-rule set for the package.
+
+
+        <P class="indented20">Nets that are part of a differential pair <B><I>must</I></B> 
+           be associated with an <CODE class="highlight">exception</CODE> set of design rules.
+           Otherwise, the nets will be routed individually, with no guarantee that their
+           spacing will remain consistent. This is shown in the example netlist below, in
+           which two nets are associated with exception '<B><CODE>50_Ohm</CODE></B>', and two
+           nets are associated with exception '<B><CODE>100_Ohm</CODE></B>'. Further, each net
+           of a differential pair must also specify the net's partner as the 9<SUP>th</SUP>
+           token in the netlist line, e.g., the net names beneath the '<B><CODE>Diff Pair 
+           Partner</CODE></B>' heading. Finally, an optional 10<SUP>th</SUP> token, the
+           keyword <CODE class="highlight"><B>PN_swappable</B></CODE>, can be appended to
+           differential pair nets whose positive and negative terminals may be swapped
+           to optimize the physical routing.
+
+<PRE class="indented40"><CODE><B>start_nets</B>
+  # Net    Start    Start Start    End       End   End   <CODE class="highlight">Exception        Diff Pair    P/N</CODE>
+  # Name   Layer      X     Y      Layer      X     Y    <CODE class="highlight">(optional)       Partner      Swappable?</CODE>
+  # -----  ------- ----- -----     ------- ----- -----  <CODE class="highlight">---------------  -----------  --------------</CODE>
+  net1     Die_Top  2500  3000     Die_Top  4900  2800   Large_Spacing
+  VDD      Die_Top  2600  3000     PCB_M1    100  6800   POWER_GROUND
+
+  DP1_P    Die_Top  5000  2800     PCB_M1   6000   100   <CODE class="highlight">50_Ohm           DP1_N</CODE>
+  DP1_N    Die_Top  5000  2900     PCB_M1   6100   100   <CODE class="highlight">50_Ohm           DP1_P</CODE>
+
+  DP2_P    Die_Top 11000  3100     PCB_M1  13800  4000   <CODE class="highlight">100_Ohm          DP2_N        <B>PN_swappable</B></CODE>
+  DP2_N    Die_Top 11080  3100     PCB_M1  13800  4150   <CODE class="highlight">100_Ohm          DP2_P        <B>PN_swappable</B></CODE>
+<B>end_nets</B></CODE></PRE>
+
 
       <div id="cost_zones"></DIV>
       <H3>Cost Zones</H3>

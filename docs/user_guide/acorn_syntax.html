@@ -244,20 +244,24 @@
              <P class="indented60">The optional eighth token,
                 <CODE class="highlight">&lt;design_rule_exception_name&gt;</CODE>, specifies the name of a
                 design-rule exception which will be applied to this net. The name of the design-rule
-                exception must match the name of one of the <CODE class="highlight">exception</CODE>
-                statements within a <CODE class="highlight"> design_rule_set</CODE> block. The 
-                <CODE class="highlight">&lt;design_rule_exception_name&gt;</CODE> token is required
-                for all differential pair nets, but may also be used for other nets.
+                exception must match the name of one of the <A href="#exception">
+                <CODE class="highlight">exception</CODE> statements</A> within a 
+                <CODE class="highlight">design_rule_set</CODE> block. The 
+                <CODE class="highlight">&lt;design_rule_exception_name&gt;</CODE> token is 
+                <B><I>required</I></B> for all differential pair nets, but may also be used for other nets.
              <P class="indented60">The ninth token,
                 <CODE class="highlight">&lt;diff-pair_partner_net_name&gt;</CODE>, is required only for
                 differential pairs. This token specifies the case-sensitive net name that is the partner
                 net of the current differential pair net. This name must exactly match one of the other
                 <CODE class="highlight">&lt;netName_i&gt;</CODE> names in the list of nets.
-             <P class="indented60">The optional tenth token, <CODE class="highlight">PN_SWAPPABLE</CODE>,
+             <P class="indented60">The optional tenth token, <CODE class="highlight">PN_swappable</CODE>,
                 specifies that the current net, which must be part of a differential pair, may be swapped
                 with its partner in order to optimize the physical routing. If one one of the two nets in
-                a differential pair is marked as <CODE class="highlight">PN_SWAPPABLE</CODE>, then its
-                partner-net must likewise be marked as <CODE class="highlight">PN_SWAPPABLE</CODE>.
+                a differential pair is marked as <CODE class="highlight">PN_swappable</CODE>, then its
+                partner-net must likewise be marked as <CODE class="highlight">PN_swappable</CODE>.
+                If the <CODE class="highlight">PN_swappable</CODE> tag is <B><I>not</I></B> added to
+                a net, then the P- and N-nets of the differential pair will not be swapped to optimize
+                the physical routing.
 
         <P class="indented40"><B><U>Required or Optional</U></B>: The block between the 
            <CODE class="highlight">start_nets</CODE> and 
@@ -363,13 +367,13 @@
       <H3 class="indented20"><CODE class="highlight">design_rule_set</CODE> and <CODE class="highlight">
         end_design_rule_set</CODE></H3>
 
-        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">design_rule_set</CODE> statement
-           denotes the start of a block that defines design rules. The end of this block is denoted by the
-           <CODE class="highlight">end_design_rule_set</CODE> statement. Such blocks specify a set of design
-           rules that may be applied to the entire routing area, or to specific regions using
-           <CODE class="highlight">DR_zone statements</CODE>. These rules specify the trace width, via
-           diameters, and the minimum allowed spacings between adjacent traces and vias. The rules also 
-           specify the allowed routing directions for traces and vias.
+        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">design_rule_set</CODE>
+           statement denotes the start of a block that defines design rules. The end of this block is
+           denoted by the <CODE class="highlight">end_design_rule_set</CODE> statement. Such blocks
+           specify a set of design rules that may be applied to the entire routing area, or to specific
+           regions using <CODE class="highlight">DR_zone statements</CODE>. These rules specify the
+           trace width, via diameters, and the minimum allowed spacings between adjacent traces and
+           vias. The rules also specify the allowed routing directions for traces and vias.
 
         <P class="indented40">Up to 15 <CODE class="highlight">design_rule_set</CODE> blocks are allowed.
 
@@ -913,10 +917,11 @@
 
       <P class="indented20">Each length of lateral routing has a default cost which Acorn attempts to
          minimize. Likewise, each via (or vertical route) has a default cost, which is partly defined
-         by the <CODE class="highlight">vertCost</CODE> parameter. For both lateral and vertical routing,
-         the default costs apply globally to the entire map. However, the user may increase these
-         default costs in specific areas using the statements described in this section. Increasing the
-         routing costs in a region has the effect of reducing the routing in that region.
+         by the <CODE class="highlight"><A href="#vertCost">vertCost</A></CODE> parameter. For both
+         lateral and vertical routing, the default costs apply globally to the entire map. However,
+         the user may increase these default costs in specific areas using the statements described
+         in this section. Increasing the routing costs in a region has the effect of reducing the
+         routing in that region.
 
 
       <DIV id="trace_cost_multiplier"></DIV>
@@ -1226,24 +1231,52 @@
       <DIV id="vertCost"></DIV>
       <H3 class="indented20"><CODE class="highlight">vertCost</CODE></H3>
 
-        <P class="indented40"><B><U>Purpose</U></B>: The <CODE class="highlight">vertCost</CODE> statement
-           specifies the lateral distance, in microns, that Acorn should laterally route a trace 
-           <B><I>around</I></B> an obstacle rather than creating vias to route <B><I>above/below</I></B>
-           the obstacle. Larger values of <CODE class="highlight">vertCost</CODE> result in routing
-           with fewer vias
 
-        <P class="indented40"><B><U>Syntax</U></B>: <CODE class="highlight">vertCost = &ltNN.N&gt;</CODE>
 
-        <P class="indented40"><B><U>Required or Optional</U></B>: The <CODE class="highlight">vertCost</CODE>
-           statement is <B>optional</B>. The default value is calculated based on the lateral dimensions
-           of the routing area. Specifically, the default value is one fourth of the square root of
-           the area: 
-             <SPAN style="white-space: nowrap">
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 40pt">
+              <B><U>Purpose</U></B>: The <CODE class="highlight">vertCost</CODE> statement
+              specifies the lateral distance, in microns, that Acorn should laterally route
+              a trace <B><I>around</I></B> an obstacle rather than creating vias to route 
+              <B><I>above/below</I></B> the obstacle. Larger values of
+              <CODE class="highlight">vertCost</CODE> result in routing with fewer vias
+
+              <P>The diagram at right illustrates the effects of different vertical costs. The
+              topmost ('<CODE>M1</CODE>') layer contains a rectangular barrier that separates
+              the start- and end-terminals on the same layer. If the vertical cost is set to a
+              high value, then the autorouter will avoid creating new vias, and will take the
+              route shown in blue around the barrier.
+
+              <P>Instead, if the vertical cost is set to a <B><I>low</I></B> value, then the
+              autorouter will create two new vias to take the route shown in green. This route
+              clearly has a shorter <B><I>lateral</I></B> routing length, but requires the
+              addition of two vias. If the cost of these vias is lower than the detour taken
+              by the blue route, then the green route will be taken.
+              
+              <P><B><U>Syntax</U></B>: <CODE class="highlight">vertCost = &ltNN.N&gt;</CODE>
+
+              <P><B><U>Required or Optional</U></B>: The <CODE class="highlight">vertCost</CODE>
+              statement is <B>optional</B>. The default value is calculated based on the lateral
+              dimensions of the routing area. Specifically, the default value is one fourth of
+              the square root of the area: 
+              <SPAN style="white-space: nowrap">
                (&radic;<SPAN style="text-decoration:overline;">&nbsp;width x height&nbsp;</SPAN>&nbsp;) / 4,
-             </SPAN>
-           expressed in microns.
+               </SPAN>
+              expressed in microns.
 
-        <P class="indented40"><B><U>Example</U></B>: <CODE class="highlight">vertCost = 1500 // 1500 microns</CODE>
+            </TD>
+            <!-- Right cell contains image: -->
+            <TD>
+              <IMG src="../images/vertical_cost_perspective_view.png" alt="Differences in vertical cost"
+                width="659" height="236">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <B class="indented40"><U>Example</U></B>: <CODE class="highlight">vertCost = 1500 // 1500 microns</CODE>
 
 
       <DIV id="violationFreeThreshold"></DIV>
