@@ -715,9 +715,46 @@
       <div id="cost_zones"></DIV>
       <H3>Cost Zones</H3>
 
-        <P class="indented20">Explanation goes here.
 
+        <P class="indented20">Each length of lateral routing has a default cost which 
+           Acorn attempts to minimize. Likewise, each via (or vertical route) has a
+           default cost, (partly defined by the <CODE class="highlight">
+           <A href="acorn_syntax.html#vertCost" target="_blank">vertCost</A></CODE>
+           parameter), so Acorn also attempts to minimize the number of vias. For both 
+           lateral and vertical routing, the default costs apply <B><I>globally</I></B>
+           to the entire map. However, the user may increase these default costs in 
+           specific areas. This has the effect of reducing the routing in that region. 
 
+        <P class="indented20">Increasing the cost of lateral routing in specific regions
+           is accomplished using <A href="acorn_syntax.html#trace_cost_multiplier"
+           target="_blank"><CODE class="highlight">trace_cost_multiplier</CODE> and
+           <CODE class="highlight">trace_cost_zone</CODE> statements</A>. Relative to 
+           the baseline (non-increased) cost, the cost increase can be an integer 
+           multiple, e.g., 2, 5, 10, 25, etc.
+
+        <P class="indented20">The example below shows the effect of a cost zone for 
+           lateral traces. On the left is a simple trace (red) routed directly from the
+           start-terminal to the end-terminal. On the right is shown the effect of 
+           adding a cost-zone (grey) with twice the lateral routing cost. In this
+           case, Acorn minimizes the routing <B><I>cost</I></B> by avoiding the costly 
+           zone, but at the expense of additional routing length. Unlike a 
+           <A href="#keep_out_areas">keep-out zone</A> (created with 
+           <A href="acorn_syntax.html#keep_out_areas" target="_blank">block and unblock
+           statements</A>), traces and vias can enter cost-zone regions. (Incidentally,
+           the example below also shows that cost zones influence only the 
+           <B><I>centerlines</B></I> of the traces, and do not impede the outer parts
+           of the traces to overlap with the higher-cost zone.)
+          <BR><BR>
+          <IMG class="indented20" src="../images/cost-zone_comparison.png"
+                alt="RAM component with swappable pins" width="806" height="398">
+
+        <P class="indented20">Reducing <B><I>vias</I></B> in a region is handled in
+           a similar manner as traces. Doing so requires the use of 
+           <A href="acorn_syntax.html#via_cost_multiplier" target="_blank">
+           <CODE class="highlight">via_cost_multiplier</CODE> and
+           <CODE class="highlight">via_cost_zone</CODE> statements</A>. Relative to 
+           the baseline (non-increased) cost, the cost increase can be an integer 
+           multiple, e.g., 2, 5, 10, 25, etc.
 
 
       <div id="pin_swap_zones"></DIV>
@@ -733,7 +770,10 @@
               which the ordering of bits within an eight-bit byte may be scrambled to 
               optimize physical routing. Such pin-swapping is achieved in Acorn by 
               locating the terminals of pin-swappable nets into a <B><I>pin-swap
-              zone</I></B>, as illustrated at right. 
+              zone</I></B>, as illustrated at right. Such zones are defined using
+              <A href="acorn_syntax.html#pin_swap_zones" target="_blank">
+              <CODE class="highlight">pin_swap</CODE> and 
+              <CODE class="highlight">no_pin_swap</CODE> statements</A>.
               <BR><BR>
               In this example, two separate pin-swap zones (in yellow) allow 8 pins to
               be swapped on the left, and a separate 8 pins to be swapped on the right.
@@ -800,41 +840,6 @@
         <IMG class="indented60" src="../images/pin-swap_zone_for_die-package-PCB_optimization.png"
                 alt="Pin-swap zone on perimeter of PCB to assess escape routing"
                 width="668" height="286">
-
-
-<BR><BR><BR>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
