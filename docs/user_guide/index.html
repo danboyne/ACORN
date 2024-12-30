@@ -12,7 +12,7 @@
     </STYLE>
 
     <STYLE> .indented60
-      { padding-left: 40pt; }
+      { padding-left: 60pt; }
     </STYLE>
 
     <STYLE> .highlight  {
@@ -64,7 +64,7 @@
                   <LI><A href="#keep_out_areas">Keep-out Areas</A></LI>
                   <LI><A href="#design_rules">Design Rules</A></LI>
                   <LI><A href="#cost_zones">Cost Zones</A></LI>
-                  <LI><A href="#pin_swap_zones">Pin-Swap Zones</A></LI>
+                  <LI><A href="#pin_swap_zones">Pin-Swap Zones and Escape Routing</A></LI>
                 </UL>
               <LI><A href="#running_acorn">Running Acorn on Your Own Routing Cases</A></LI>
             </UL>
@@ -134,12 +134,10 @@
             using your favorite web browser. The latter file will be created in the working directory from
             which you launched Acorn. As a reminder, you can open this file from a browser using CTL-o (or
             CMD-o on Macs) and navigating to the working directory to open
-            <SPAN style="font-family:monospace"><B>routingStatus.html</B></SPAN>. Scroll down to the bottom
-            of the web page to access the final iteration, which is listed just before the message 
-            <SPAN style="font-family:monospace"><B>'Program completed successfully'</B></SPAN>. Click the
-            hyperlink of the final iteration to view the routing of the 4 nets through the 4 layers of
-            routing (layers M1, M2, M3, and M4), which include routing obstacles shapes as triangles and
-            rectangles.
+            <SPAN style="font-family:monospace"><B>routingStatus.html</B></SPAN>. As shown in the example
+            screenshots below (and at <A href="demo1/routingStatus_C.html" target="_blank">this link</A>),
+            the top of the web page provides the current status. Near the top of the page are a graph of
+            routing metrics and an animated display of the routing for each iteration.
 
             <P class="indented20">Incidentally, if you'd like Acorn to use <B><I>fewer</I></B> threads than
             are available on your system, you can use the <SPAN style="font-family:monospace"><B>-t</B></SPAN>
@@ -565,10 +563,6 @@
            statements would be repeated with '<CODE>Pkg_M1</CODE>' replaced by 
            '<CODE>Pkg_M2</CODE>'.
            
-
-
-
-
         <!-- Following table contains 1 row and 2 columns: -->
         <TABLE style="width:100%">
           <TR>
@@ -723,10 +717,126 @@
 
         <P class="indented20">Explanation goes here.
 
-      <div id="pin_swap_zones"></DIV>
-      <H3>Pin-Swap Zones</H3>
 
-        <P class="indented20">Explanation goes here.
+
+
+      <div id="pin_swap_zones"></DIV>
+      <H3>Pin-Swap Zones and Escape Routing</H3>
+
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+              Early in the co-design process, there may be flexibility in the assignment 
+              of pins to/from a given component. RAM data busses are common examples, in
+              which the ordering of bits within an eight-bit byte may be scrambled to 
+              optimize physical routing. Such pin-swapping is achieved in Acorn by 
+              locating the terminals of pin-swappable nets into a <B><I>pin-swap
+              zone</I></B>, as illustrated at right. 
+              <BR><BR>
+              In this example, two separate pin-swap zones (in yellow) allow 8 pins to
+              be swapped on the left, and a separate 8 pins to be swapped on the right.
+              Because the two pin-swap zones are not contiguous, pins from the left
+              swap-zone cannot be swapped with those from the right.
+              <BR><BR>
+              These pin-swap zones can also be used for <B><I>escape routing</I></B>. To
+              do so, a terminal of every net is placed within a single pin-swap zone. For
+              example, the figure below illustrates single-layer escape routing in which
+              a terminal of every net is placed at the lower-left corner of the perimeter
+              pin-swap zone. This will cause the autorouter to find the shortest path 
+              from the BGA terminal (blue circles) to <B><I>any</I></B> location in the
+              yellow pin-swap zone, since such zones represent regions with near-zero
+              routing cost. And because design-rule violations are allowed within 
+              pin-swap zones, the terminals of multiple nets can be located wherever
+              it's convenient. In the example below, all the terminals are located in 
+              the lower-left corner.
+            </TD>
+
+            <!-- Right cell contains image: -->
+            <TD>
+              <IMG src="../images/pin-swap_zones_on_RAM_component.png"
+                alt="RAM component with swappable pins" width="375" height="316">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <!-- Image below for single-layer escape routing:     -->
+        <IMG class="indented60" src="../images/perimeter_pin-swap_zone_for_escape-routing.png"
+                alt="Pin-swap zone on perimeter of design to assess escape routing"
+                width="350" height="496">
+
+        <!-- Following table contains 1 row and 2 columns: -->
+        <TABLE style="width:100%">
+          <TR>
+            <!-- Left cell contains text: -->
+            <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+              As illustrated above, a carefully constructed pin-swap zone
+              can be used for escape routing on a single layer. This concept may be
+              extended to study escape routing across one or more domains of the 
+              die/package/PCB system. For example, to optimize the '<B><I>pin map</I></B>' 
+              of a BGA package, the terminals of all nets may be located in a pin-swap
+              zone immediately beneath the BGA array, as shown at right. In this
+              cross-sectional diagram, the yellow area is defined as a pin-swap zone
+              that contains terminals for all the nets that must route through the
+              package and to the die. 
+              <BR><BR>
+              Extending this concept, a single pin-swap zone can extend vertically across 
+              all routing layers surrounding the perimeter of a PCB, as shown in the 
+              figure below. Locating terminals of all nets in this pin-swap zone prompts
+              Acorn to find viable, violation-free routing across the die, package, 
+              and PCB.
+            </TD>
+
+            <!-- Right cell contains image: -->
+            <TD>
+              <IMG src="../images/pin-swap_zone_for_optimized_pin-map.png"
+                alt="Pin-swap zone to optimize package pin-map" width="418" height="172">
+            </TD>
+          </TR>
+        </TABLE>
+
+        <!-- Image below for die/package/PCB routing with perimeter pin-swap zone:     -->
+        <IMG class="indented60" src="../images/pin-swap_zone_for_die-package-PCB_optimization.png"
+                alt="Pin-swap zone on perimeter of PCB to assess escape routing"
+                width="668" height="286">
+
+
+<BR><BR><BR>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <HR>
     <div id="running_acorn"></DIV>
