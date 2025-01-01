@@ -531,9 +531,10 @@ DR_zone   PCB_top_DRs         PCB_top   ALL
 # will make to find a crossing-free solution.
 maxIterations = 1000
 
-# The parameter 'violationFreeThreshold' is the minimum number of crossing-free
-# solutions that program will find before deciding that it has found the
-# optimal solution.
+# The parameter 'violationFreeThreshold' specifies an additional number of 
+# iterations that must be free of design-rule violations, in addition to the 
+# minimum value enforced by Acorn, which is 35∙log10(Nnets), where Nnets is 
+# the number of nets. 
 violationFreeThreshold = 50
 
 # The parameter 'vertCost' is the cost of routing up or down to a different

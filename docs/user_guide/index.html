@@ -462,11 +462,31 @@
           <TR>
             <!-- Left cell contains text: -->
             <TD style="min-width:550px; vertical-align:top; padding-left: 20pt">
+
               To define which parts of a layer may be used for routing, Acorn uses
               two types of statements:
               <A href="acorn_syntax.html#keep_out_areas"><CODE class="highlight">block</CODE> and 
-              <CODE class="highlight">unblock</CODE></A>. Complex shapes may be created using
-              combinations of these statements. Using the previous chip-package-PCB example,
+              <CODE class="highlight">unblock</CODE></A>. A <CODE class="highlight">block</CODE> 
+              statements creates a keep-out area of a particular shape, such as a rectangle, circle,
+              or triangle. An <CODE class="highlight">unblock</CODE> statement 'erases' such 
+              keep-out areas, and can also be applied as a rectangle, circle, or triangle. Complex
+              shapes may be created using combinations of these statements. For example, the 
+              diagram at right shows the effects of two <CODE class="highlight">block</CODE>
+              statements and one <CODE class="highlight">unblock</CODE> statement. In (a) is
+              shown an area with no keep-out zones. (b) shows the effect of a 
+              <CODE class="highlight">block rect</CODE> statement, i.e., a block statement that
+              defines a <B><I>rect</I></B>angular keep-out zone (in grey) on the left side of 
+              the area. (c) depicts the effect of an <CODE class="highlight">unblock cir</CODE> 
+              statement, which erases the keep-out zone of a <B><I>cir</I></B>cular area. 
+              Finally, (d) illustrates the effect of a subsequent 
+              <CODE class="highlight">block tri</CODE> statement, which defines a 
+              <B><I>tri</I></B>angular keep-out zone. Note that the final keep-out zones in 
+              (d) depend on the sequence of the <CODE class="highlight">block</CODE> and 
+              <CODE class="highlight">unblock</CODE> statements. Acorn processes these statements
+              in the exact order that you place them in the input text file.
+              <BR><BR>
+
+              Using the previous chip-package-PCB example,
               a handful of <CODE class="highlight">block</CODE> and
               <CODE class="highlight">unblock</CODE> statements can define the boundaries
               for the routing layers on the three chips, as depicted at right. These 
@@ -491,8 +511,11 @@
 
             </TD>
 
-            <!-- Right cell contains image: -->
+            <!-- Right cell contains images: -->
             <TD>
+              <IMG src="../images/block_and_unblock_statement_effects.png"
+                alt="Effects of BLOCK and UNBLOCK statements" width="634" height="200">
+              <BR><BR>
               <IMG src="../images/perspective_view_of_chip_package_PCB_with_XY_die_view.png"
                 alt="Chip-package-PCB system" width="606" height="261">
             </TD>
