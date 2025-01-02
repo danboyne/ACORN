@@ -112,13 +112,29 @@
 
                 <TR>
                   <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    <CODE>80n_16mmX16mm_5L_15um_res_minimal_example.txt</CODE>
+                    <CODE>
+                    <A href="https://github.com/danboyne/ACORN/blob/main/tests/80n_16mmX16mm_5L_15um_res_example2.txt"
+                      target="_blank">
+                      80n_16mmX16mm_5L_15um_res_example2.txt
+                    </A></CODE>
+                  </TD>
+                  <TD style="border:1px #AAAAAA solid; text-align:left; padding:5px">
+                    Four-layer package substrate with 80 nets, simlar to the above case
+                    (<CODE>80n_16mmX16mm_5L_15um_res_example1.txt</CODE>). However, the
+                    current case includes four nets that are part of differential pairs.
+                    These are visible in the upper-right corner of the thumbnail to the
+                    right. One of these pairs is defined as P/N-swappable, which allows
+                    the autorouter to avoid the type of wire-crossing that's visible 
+                    in the other differential pair. Finally, this design includes 
+                    net-specific design rules, resulting in wider traces for selected
+                    nets.
+                    <BR><BR>
+                    This case takes approximately a half hour to complete on a modern
+                    laptop with multiple cores.
                   </TD>
                   <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
-                  </TD>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
+                    <IMG src="../images/80n_16mmX16mm_5L_15um_res_example2.png" 
+                      alt="Example with more features" width="265" height="265">
                   </TD>
                 </TR>
 
