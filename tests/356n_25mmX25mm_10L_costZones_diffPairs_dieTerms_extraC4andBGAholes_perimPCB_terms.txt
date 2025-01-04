@@ -2247,7 +2247,6 @@ design_rule_set Pkg_Bottom   Design Rules for bottom package layer  // Rules for
   via_down_to_trace_spacing    =  20 // Trace-to-pad spacing is 20um   
   via_up_to_via_up_spacing     = 280 // BGA pad-to-pad spacing is 300 um. Reduced by equivalent of 1 cell (20um).
   via_down_to_via_down_spacing =  40 // Via pad-to-pad spacing is 40-50um
-
   via_up_to_via_down_spacing   =  20 // BGA pad-to-via pad spacing is <10 um
   
   exception = PWR_GND   // Exception design rules for power and ground nets 
@@ -3558,9 +3557,9 @@ violationFreeThreshold = 50
 # avoided by adding a via to a different layer.
 vertCost  = 5000   // in microns of equivalent trace length
 
-# The parameter 'runsPerPngMap' is the number of iterations to run between
+# The parameter 'iterationsPerPngMap' is the number of iterations to run between
 # writing PNG versions of the routing maps.
-runsPerPngMap =  1
+iterationsPerPngMap =  1
 
 # (OPTIONAL!) Omit selected layers from the composite PNG files (and therefore,
 # from the animated routing evolution of the entire map):

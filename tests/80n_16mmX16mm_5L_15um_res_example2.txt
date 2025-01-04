@@ -221,15 +221,15 @@ UNBLOCK CIR BGA 	4500	10000	180
 UNBLOCK CIR BGA 	5000	11000	180
 UNBLOCK CIR BGA 	5000	11500	180
 #
-# Create wide opening for differential pairs RO1_I_N and RO1_I_P:
+# Create wide opening for differential pairs Net_35_P and Net_36_N:
 UNBLOCK CIR BGA 	11000	11250	430
-# UNBLOCK CIR BGA 	11000	11000	180  // For original diff-pair net 'RO1_I_N'
-# UNBLOCK CIR BGA 	11000	11500	180  // For original diff-pair net 'RO1_I_P'
+# UNBLOCK CIR BGA 	11000	11000	180  // For original diff-pair net 'Net_35_P'
+# UNBLOCK CIR BGA 	11000	11500	180  // For original diff-pair net 'Net_36_N'
 #
-# Create wide opening for differential pairs RO1_Q_N and RO1_Q_P:
+# Create wide opening for differential pairs Net_37_P and Net_38_N:
 UNBLOCK CIR BGA 	11500	10250	430
-# UNBLOCK CIR BGA 	11500	10500	180  // For original diff-pair net 'RO1_Q_N'
-# UNBLOCK CIR BGA 	11500	10000	180  // For original diff-pair net 'RO1_Q_P'
+# UNBLOCK CIR BGA 	11500	10500	180  // For original diff-pair net 'Net_37_P'
+# UNBLOCK CIR BGA 	11500	10000	180  // For original diff-pair net 'Net_38_N'
 #
 UNBLOCK CIR BGA 	6000	11500	180
 UNBLOCK CIR BGA 	6000	11000	180
