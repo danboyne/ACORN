@@ -277,6 +277,38 @@
         </TABLE>
       </TD></TR></TABLE>
 
+      <P class="indented20">The table in the above screenshot includes hyperlinks to each iteration that
+         displays detailed routing from that iteration. An example is <A href="demo1/iteration0002.html" 
+         target="_blank">available at this link</A>. In this example can be seen nets with design-rule
+         violations, as highlighted in orange in the image below. 
+
+      <!-- Table with caption and example image of detailed routing:  -->
+      <!-- (Outer table is used to indent the inner table.)           -->
+      <TABLE style="padding-left:40px;"><TR><TD>
+        <TABLE style="border:1px solid;">
+          <TR>
+            <TD valign="top">
+              <A href="demo1/iteration0002.html" target="_blank">
+                <IMG src="../images/diff_pairs_with_design_rule_violations.png" alt="Detailed routing"
+                width="761" height="349">
+              </A>
+            </TD>
+          </TR>
+          <TR>
+            <TD valign="top">
+              <P class="indented20">Detailed routing showing differential pairs with design-rule 
+                 violations. Click within the image<BR>above to open a live version in a new browser tab.
+            </TD>
+          </TR>
+        </TABLE>
+      </TD></TR></TABLE>
+
+      <P class="indented20">In the above layout, nets on different layers have different colors. For
+         differential pairs, Acorn displays the centerline of the pair as a grey line, with the regions
+         lightly colored between the diff pairs. Acorn routes each differential pair as a single net,
+         called a <B><I>pseudo-net</I></B>. At the end of each iteration, Acorn then replaces the 
+         pseudo-net with the two differential-pair nets.
+
     <HR>
     <div id="create_test_case"></DIV>
     <H2>Creating Your Own Routing Cases</H2>
@@ -870,7 +902,41 @@
     <div id="running_acorn"></DIV>
     <H2>Running Acorn on Your Own Routing Cases</H2>
 
-      <P class="indented20">Explanation goes here.
+      <P class="indented20">Acorn unfortunately does not currently read netlists or layout information
+         from industry-stardard file formats. Such information must therefore be converted into the
+         Acorn-compatible format described <A href="#create_test_case">above</A> and in the <A
+         href="acorn_syntax.html">Acorn syntax page</A>. Be aware that creating this file can be 
+         time-consuming, depending on your experience in converting or formatting layout and netlist
+         data. Shell scripts, Python scripts, or even Excel spreadsheets can be helpful.
+
+      <P class="indented20">As you create your Acorn input file, it's suggested that you test it
+         frequently by running Acorn on it. In the output sent to <CODE><B>STDOUT</B></CODE> (or 
+         redirected to a log file of your choice), the software will report syntax and functional
+         issues as it prepares and completes the first iteration, which takes only seconds or a 
+         few minutes. For example, if user-defined barriers in the layout prevent any possible 
+         path between the start- and end-terminals of a net, then Acorn will report the net and 
+         suggest changes.
+
+      <P class="indented20">Even before the first iteration completes in Acorn, it generates a
+         <B><I>pre-routing map</I></B> that displays the locations of the start- and end-terminals, 
+         as well as any user-defined barriers, the locations of design-rule zones, and the 
+         locations of cost-zones. An example of such a <A href="demo1/preRouting_map.html" 
+         target="_blank">pre-routing map is available here</A>.
+
+      <P class="indented20">Once your Acorn input file has been created, it's time to run Acorn.
+         Depending on the size and complexity of your design, the run-time can take minutes to 
+         hours -- and even days! Acorn takes advantage of parallel processing, so the more CPUs
+         that are on your computer, the faster Acorn will progress. (Acorn does not currently
+         use G<B><I>P</I></B>U hardware.) Monitor the progress by pointing your browser to the
+         <CODE><B>routingStatus.html</B></CODE> file (<A href="demo1/routingStatus_B.html" 
+         target="_blank">example here</A>), which Acorn updates at the beginning/end of each
+         iteration.        
+
+      <P class="indented20">If the run-time is too long, consider increasing the 
+         <CODE class="highlight"><B>resolution</B></CODE> value in the Acorn input file; 
+         run-times scale as this value raised to the power of &#8209;3 or &#8209;4. In other words,
+         doubling the resolution could reduce the run-time by up to a factor of 16 
+         (2<SUP>&#8209;4</SUP>).
 
 
     <BR><BR><BR><HR>
