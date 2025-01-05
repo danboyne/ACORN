@@ -141,37 +141,32 @@
 
                 <TR>
                   <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    <CODE>80n_16mmX16mm_5L_15um_res_minimal_example.txt</CODE>
+                    <CODE>
+                    <A href="https://github.com/danboyne/ACORN/blob/main/tests/80n_16mmX16mm_6L_15um_res_example3.txt"
+                      target="_blank">
+                      80n_16mmX16mm_6L_15um_res_example3.txt</CODE>
+                  </A></TD>
+                  <TD style="border:1px #AAAAAA solid; text-align:left; padding:5px">
+                    Four-layer package substrate with 80 nets, simlar to the above case
+                    (<CODE>80n_16mmX16mm_5L_15um_res_example2.txt</CODE>). However, the
+                    current case includes two PCB layers and ring-shaped 'swap-zones' 
+                    on both of these layers. Because all the nets' terminals are located in
+                    this circular swap-zone (yellow circular ring, in the thumbnail at
+                    right), this case acts as an escape-routing exercise, in which Acorn
+                    attempts to optimize the BGA map and PCB routing to route the nets 
+                    from the die through the package and beyond the shadow of the package
+                    on the PCB.
+                    <BR><BR>
+                    This case illustrates the use of design-rule zones to limit the routing
+                    in certain regions. The case further uses design-rule zones to 
+                    restrict the directions of traces to 45&deg; angles on the PCB layers.
+                    <BR><BR>
+                    This case takes approximately 3 hours to complete on a modern laptop 
+                    with multiple cores.
                   </TD>
                   <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
-                  </TD>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
-                  </TD>
-                </TR>
-
-                <TR>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    <CODE>80n_16mmX16mm_5L_15um_res_minimal_example.txt</CODE>
-                  </TD>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
-                  </TD>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
-                  </TD>
-                </TR>
-
-                <TR>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    <CODE>80n_16mmX16mm_5L_15um_res_minimal_example.txt</CODE>
-                  </TD>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
-                  </TD>
-                  <TD style="border:1px #AAAAAA solid; text-align:center; padding:5px">
-                    TBD
+                    <IMG src="../images/80n_16mmX16mm_6L_15um_res_example3.png" 
+                      alt="Example with more features" width="533" height="533">
                   </TD>
                 </TR>
 

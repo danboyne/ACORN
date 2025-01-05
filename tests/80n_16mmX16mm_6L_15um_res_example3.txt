@@ -166,19 +166,22 @@ end_nets
 #
 
 #
-# On the top PCB layer, define a single, circular pin-swappable zone that is surrounded by a circular keep-out zone: 
+# On the two PCB layers, define a single, circular pin-swappable zone that is surrounded by a circular keep-out zone: 
 #
-pin_swap     PCB_top  CIR    8000  8000     7850  // Circle at center of PCB_top with 7650 um radius
-no_pin_swap  PCB_top  CIR    8000  8000     7500  // Anti-circle at PCB_top center with 7300 um radius
+pin_swap     PCB_top  CIR    8000  8000     7850  // Circle at center of PCB_top with 7850 um radius
+no_pin_swap  PCB_top  CIR    8000  8000     7500  // Anti-circle at PCB_top center with 7500 um radius
 
-BLOCK   CIR PCB_top          8000  8000     7950  // Block a circular region of PCB_top with 7950 radius
-UNBLOCK CIR PCB_top          8000  8000     7850  // Allow routing within pin-swap region and non-pin-swap region on PCB layer
+BLOCK   CIR  PCB_top         8000  8000     7950  // Block a circular region of PCB_top with 7950 radius
+UNBLOCK CIR  PCB_top         8000  8000     7850  // Allow routing within pin-swap region and non-pin-swap region on PCB layer
 
-#
-# On the bottom PCB layer, define a circular keep-out ring:
-#
-BLOCK   CIR PCB_bottom       8000  8000     7950  // Block a circular region of PCB_bottom with 7950 radius
-UNBLOCK CIR PCB_bottom       8000  8000     7500  // Allow routing within region on PCB_bottom layer
+
+pin_swap     PCB_bottom  CIR    8000  8000     7850  // Circle at center of PCB_top with 7850 um radius
+no_pin_swap  PCB_bottom  CIR    8000  8000     7500  // Anti-circle at PCB_top center with 7500 um radius
+
+BLOCK   CIR  PCB_bottom         8000  8000     7950  // Block a circular region of PCB_top with 7950 radius
+UNBLOCK CIR  PCB_bottom         8000  8000     7850  // Allow routing within pin-swap region and non-pin-swap region on PCB layer
+
+
 
 #
 # Block all routing layers in package outside of 8x8mm package outline. Within the
@@ -195,11 +198,6 @@ UNBLOCK RECT Pkg_M3 4300 4300 11700 11700 // Allow routing within pkg, with 300u
 
 BLOCK   RECT Pkg_M4 4000 4000 12000 12000
 UNBLOCK RECT Pkg_M4 4300 4300 11700 11700 // Allow routing within pkg, with 300um keep-out zone on perimeter
- 
-# BLOCK   RECT Pkg_M4 3900 3900 12100 12100 
-# UNBLOCK RECT Pkg_M4 4000 4000 12000 12000 // Allow routing within pkg, with no keep-out zone on perimeter
-                                          // so that (large-diameter diff-pair vias are not obstructed as
-                                          // they route to the PCB.
 #
 # End of package outline definition
 #
@@ -297,6 +295,12 @@ UNBLOCK CIR BGA      6500    10000     180
 UNBLOCK CIR BGA      5500    10000     180
 UNBLOCK CIR BGA      6500    10000     180
 UNBLOCK CIR BGA      5500    10000     180
+UNBLOCK CIR BGA      4500     7500     180
+UNBLOCK CIR BGA      7000     6000     180
+UNBLOCK CIR BGA      9500     6000     180
+UNBLOCK CIR BGA     11500     8500     180
+UNBLOCK CIR BGA      6500    11500     180
+#
 # End of BGA pattern definition for layer 'BGA'
 
 
@@ -385,6 +389,11 @@ BLOCK CIR V3-4      6500    10000     165
 BLOCK CIR V3-4      5500    10000     165
 BLOCK CIR V3-4      6500    10000     165
 BLOCK CIR V3-4      5500    10000     165
+BLOCK CIR V3-4      4500     7500     165
+BLOCK CIR V3-4      7000     6000     165
+BLOCK CIR V3-4      9500     6000     165
+BLOCK CIR V3-4     11500     8500     165
+BLOCK CIR V3-4      6500    11500     165
 # End of pattern for blocking vias directly above BGA balls (no via-in-pad)
 
 #
@@ -402,7 +411,7 @@ trace_cost_multiplier             2                      4  // Not used
 trace_cost_multiplier             3                      5
 trace_cost_multiplier             4                     10  // Not used
 
-via_cost_multiplier               1                      2  // Not used
+via_cost_multiplier               1                      2  
 via_cost_multiplier               2                      3  // Not used
 via_cost_multiplier               3                      4  // Not used
 
@@ -423,10 +432,11 @@ trace_cost_zone              1                  Pkg_M3           ALL  // 2x cost
 # Limit routing on package layers M4, which is used for BGAs and ground plane
 trace_cost_zone              3                  Pkg_M4           ALL  // 5x cost-multiplier
 
-# Avoid routing on PCB_bottom layer:
-trace_cost_zone              1                  PCB_bottom       ALL  // 2x cost-multiplier
-
-
+# Avoid extra vias in the package without penalizing vias in the PCB:
+via_cost_zone                1                  V1-2             ALL  // 2x cost-multiplier
+via_cost_zone                1                  V2-3             ALL  // 2x cost-multiplier
+via_cost_zone                1                  V3-4             ALL  // 2x cost-multiplier
+via_cost_zone                1                  BGA              ALL  // 2x cost-multiplier
 
 #
 # Design rules: Specify up to 15 design-rule sets. Later, we'll define
@@ -575,6 +585,7 @@ design_rule_set No_BGAs   Design Rules prohibiting all vias
   
 end_design_rule_set   // End of design rule set
 
+
 design_rule_set No_NonDiffPair_BGAs   Design Rules for diff-pair BGA vias  
   line_width        = 30   // Minimum linewidth on bottom is 30um
   line_spacing      = 60   // Minimum linewidth on bottom is 60um
@@ -606,7 +617,6 @@ design_rule_set No_NonDiffPair_BGAs   Design Rules for diff-pair BGA vias
 end_design_rule_set   // End of design rule set
 
 
-
 design_rule_set  No_DiffPair_BGAs     Design Rules for non-diff-pair BGA vias
   line_width        = 30   // Minimum linewidth on bottom is 30um
   line_spacing      = 60   // Minimum linewidth on bottom is 60um
@@ -635,6 +645,7 @@ design_rule_set  No_DiffPair_BGAs     Design Rules for non-diff-pair BGA vias
 
 end_design_rule_set   // End of design rule set
 
+
 design_rule_set PCB_top_DRs    Design rules for top PCB layer  
   line_width        = 100  // Guess
   line_spacing      = 100  // Guess
@@ -644,9 +655,11 @@ design_rule_set PCB_top_DRs    Design rules for top PCB layer
   via_up_to_trace_spacing      = 100 // Guess
   via_down_to_trace_spacing    = 100 // Guess
   via_up_to_via_up_spacing     = 100 // Guess
-  via_down_to_via_down_spacing = 155 // BGA pad-to-pad spacing is 170 um
+  via_down_to_via_down_spacing = 155 // BGA pad-to-pad spacing 
   via_up_to_via_down_spacing   = 100 // Guess
   
+  allowed_directions = Manhattan_X
+
   // Exceptions to above design rules for power/ground nets:
   exception = PWR_GND
     line_width        = 150  // Slightly wider than normal traces
@@ -671,6 +684,8 @@ design_rule_set PCB_bottom_DRs    Design rules for bottom PCB layer
   via_up_to_via_up_spacing     = 100 // Not applicable for 2-layer PCB
   via_down_to_via_down_spacing = 100 // Guess
   via_up_to_via_down_spacing   = 100 // Not applicable for 2-layer PCB
+
+  allowed_directions = Manhattan_X
   
   // Exceptions to above design rules for power/ground nets:
   exception = PWR_GND
@@ -680,6 +695,41 @@ design_rule_set PCB_bottom_DRs    Design rules for bottom PCB layer
   // Exceptions to above design rules for differential pairs:
   exception = DIFF_PAIR
     diff_pair_pitch = 300  // Pitch of differential pairs
+  end_exception
+  
+end_design_rule_set   // End of design rule set
+
+
+#
+# The following design-rule set is used for prohibiting routing in certain areas.
+# Instead of creating this type of design rule, 'BLOCK' statements could be used
+# to create barriers to routing. However, such barriers show up as opaque regions
+# in the layout, which make the layout more difficult to view when multiple layers
+# are overlaid.
+#
+design_rule_set No_Routing    Design rules that prohibit all routing
+  line_width        = 15
+  line_spacing      = 15
+  via_up_diameter   = 15
+  via_down_diameter = 15
+
+  via_up_to_trace_spacing      = 15
+  via_down_to_trace_spacing    = 15
+  via_up_to_via_up_spacing     = 15
+  via_down_to_via_down_spacing = 15
+  via_up_to_via_down_spacing   = 15
+
+  allowed_directions = None
+  
+  // Exceptions to above design rules for power/ground nets:
+  exception = PWR_GND
+    allowed_directions = None
+  end_exception
+  
+  // Exceptions to above design rules for differential pairs:
+  exception = DIFF_PAIR
+    diff_pair_pitch = 15
+    allowed_directions = None
   end_exception
   
 end_design_rule_set   // End of design rule set
@@ -711,12 +761,25 @@ end_design_rule_set   // End of design rule set
 #         Design Rule         Layer
 #             Name            Name         Layer coordinates
 #         -----------         -------      ----------------------
-DR_zone   Pkg_top_DRs         Pkg_M1       ALL
-DR_zone   Pkg_M2_DRs          Pkg_M2       ALL
-DR_zone   Pkg_M3_DRs          Pkg_M3       ALL
-DR_zone   Pkg_bottom_DRs      Pkg_M4       ALL
-DR_zone   PCB_top_DRs         PCB_top      ALL
-DR_zone   PCB_bottom_DRs      PCB_bottom   ALL
+DR_zone   No_Routing          Pkg_M1       ALL
+DR_zone   Pkg_top_DRs         Pkg_M1       RECT   4000  4000     12000 12000  // Allow routing only within 8mm x 8mm square
+
+DR_zone   No_Routing          Pkg_M2       ALL
+DR_zone   Pkg_M2_DRs          Pkg_M2       RECT   4000  4000     12000 12000  // Allow routing only within 8mm x 8mm square
+
+DR_zone   No_Routing          Pkg_M3       ALL
+DR_zone   Pkg_M3_DRs          Pkg_M3       RECT   4000  4000     12000 12000  // Allow routing only within 8mm x 8mm square
+
+DR_zone   No_Routing          Pkg_M4       ALL
+DR_zone   Pkg_bottom_DRs      Pkg_M4       RECT   4000  4000     12000 12000  // Allow routing only within 8mm x 8mm square
+
+DR_zone   No_Routing          PCB_top      ALL
+DR_zone   PCB_top_DRs         PCB_top      CIR    8000  8000     7850   // Allow routing only within circular region
+
+DR_zone   No_Routing          PCB_bottom   ALL
+DR_zone   PCB_bottom_DRs      PCB_bottom   CIR    8000  8000     7850   // Allow routing only within circular region
+
+
 
 
 # Create circular design-rule zones on Pkg_M4 above each BGA via for diff-pairs, to prevent non-diff-pair nets
@@ -818,6 +881,12 @@ DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      6500    10000     0
 DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      5500    10000     0
 DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      6500    10000     0
 DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      5500    10000     0
+DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      4500     7500     0
+DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      7000     6000     0
+DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      9500     6000     0
+DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR     11500     8500     0
+DR_zone  No_DiffPair_BGAs  Pkg_M4     CIR      6500    11500     0
+
 #
 # End of design-rule zones for non-diff-pair BGA vias
 #
@@ -847,4 +916,4 @@ violationFreeThreshold = 50
 # microns, and should be interpreted as half the trace-length that could be
 # avoided by adding a via to a different layer. If not specified, the default 
 # value is half the average dimension of the map (e.g., 5000um for a 10x10mm map).
-vertCost  = 4000   // in microns of equivalent trace length
+vertCost  = 2000   // in microns of equivalent trace length
